@@ -20,18 +20,18 @@ const COLORS = {
 
 const POINT_MARKER_ICON_CONFIG = {
     path: "M 0, 0 m -5, 0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0",
-    strokeOpacity: 0.7,
-    strokeWeight: 4,
+    strokeOpacity: 1,
+    strokeWeight: 1, //4
     strokeColor: COLORS.POINT,
     fillColor: COLORS.POINT_FILL,
-    fillOpacity: 0.7,
-    scale: 1
+    fillOpacity: 1, //0.7,
+    scale: 2 //1
 };
 
 const LINE_SYMBOL_CONFIG = {
     path: "M 0,-2 0,2",
     strokeOpacity: 1,
-    strokeWeight: 2,
+    strokeWeight: 4, //3
     scale: 1
 };
 
@@ -42,7 +42,7 @@ const LINE_PATH_CONFIG = {
     strokeColor: COLORS.LINE,
     icons: [{
         icon: LINE_SYMBOL_CONFIG,
-        repeat: "10px"
+        repeat: "13px" //"10px"
     }]
 };
 
@@ -56,15 +56,15 @@ const mapSettings = {
     zoomControlOptions: {
         style: "SMALL"
     },
-    zoom: 5,
+    zoom: 15,
     minZoom: 2,
-    maxZoom: 8,
+    maxZoom: 25,
     styles: [{
             featureType: "landscape",
             stylers: [
                 { hue: COLORS.LANDSCAPE },
-                { saturation: 50.2 },
-                { lightness: -34.8 },
+                { saturation: 50.2 }, //50.2
+                { lightness: -34.8 }, //-34.8
                 { gamma: 1 }
             ]
         },
@@ -92,11 +92,17 @@ const mapSettings = {
         },
         {
             featureType: "road.local",
-            stylers: [{ visibility: "off" }]
+            //stylers: [{ visibility: "on" }],
+            stylers: [
+                { hue: COLORS.LANDSCAPE },
+                { saturation: 52.4 },
+                { lightness: -32.6 },
+                { gamma: 1 }
+            ]
         },
         {
             featureType: "transit",
-            stylers: [{ visibility: "off" }]
+            stylers: [{ visibility: "on" }]
         },
         {
             featureType: "administrative.province",

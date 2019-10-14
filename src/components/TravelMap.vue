@@ -45,25 +45,25 @@ export default {
             markers: [
                 {
                     id: "a",
-                    position: { lat: 3, lng: 101 }
+                    position: { lat: 50.456376, lng: 30.380989 }// { lat: 3, lng: 101 }
                 },
                 {
                     id: "b",
-                    position: { lat: 5, lng: 99 }
+                    position: { lat: 50.455939, lng: 30.372777 }// { lat: 5, lng: 99 }
                 },
                 {
                     id: "c",
-                    position: { lat: 6, lng: 97 }
+                    position: { lat: 50.452482, lng: 30.372232 }// { lat: 6, lng: 97 }
                 }
             ],
             lines: [
                 {
                     id: "1",
-                    path: [{ lat: 3, lng: 101 }, { lat: 5, lng: 99 }]
+                    path: [{ lat: 50.456376, lng: 30.380989 }, { lat: 50.455939, lng: 30.372777 }]
                 },
                 {
                     id: "2",
-                    path: [{ lat: 5, lng: 99 }, { lat: 6, lng: 97 }]
+                    path: [{ lat: 50.455939, lng: 30.372777 }, { lat: 50.452482, lng: 30.372232 }]
                 }
             ]
         };
