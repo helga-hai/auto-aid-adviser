@@ -7,7 +7,7 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 //import GoogleMaps from 'VueGoogleMaps.Map'
 Vue.component('google-map', VueGoogleMaps.Map);
 Vue.component('google-marker', VueGoogleMaps.Marker);
-console.log(VueGoogleMaps.Map)
+console.dir(VueGoogleMaps)
 Vue.prototype.$http = Axios;
 
 const token = localStorage.getItem('token');
@@ -17,9 +17,15 @@ if (token) {
 
 Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {
-  key: 'AIzaSyB_nA80Ha1asyGCQtdcgAGZNtd6Vzr8p3A',
-  libraries: 'places, drawing',
-  installComponents: true
+  //key: 'AIzaSyB_nA80Ha1asyGCQtdcgAGZNtd6Vzr8p3A',
+  //libraries: 'places, drawing',
+  installComponents: true,
+  load: {
+    region: 'UK',
+    language: 'ua',
+    key: 'AIzaSyB_nA80Ha1asyGCQtdcgAGZNtd6Vzr8p3A',
+    libraries: 'places'
+  }
 });
 new Vue({
     router,
