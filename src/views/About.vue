@@ -1,7 +1,6 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <travel-map/>
 
     <div v-if="errorStr">
       Sorry, but the following error
@@ -15,7 +14,7 @@
     <div v-if="location">
       Your location data is {{ location.coords.latitude }}, {{ location.coords.longitude}}
     </div>
-    
+     <travel-map/>
   </div>
 </template>
 
