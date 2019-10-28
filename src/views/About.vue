@@ -27,43 +27,22 @@ export default {
   },
   data() {
     return {
-      location:null,
-      gettingLocation: false,
-      errorStr:null
     }
   },
-  // mounted() {
-  //   var x = document.getElementById("demo");
-  //   function getLocation() {
-  //       if (navigator.geolocation) {
-  //           navigator.geolocation.getCurrentPosition(showPosition);
-  //       } else {
-  //           x.innerHTML = "Geolocation is not supported by this browser.";
-  //       }
-  //   }
-  //   function showPosition(position) {
-  //       x.innerHTML = "Latitude: " + position.coords.latitude + 
-  //       "<br>Longitude: " + position.coords.longitude; 
-  //   }
-  //   getLocation()
-
-  // },
+  computed: {
+    errorStr() {
+      return this.$store.state.selfLocation.errorStr;
+    },
+    gettingLocation() {
+      return this.$store.state.selfLocation.gettingLocation;
+    },
+    location() {
+      return this.$store.state.selfLocation.location;
+    }
+  },
   created() {
     //do we support geolocation
-    if(!("geolocation" in navigator)) {
-      this.errorStr = 'Geolocation is not available.';
-      return;
-    }
-
-    this.gettingLocation = true;
-    // get position
-    navigator.geolocation.getCurrentPosition(pos => {
-      this.gettingLocation = false;
-      this.location = pos;
-    }, err => {
-      this.gettingLocation = false;
-      this.errorStr = err.message;
-    })
+    this.$store.dispatch('selfLocation/getLocation');
   }
 }
 </script>

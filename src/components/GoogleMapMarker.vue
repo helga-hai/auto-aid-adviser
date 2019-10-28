@@ -1,5 +1,5 @@
 <template>
-  
+  <div></div>
 </template>
 
 <script>
@@ -36,7 +36,7 @@ export default {
         });
     },
 
-    render() {}
+    //render() {}
 }
 </script>
 
