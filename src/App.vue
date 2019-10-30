@@ -4,7 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> | 
       <router-link to="/map">Map</router-link> |
-      <router-link to="/login">Login</router-link>
+      <router-link to="/authorization">Login/Registration</router-link>
     </div>
 
     <div v-if="alert.message" 
