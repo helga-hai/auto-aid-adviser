@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import HomePage from '../views/HomePage';
+import HomePublic from '../views/HomePublic';
+import CabinetPage from '../views/CabinetPage';
 import LoginPage from '../views/LoginPage';
 
 import RegisterPage from '../views/RegisterPage';
-
 import AuthorizationPage from '../views/AuthorizationPage';
 
 import MapPage from '../views/Map';
@@ -16,12 +16,13 @@ Vue.use(Router);
 export const router = new Router({
     mode: 'history',
     routes: [
-        { path: '/', component: HomePage },
-        {path: '/authorization', component: AuthorizationPage},
-        {path: '/register', component: RegisterPage},
+        { path: '/', component: HomePublic },
+        { path: '/authorization', component: AuthorizationPage },
+        { path: '/register', component: RegisterPage },
         { path: '/login', component: LoginPage },
         { path: '/map', component: MapPage },
         { path: '/about', component: AboutPage },
+        { path: '/cabinet', component: CabinetPage },
 
         // otherwise redirect to home
         { path: '*', redirect: '/' }
@@ -30,7 +31,7 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-    const publicPages = ['/authorization','/login','/register'];
+    const publicPages = ['/authorization', '/login', '/register', '/'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 

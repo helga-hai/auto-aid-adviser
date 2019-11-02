@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <nav-component/>
     <h1>This is an about page</h1>
 
     <div v-if="errorStr">
@@ -19,11 +20,12 @@
 </template>
 
 <script>
-
-import TravelMap from '@/components/TravelMap.vue'
+import NavComponent from '../components/NavComponent';
+import TravelMap from '@/components/TravelMap.vue';
 export default {
   components: {
-    TravelMap
+    NavComponent,
+    TravelMap,
   },
   data() {
     return {
