@@ -21,7 +21,7 @@
       <div>
           <input id="password-confirm" type="password" v-model="password_confirmation" required>
       </div>
-
+      <checkbox-component title="if Business owner"/>
       <div>
           <button type="submit">Register</button>
       </div>
@@ -29,15 +29,21 @@
   </div>
 </template>
 
+
+
+
 <script>
+import CheckboxComponent from "@/components/CheckboxComponent.vue"
 export default {
   name: 'RegisterPage',
+
   data() {
     return {
       name: "",
       email: "",
       password: "",
       password_confirmation: "",
+      checkbox_component:"",
     };
   },
 
@@ -53,6 +59,9 @@ export default {
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
     }
-  }
+  },
+  components:{
+    CheckboxComponent,
+  },
 };
 </script>
