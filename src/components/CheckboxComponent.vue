@@ -2,28 +2,41 @@
     <div>
         <input
         type="checkbox"
-        id="checkbox"
-        v-bind:checked="checked"
-         v-on:change="$emit('change', $event.target.checked)"/>
-        <label for="checkbox">{{title}}</label>
+        v-bind:id="id"
+        v-model = "toggle"
+        v-bind:true-value="trueValue"
+        v-bind:false-value="falseValue"/>
+        <label for="checkbox">{{title}}{{toggle}}</label>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'CheckboxComponent',
-    data() {
+  name: 'CheckboxComponent',
+  data() {
         return {
-        }
+          toggle: 'User',
+          res: this.toggle,
+          w: console.log(this),
+    }
+  },
+  props: {
+    id: [String,Number],
+    title: String,
+    trueValue: String,
+    falseValue: String,
+  },
+  model: {
+    prop: 'toggle',
+  },
+  computed: {
+
+    get: function() {
+      let role = this.res;
+      console.log(role);
+      return role;
     },
-      props: {
-    checked: Boolean,
-    title: String
-  },
-      model: {
-    prop: 'checked',
-    event: 'change'
-  },
+  }
 }
 
 </script>

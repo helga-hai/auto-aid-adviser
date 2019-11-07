@@ -21,7 +21,7 @@
       <div>
           <input id="password-confirm" type="password" v-model="password_confirmation" required>
       </div>
-      <checkbox-component title="if Business owner"/>
+      <checkbox-component title="if Business owner" id="1" true-value="Business" false-value="User"/>
       <div>
           <button type="submit">Register</button>
       </div>
