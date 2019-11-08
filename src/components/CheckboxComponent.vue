@@ -4,6 +4,7 @@
         type="checkbox"
         v-bind:id="id"
         v-model = "toggle"
+        @change = "someFunc"
         v-bind:true-value="trueValue"
         v-bind:false-value="falseValue"/>
         <label for="checkbox">{{title}}{{toggle}}</label>
@@ -39,6 +40,12 @@ export default {
       console.log(role);
       return role;
     },
+  },
+  methods: {
+    someFunc(e) {
+      console.log(e)
+      this.$emit('anotherFunc', this.toggle)
+    }
   }
 }
 

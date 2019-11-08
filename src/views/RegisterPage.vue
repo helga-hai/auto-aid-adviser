@@ -21,7 +21,7 @@
       <div>
           <input id="password-confirm" type="password" v-model="password_confirmation" required>
       </div>
-      <checkbox-component title="if Business owner" id="role" true-value="Business" false-value="User"/>
+      <checkbox-component title="if Business owner" id="role" true-value="Business" false-value="User" @anotherFunc='anotherFunc'/>
       <div>
           <button type="submit">Register</button>
       </div>
@@ -60,6 +60,9 @@ export default {
         .dispatch("register", data)
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
+    },
+    anotherFunc(val) {
+      console.log('emited value', val)
     }
   },
   components:{
