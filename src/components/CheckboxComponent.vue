@@ -15,8 +15,11 @@ export default {
   name: 'CheckboxComponent',
   data() {
         return {
-          toggle: 'User',
-          res: this.toggle,
+          toggle: this.falseValue,
+          role: function(toggle){
+            let _role = this.toggle
+            return _role
+            },
           w: console.log(this),
     }
   },
@@ -29,10 +32,10 @@ export default {
   model: {
     prop: 'toggle',
   },
-  computed: {
 
+  computed: {
     get: function() {
-      let role = this.res;
+      let role = this.role();
       console.log(role);
       return role;
     },
