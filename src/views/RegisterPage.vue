@@ -57,7 +57,7 @@ export default {
       };
       console.log(this.password)
       this.$store
-        .dispatch("register", data)
+        .dispatch("registration/saveStateData", data)
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
     },
