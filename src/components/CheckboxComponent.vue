@@ -17,10 +17,7 @@ export default {
   data() {
         return {
           toggle: this.falseValue,
-          role: function(toggle){
-            let _role = this.toggle
-            return _role
-            },
+
           w: console.log(this),
     }
   },
@@ -35,16 +32,12 @@ export default {
   },
 
   computed: {
-    get: function() {
-      let role = this.role();
-      console.log(role);
-      return role;
-    },
   },
+
   methods: {
     someFunc(e) {
       console.log(e)
-      this.$emit('anotherFunc', this.toggle)
+      this.$emit('toggleFunc', this.toggle)
     }
   }
 }
