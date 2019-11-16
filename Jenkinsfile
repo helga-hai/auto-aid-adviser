@@ -19,8 +19,14 @@ pipeline {
         }
         
         stage('Deploy') {
+            environment {
+                BUCKET = "s3://auto-aid-adviser-front/"
+                DIST = "./dist"
+            }
+            
             steps{
-                sh 'aws s3 cp --recursive ~/workspace/adviser-front-pipeline/dist s3://auto-aid-adviser-front/'
+                sh 'aws s3 rm --recursive ${BUCKET}'
+                sh 'aws s3 cp --recursive ${DIST} ${BUCKET}'
             }
         }
    }
