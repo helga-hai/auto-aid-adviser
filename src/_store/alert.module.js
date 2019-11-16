@@ -25,6 +25,10 @@ export const alert = {
             state.type = 'alert-danger';
             if (errorStatus == 404) {
                 state.message = 'Дана поштова адреса не зареєстрована на нашому сервісі. Перейдіть, будь ласка, на сторінку реєстрації нових користувачів';
+            } else if (errorStatus == 403) {
+                state.message = 'Forbidden / Недостатньо захищений пароль';
+            } else if (errorStatus == 401) {
+                state.message = 'Unauthorized';
             }
         },
         clear(state) {

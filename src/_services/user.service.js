@@ -56,14 +56,14 @@ function handleResponse(response) {
                 location.reload(true);
             } else {
                 console.log('response.status', response.status)
-                if (response.status == 404) {
+                    //if (response.status == 404) {
                     // dispatch('alert/error', error, { root: true });
-                    console.log('data', data)
-                    const error = (data && data.message) || response.statusText;
-                    const errorStatus = (data && data.status) || response.status;
-                    console.log('error, errorStatus', error, errorStatus)
-                    return Promise.reject([error, errorStatus]);
-                }
+                console.log('data', data)
+                const error = (data && data.message) || response.statusText;
+                const errorStatus = (data && data.status) || response.status;
+                console.log('error, errorStatus', error, errorStatus)
+                return Promise.reject([error, errorStatus]);
+                //}
             }
 
             // const error = (data && data.message) || response.statusText;
