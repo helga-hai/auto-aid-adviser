@@ -21,7 +21,7 @@
       <div>
           <input id="password-confirm" type="password" v-model="password_confirmation" required>
       </div>
-
+      <checkbox-component title="if Business owner" id="role" true-value="Business" false-value="User" @toggleFunc='toggleFunc' />
       <div>
           <button type="submit">Register</button>
       </div>
@@ -29,15 +29,21 @@
   </div>
 </template>
 
+
+
+
 <script>
+import CheckboxComponent from "@/components/CheckboxComponent.vue"
 export default {
   name: 'RegisterPage',
+
   data() {
     return {
       name: "",
       email: "",
       password: "",
       password_confirmation: "",
+      role: "",
     };
   },
 
@@ -47,12 +53,25 @@ export default {
         name: this.name,
         email: this.email,
         password: this.password,
+        role: this.role,
       };
+      console.log(this.password)
+      console.log(this.role)
       this.$store
-        .dispatch("register", data)
+        .dispatch("registration/saveStateData", data)
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
-    }
-  }
+    },
+
+    toggleFunc(val) {
+      console.log('emited value', val)
+      return this.role = val;
+    },
+
+
+  },
+  components:{
+    CheckboxComponent,
+  },
 };
 </script>
