@@ -16,7 +16,7 @@ export default {
   name: 'Authorization',
   components: {
     LoginPage,
-    RegisterPage
+    RegisterPage,
   }
 }
 </script>
