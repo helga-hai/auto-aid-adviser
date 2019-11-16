@@ -1,15 +1,38 @@
 //import config from 'config';
 import { authHeader } from '../_helpers';
 const config = {
-    //apiUrl: 'http://localhost:4000'
     apiUrl: 'http://localhost:8080'
 }
 export const userService = {
+    regist,
     login,
     logout,
     getAll
 };
+///   REGISTRATION   /////
+function regist(user) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+    console.log('regist')
+    console.log(user)
+    return fetch(`${config.apiUrl}/api/user/register`, requestOptions)
+        .then(handleResponse)
+        .then(resolve => {
+            console.log('requestOptions')
+            console.log(requestOptions) //email password role
+                // login successful if there's a jwt token in the response
+                //if (user.token) {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                // localStorage.setItem('user', JSON.stringify(user));
+                //}
 
+            return resolve;
+        });
+}
+///   AUTHENTIFICATION   /////
 function login(email, password) {
     const requestOptions = {
         method: 'POST',
@@ -55,9 +78,9 @@ function handleResponse(response) {
                 logout();
                 location.reload(true);
             } else {
-                console.log('response.status', response.status)
-                    //if (response.status == 404) {
-                    // dispatch('alert/error', error, { root: true });
+                //console.log('response.status', response.status)
+                //if (response.status == 404) {
+                // dispatch('alert/error', error, { root: true });
                 console.log('data', data)
                 const error = (data && data.message) || response.statusText;
                 const errorStatus = (data && data.status) || response.status;
