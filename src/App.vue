@@ -68,7 +68,7 @@ button {
 	border: none;
 	border-radius: 0;
 	box-shadow: none;
-	-webkit-appearance: none;
+	//-webkit-appearance: none;
 	cursor: pointer;
 	outline: none;
 }
@@ -78,7 +78,7 @@ input {
 	outline: none;
 	border-radius: 0;
 	box-shadow: none;
-	-webkit-appearance: none;
+	//-webkit-appearance: none;
 }
 
 
