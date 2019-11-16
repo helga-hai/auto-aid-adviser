@@ -20,10 +20,12 @@ export const alert = {
             state.type = 'alert-success';
             state.message = message;
         },
-        error(state, message) {
+        error(state, [message, errorStatus]) {
             console.log('ERROR alert module')
             state.type = 'alert-danger';
-            state.message = message;
+            if (errorStatus == 404) {
+                state.message = 'Дана поштова адреса не зареєстрована на нашому сервісі. Перейдіть, будь ласка, на сторінку реєстрації нових користувачів';
+            }
         },
         clear(state) {
             state.type = null;

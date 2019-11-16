@@ -1,15 +1,15 @@
 <template>
     <div>
         <div class="alert alert-info">
-            Username: test<br />
-            Password: test
+            <!-- email: test<br />
+            Password: test -->
         </div>
         <h2>Login</h2>
         <form @submit.prevent="handleSubmit">
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" v-model="username" name="username" class="form-control" :class="{ 'is-invalid': submitted && !username }" />
-                <div v-show="submitted && !username" class="invalid-feedback">Username is required</div>
+                <label for="email">email</label>
+                <input type="text" v-model="email" name="email" class="form-control" :class="{ 'is-invalid': submitted && !email }" />
+                <div v-show="submitted && !email" class="invalid-feedback">email is required</div>
             </div>
             <div class="form-group">
                 <label htmlFor="password">Password</label>
@@ -29,7 +29,7 @@ export default {
     name: 'LoginPage',
     data () {
         return {
-            username: '',
+            email: '',
             password: '',
             submitted: false
         }
@@ -46,10 +46,10 @@ export default {
     methods: {
         handleSubmit (e) {
             this.submitted = true;
-            const { username, password } = this;
+            const { email, password } = this;
             const { dispatch } = this.$store;
-            if (username && password) {
-                dispatch('authentication/login', { username, password });
+            if (email && password) {
+                dispatch('authentication/login', { email, password });
             }
         }
     }

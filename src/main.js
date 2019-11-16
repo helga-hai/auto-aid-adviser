@@ -6,8 +6,8 @@ import App from './App.vue'
 import { store } from './_store';
 import { router } from './_helpers';
 // setup fake backend
-import { configureFakeBackend } from './_helpers';
-configureFakeBackend();
+//import { configureFakeBackend } from './_helpers';
+//configureFakeBackend();
 
 import Axios from 'axios';
 import * as VueGoogleMaps from 'vue2-google-maps';
