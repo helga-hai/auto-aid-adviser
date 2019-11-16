@@ -21,7 +21,7 @@
       <div>
           <input id="password-confirm" type="password" v-model="password_confirmation" required>
       </div>
-      <checkbox-component title="if Business owner" id="role" true-value="ROLE_BUSINESS" false-value="User" @toggleFunc='toggleFunc' />
+      <checkbox-component title="if Business owner" id="role" true-value="ROLE_BUSINESS" false-value="ROLE_USER" @toggleFunc='toggleFunc' />
       <div>
           <button type="submit">Register</button>
       </div>
@@ -43,7 +43,7 @@ export default {
       email: "",
       password: "",
       password_confirmation: "",
-      role: "ROLE_USER",
+      roleUser: "ROLE_USER",
     };
   },
 
@@ -52,7 +52,7 @@ export default {
       let data = {
         email: this.email,
         password: this.password,
-        role: this.role,
+        roleUser: this.roleUser,
       };
       this.$store.dispatch("registration/register", data)
         //.then(() => this.$router.push("/"))
@@ -61,7 +61,7 @@ export default {
 
     toggleFunc(val) {
       console.log('emited value', val)
-      return this.role = val;
+      return this.roleUser = val;
     },
 
 

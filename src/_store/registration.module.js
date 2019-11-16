@@ -8,7 +8,7 @@ export const registration = {
         name: null,
         email: null,
         password: null,
-        role: null,
+        roleUser: null,
     },
     actions: {
         saveStateData({ commit }, payload) {
@@ -18,7 +18,6 @@ export const registration = {
 
         register({ commit }, user) {
 
-            console.log({ email: user.email, password: user.password, role: user.role })
             console.log('user', user)
             userService.regist(user)
                 .then(
