@@ -1,0 +1,633 @@
+{
+	"id": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+	"name": "aaa",
+	"description": "",
+	"order": [
+		"d40b8d81-0622-ba35-21fd-0c1abf9bbe91",
+		"70cc13ab-8f84-b3e2-6eb2-d9ff54c69949",
+		"49c686d3-5639-b455-176f-405dd34542e9",
+		"7207fb42-46db-52e5-c9a9-d849cc7d55d0",
+		"fe467da1-6b1e-42ac-5ae2-9624a3eda58c",
+		"1f550cc0-b324-bb49-5d61-1fcd4b17545c",
+		"1246406a-0e33-9d70-1145-0130fc0fd997",
+		"e1d3cea4-a9ed-ba7c-675c-538275034365",
+		"dd439bd2-ddec-3c65-1400-16e2d34949d7",
+		"6d90fe70-72b2-927f-ef1d-2e9025d5314e",
+		"87a3734d-134b-4cd5-2ed4-a587e7fc6665",
+		"5ad2be9f-375c-9a7d-9d3c-212a7f9cbe66",
+		"7be07685-2db5-502b-4015-14083acf0b6e",
+		"43926d53-c4f0-d8ef-d821-0a8456bcbb21",
+		"d3a00cce-e612-a343-c5dc-6f3591a79f90",
+		"3a3f6007-c07a-6d41-04c8-a71a65d53301",
+		"c516a561-fd88-1038-40c3-7dcdea50fc28"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1573594483783,
+	"owner": "8096242",
+	"public": false,
+	"requests": [
+		{
+			"id": "1246406a-0e33-9d70-1145-0130fc0fd997",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/catalog/business_types/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "business_type - find by id",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573655233386,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"id\": 2,\n    \"name\": \"Shop\"\n}"
+		},
+		{
+			"id": "1f550cc0-b324-bb49-5d61-1fcd4b17545c",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/catalog/business_types/",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "business_type - find all",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573655018847,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"id\": 2,\n    \"name\": \"Shop\"\n}"
+		},
+		{
+			"id": "3a3f6007-c07a-6d41-04c8-a71a65d53301",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNjU3MDQ0LCJleHAiOjE1NzM2NjA2NDR9.hkMRazrN1X5Py4LAu2RT6Hc36n3gE4tjuw-K0w3Zik4Af0J84ggYXBVl5Ju6W4yaja8Vg6L7Q0HLEj12ZwT1Wg\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNjU3MDQ0LCJleHAiOjE1NzM2NjA2NDR9.hkMRazrN1X5Py4LAu2RT6Hc36n3gE4tjuw-K0w3Zik4Af0J84ggYXBVl5Ju6W4yaja8Vg6L7Q0HLEj12ZwT1Wg",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/businesses/2",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "businesse - find by id",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573657876906,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "    {\n        \"name\": \"My business 2\",\n        \"location\": {\n            \"longitude\": 120,\n            \"latitude\": 190,\n            \"address\": \"Kharkov\"\n        },\n        \"contact\": {\n            \"phone\": \"098-9999999\"\n        },\n        \"workingDays\": null,\n        \"workingHours\": null,\n        \"serviceForBusinesses\": [\n            {\n                \"id\": 1\n            },\n            {\n                \"id\": 2\n            }\n        ]\n    }"
+		},
+		{
+			"id": "43926d53-c4f0-d8ef-d821-0a8456bcbb21",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNjU3MDQ0LCJleHAiOjE1NzM2NjA2NDR9.hkMRazrN1X5Py4LAu2RT6Hc36n3gE4tjuw-K0w3Zik4Af0J84ggYXBVl5Ju6W4yaja8Vg6L7Q0HLEj12ZwT1Wg\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNjU3MDQ0LCJleHAiOjE1NzM2NjA2NDR9.hkMRazrN1X5Py4LAu2RT6Hc36n3gE4tjuw-K0w3Zik4Af0J84ggYXBVl5Ju6W4yaja8Vg6L7Q0HLEj12ZwT1Wg",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/businesses",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "businesse - add",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573657186487,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "    {\n        \"name\": \"Testing create new business\",\n        \"location\": {\n            \"longitude\": 100,\n            \"latitude\": 90,\n            \"address\": \"Kharkov\"\n        },\n        \"contact\": {\n            \"phone\": \"098-9999999\"\n        },\n        \"workingDays\": null,\n        \"workingHours\": null,\n        \"serviceForBusinesses\": [\n            {\n                \"id\": 1\n            },\n            {\n                \"id\": 2\n            }\n        ]\n    }"
+		},
+		{
+			"id": "49c686d3-5639-b455-176f-405dd34542e9",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/user/login",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "user - login",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573595492856,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"email\": \"test2@mail.com\",\n    \"password\": \"Pass_123456\"\n}"
+		},
+		{
+			"id": "5ad2be9f-375c-9a7d-9d3c-212a7f9cbe66",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/catalog/services",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "service - find all (by pages)",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573656443271,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"name\": \"Oil\",\n    \"serviceType\" : {\n    \t\"id\" : 1\n    \t}\n}"
+		},
+		{
+			"id": "6d90fe70-72b2-927f-ef1d-2e9025d5314e",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/catalog/business_types/1/service_types",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "service_type - find by business type id",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573656032102,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"id\": 1,\n    \"name\": \"Engine\",\n    \"businessType\": {\n        \"id\": 1,\n        \"name\": \"test\"\n    }\n}"
+		},
+		{
+			"id": "70cc13ab-8f84-b3e2-6eb2-d9ff54c69949",
+			"headers": "",
+			"headerData": [],
+			"url": "127.0.0.1:8080/api/user/activate/c877949c-779a-488c-bb12-72814b2fe995",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": null,
+			"dataMode": "params",
+			"name": "user - activation",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573595144224,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "7207fb42-46db-52e5-c9a9-d849cc7d55d0",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/catalog/business_types/",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "business_type - add",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573646325213,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"name\" : \"STO\"\n}"
+		},
+		{
+			"id": "7be07685-2db5-502b-4015-14083acf0b6e",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/catalog/services",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "service - update",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573656810873,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "        {\n            \"id\": 1,\n            \"name\": \"Setting injector\",\n            \"serviceType\": {\n                \"id\": 1\n            }\n        }"
+		},
+		{
+			"id": "87a3734d-134b-4cd5-2ed4-a587e7fc6665",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/catalog/services",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "service - add",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573656356180,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"name\": \"Oil\",\n    \"serviceType\" : {\n    \t\"id\" : 1\n    \t}\n}"
+		},
+		{
+			"id": "c516a561-fd88-1038-40c3-7dcdea50fc28",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNjU3MDQ0LCJleHAiOjE1NzM2NjA2NDR9.hkMRazrN1X5Py4LAu2RT6Hc36n3gE4tjuw-K0w3Zik4Af0J84ggYXBVl5Ju6W4yaja8Vg6L7Q0HLEj12ZwT1Wg\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNjU3MDQ0LCJleHAiOjE1NzM2NjA2NDR9.hkMRazrN1X5Py4LAu2RT6Hc36n3gE4tjuw-K0w3Zik4Af0J84ggYXBVl5Ju6W4yaja8Vg6L7Q0HLEj12ZwT1Wg",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/businesses",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "businesse - update",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573657953440,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"id\": 2,\n    \"name\": \"My update business 2\",\n    \"location\": {\n        \"longitude\": 122,\n        \"latitude\": 115,\n        \"address\": \"Kharkov\"\n    },\n    \"contact\": {\n        \"phone\": \"098-9999999\"\n    },\n    \"workingDays\": null,\n    \"workingHours\": null,\n    \"serviceForBusinesses\": [\n        {\n            \"id\": 1,\n            \"name\": \"Setting injector\"\n        }\n    ]\n}"
+		},
+		{
+			"id": "d3a00cce-e612-a343-c5dc-6f3591a79f90",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNjU3MDQ0LCJleHAiOjE1NzM2NjA2NDR9.hkMRazrN1X5Py4LAu2RT6Hc36n3gE4tjuw-K0w3Zik4Af0J84ggYXBVl5Ju6W4yaja8Vg6L7Q0HLEj12ZwT1Wg\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNjU3MDQ0LCJleHAiOjE1NzM2NjA2NDR9.hkMRazrN1X5Py4LAu2RT6Hc36n3gE4tjuw-K0w3Zik4Af0J84ggYXBVl5Ju6W4yaja8Vg6L7Q0HLEj12ZwT1Wg",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/businesses",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "businesse - find all for active user",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573657770588,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "    {\n        \"name\": \"My business 2\",\n        \"location\": {\n            \"longitude\": 120,\n            \"latitude\": 190,\n            \"address\": \"Kharkov\"\n        },\n        \"contact\": {\n            \"phone\": \"098-9999999\"\n        },\n        \"workingDays\": null,\n        \"workingHours\": null,\n        \"serviceForBusinesses\": [\n            {\n                \"id\": 1\n            },\n            {\n                \"id\": 2\n            }\n        ]\n    }"
+		},
+		{
+			"id": "d40b8d81-0622-ba35-21fd-0c1abf9bbe91",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/user/register",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1573594962504,
+			"name": "user - registration business user",
+			"description": "",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"responses": [],
+			"rawModeData": "{\n\t\"email\" : \"test2@mail.com\",\n\t\"password\" : \"Pass_123456\",\n\t\"role\" : \"ROLE_BUSINESS\"\n}"
+		},
+		{
+			"id": "dd439bd2-ddec-3c65-1400-16e2d34949d7",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/catalog/service_types/",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "service_type - update",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573655902766,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"id\": 1,\n    \"name\": \"Engine\",\n    \"businessType\": {\n        \"id\": 1,\n        \"name\": \"test\"\n    }\n}"
+		},
+		{
+			"id": "e1d3cea4-a9ed-ba7c-675c-538275034365",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/catalog/service_types/",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "service_type - add",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573655714207,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"name\": \"Body\",\n    \"businessType\" : {\n    \t\"id\" : 1,\n    \t\"name\" : \"test\"\n    }\n}"
+		},
+		{
+			"id": "fe467da1-6b1e-42ac-5ae2-9624a3eda58c",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczNTk1MTA2LCJleHAiOjE1NzM1OTg3MDZ9.v3h47lKr1-ZF0pd_XNBifLp6jPZpTxFcCFpAUL0DIWz4p_PtpgSnNCVsPmrgVQzdg2OL6br7j5X6eQv8RQ3bQQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "127.0.0.1:8080/api/catalog/business_types/",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "c6c6da99-73e5-39a1-8e36-e8bbd6b1877f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "business_type - update",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1573654982098,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"id\": 2,\n    \"name\": \"Shop\"\n}"
+		}
+	]
+}

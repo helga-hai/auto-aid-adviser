@@ -21,6 +21,7 @@ export const alert = {
             state.message = message;
         },
         error(state, message) {
+            console.log('ERROR alert module')
             state.type = 'alert-danger';
             state.message = message;
         },
