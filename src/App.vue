@@ -40,7 +40,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import './styles/normalize.scss';
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap&subset=cyrillic');
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -48,4 +50,36 @@ export default {
     text-align: center;
     color: #2c3e50;
 }
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+	margin: 0;
+	padding: 0;
+}
+
+button {
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	//-webkit-appearance: none;
+	cursor: pointer;
+	outline: none;
+}
+
+input {
+	border: none;
+	outline: none;
+	border-radius: 0;
+	box-shadow: none;
+	//-webkit-appearance: none;
+}
+
+
 </style>

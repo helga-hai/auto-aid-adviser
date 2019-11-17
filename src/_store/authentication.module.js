@@ -9,18 +9,20 @@ export const authentication = {
     namespaced: true,
     state: initialState,
     actions: {
-        login({ dispatch, commit }, { username, password }) {
-            commit('loginRequest', { username });
+        login({ dispatch, commit }, { email, password }) {
+            console.log('store action login: email, password', email, password)
+            commit('loginRequest', { email });
 
-            userService.login(username, password)
+            userService.login(email, password)
                 .then(
                     user => {
                         commit('loginSuccess', user);
                         router.push('/');
                     },
-                    error => {
+                    ([error, errorStatus]) => {
+                        console.log('authentication error', [error, errorStatus])
                         commit('loginFailure', error);
-                        dispatch('alert/error', error, { root: true });
+                        dispatch('alert/error', [error, errorStatus], { root: true }); // перенесла в UserService
                     }
                 );
         },
@@ -31,6 +33,7 @@ export const authentication = {
     },
     mutations: {
         loginRequest(state, user) {
+            console.log('store mutations loginRequest: state, user', state, user)
             state.status = { loggingIn: true };
             state.user = user;
         },

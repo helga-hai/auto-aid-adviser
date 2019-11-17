@@ -2,10 +2,10 @@
   <div>
     <h4>Register</h4>
     <form @submit.prevent="register">
-      <label for="name">Name</label>
+      <!-- <label for="name">Name</label>
       <div>
           <input id="name" type="text" v-model="name" required autofocus>
-      </div>
+      </div> -->
 
       <label for="email" >E-Mail Address</label>
       <div>
@@ -21,7 +21,7 @@
       <div>
           <input id="password-confirm" type="password" v-model="password_confirmation" required>
       </div>
-
+      <checkbox-component title="if Business owner" id="role" true-value="ROLE_BUSINESS" false-value="ROLE_USER" @toggleFunc='toggleFunc' />
       <div>
           <button type="submit">Register</button>
       </div>
@@ -29,30 +29,45 @@
   </div>
 </template>
 
+
+
+
 <script>
+import CheckboxComponent from "@/components/CheckboxComponent.vue"
 export default {
   name: 'RegisterPage',
+
   data() {
     return {
-      name: "",
+      //name: "",
       email: "",
       password: "",
       password_confirmation: "",
+      roleUser: "ROLE_USER",
     };
   },
 
   methods: {
     register: function() {
       let data = {
-        name: this.name,
         email: this.email,
         password: this.password,
+        roleUser: this.roleUser,
       };
-      this.$store
-        .dispatch("register", data)
-        .then(() => this.$router.push("/"))
-        .catch(err => console.log(err));
-    }
-  }
+      this.$store.dispatch("registration/register", data)
+        //.then(() => this.$router.push("/"))
+        //.catch(err => console.log(err));
+    },
+
+    toggleFunc(val) {
+      console.log('emited value', val)
+      return this.roleUser = val;
+    },
+
+
+  },
+  components:{
+    CheckboxComponent,
+  },
 };
 </script>

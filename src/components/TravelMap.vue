@@ -39,23 +39,23 @@ export default {
         GoogleMapMarker,
         GoogleMapLine
     },
-
+    props: ['markers'],
     data() {
         return {
-            markers: [
-                {
-                    id: "a",
-                    position: { lat: 50.456376, lng: 30.380989 }// { lat: 3, lng: 101 }
-                },
-                {
-                    id: "b",
-                    position: { lat: 50.455939, lng: 30.372777 }// { lat: 5, lng: 99 }
-                },
-                {
-                    id: "c",
-                    position: { lat: 50.452482, lng: 30.372232 }// { lat: 6, lng: 97 }
-                }
-            ],
+            // markers: [
+            //     {
+            //         id: "a",
+            //         position: { lat: 50.456376, lng: 30.380989 }// { lat: 3, lng: 101 }
+            //     },
+            //     {
+            //         id: "b",
+            //         position: { lat: 50.455939, lng: 30.372777 }// { lat: 5, lng: 99 }
+            //     },
+            //     {
+            //         id: "c",
+            //         position: { lat: 50.452482, lng: 30.372232 }// { lat: 6, lng: 97 }
+            //     }
+            // ],
             lines: [
                 {
                     id: "1",

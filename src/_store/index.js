@@ -5,6 +5,8 @@ import { alert } from './alert.module';
 import { authentication } from './authentication.module';
 import { users } from './users.module';
 import { selfLocation } from './selfLocation.module';
+import { maploader } from './maploader.module';
+import { registration } from './registration.module';
 
 Vue.use(Vuex);
 
@@ -13,6 +15,8 @@ export const store = new Vuex.Store({
         alert,
         authentication,
         users,
-        selfLocation
+        selfLocation,
+        maploader,
+        registration
     }
 });
