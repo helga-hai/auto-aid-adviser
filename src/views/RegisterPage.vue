@@ -39,7 +39,7 @@ export default {
 
   data() {
     return {
-      name: "",
+      // name: "",
       email: "",
       password: "",
       password_confirmation: "",
@@ -50,7 +50,7 @@ export default {
   methods: {
     register: function() {
       let data = {
-        name: this.name,
+        // name: this.name,
         email: this.email,
         password: this.password,
         role: this.role,
@@ -58,7 +58,7 @@ export default {
       console.log(this.password)
       console.log(this.role)
       this.$store
-        .dispatch("registration/saveStateData", data)
+        .dispatch("registration/register", data)
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
     },
