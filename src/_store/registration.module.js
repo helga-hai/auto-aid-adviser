@@ -5,10 +5,10 @@ import axios from 'axios';
 export const registration = {
     namespaced: true,
     state: {
-        name: null,
+        // name: null,
         email: null,
         password: null,
-        roleUser: null,
+        role: null,
     },
     actions: {
         saveStateData({ commit }, payload) {

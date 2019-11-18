@@ -70,6 +70,7 @@ function getAll() {
 }
 
 function handleResponse(response) {
+    //console.dir(JSON.parse(response))
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
