@@ -61,7 +61,7 @@ export default {
 
     toggleFunc(val) {
       console.log('emited value', val)
-      return this.roleUser = val;
+      return this.role = val;
     },
 
 
