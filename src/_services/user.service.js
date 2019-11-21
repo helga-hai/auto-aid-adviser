@@ -1,25 +1,52 @@
 //import config from 'config';
 import { authHeader } from '../_helpers';
 const config = {
-    apiUrl: 'http://localhost:4000'
+    apiUrl: 'http://localhost:8080'
 }
 export const userService = {
+    regist,
     login,
     logout,
-    getAll
+    getAll,
+    successRegistStat
 };
-
-function login(username, password) {
+///   REGISTRATION   /////
+function regist(user) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify(user)
+    };
+    console.log('regist')
+    console.log(user)
+    return fetch(`${config.apiUrl}/api/user/register`, requestOptions)
+        .then(handleResponse)
+        .then(resolve => {
+            console.log('requestOptions')
+            console.log(requestOptions) //email password role
+                // login successful if there's a jwt token in the response
+                //if (user.token) {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                // localStorage.setItem('user', JSON.stringify(user));
+                //}
+            return resolve;
+        });
+}
+
+///   AUTHENTIFICATION   /////
+function login(email, password) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch(`${config.apiUrl}/api/users/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            // login successful if there's a jwt token in the response
+            console.log('requestOptions')
+            console.log(requestOptions) //email password
+                // login successful if there's a jwt token in the response
             if (user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
@@ -27,6 +54,14 @@ function login(username, password) {
 
             return user;
         });
+}
+
+function successRegistStat(val){
+    if(val){
+        console.log("success:-)");
+    }else{
+        console.log("Oooooops.........");
+    }
 }
 
 function logout() {
@@ -44,6 +79,7 @@ function getAll() {
 }
 
 function handleResponse(response) {
+    //console.dir(JSON.parse(response))
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
@@ -51,10 +87,21 @@ function handleResponse(response) {
                 // auto logout if 401 response returned from api
                 logout();
                 location.reload(true);
+            } else {
+                //console.log('response.status', response.status)
+                //if (response.status == 404) {
+                // dispatch('alert/error', error, { root: true });
+                console.log('data', data)
+                const error = (data && data.message) || response.statusText;
+                const errorStatus = (data && data.status) || response.status;
+                console.log('error, errorStatus', error, errorStatus);
+                
+                return Promise.reject([error, errorStatus]);
+                //}
             }
 
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
+            // const error = (data && data.message) || response.statusText;
+            // return Promise.reject(error);
         }
 
         return data;

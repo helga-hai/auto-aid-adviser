@@ -2,10 +2,10 @@
   <div>
     <h4>Register</h4>
     <form @submit.prevent="register">
-      <label for="name">Name</label>
+      <!-- <label for="name">Name</label>
       <div>
           <input id="name" type="text" v-model="name" required autofocus>
-      </div>
+      </div> -->
 
       <label for="email" >E-Mail Address</label>
       <div>
@@ -21,7 +21,7 @@
       <div>
           <input id="password-confirm" type="password" v-model="password_confirmation" required>
       </div>
-      <checkbox-component title="if Business owner" id="role" true-value="Business" false-value="User" @toggleFunc='toggleFunc' />
+      <checkbox-component title="if Business owner" id="role" true-value="ROLE_BUSINESS" false-value="ROLE_USER" @toggleFunc='toggleFunc' />
       <div>
           <button type="submit">Register</button>
       </div>
@@ -39,28 +39,24 @@ export default {
 
   data() {
     return {
-      // name: "",
+      //name: "",
       email: "",
       password: "",
       password_confirmation: "",
-      role: "",
+      role: "ROLE_USER",
     };
   },
 
   methods: {
     register: function() {
       let data = {
-        // name: this.name,
         email: this.email,
         password: this.password,
         role: this.role,
       };
-      console.log(this.password)
-      console.log(this.role)
-      this.$store
-        .dispatch("registration/register", data)
-        .then(() => this.$router.push("/"))
-        .catch(err => console.log(err));
+      this.$store.dispatch("registration/register", data)
+        //.then(() => this.$router.push("/"))
+        //.catch(err => console.log(err));
     },
 
     toggleFunc(val) {
