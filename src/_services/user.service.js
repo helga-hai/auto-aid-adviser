@@ -1,16 +1,21 @@
 //import config from 'config';
-import { authHeader } from '../_helpers';
+import { authHeader, router } from '../_helpers';
+
+
+
+
 const config = {
     apiUrl: 'http://localhost:8080'
-}
+};
 export const userService = {
     regist,
     login,
     logout,
     getAll,
-    successRegistStat
+    successRegist,
 };
 ///   REGISTRATION   /////
+
 function regist(user) {
     const requestOptions = {
         method: 'POST',
@@ -31,6 +36,11 @@ function regist(user) {
                 //}
             return resolve;
         });
+}
+
+function successRegist(){
+    console.log("success:-)");
+    router.push('successRegister');
 }
 
 ///   AUTHENTIFICATION   /////
@@ -54,14 +64,6 @@ function login(email, password) {
 
             return user;
         });
-}
-
-function successRegistStat(val){
-    if(val){
-        console.log("success:-)");
-    }else{
-        console.log("Oooooops.........");
-    }
 }
 
 function logout() {

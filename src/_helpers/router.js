@@ -7,6 +7,7 @@ import LoginPage from '../views/LoginPage';
 
 import RegisterPage from '../views/RegisterPage';
 import AuthorizationPage from '../views/AuthorizationPage';
+import SuccessRegister from '../views/SuccessRegister';
 
 import MapPage from '../views/Map';
 import AboutPage from '../views/About';
@@ -23,6 +24,7 @@ export const router = new Router({
         { path: '/map', component: MapPage },
         { path: '/about', component: AboutPage },
         { path: '/cabinet', component: CabinetPage },
+        { path: '/successRegister', component: SuccessRegister },
 
         // otherwise redirect to home
         { path: '*', redirect: '/' }
@@ -31,7 +33,7 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about'];
+    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about','/successRegister'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
