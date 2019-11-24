@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
     }
 } else if (process.env.NODE_ENV === 'production') {
     const config = {
-        apiUrl: VUE_APP_BE_URI
+        apiUrl: 'http://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
     }
 }
 
