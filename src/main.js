@@ -35,7 +35,8 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 // if (token) {
 //   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
 // }
-
+console.log('process.env')
+console.log(process.env)
 Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {
     //key: 'AIzaSyB_nA80Ha1asyGCQtdcgAGZNtd6Vzr8p3A',

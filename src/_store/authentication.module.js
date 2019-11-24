@@ -22,7 +22,7 @@ export const authentication = {
                     ([error, errorStatus]) => {
                         console.log('authentication error', [error, errorStatus])
                         commit('loginFailure', error);
-                        dispatch('alert/error', [error, errorStatus], { root: true }); // перенесла в UserService
+                        dispatch('alert/error', [error, errorStatus], { root: true });
                     }
                 );
         },

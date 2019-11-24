@@ -1,8 +1,16 @@
 //import config from 'config';
 import { authHeader } from '../_helpers';
-const config = {
-    apiUrl: 'http://localhost:8080'
+
+if (process.env.NODE_ENV === 'development') {
+    const config = {
+        apiUrl: 'http://localhost:8080'
+    }
+} else if (process.env.NODE_ENV === 'production') {
+    const config = {
+        apiUrl: VUE_APP_BE_URI
+    }
 }
+
 export const userService = {
     regist,
     login,
