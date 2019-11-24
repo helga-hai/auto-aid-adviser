@@ -1,5 +1,5 @@
 <template>
-    <div class="res" :class="{'res__login': loginShow}">
+    <div class="res" :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
     <div class="one">
       <label for="">Оберіть тип объекту</label  @click="loginShow = !loginShow">
       <button type="button" name="button"  @click="loginShow = !loginShow">
@@ -55,7 +55,7 @@ button{
   border-radius: 4px;
 }
 .res {
-  background: url(require('@/assets/backgroundimage.jpg'));
+  /*background: url(require('@/assets/backgroundimage.jpg'));*/
   position: absolute;
   width: 1131px;
   height: 132px;
