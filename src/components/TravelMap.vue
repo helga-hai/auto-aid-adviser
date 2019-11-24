@@ -17,6 +17,7 @@
                 classname="search-input home-input"
                 placeholder="Введіть адресу"
                 v-on:placechanged="getAddressData" 
+                
             >
             </vue-google-autocomplete>
             <GoogleMapMarker v-if="address"
@@ -27,6 +28,11 @@
             <!-- <GoogleMapMarker
                 v-for="marker in markers"
                 :key="marker.id"
+                
+                :enableGeolocation="true"
+                @focus="onFocus()"
+                @blur="onBlur()"
+                
                 :marker="marker"
                 :google="google"
                 :map="map"
@@ -54,7 +60,7 @@ import GoogleMapMarker from "./GoogleMapMarker";
 import GoogleMapLine from "./GoogleMapLine";
 import { mapSettings } from "@/constants/mapSettings";
 import VueGoogleAutocomplete from 'vue-google-autocomplete';
-
+console.log(VueGoogleAutocomplete)
 export default {
     components: {
         GoogleMapLoader,
@@ -115,10 +121,11 @@ export default {
             }
         }
     },
-    mounted() {
-        //navigator.geolocate()
-        // console.log('navigator')
-        // console.log(navigator)
+    update() {
+        navigator.geolocate()
+         console.log('navigator')
+         console.log(navigator)
+         console.log(this.$refs.vAutoComplete)
         // navigator.geolocate()
         // this.$refs.vAutoComplete.update()
         //console.log(this.$refs.vAutoComplete.geolocate())
@@ -126,7 +133,24 @@ export default {
     methods: {
         getAddressData: function (addressData, placeResultData, id) {
             this.address = addressData;
-        }
+        },
+        geolocate() {
+            if (this.enableGeolocation) {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(position => {
+                    let geolocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    let circle = new google.maps.Circle({
+                        center: geolocation,
+                        radius: position.coords.accuracy
+                    });
+                    this.autocomplete.setBounds(circle.getBounds());
+                    });
+                }
+            }
+        },
         // getDirection: function() {
         //     var directionsService = new google.maps.DirectionsService;
         //     var directionsDisplay = new google.maps.DirectionsRenderer({draggable:true});
