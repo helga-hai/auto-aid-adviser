@@ -8,7 +8,7 @@
     >
 
         <template v-slot:default="{ google, map }"> <h3 class="title is-4" >
-        <button @click="$refs.vAutoComplete.geolocate()">force current location</button>
+        <!-- <button @click="$refs.vAutoComplete.geolocate()">force current location</button> -->
     </h3>
             <vue-google-autocomplete 
                 ref="vAutoComplete"

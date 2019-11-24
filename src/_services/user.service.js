@@ -16,7 +16,7 @@ export const userService = {
     login,
     logout,
     getAll,
-    successRegistStat
+    //successRegistStat
 };
 ///   REGISTRATION   /////
 function regist(user) {
@@ -95,7 +95,7 @@ function handleResponse(response) {
                 const error = (data && data.message) || response.statusText;
                 const errorStatus = (data && data.status) || response.status;
                 console.log('error, errorStatus', error, errorStatus);
-                
+
                 return Promise.reject([error, errorStatus]);
                 //}
             }

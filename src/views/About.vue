@@ -210,6 +210,7 @@ export default {
   }
 }
 .guide {
+  //width: calc(100% - 104px);
   width: calc(100% - 104px);
   //min-height: 500px;
   position: relative;

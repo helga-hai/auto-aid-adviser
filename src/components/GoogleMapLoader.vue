@@ -9,7 +9,7 @@
       />
       
     </template>
-    <button @click="calculateAndDisplayRoute( {from:paramOrigin,to:paramDest} )">get directions</button>
+    <button id="dir" @click="calculateAndDisplayRoute( {from:paramOrigin,to:paramDest} )">get directions</button>
   </div>
 </template>
 
@@ -80,6 +80,12 @@ export default {
             var control = document.getElementById('autocompletePannel');
             control.style.display = 'block';
             map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
+            
+            var buttonD = document.getElementById('dir');
+            buttonD.style.display = 'block';
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(buttonD);
+            //map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(button);
             //var onChangeHandler = function() {
             //  this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
               
@@ -197,7 +203,8 @@ export default {
 <style scoped>
 .google-map {
   width: 100%;
-  min-height: calc(100vh - 56px);
+  /* min-height: calc(100vh - 56px); */
+  min-height: calc(100vh - 86px);
   position:relative
 }
 
@@ -235,5 +242,11 @@ export default {
   line-height: 30px;
   padding-left: 10px;
   width: calc(100% - 266px);
+}
+#dir {
+  position: absolute;
+  bottom:0;
+  text-transform: uppercase;
+  background: yellow;
 }
 </style>
