@@ -15,7 +15,8 @@ export const userService = {
     regist,
     login,
     logout,
-    getAll
+    getAll,
+    successRegistStat
 };
 ///   REGISTRATION   /////
 function regist(user) {
@@ -36,10 +37,10 @@ function regist(user) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 // localStorage.setItem('user', JSON.stringify(user));
                 //}
-
             return resolve;
         });
 }
+
 ///   AUTHENTIFICATION   /////
 function login(email, password) {
     const requestOptions = {
@@ -93,7 +94,8 @@ function handleResponse(response) {
                 console.log('data', data)
                 const error = (data && data.message) || response.statusText;
                 const errorStatus = (data && data.status) || response.status;
-                console.log('error, errorStatus', error, errorStatus)
+                console.log('error, errorStatus', error, errorStatus);
+                
                 return Promise.reject([error, errorStatus]);
                 //}
             }
