@@ -16,6 +16,7 @@
           <button class="action__filter">фільтрУватИ</button>
         </div>
         <div class="mark">Найближчі</div>
+        <div id="directionsPanel"></div>
         <div class="point">
           <div class="point__name">Stop&Go-Шиномонтаж</div>
           <div class="point__type">Магазин шин</div>
@@ -32,7 +33,7 @@
           <div class="point__address">ул. Поперечная, 21А</div>
         </div>
       </div>
-      <travel-map class="guide" ref="mapr" :markers="markersOut"/>
+      <travel-map class="guide" ref="mapr" :myPosition="location"/>
       <!-- <button @click="getDirection">get directions</button> -->
     </div>
 
@@ -43,9 +44,9 @@
     <div v-if="gettingLocation">
       <i>Getting your location...</i>
     </div>
-    <div v-if="location">
+    <!-- <div v-if="location">
       Your location data is {{ location.coords.latitude }}, {{ location.coords.longitude}}
-    </div>
+    </div> -->
 
   </div>
 </template>
@@ -209,7 +210,9 @@ export default {
   }
 }
 .guide {
+  //width: calc(100% - 104px);
   width: calc(100% - 104px);
   //min-height: 500px;
+  position: relative;
 }
 </style>

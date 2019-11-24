@@ -5,10 +5,10 @@ import axios from 'axios';
 export const registration = {
     namespaced: true,
     state: {
-        name: null,
+        // name: null,
         email: null,
         password: null,
-        roleUser: null,
+        role: null,
     },
     actions: {
         saveStateData({ commit }, payload) {
@@ -22,8 +22,8 @@ export const registration = {
             userService.regist(user)
                 .then(
                     resp => {
-                        console.log('resp')
-                        console.log(resp)
+                        console.log('resp');
+                        console.log(resp);
                             //commit('auth_success', resp);
                             //router.push('/');
                     },
@@ -33,8 +33,6 @@ export const registration = {
                             // dispatch('alert/error', reject, { root: true }); 
                     }
                 );
-
-
 
             // return new Promise((resolve, reject) => {
             //     //commit('auth_request')

@@ -43,7 +43,7 @@ export default {
       email: "",
       password: "",
       password_confirmation: "",
-      roleUser: "ROLE_USER",
+      role: "ROLE_USER",
     };
   },
 
@@ -52,7 +52,7 @@ export default {
       let data = {
         email: this.email,
         password: this.password,
-        roleUser: this.roleUser,
+        role: this.role,
       };
       this.$store.dispatch("registration/register", data)
         //.then(() => this.$router.push("/"))
@@ -61,7 +61,7 @@ export default {
 
     toggleFunc(val) {
       console.log('emited value', val)
-      return this.roleUser = val;
+      return this.role = val;
     },
 
 

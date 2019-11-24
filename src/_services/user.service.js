@@ -1,13 +1,22 @@
 //import config from 'config';
 import { authHeader } from '../_helpers';
-const config = {
-    apiUrl: 'http://localhost:8080'
+
+if (process.env.NODE_ENV === 'development') {
+    const config = {
+        apiUrl: 'http://localhost:8080'
+    }
+} else if (process.env.NODE_ENV === 'production') {
+    const config = {
+        apiUrl: VUE_APP_BE_URI
+    }
 }
+
 export const userService = {
     regist,
     login,
     logout,
-    getAll
+    getAll,
+    //successRegistStat
 };
 ///   REGISTRATION   /////
 function regist(user) {
@@ -28,10 +37,10 @@ function regist(user) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 // localStorage.setItem('user', JSON.stringify(user));
                 //}
-
             return resolve;
         });
 }
+
 ///   AUTHENTIFICATION   /////
 function login(email, password) {
     const requestOptions = {
@@ -70,6 +79,7 @@ function getAll() {
 }
 
 function handleResponse(response) {
+    //console.dir(JSON.parse(response))
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
@@ -84,7 +94,8 @@ function handleResponse(response) {
                 console.log('data', data)
                 const error = (data && data.message) || response.statusText;
                 const errorStatus = (data && data.status) || response.status;
-                console.log('error, errorStatus', error, errorStatus)
+                console.log('error, errorStatus', error, errorStatus);
+
                 return Promise.reject([error, errorStatus]);
                 //}
             }
