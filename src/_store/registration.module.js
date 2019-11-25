@@ -9,6 +9,7 @@ export const registration = {
         email: null,
         password: null,
         role: null,
+        status: null,
     },
     actions: {
         saveStateData({ commit }, payload) {
@@ -67,10 +68,11 @@ export const registration = {
         },
         auth_success(state,// token, 
             user) {
-            console.log('success')
+            console.log('success');
             state.status = 'success';
+            console.log('status : ' + state.status);
             // state.token = token
-            state.user = user
+            state.user = user;
         },
         auth_error(state) {
             state.status = 'error';

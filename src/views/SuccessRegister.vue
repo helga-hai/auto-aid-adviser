@@ -1,7 +1,7 @@
 <template>
   <div>
       <h1>
-          Register success. Check your e-mail!
+          Check your e-mail!
       </h1>
   </div>
 </template>

@@ -40,7 +40,7 @@ function regist(user) {
 
 function successRegist(){
     console.log("success:-)");
-    router.push('successRegister');
+    router.push('/successRegister');
 }
 
 ///   AUTHENTIFICATION   /////

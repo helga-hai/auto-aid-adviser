@@ -12,6 +12,8 @@ import SuccessRegister from '../views/SuccessRegister';
 import MapPage from '../views/Map';
 import AboutPage from '../views/About';
 
+import { registration } from '../_store/registration.module';
+
 Vue.use(Router);
 
 export const router = new Router({
@@ -33,13 +35,22 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about','/successRegister'];
+    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
-    if (authRequired && !loggedIn) {
+
+    if(registration.state.status==="success"){
+        console.log("hi :" + registration.state.status);
+        console.log(router);
+        return next();
+    }
+
+    else if (authRequired && !loggedIn) {
         return next('/login');
     }
+
+    else
 
     next();
 });
