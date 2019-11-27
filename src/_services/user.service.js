@@ -27,8 +27,8 @@ function regist(user) {
     return fetch(`${config.apiUrl}/api/user/register`, requestOptions)
         .then(handleResponse)
         .then(resolve => {
-            console.log('requestOptions')
-            console.log(requestOptions) //email password role
+            console.log('requestOptions');
+            console.log(requestOptions); //email password role
                 // login successful if there's a jwt token in the response
                 //if (user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
