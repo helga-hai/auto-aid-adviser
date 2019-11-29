@@ -33,8 +33,8 @@ methods:{
   requestKey(){
      fetch(this.targetURL(),{
         method: 'POST',
-        headers: { 'Content-Type': 'application/json',
-                  'Authorization': 'Bearer'},
+        headers: { 'Content-Type': 'application/json'}
+                  // 'Authorization': 'Bearer'},
         // body: JSON.stringify()
     }).then(function(response) {
       console.log(response.headers.Authorization);
