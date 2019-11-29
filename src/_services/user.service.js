@@ -8,11 +8,13 @@ const config = {
     apiUrl: 'http://localhost:8080'
 };
 export const userService = {
+    config,
     regist,
     login,
     logout,
     getAll,
     successRegist,
+    activate,
 };
 ///   REGISTRATION   /////
 
@@ -22,8 +24,8 @@ function regist(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    console.log('regist')
-    console.log(user)
+    console.log('regist');
+    console.log(user);
     return fetch(`${config.apiUrl}/api/user/register`, requestOptions)
         .then(handleResponse)
         .then(resolve => {
@@ -41,6 +43,30 @@ function regist(user) {
 function successRegist(){
     console.log("success:-)");
     router.push('/successRegister');
+}
+
+///   ACTIVATION   /////
+
+function activate(k){
+    const requestOptions = {
+        method: 'POST',
+        headers:
+        {
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer'
+        },
+        body: ''
+    };
+    return fetch(`${config.apiUrl}/api/user/activate/${k}`, requestOptions)
+        .then(handleResponse => {
+            console.log(response)
+            return handleResponse;
+            })
+        .then(resolve => {
+            console.log('requestOptions');
+            console.log(requestOptions);
+            return resolve;
+        });
 }
 
 ///   AUTHENTIFICATION   /////
@@ -105,7 +131,7 @@ function handleResponse(response) {
             // const error = (data && data.message) || response.statusText;
             // return Promise.reject(error);
         }
-
+        console.log(data);
         return data;
     });
 }
