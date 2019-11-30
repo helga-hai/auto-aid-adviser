@@ -17,11 +17,13 @@
                         <div class="servise">
                             <!-- <label for="content">ServiseType</label> -->
                             <input type="text" id="content" class="form-control" placeholder="ServiseType..." @focus="connect" @blur="disconnect" @input="fillMessageAndSend1" autocomplete="off"><!--v-model="send_message.content"-->
-                            <div class="servise__autocomplete" v-for="(item,index) in received_messages" :key="index"> 
-                              <div class="servise__autocomplete_item" v-for="(el, index) in item" :key="index"> {{ el }} </div>
+                            <div class="servise__autocomplete"> <!-- v-for="(item,index) in received_messages" :key="index"-->
+                              <div class="servise__block">
+                                <div class="servise__autocomplete_item" v-for="(el, index) in received_messages[received_messages.length-1]" :key="index"> {{ el }} </div>
+                              </div>
                             </div>
                         </div>
-                        <button id="send" class="btn btn-default" type="submit" @click.prevent="send1">Send</button>
+                        <!-- <button id="send" class="btn btn-default" type="submit" @click.prevent="send1">Send</button> -->
                     </form>
                     <form class="form-inline">
                         <div class="bussines">
@@ -80,8 +82,6 @@ export default {
       this.send_message1.searchType = 'BusinessType';
       this.send_message1.content = e.target.value;
       console.log(this.send_message1)
-      // this.send_message.inputDTO.searchType = 'BusinessType';
-      // this.send_message.inputDTO.content = e.target.value;
       console.dir(e)
       // SEND //
       console.log("Send message.content1:" + this.send_message1.content);
@@ -131,6 +131,7 @@ export default {
           console.log('frame',frame);
           this.stompClient.subscribe("/list/result", tick => {
             console.log('tick',tick);
+            //this.received_messages.push(JSON.parse(tick.body).result);
             this.received_messages.push(JSON.parse(tick.body).result);
           });
         },
