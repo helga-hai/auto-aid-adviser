@@ -14,18 +14,22 @@
                 </div>
                 <div class="col-md-6">
                     <form class="form-inline">
-                        <div class="form-group">
-                            <label for="content">ServiseType</label>
-                            <input type="text" id="content" class="form-control"  placeholder="Your name here..." @focus="isFocus" @input="fillMessage1"><!--v-model="send_message.content"-->
+                        <div class="servise">
+                            <!-- <label for="content">ServiseType</label> -->
+                            <input type="text" id="content" class="form-control" placeholder="ServiseType..." @focus="connect" @blur="disconnect" @input="fillMessageAndSend1" autocomplete="off"><!--v-model="send_message.content"-->
+                            <div class="servise__autocomplete" v-for="(item,index) in received_messages" :key="index"> 
+                              <div class="servise__autocomplete_item" v-for="(el, index) in item" :key="index"> {{ el }} </div>
+                            </div>
                         </div>
-                        <button id="send" class="btn btn-default" type="submit" @click.prevent="send">Send</button>
+                        <button id="send" class="btn btn-default" type="submit" @click.prevent="send1">Send</button>
                     </form>
                     <form class="form-inline">
-                        <div class="form-group">
-                            <label for="content">BusinessType</label>
-                            <input type="text" id="content" class="form-control"  placeholder="Your name here..." @focus="isFocus" @input="fillMessage2"><!--v-model="send_message.content"-->
+                        <div class="bussines">
+                            <!-- <label for="content">BusinessType</label> -->
+                            <input type="text" id="content" class="form-control" placeholder="BusinessType..." @focus="connect" @blur="disconnect" @input="fillMessage2"><!--v-model="send_message.content"-->
+                            <div class="bussines__autocomplete"></div>
                         </div>
-                        <button id="send" class="btn btn-default" type="submit" @click.prevent="send">Send</button>
+                        <button id="send" class="btn btn-default" type="submit" @click.prevent="send2">Send</button>
                     </form>
                 </div>
             </div>
@@ -38,7 +42,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in received_messages" :key="item">
+                            <tr v-for="(item, index) in received_messages" :key="index">
                                 <td>{{ item }}</td>
                             </tr>
                         </tbody>
@@ -52,7 +56,8 @@
 <script>
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
-
+import { userService } from '../_services';
+//console.dir(userService.config.apiUrl)
 export default {
   name: "websocket",
   data() {
@@ -70,7 +75,7 @@ export default {
     }
   },
   methods: {
-    fillMessage1(e) {
+    fillMessageAndSend1(e) {
       console.log(this.send_message1)
       this.send_message1.searchType = 'BusinessType';
       this.send_message1.content = e.target.value;
@@ -78,6 +83,14 @@ export default {
       // this.send_message.inputDTO.searchType = 'BusinessType';
       // this.send_message.inputDTO.content = e.target.value;
       console.dir(e)
+      // SEND //
+      console.log("Send message.content1:" + this.send_message1.content);
+      if (this.stompClient && this.stompClient.connected) {
+        //const msg = { content: this.send_message };
+        const msg = this.send_message1 ;
+        //this.stompClient.send("/app/socket/message", JSON.stringify(msg), {});// /app/hello
+        this.stompClient.send("/app/socket/message", JSON.stringify(msg), {});// /app/hello
+      }
     },
     fillMessage2(e) {
       // this.send_message2.inputDTO.searchType = 'ServiceType';
@@ -89,16 +102,27 @@ export default {
     isFocus(){
       console.log('focus true')
     },
-    send() {
-      console.log("Send message.conten:" + this.send_message1.content);
+    send1() {
+      console.log("Send message.content1:" + this.send_message1.content);
       if (this.stompClient && this.stompClient.connected) {
         //const msg = { content: this.send_message };
         const msg = this.send_message1 ;
+        //this.stompClient.send("/app/socket/message", JSON.stringify(msg), {});// /app/hello
+        this.stompClient.send("/app/socket/message", JSON.stringify(msg), {});// /app/hello
+      }
+    },
+    send2() {
+      console.log("Send message.content2:" + this.send_message2.content);
+      if (this.stompClient && this.stompClient.connected) {
+        //const msg = { content: this.send_message };
+        const msg = this.send_message1 ;
+        //this.stompClient.send("/app/socket/message", JSON.stringify(msg), {});// /app/hello
         this.stompClient.send("/app/socket/message", JSON.stringify(msg), {});// /app/hello
       }
     },
     connect() {
-      this.socket = new SockJS("http://localhost:8080/api/socket");
+      //this.socket = new SockJS("http://localhost:8080/api/socket");
+      this.socket = new SockJS(userService.config.apiUrl+"/api/socket");
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect(
         {},
@@ -107,7 +131,7 @@ export default {
           console.log('frame',frame);
           this.stompClient.subscribe("/list/result", tick => {
             console.log('tick',tick);
-            this.received_messages.push(JSON.parse(tick.body).content);
+            this.received_messages.push(JSON.parse(tick.body).result);
           });
         },
         error => {
@@ -127,12 +151,13 @@ export default {
     }
   },
   mounted() {
+    console.dir(userService)
     // this.connect();
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 button, input {
   padding: 5px 20px;
   background: #cccccc;
@@ -141,5 +166,28 @@ button, input {
 input {
   background:#fff;
   border: 1px solid #666;
+}
+.servise {
+  width: 300px;
+  margin: 0 auto;
+  input {
+    width: 100%;
+  }
+  &__autocomplete {
+    margin: 0 5px 3px;
+    width: 100%;
+    text-align: left;
+    position: absolute;
+    background: white;
+    box-shadow: 1px 1px 3px #ccc;
+    position: relative;
+    &_item {
+      padding: 5px 5px;
+      width: 100%;
+      &:hover {
+        background:#ccc;
+      }
+    }
+  }
 }
 </style>

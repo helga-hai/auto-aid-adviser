@@ -1,24 +1,30 @@
 //import config from 'config';
 import { authHeader } from '../_helpers';
 
-if (process.env.NODE_ENV === 'development') {
-    const config = {
-        apiUrl: 'http://localhost:8080'
-    }
-} else if (process.env.NODE_ENV === 'production') {
-    const config = {
-        apiUrl: 'http://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
+function getConfig() {
+    if (process.env.NODE_ENV === 'development') {
+        return {
+            apiUrl: 'http://localhost:8080'
+        }
+    } else if (process.env.NODE_ENV === 'production') {
+        return {
+            apiUrl: 'http://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
+        }
     }
 }
-
+const config = getConfig()
 export const userService = {
     regist,
     login,
     logout,
     getAll,
+    config
     //successRegistStat
 };
-///   REGISTRATION   /////
+
+//config()
+console.log(config.apiUrl)
+    ///   REGISTRATION   /////
 function regist(user) {
     const requestOptions = {
         method: 'POST',
