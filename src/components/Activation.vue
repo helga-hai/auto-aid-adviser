@@ -37,11 +37,16 @@ methods:{
                   // 'Authorization': 'Bearer'},
         // body: JSON.stringify()
     }).then(function(response) {
-      console.log(response.headers.Authorization);
+      // console.log(response.headers.Authorization);
       response.text().then(function(text) {
       console.log(text);
-      return text;
-  });
+      return text;})
+      .then(function(text){
+        let respToken = JSON.parse(text);
+        console.log(typeof text)
+        console.log(respToken.token)
+        return respToken})
+      .then(function(respToken){localStorage.setItem('token',respToken.token)});
   });
   }
 }
