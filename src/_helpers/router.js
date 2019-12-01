@@ -11,6 +11,9 @@ import AuthorizationPage from '../views/AuthorizationPage';
 import MapPage from '../views/Map';
 import AboutPage from '../views/About';
 
+import CreateBusiness from '../views/CreateBusiness';
+import Map3 from '../views/Map3';
+
 Vue.use(Router);
 
 export const router = new Router({
@@ -24,6 +27,9 @@ export const router = new Router({
         { path: '/about', component: AboutPage },
         { path: '/cabinet', component: CabinetPage },
 
+        { path: '/create', component: CreateBusiness },
+        { path: '/map3', component: Map3 },
+
         // otherwise redirect to home
         { path: '*', redirect: '/' }
     ]
@@ -31,7 +37,7 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about'];
+    const publicPages = ['/authorization', '/login', '/create', '/map3', '/register', '/', '/map', '/about'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
