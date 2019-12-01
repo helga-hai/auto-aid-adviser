@@ -1,5 +1,5 @@
 <template>
-    <div class="header" :class="{'header__privat':privat, 'header__grey':grey}">
+    <div class="header" :class="{'header__privat':privat, 'header__grey':grey}" >
         <div class="header__logo">
             <img src="../assets/aaa_logo.svg"/> 
         </div>   
@@ -7,7 +7,8 @@
             <router-link to="/">Пошук</router-link>
             <router-link to="/about">Про нас</router-link>
             <span class="header__lang">Укр </span> 
-            <router-link to="/authorization">Вхід / Реєстрація</router-link>
+            <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
+            <a href="#" @click="loginShowFunc">Вхід / Реєстрація</a>
             <router-link to="#">Особистий кабінет</router-link>
         </div>
     </div>
@@ -15,9 +16,14 @@
 
 <script>
 export default {
-    props:['privat','grey'],
+    props:['privat','grey','loginShow'],
     data() {
         return {
+        }
+    },
+    methods: {
+        loginShowFunc() {
+            this.$emit('loginShowFunc')
         }
     }
 }
