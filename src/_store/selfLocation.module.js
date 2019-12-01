@@ -1,7 +1,9 @@
 export const selfLocation = {
     namespaced: true,
     state: {
-        location: null,
+        location: {
+            id: '0'
+        },
         gettingLocation: false,
         errorStr: null
     },
@@ -23,8 +25,10 @@ export const selfLocation = {
             // get position
             navigator.geolocation.getCurrentPosition(pos => {
                 state.gettingLocation = false;
-                state.location = pos;
-                console.log(typeof state.location.coords.latitude)
+                state.location.position = {};
+                state.location.position.lat = pos.coords.latitude;
+                state.location.position.lng = pos.coords.longitude;
+                console.log(state.location)
             }, err => {
                 state.gettingLocation = false;
                 state.errorStr = err.message;

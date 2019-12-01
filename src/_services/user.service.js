@@ -1,12 +1,22 @@
 //import config from 'config';
 import { authHeader, router } from '../_helpers';
 
+// const config = {
+//     apiUrl: 'http://localhost:8080'
+// };
 
-
-
-const config = {
-    apiUrl: 'http://localhost:8080'
-};
+function getConfig() {
+    if (process.env.NODE_ENV === 'development') {
+        return {
+            apiUrl: 'http://localhost:8080'
+        }
+    } else if (process.env.NODE_ENV === 'production') {
+        return {
+            apiUrl: 'http://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
+        }
+    }
+}
+const config = getConfig()
 export const userService = {
     config,
     regist,
@@ -16,8 +26,10 @@ export const userService = {
     successRegist,
     activate,
 };
-///   REGISTRATION   /////
 
+//config()
+console.log(config.apiUrl)
+    ///   REGISTRATION   /////
 function regist(user) {
     const requestOptions = {
         method: 'POST',
@@ -31,27 +43,26 @@ function regist(user) {
         .then(resolve => {
             console.log('requestOptions');
             console.log(requestOptions); //email password role
-                // login successful if there's a jwt token in the response
-                //if (user.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                // localStorage.setItem('user', JSON.stringify(user));
-                //}
+            // login successful if there's a jwt token in the response
+            //if (user.token) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            // localStorage.setItem('user', JSON.stringify(user));
+            //}
             return resolve;
         });
 }
 
-function successRegist(){
+function successRegist() {
     console.log("success:-)");
     router.push('/successRegister');
 }
 
 ///   ACTIVATION   /////
 
-function activate(k){
+function activate(k) {
     const requestOptions = {
         method: 'POST',
-        headers:
-        {
+        headers: {
             'Content-type': 'application/json',
             'Authorization': 'Bearer'
         },
@@ -61,7 +72,7 @@ function activate(k){
         .then(handleResponse => {
             console.log(response)
             return handleResponse;
-            })
+        })
         .then(resolve => {
             console.log('requestOptions');
             console.log(requestOptions);
@@ -123,7 +134,7 @@ function handleResponse(response) {
                 const error = (data && data.message) || response.statusText;
                 const errorStatus = (data && data.status) || response.status;
                 console.log('error, errorStatus', error, errorStatus);
-                
+
                 return Promise.reject([error, errorStatus]);
                 //}
             }
