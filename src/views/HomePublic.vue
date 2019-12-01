@@ -1,13 +1,15 @@
 <template>
   <div class = 'wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
-    <nav-component />
+    <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
+    <!-- <websocket/> -->
     <div class="res" >
     <div class="one">
-      <label for="">Оберіть тип объекту</label  @click="loginShow = !loginShow">
-      <button type="button" name="button"  @click="loginShow = !loginShow">
+      <label for="">Оберіть тип объекту</label>
+      <!-- <button type="button" name="button" >
         <div class="selected-option">Аргонна сварка</div>
         <div class="arrow-down"></div>
-      </button>
+      </button> -->
+      <websocket />
       <ul class="submenu">
         <li class="submenu-item"><a href="#">Аргонна сварка</a></li>
         <li class="submenu-item"><a href="#">item2_2</a></li>
@@ -31,10 +33,10 @@
       <a href="#" class="button orange">Знайти</a>
     </div>
     </div>
-    <div class="modal-login-registration active-modal">
-      <div class="close-x">
+    <div class="modal-login-registration " :class="{'active-modal': loginShow}">
+      <button class="close-x" @click="loginHideFunc">
         <span class="close">x</span>
-      </div>
+      </button>
 
       <div class="entrance">
         <div class="mode active">
@@ -84,14 +86,25 @@
 
 <script>
 import NavComponent from '../components/NavComponent';
+import websocket from '../components/websocket';
 export default {
     name: 'HomePublic',
     components: {
-        NavComponent
+        NavComponent,
+        websocket
     },
     data () {
       return {
         loginShow: false,
+        registerShow: false
+      }
+    },
+    methods: {
+      loginShowFunc() {
+        this.loginShow = true
+      },
+      loginHideFunc() {
+        this.loginShow = false
       }
     }
 }
@@ -102,9 +115,11 @@ export default {
 button{
   border: 1px solid #000;
   border-radius: 4px;
+
 }
 .wrap {
-height: 100vh;
+  height: 100vh;
+  background-size: cover;
 }
 .res {
   /*background: url(require('@/assets/backgroundimage.jpg'));*/
@@ -293,16 +308,16 @@ div,input {
   padding: 32px 50px;
   width: 400px;
   position: absolute;
-  left: auto;
-  right: 0px;
+  /* left: auto; */
+  right: -400px;
   top: 0;
   bottom: 0px;
   background-color: #FFFFFF;
-  transition: right 2s;
+  transition: right 1s;
 
 }
 .modal-login-registration.active-modal {
-  right: 400px;
+  right: 0;
 }
 .close-x {
   display: flex;
