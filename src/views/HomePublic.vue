@@ -1,7 +1,6 @@
 <template>
   <div class = 'wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
     <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
-    <!-- <websocket/> -->
     <div class="res" >
     <div class="one">
       <label for="">Оберіть тип объекту</label>
