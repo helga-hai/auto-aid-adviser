@@ -30,7 +30,7 @@
 
 <script>
 import Header from "@/components/Header";
-import Header from "@/components/sideBar";
+import sideBar from "@/components/sideBar";
 export default {
     name: 'CreatePage',
     components: {
