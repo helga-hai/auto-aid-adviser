@@ -10,7 +10,7 @@
     </section>
 </template>
 
-<style scoped>
+<style>
 /*  sideBar.css  */
 main {
     display: flex;
@@ -28,6 +28,7 @@ main {
     width: 216px;
     padding-top: 56px;
     background-color: #F6F7F8;
+    text-align: left;
 }
 .sideBar p {
     color: #0E1E2E;
@@ -35,7 +36,8 @@ main {
     font-size: 18px;
     line-height: 24px;
     margin: 0;
-    padding: 0px 28px;
+    padding-left: 48px;
+    padding-right: 10px;
 }
 .sideBar ul {
     padding: 36px 0px 0px 16px;
@@ -51,6 +53,7 @@ main {
 .sideBar__button {
     display: inline-block;
     font-size: 16px;
+    line-height: 22px;
     padding-bottom: 26px;
 }
 .sideBar__button:hover {

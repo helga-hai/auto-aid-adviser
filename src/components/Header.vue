@@ -1,6 +1,6 @@
 <template>
   <header>
-        <a href="#">
+        <a href="#" class ="logo">
             <img :src="require('../assets/aaa_logo.svg')">
         </a>
         <nav>
@@ -27,7 +27,7 @@
     </header>
 </template>
 
-<style scoped>
+<style>
 /*  TOP MENU  */
 * {
     box-sizing: border-box;
@@ -42,10 +42,12 @@ a {
     cursor: pointer; 
     color: #4B5E7A; }
 html,
-body {
+body, 
+#app {
   width: 100%;
   margin: 0;}
-body {
+body,
+#app {
     font-family: 'Roboto', sans-serif; 
     background-color:  rgb(255, 255, 255);
     color: #4B5E7A;}
@@ -63,6 +65,10 @@ header {
     background-color:  rgb(255, 255, 255);
     z-index: 3;
 }
+.logo {
+    width: 113.23px;
+    height: 32px;
+}
 .topMenu {
     display: flex;
     flex-direction: row;
@@ -70,6 +76,9 @@ header {
     align-items: center;  
     font-size: 16px;
     line-height: 19px;
+}
+.topMenu a, .topMenu .topMenu__selected {
+    color: #6F7E95;
 }
 .topMenu li {
     margin-left: 40px;
