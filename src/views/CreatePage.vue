@@ -6,6 +6,7 @@
         <section class="registrStep1">
             <div class="registrStep1__formWrapp">
                 <h1>Реєстрація об’єкту</h1>
+                <p> test<p>
                 <form>
                     <div class="registrStep1__address">
                         <label for="name">Вкажіть місцезнаходження об’єкту на карті або введіть адресу</label>
@@ -28,8 +29,8 @@
 </template>
 
 <script>
-import Header from "@/constants/Header";
-import Header from "@/constants/sideBar";
+import Header from "@/components/Header";
+import Header from "@/components/sideBar";
 export default {
     name: 'CreatePage',
     components: {
