@@ -75,7 +75,7 @@
           <a href="#">Забули пароль?</a>
       </div>
       <div class="media-login"> -->
-        <p>Увійти за допомогою соцмереж</p>
+        <!-- <p>Увійти за допомогою соцмереж</p>
         <ul class="social-providers">
           <li>
             f
@@ -83,7 +83,7 @@
           <li>
             G
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>

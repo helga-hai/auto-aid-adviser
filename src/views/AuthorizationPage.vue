@@ -13,11 +13,22 @@
           <!-- <router-link to="/login">Login</router-link> |
           <router-link to="/register">Register</router-link> -->
           <!-- <p><navigation-link url="login">Вхід</navigation-link><span>|</span><span>Реєстрація</span></p> -->
-          <p><span>Вхід</span><span>|</span><span>Реєстрація</span></p>
-          <register-page/>
-          <login-page/>
+          <p><span id="login" @click="toggler=true">Вхід</span><span>|</span><span id="registrtion" @click="toggler=false">Реєстрація</span></p>
+          <div id='logRegContainer'>
+            <login-page v-if="toggler"/>
+            <register-page v-else/>
+          </div>
       </div>
-      <!-- <slot></slot> -->
+              <p>Увійти за допомогою соцмереж</p>
+        <ul class="social-providers">
+          <li>
+            f
+          </li>
+          <li>
+            G
+          </li>
+        </ul>
+      
   </div>
 </template>
 
@@ -25,20 +36,28 @@
 
 import LoginPage from '@/views/LoginPage.vue'
 import RegisterPage from '@/views/RegisterPage.vue'
-// import NavigationLink from '../components/NavigationLink'
+
 
 export default {
   name: 'Authorization',
   components: {
     LoginPage,
     RegisterPage,
-    // NavigationLink,
+  },
+  data(){
+    return{
+      toggler: false,
+    }
   }
+
 }
 </script>
 
 <style>
   .auth{
     background-color: red;
+  }
+  span#login, span#registrtion{
+    cursor: pointer;
   }
 </style>

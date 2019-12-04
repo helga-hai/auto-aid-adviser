@@ -61,4 +61,4 @@ export const authentication = {
             state.user = null;
         }
     }
-}
+};

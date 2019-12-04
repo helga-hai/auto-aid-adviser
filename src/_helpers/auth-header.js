@@ -15,9 +15,9 @@ export function authHeader() {
 
     if (token) {
         console.log('Authorization: Bearer user.token', token);
-        return {
-            'Content-Type': 'application/json' ,
-            'Authorization': 'Bearer ' + token[2] };
+    //     return {
+    //         'Content-Type': 'application/json' ,
+    //         'Authorization': 'Bearer ' + token };
     } else {
         return {};
     }
