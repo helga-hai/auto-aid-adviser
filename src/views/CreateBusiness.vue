@@ -36,8 +36,9 @@ export default {
         }
     },
     methods: {
-
-        
+        get(){
+            
+        }
         
     },
 
