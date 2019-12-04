@@ -1,5 +1,6 @@
 <template>
-  <header>
+    <div>
+    <header>
         <a href="#" class ="logo">
             <img :src="require('../assets/aaa_logo.svg')">
         </a>
@@ -25,6 +26,24 @@
             </ul>
         </nav>
     </header>
+    <main>
+        <section class="sideBar">
+            <p>Особистий кабінет</p>
+            <ul>
+                <li class="sideBar__list "><a href="#" class="sideBar__button">Особисті данні</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button">Мої об‘єкти</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button">Заявки клієнтів</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button">Налаштування</a></li>
+            </ul>
+        </section>
+        <section class="objectsWrapp">
+            <slot></slot>
+        </section>
+    </main>
+    <footer>
+        <p class="footerTitle">2019 Hillel EVO project. Auto Aid Adviser</p>
+    </footer>
+    </div>
 </template>
 
 <style>
@@ -105,5 +124,74 @@ header {
     justify-content: flex-start;
     align-items: flex-start;  
 }
-
+/*  sideBar.css  */
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100%;
+    z-index: 2;
+}
+.sideBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 216px;
+    padding-top: 56px;
+    background-color: #F6F7F8;
+    text-align: left;
+}
+.sideBar p {
+    color: #0E1E2E;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    margin: 0;
+    padding-left: 48px;
+    padding-right: 10px;
+}
+.sideBar ul {
+    padding: 36px 0px 0px 16px;
+}
+.sideBar__list ::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 8px;
+    background-color: #E4E7EB;
+    margin-right: 16px ;
+}
+.sideBar__button {
+    display: inline-block;
+    font-size: 16px;
+    line-height: 22px;
+    padding-bottom: 26px;
+}
+.sideBar__button:hover {
+    color: black;
+}
+/*content*/
+.objectsWrapp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: calc(100% - 216px);
+    min-height: calc(100vh - 80px - 79.6px);
+    text-align: left;
+}
+/*  footer  */
+footer {
+    width: 100%;
+    padding: 29px 50px;
+    text-align: right;
+    background-color: #0E1E2E;
+}
+.footerTitle {
+    font-size: 16px;
+    line-height: 22px;
+    color: #FFFFFF;
+}
 </style>
