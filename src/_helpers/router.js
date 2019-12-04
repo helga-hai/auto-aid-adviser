@@ -12,6 +12,7 @@ import MapPage from '../views/Map';
 import AboutPage from '../views/About';
 import CreatePage from '../views/CreatePage';
 import CreatePage2 from '../views/CreatePage2';
+import CreatePage3 from '../views/CreatePage3';
 
 Vue.use(Router);
 
@@ -27,6 +28,8 @@ export const router = new Router({
         { path: '/cabinet', component: CabinetPage },
         { path: '/create', component: CreatePage },
         { path: '/create2', component: CreatePage2 },
+        { path: '/create3', component: CreatePage3 },
+
 
         // otherwise redirect to home
         { path: '*', redirect: '/' }
