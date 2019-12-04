@@ -26,6 +26,7 @@
           <button type="submit">Register</button>
       </div>
     </form>
+    <slot></slot>
   </div>
 </template>
 
