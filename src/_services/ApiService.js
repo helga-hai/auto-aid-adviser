@@ -10,12 +10,6 @@ const apiConfig = IS_DEVELOPMENT ? {
     port: ''
 }
 
-// const apiConfig = {
-//     protocol: 'http',
-//     host: 'ec2-34-247-199-110.eu-west-1.compute.amazonaws.com',
-//     port: ''
-// }
-
 const getPath = () => IS_DEVELOPMENT ? `${apiConfig.protocol}://${apiConfig.host}:${apiConfig.port}` : '';
 
 export default class {
@@ -30,12 +24,31 @@ export default class {
         //options.mode = 'no-cors';
 
         let token = window.localStorage.getItem('jwt');
-        console.log('options.headers.authorization', options.headers)
-        if (!options.headers.authorization) {
-            //options.headers.authorization = token ? `Play ${token}`: '';
+        console.log('options.headers.authorization', options.headers.authorization)
+        if (options.headers.authorization === undefined) {
+            options.headers.authorization = token ? `Play ${token}` : '';
         }
 
-        return fetch(`${getPath() + url}`, options).then(resp => resp.json()).catch(console.warn);
+        return new Promise((resolve, reject) => {
+            fetch(`${getPath() + url}`, options)
+                .then(response => {
+                    console.log('response', response)
+                    if (response.status < 400) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                })
+                .then(data => {
+                    console.log('data', data)
+                    resolve(data);
+                })
+                .catch(response => {
+                    console.log('response', response)
+                    console.log('response.json()', response.json())
+                    reject(response.statusText)
+                })
+        })
     }
 
     static loadConfigs() {
