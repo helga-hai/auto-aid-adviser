@@ -15,6 +15,7 @@ import MapPage from '../views/Map';
 import AboutPage from '../views/About';
 import CreatePage from '../views/CreatePage';
 import CreatePage2 from '../views/CreatePage2';
+import CreatePage3 from '../views/CreatePage3';
 
 
 
@@ -42,10 +43,12 @@ export const router = new Router({
         { path: '/user/activation/*', redirect: '/user/activation' },
         { path: '/create', component: CreatePage },
         { path: '/create2', component: CreatePage2 },
+        { path: '/create3', component: CreatePage3 },
+
 
         //test path
-        { path: '/business', component: BusinessCabPage},
-        { path: '/user', component: UserCabPage},
+        { path: '/business', component: BusinessCabPage },
+        { path: '/user', component: UserCabPage },
         /////////////////////////////////////////////
 
 
@@ -57,9 +60,7 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about', '/create', '/create2', '/user/activation',
-    // '/business', '/user'
-    ];
+    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/user/activation'];
     const authRequired = !publicPages.includes(to.path);
 
     // const loggedIn = localStorage.getItem('user');
