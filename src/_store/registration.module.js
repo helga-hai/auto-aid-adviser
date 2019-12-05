@@ -1,6 +1,11 @@
 import { userService } from '../_services';
+
+
+
 import { router } from '../_helpers';
 import axios from 'axios';
+
+
 
 export const registration = {
     namespaced: true,
@@ -9,6 +14,7 @@ export const registration = {
         email: null,
         password: null,
         role: null,
+        status: null,
     },
     actions: {
         saveStateData({ commit }, payload) {
@@ -18,22 +24,20 @@ export const registration = {
 
         register({ commit }, user) {
 
-            console.log('user', user)
+            console.log('user', user);
             userService.regist(user)
                 .then(
                     resp => {
                         console.log('resp');
                         console.log(resp);
-                            //commit('auth_success', resp);
-                            //router.push('/');
+                            commit('auth_success', resp);
+                            userService.successRegist();
                     },
                     reject => {
-                        console.log('register reject', reject)
+                        console.log('register reject', reject);
                             //commit('loginFailure', error);
                             // dispatch('alert/error', reject, { root: true }); 
-                    }
-                );
-
+                    });
             // return new Promise((resolve, reject) => {
             //     //commit('auth_request')
             //     fetch({ url: 'http://localhost:8080/api/user/register', data: user, method: 'POST' })
@@ -53,7 +57,8 @@ export const registration = {
             //             reject(err);
             //         });
             // });
-        },
+            },
+        
     },
     mutations: {
 
@@ -66,11 +71,13 @@ export const registration = {
             console.log('loading')
             state.status = 'loading';
         },
-        auth_success(state, token, user) {
-            console.log('success')
+        auth_success(state,// token, 
+            user) {
+            console.log('success');
             state.status = 'success';
-            state.token = token
-            state.user = user
+            console.log('status : ' + state.status);
+            // state.token = token
+            state.user = user;
         },
         auth_error(state) {
             state.status = 'error';
