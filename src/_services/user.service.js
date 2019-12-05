@@ -1,5 +1,9 @@
 //import config from 'config';
-import { authHeader } from '../_helpers';
+import { authHeader, router } from '../_helpers';
+
+// const config = {
+//     apiUrl: 'http://localhost:8080'
+// };
 
 function getConfig() {
     if (process.env.NODE_ENV === 'development') {
@@ -14,12 +18,13 @@ function getConfig() {
 }
 const config = getConfig()
 export const userService = {
+    config,
     regist,
     login,
     logout,
     getAll,
-    config
-    //successRegistStat
+    successRegist,
+    activate,
 };
 
 //config()
@@ -31,18 +36,46 @@ function regist(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    console.log('regist')
-    console.log(user)
+    console.log('regist');
+    console.log(user);
     return fetch(`${config.apiUrl}/api/user/register`, requestOptions)
         .then(handleResponse)
         .then(resolve => {
-            console.log('requestOptions')
-            console.log(requestOptions) //email password role
-                // login successful if there's a jwt token in the response
-                //if (user.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                // localStorage.setItem('user', JSON.stringify(user));
-                //}
+            console.log('requestOptions');
+            console.log(requestOptions); //email password role
+            // login successful if there's a jwt token in the response
+            //if (user.token) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            // localStorage.setItem('user', JSON.stringify(user));
+            //}
+            return resolve;
+        });
+}
+
+function successRegist() {
+    console.log("success:-)");
+    router.push('/successRegister');
+}
+
+///   ACTIVATION   /////
+
+function activate(k) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer'
+        },
+        body: ''
+    };
+    return fetch(`${config.apiUrl}/api/user/activate/${k}`, requestOptions)
+        .then(handleResponse => {
+            console.log(response)
+            return handleResponse;
+        })
+        .then(resolve => {
+            console.log('requestOptions');
+            console.log(requestOptions);
             return resolve;
         });
 }
@@ -109,7 +142,7 @@ function handleResponse(response) {
             // const error = (data && data.message) || response.statusText;
             // return Promise.reject(error);
         }
-
+        console.log(data);
         return data;
     });
 }

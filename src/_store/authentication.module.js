@@ -2,7 +2,7 @@ import { userService } from '../_services';
 import { router } from '../_helpers';
 
 const user = JSON.parse(localStorage.getItem('user'));
-console.log('user', user)
+// console.log('user', user)
 const initialState = user ? { status: { loggedIn: true }, user } : { status: {}, user: null };
 
 export const authentication = {
