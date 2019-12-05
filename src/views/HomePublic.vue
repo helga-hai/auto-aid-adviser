@@ -40,7 +40,10 @@
         <span class="close">x</span>
       </button>
 
-      <div class="entrance">
+      <!-- <div class="entrance"> -->
+
+
+      <div>
         <Authorization></Authorization>
         
         <!-- <div class="mode active">
@@ -54,6 +57,8 @@
         </div>
 
       </div>
+
+      
       <form class="login-form active-form" method="post">
         <div class="form-input">
           <input type="email" placeholder="E-mail">
@@ -74,8 +79,11 @@
       <div class="lost-password">
           <a href="#">Забули пароль?</a>
       </div>
-      <div class="media-login"> -->
-        <!-- <p>Увійти за допомогою соцмереж</p>
+      <div class="media-login"> 
+
+
+
+        <p>Увійти за допомогою соцмереж</p>
         <ul class="social-providers">
           <li>
             f

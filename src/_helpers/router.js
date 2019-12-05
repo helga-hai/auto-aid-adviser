@@ -43,8 +43,10 @@ export const router = new Router({
         { path: '/create', component: CreatePage },
         { path: '/create2', component: CreatePage2 },
 
+        //test path
         { path: '/business', component: BusinessCabPage},
         { path: '/user', component: UserCabPage},
+        /////////////////////////////////////////////
 
 
 
