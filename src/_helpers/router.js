@@ -15,6 +15,7 @@ import MapPage from '../views/Map';
 import AboutPage from '../views/About';
 import CreatePage from '../views/CreatePage';
 import CreatePage2 from '../views/CreatePage2';
+import CreatePage3 from '../views/CreatePage3';
 
 import { registration } from '../_store/registration.module';
 
@@ -35,6 +36,8 @@ export const router = new Router({
         { path: '/user/activation/*', redirect: '/user/activation' },
         { path: '/create', component: CreatePage },
         { path: '/create2', component: CreatePage2 },
+        { path: '/create3', component: CreatePage3 },
+
 
         // otherwise redirect to home
         { path: '*', redirect: '/' }
@@ -43,7 +46,7 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about', '/create', '/create2', '/user/activation'];
+    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/user/activation'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
