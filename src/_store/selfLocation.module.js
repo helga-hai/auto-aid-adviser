@@ -8,14 +8,14 @@ export const selfLocation = {
         errorStr: null
     },
     actions: {
-        getLocation({ commit }, payload) {
+        async getLocation({ commit }, payload) {
             //do we support geolocation
             if (!("geolocation" in navigator)) {
                 // no
                 commit('error', 'Geolocation is not available.');
             } else {
                 // yes
-                commit('success')
+                await commit('success')
             }
         }
     },
