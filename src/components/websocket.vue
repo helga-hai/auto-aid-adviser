@@ -1,57 +1,47 @@
 <template>
     <div>
-        <div id="main-content" class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label for="connect">WebSocket connection:</label>
-                            <button id="connect" class="btn btn-default" type="submit" :disabled="connected == true" @click.prevent="connect">Connect</button>
-                            <button id="disconnect" class="btn btn-default" type="submit" :disabled="connected == false" @click.prevent="disconnect">Disconnect
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <form class="form-inline">
-                        <div class="servise">
-                            <!-- <label for="content">ServiseType</label> -->
-                            <input type="text" id="content" class="form-control" placeholder="ServiseType..." @focus="connect" @blur="disconnect" @input="fillMessageAndSend1" autocomplete="off"><!--v-model="send_message.content"-->
-                            <div class="servise__autocomplete"> <!-- v-for="(item,index) in received_messages" :key="index"-->
-                              <div class="servise__block">
-                                <div class="servise__autocomplete_item" v-for="(el, index) in received_messages[received_messages.length-1]" :key="index"> {{ el }} </div>
-                              </div>
-                            </div>
-                        </div>
-                        <!-- <button id="send" class="btn btn-default" type="submit" @click.prevent="send1">Send</button> -->
-                    </form>
-                    <form class="form-inline">
-                        <div class="bussines">
-                            <!-- <label for="content">BusinessType</label> -->
-                            <input type="text" id="content" class="form-control" placeholder="BusinessType..." @focus="connect" @blur="disconnect" @input="fillMessage2"><!--v-model="send_message.content"-->
-                            <div class="bussines__autocomplete"></div>
-                        </div>
-                        <button id="send" class="btn btn-default" type="submit" @click.prevent="send2">Send</button>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <table id="conversation" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Greetings</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item, index) in received_messages" :key="index">
-                                <td>{{ item }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+      <!-- <div class="col-md-6">
+          <form class="form-inline">
+              <div class="form-group">
+                  <label for="connect">WebSocket connection:</label>
+                  <button id="connect" class="btn btn-default" type="submit" :disabled="connected == true" @click.prevent="connect">Connect</button>
+                  <button id="disconnect" class="btn btn-default" type="submit" :disabled="connected == false" @click.prevent="disconnect">Disconnect
+                  </button>
+              </div>
+          </form>
+      </div> -->
+          <!-- <form class="form-inline">
+              <div class="servise"> -->
+                  <!-- <label for="content">ServiseType</label> -->
+                  <input type="text" id="content" class="servise__input" placeholder="ServiseType..." @focus="connect" @blur="disconnect" @input="fillMessageAndSend1" autocomplete="off"><!--v-model="send_message.content"-->
+                  <div class="servise__autocomplete"> <!-- v-for="(item,index) in received_messages" :key="index"-->
+                    <div class="servise__block">
+                      <div class="servise__autocomplete_item" v-for="(el, index) in received_messages[received_messages.length-1]" :key="index"> {{ el }} </div>
+                    </div>
+                  </div>
+              <!-- </div> -->
+              <!-- <button id="send" class="btn btn-default" type="submit" @click.prevent="send1">Send</button> -->
+          <!-- </form> -->
+          <!-- <form class="form-inline">
+              <div class="bussines">
+                  !-- <label for="content">BusinessType</label> --
+                  <input type="text" id="content" class="form-control" placeholder="BusinessType..." @focus="connect" @blur="disconnect" @input="fillMessage2">
+                  <div class="bussines__autocomplete"></div>
+              </div>
+              <button id="send" class="btn btn-default" type="submit" @click.prevent="send2">Send</button>
+          </form>
+          <table id="conversation" class="table table-striped">
+              <thead>
+                  <tr>
+                      <th>Greetings</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="(item, index) in received_messages" :key="index">
+                      <td>{{ item }}</td>
+                  </tr>
+              </tbody>
+          </table> -->
     </div>
 </template>
 
@@ -159,36 +149,44 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-button, input {
-  padding: 5px 20px;
-  background: #cccccc;
-  margin: 3px 5px;
-}
-input {
-  background:#fff;
-  border: 1px solid #666;
-}
+// button, input {
+//   padding: 5px 20px;
+//   background: #cccccc;
+//   margin: 3px 5px;
+// }
+// input {
+//   background:#fff;
+//   border: 1px solid #666;
+// }
 .servise {
-  width: 300px;
-  margin: 0 auto;
-  input {
+  &__input {
+    border: 1px solid #000;
+    border-radius: 4px;
     width: 100%;
+    height: 56px;
+    position: relative;
+    padding-left: 16px;
+    background-color: #fff;
+    border-color: rgba(10, 5, 23, 0.6);
   }
   &__autocomplete {
-    margin: 0 5px 3px;
-    width: 100%;
+    //margin: 0 5px 3px;
+    width: calc(100% - 6px);
+    margin: 0 3px;
     text-align: left;
     position: absolute;
     background: white;
     box-shadow: 1px 1px 3px #ccc;
     position: relative;
     &_item {
-      padding: 5px 5px;
+      padding: 6px 17px;
       width: 100%;
       &:hover {
-        background:#ccc;
+        background:#FFF5C0;
       }
     }
   }
+}
+.servise__input {
 }
 </style>

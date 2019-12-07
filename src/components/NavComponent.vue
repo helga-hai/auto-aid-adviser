@@ -1,5 +1,5 @@
 <template>
-    <div class="header" :class="{'header__privat':privat, 'header__grey':grey}">
+    <div class="header" :class="{'header__privat':privat, 'header__grey':grey}" >
         <div class="header__logo">
             <img src="../assets/aaa_logo.svg"/> 
         </div>   
@@ -7,17 +7,45 @@
             <router-link to="/">Пошук</router-link>
             <router-link to="/about">Про нас</router-link>
             <span class="header__lang">Укр </span> 
-            <router-link to="/authorization">Вхід / Реєстрація</router-link>
+            <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
+            <div class="enterRegExit">
+                <span v-if="ifToken()===true" @click="logout" id='logout'>Вихід</span>
+                <a href="#" @click="loginShowFunc" v-if="ifToken()===false">Вхід / Реєстрація</a>
+            </div>
+            
+
             <router-link to="#">Особистий кабінет</router-link>
         </div>
     </div>
 </template>
 
 <script>
+
+import { userService } from '../_services';
+import { router } from '../_helpers';
+
 export default {
-    props:['privat','grey'],
+
+
+    props:['privat','grey','loginShow'],
     data() {
         return {
+        }
+    },
+    methods: {
+        loginShowFunc() {
+            this.$emit('loginShowFunc')
+        },
+        ifToken(){
+            let token = localStorage.getItem('token');
+            if(token){
+                return true;
+            }
+            return false;
+        },
+        logout(){
+            userService.logout();
+            router.push('/');
         }
     }
 }
@@ -73,5 +101,11 @@ export default {
 }
 .header__nav a.router-link-exact-active {
   color: #42b983;
+}
+.enterRegExit{
+    display: inline;
+}
+#logout{
+    cursor: pointer;
 }
 </style>
