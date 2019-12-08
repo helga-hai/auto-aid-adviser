@@ -7,15 +7,20 @@ export const selfLocation = {
         gettingLocation: false,
         errorStr: null
     },
+    getters: {
+        doneLocation: state => {
+            return state.location
+        }
+    },
     actions: {
-        async getLocation({ commit }, payload) {
+        getLocation({ commit }, payload) {
             //do we support geolocation
             if (!("geolocation" in navigator)) {
                 // no
                 commit('error', 'Geolocation is not available.');
             } else {
                 // yes
-                await commit('success')
+                commit('success')
             }
         }
     },

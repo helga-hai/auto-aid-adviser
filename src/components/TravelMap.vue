@@ -8,19 +8,15 @@
     ><slot name="acompl"/>
 
         <template v-slot:default="{ google, map }" @isDoneFuncInTravel="isDoneFuncInTravel"> 
-            <h3 class="title is-4" >
-                <!-- <button @click="$refs.vAutoComplete.geolocate()">force current location</button> -->
-            </h3>
-            <!-- <template>
-                <slot :autocomplete="autocomplete"/>
-            </template> -->
-
-            <GoogleMapMarker
-                ref="customMarker"
-                :google="google"
-                :map="map"
-                :marker= "curMarker"
-            />
+ 
+            <div v-if="isLocationDone">
+                <GoogleMapMarker
+                    ref="customMarker"
+                    :google="google"
+                    :map="map"
+                    :marker= "curMarker"
+                />
+            </div>
             <!-- <GoogleMapMarker
                 :google="google"
                 :map="map"
@@ -58,14 +54,14 @@ import GoogleMapLoader from "./GoogleMapLoader";
 import GoogleMapMarker from "./GoogleMapMarker";
 import { mapSettings } from "@/constants/mapSettings";
 import VueGoogleAutocomplete from 'vue-google-autocomplete';
-console.log(VueGoogleAutocomplete)
+//console.log(VueGoogleAutocomplete)
 export default {
     components: {
         GoogleMapLoader,
         GoogleMapMarker,
         VueGoogleAutocomplete,
     },
-    props: ['location','address','curMarker'],
+    props: ['location','address','curMarker',],
     data() {
         return {
             
@@ -89,9 +85,14 @@ export default {
                     position: { lat: 50.452482, lng: 30.372232 }// { lat: 6, lng: 97 }
                 }
             ],
+            isLocationDone: this.$store.getters['selfLocation/doneLocation'].position
         };
     },
     watch:{
+        isLocationDone() {
+            console.log('isLocationDone',isLocationDone)
+            this.isLocationDone=true
+        },
         curMarker(newVal,oldVal){
             //this.address=newVal
             console.log('WATCH curMarker')
@@ -103,6 +104,25 @@ export default {
         location(newVal,oldVal) {
             console.log('WATCH location')
         }
+    },
+    created() {
+        console.dir(this.$store.getters['selfLocation/doneLocation']);
+        console.log(this.$store);
+        // this.$store.watch(
+        //     (state)=>{
+        //         return this.$store.state.selfLocation.gettingLocation // could also put a Getter here
+        //     },
+        //     (newValue, oldValue)=>{
+        //         //something changed do something
+        //         console.log(oldValue)
+        //         console.log(newValue)
+        //         //this.getConsumption();
+        //     },
+        //     //Optional Deep if you need it
+        //         {
+        //         deep:true
+        //         }
+        // )
     },
     computed: {
         center(){ 

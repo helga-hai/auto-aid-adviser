@@ -9,7 +9,7 @@
             <span class="header__lang">Укр </span> 
             <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
             <a href="#" @click="loginShowFunc">Вхід / Реєстрація</a>
-            <router-link to="#">Особистий кабінет</router-link>
+            <router-link to="/create">Особистий кабінет</router-link>
         </div>
     </div>
 </template>

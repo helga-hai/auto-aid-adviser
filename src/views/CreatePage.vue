@@ -94,7 +94,7 @@ export default {
             groups: ['СТО','Шиномонтаж','Мойка'],
             curMarker: {
                 id: "a",
-                position: this.$store.state.selfLocation.location.position,// { lat: 3, lng: 101 }
+                position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }
                 content:'Place de la Bastille'
             },
             address: '',
