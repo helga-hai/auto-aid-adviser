@@ -17,6 +17,13 @@ import CreatePage from '../views/CreatePage';
 import CreatePage2 from '../views/CreatePage2';
 import CreatePage3 from '../views/CreatePage3';
 
+
+
+
+import UserCabPage from '../views/UserCabPage';
+import BusinessCabPage from '../views/BusinessCabPage';
+
+
 import { registration } from '../_store/registration.module';
 
 Vue.use(Router);
@@ -39,6 +46,13 @@ export const router = new Router({
         { path: '/create3', component: CreatePage3 },
 
 
+        //test path
+        { path: '/business', component: BusinessCabPage },
+        { path: '/user', component: UserCabPage },
+        /////////////////////////////////////////////
+
+
+
         // otherwise redirect to home
         { path: '*', redirect: '/' }
     ]
@@ -48,7 +62,9 @@ router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
     const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/user/activation'];
     const authRequired = !publicPages.includes(to.path);
-    const loggedIn = localStorage.getItem('user');
+
+    // const loggedIn = localStorage.getItem('user');
+    const loggedIn = localStorage.getItem('token');
 
 
     if (registration.state.status === "success") {

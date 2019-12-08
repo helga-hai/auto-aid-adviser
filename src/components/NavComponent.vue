@@ -8,14 +8,27 @@
             <router-link to="/about">Про нас</router-link>
             <span class="header__lang">Укр </span> 
             <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
-            <a href="#" @click="loginShowFunc">Вхід / Реєстрація</a>
+            <div class="enterRegExit">
+                <span v-if="ifToken()===true" @click="logout" id='logout'>Вихід</span>
+                <a href="#" @click="loginShowFunc" v-if="ifToken()===false">Вхід / Реєстрація</a>
+            </div>
+            
+
             <router-link to="/create">Особистий кабінет</router-link>
+            <!-- <a href="#" @click="loginShowFunc">Вхід / Реєстрація</a>
+            <router-link to="/create">Особистий кабінет</router-link> -->
         </div>
     </div>
 </template>
 
 <script>
+
+import { userService } from '../_services';
+import { router } from '../_helpers';
+
 export default {
+
+
     props:['privat','grey','loginShow'],
     data() {
         return {
@@ -24,6 +37,17 @@ export default {
     methods: {
         loginShowFunc() {
             this.$emit('loginShowFunc')
+        },
+        ifToken(){
+            let token = localStorage.getItem('token');
+            if(token){
+                return true;
+            }
+            return false;
+        },
+        logout(){
+            userService.logout();
+            router.push('/');
         }
     }
 }
@@ -79,5 +103,11 @@ export default {
 }
 .header__nav a.router-link-exact-active {
   color: #42b983;
+}
+.enterRegExit{
+    display: inline;
+}
+#logout{
+    cursor: pointer;
 }
 </style>

@@ -4,7 +4,7 @@
             <h1>Мої об’єкти</h1>
             <p>Наразі у вас немає об’єктів.</p>
             <p>Якщо бажаєте, то можемо створити новий об’єкт саме зараз.</p>         
-            <span><a href="#" class="objects__button">Додати об'єкт</a></span>
+            <span><a href="#" class="objects__button" @click="createStepOne">Додати об'єкт</a></span>
         </div>
         <div class="Image">
             <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/illustration1.jpg')+')'}"></div>
@@ -19,6 +19,11 @@ export default {
     components: {
         BusinessLayout,
     },
+    methods: {
+        createStepOne() {
+            this.$emit('stepOneFunction')
+        }
+    }
 }
 </script>
 
