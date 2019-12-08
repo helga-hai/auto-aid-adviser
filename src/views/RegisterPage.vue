@@ -31,7 +31,7 @@
 
     > -->
 
-    <form class="login-form active-form" @submit='checkPass'>
+    <form class="login-form active-form" @submit.prevent='checkPass'>
 
 
       <!-- <label for="name">Name</label>
