@@ -31,32 +31,32 @@ export const userService = {
 };
 
 //config()
-console.log(config.apiUrl) <<
+console.log(config.apiUrl)
 
-    ///   REGISTRATION   /////
+///   REGISTRATION   /////
 
 
-    function regist(user) {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
-        };
-        console.log('regist');
-        console.log(user);
-        return fetch(`${config.apiUrl}/api/user/register`, requestOptions)
-            .then(handleResponse)
-            .then(resolve => {
-                console.log('requestOptions');
-                console.log(requestOptions); //email password role
-                // login successful if there's a jwt token in the response
-                //if (user.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                // localStorage.setItem('user', JSON.stringify(user));
-                //}
-                return resolve;
-            });
-    }
+function regist(user) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+    console.log('regist');
+    console.log(user);
+    return fetch(`${config.apiUrl}/api/user/register`, requestOptions)
+        .then(handleResponse)
+        .then(resolve => {
+            console.log('requestOptions');
+            console.log(requestOptions); //email password role
+            // login successful if there's a jwt token in the response
+            //if (user.token) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            // localStorage.setItem('user', JSON.stringify(user));
+            //}
+            return resolve;
+        });
+}
 
 function successRegist() {
     console.log("success:-)");
