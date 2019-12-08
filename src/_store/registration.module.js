@@ -30,13 +30,13 @@ export const registration = {
                     resp => {
                         console.log('resp');
                         console.log(resp);
-                            commit('auth_success', resp);
-                            userService.successRegist();
+                        commit('auth_success', resp);
+                        userService.successRegist();
                     },
                     reject => {
                         console.log('register reject', reject);
-                            //commit('loginFailure', error);
-                            // dispatch('alert/error', reject, { root: true }); 
+                        //commit('loginFailure', error);
+                        // dispatch('alert/error', reject, { root: true }); 
                     });
             // return new Promise((resolve, reject) => {
             //     //commit('auth_request')
@@ -57,8 +57,8 @@ export const registration = {
             //             reject(err);
             //         });
             // });
-            },
-        
+        },
+
     },
     mutations: {
 
@@ -71,7 +71,7 @@ export const registration = {
             console.log('loading')
             state.status = 'loading';
         },
-        auth_success(state,// token, 
+        auth_success(state, // token, 
             user) {
             console.log('success');
             state.status = 'success';
