@@ -1,6 +1,7 @@
 //import config from 'config';
 import { authHeader, router } from '../_helpers';
 
+
 // const config = {
 //     apiUrl: 'http://localhost:8080'
 // };
@@ -24,12 +25,17 @@ export const userService = {
     logout,
     getAll,
     successRegist,
+
     activate,
+
 };
 
 //config()
 console.log(config.apiUrl)
-    ///   REGISTRATION   /////
+
+///   REGISTRATION   /////
+
+
 function regist(user) {
     const requestOptions = {
         method: 'POST',
@@ -88,53 +94,54 @@ function login(email, password) {
 
 
         body: JSON.stringify({ email, password })
-        // body: JSON.stringify( email, password )
+            // body: JSON.stringify( email, password )
     };
 
     return fetch(`${config.apiUrl}/api/user/login`, requestOptions)
 
 
-        .then(handleResponse)
+    .then(handleResponse)
         // .then(handleResponse => {
         //     console.log(JSON.stringify(response));
         //     return handleResponse;})
 
 
-        .then(user => {
-            // .then(token => {
+    .then(user => {
+        // .then(token => {
 
 
-            console.log('requestOptions')
-            console.log(requestOptions) //email password
-                // login successful if there's a jwt token in the response
+        console.log('requestOptions')
+        console.log(requestOptions) //email password
+            // login successful if there's a jwt token in the response
 
-            // if (user.token)
-            if (user)
-            
-            {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
+        // if (user.token)
+        if (user)
+
+        {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
 
 
-                // localStorage.setItem('user', JSON.stringify(user));
-                console.log(JSON.stringify(user));
+            // localStorage.setItem('user', JSON.stringify(user));
+            console.log(JSON.stringify(user));
 
-                localStorage.setItem('token', JSON.stringify(user.token));
-                console.log(JSON.stringify(user.role));
-
-                return user;
-            }
+            localStorage.setItem('token', JSON.stringify(user.token));
+            console.log(JSON.stringify(user.role));
 
             return user;
-            // return token;
+        }
+
+        return user;
+        // return token;
 
 
-        });
+    });
 }
 
 function logout() {
     // remove user from local storage to log user out
 
     // localStorage.removeItem('user');
+    console.log('localStor: ' + localStorage);
     localStorage.removeItem('token');
 
 }
@@ -177,4 +184,4 @@ function handleResponse(response) {
         console.log(data);
         return data;
     });
-}
+};

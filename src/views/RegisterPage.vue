@@ -26,7 +26,14 @@
 
 
 
-    <form class="login-form active-form" @submit.prevent="register">
+    <!-- <form class="login-form active-form"
+    @submit.prevent="register"
+
+    > -->
+
+    <form class="login-form active-form" @submit.prevent='checkPass'>
+
+
       <!-- <label for="name">Name</label>
       <div>
           <input id="name" type="text" v-model="name" required autofocus>
@@ -39,12 +46,16 @@
 
       <label for="password">Password</label>
       <div class="form-input">
-          <input id="password" type="password" v-model="password" required>
+          <input id="password" type="password" v-model="password" required >
+          <span id='checkPass'></span>
       </div>
+
+      
 
       <label for="password-confirm">Confirm Password</label>
       <div class="form-input">
           <input id="password-confirm" type="password" v-model="password_confirmation" required>
+          <span id='checkPass_Conf'></span>
       </div>
       <checkbox-component title="if Business owner" id="role" true-value="ROLE_BUSINESS" false-value="ROLE_USER" @toggleFunc='toggleFunc' />
       <div>
@@ -76,20 +87,60 @@ export default {
   },
 
   methods: {
-    register: function() {
+
+
+    // register: function() {
+    //   return data = {
+    //     email: this.email,
+    //     password: this.password,
+    //     role: this.role,
+    //   };
+      
+      // this.$store.dispatch("registration/register", data)
+
+        //.then(() => this.$router.push("/"))
+        //.catch(err => console.log(err));
+    // },
+
+
+    toggleFunc(val) {
+      console.log('emited value', val)
+      return this.role = val;
+    },
+
+
+    
+    checkPass(){
+      console.log(this.password)
+      let numRE = /[0-9]/;
+      let bigL = /[A-Z]/;
+      let letter = /[a-z]/;
+      let msg = document.getElementById('checkPass');
+      msg.style.backgroundColor = 'red';
+      let msg2 = document.getElementById('checkPass_Conf');
+      msg2.style.backgroundColor = 'red';
+
+      if(this.password.length<8||this.password.search(numRE)<0||this.password.search(bigL)<0||this.password.search(letter)<0){
+        console.log(this.password.search(numRE));
+        console.log(this.password.search(bigL));
+        console.log(this.password.search(letter));
+        return msg.innerText = 'Пароль має складатись мінімум з 8-и символів містити принаймні одну велику літеру та одну цифру';
+        
+      }else if(this.password!==this.password_confirmation){
+        msg.innerText = '';
+        return msg2.innerText = 'Паролі не співпадають';
+
+
+      }else{
       let data = {
         email: this.email,
         password: this.password,
         role: this.role,
       };
+      msg.innerText = '';
+      msg2.innerText = '';
       this.$store.dispatch("registration/register", data)
-        //.then(() => this.$router.push("/"))
-        //.catch(err => console.log(err));
-    },
-
-    toggleFunc(val) {
-      console.log('emited value', val)
-      return this.role = val;
+      };
     },
 
 

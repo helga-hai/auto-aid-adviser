@@ -9,8 +9,8 @@
             <span class="header__lang">Укр </span> 
             <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
             <div class="enterRegExit">
-                <span v-if="ifToken()===true" @click="logout" id='logout'>Вихід</span>
-                <a href="#" @click="loginShowFunc" v-if="ifToken()===false">Вхід / Реєстрація</a>
+                <span v-if="ifToken()===true && isLog" @click="logout" id='logout'>Вихід</span>
+                <a href="#" @click="loginShowFunc" v-if="ifToken()===false&&!isLog">Вхід / Реєстрація</a>
             </div>
             
 
@@ -32,6 +32,7 @@ export default {
     props:['privat','grey','loginShow'],
     data() {
         return {
+            isLog: false
         }
     },
     methods: {
@@ -41,12 +42,16 @@ export default {
         ifToken(){
             let token = localStorage.getItem('token');
             if(token){
+                this.isLog=true;
                 return true;
             }
             return false;
         },
         logout(){
+            console.log("work");
             userService.logout();
+            this.ifToken();
+            this.isLog=false;
             router.push('/');
         }
     }

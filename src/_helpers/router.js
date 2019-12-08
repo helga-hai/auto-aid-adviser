@@ -60,12 +60,13 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
+
     const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/user/activation'];
+
     const authRequired = !publicPages.includes(to.path);
 
     // const loggedIn = localStorage.getItem('user');
     const loggedIn = localStorage.getItem('token');
-
 
     if (registration.state.status === "success") {
         console.log("hi :" + registration.state.status);
