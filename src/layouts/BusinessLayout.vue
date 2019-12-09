@@ -41,7 +41,13 @@
         </section>
     </main>
     <footer>
+        <a href="#" class ="logoFooter">
+            <img :src="require('../assets/Group 195.png')">
+        </a>
+        <div class="Evo">
+        <img :src="require('../assets/Group 194.png')">
         <p class="footerTitle">2019 Hillel EVO project. Auto Aid Adviser</p>
+        </div>
     </footer>
     </div>
 </template>
@@ -184,14 +190,25 @@ main {
 }
 /*  footer  */
 footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    padding: 29px 50px;
-    text-align: right;
+    height: 80px;
+    padding: 0px 50px;
     background-color: #0E1E2E;
 }
+.Evo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
 .footerTitle {
-    font-size: 16px;
-    line-height: 22px;
+    padding-left:16px;
+    font-size: 12px;
+    line-height: 12px;
     color: #FFFFFF;
 }
 </style>
