@@ -11,10 +11,6 @@
                         <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': typesShow}">
                     </div>
                     <div class="registrStep2__item"></div>
-                    <div class="registrStep2__item"></div>
-                    <div class="registrStep2__item"></div>
-                    <div class="registrStep2__item"></div>
-                    <div class="registrStep2__item"></div>
                 </div>
                 <hr>
                 <p>Выберите из списка основные услуги, которые оказывает обьект</p>
@@ -22,22 +18,118 @@
                     <div  class="registrStep2__servicename" @click = "serviceShow = !serviceShow">
                         <span>Сервисное ТО</span>
                         <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': serviceShow}">
-                    </div>
+                    </div> 
+                    <div class="registrStep2__checkwrapp">
                         <div class="registrStep2__checkAll">
-                            <input type="checkbox" id="All" value="Обрати все">
-                            <label for="All">Обрати все</label>
+                            <label for="All"><input type="checkbox" id="All" value="Обрати все">Обрати все</label>
                         </div>
                         <div class="registrStep2__check">
-                            <input type="checkbox" id="oil" value="Замена масла в двигателе">
-                            <label for="oil">Замена масла в двигателе</label>
+                            <div class ="registrStep2__column1">
+                                <label for="oil"><input type="checkbox" id="oil" value="Замена масла в двигателе" checked>Замена масла в двигателе</label>
+                                <label for="diagnostics"><input type="checkbox" id="diagnostics" value="Компьютерная диагностика" >Компьютерная диагностика</label>
+                                <label for="engineFilter"><input type="checkbox" id="engineFilter" value="Замена воздушного фильтра двигателя" checked>Замена воздушного фильтра двигателя</label>
+                                <label for="cabinFilter"><input type="checkbox" id="cabinFilter" value="Замена воздушного фильтра салона" >Замена воздушного фильтра салона</label>
+                                <label for="oil2"><input type="checkbox" id="oil2" value="Замена масла в КПП" >Замена масла в КПП</label>
+                                <label for="coolant"><input type="checkbox" id="coolant" value="Замена охлаждающей жидкости" >Замена охлаждающей жидкости</label>
+                            </div>
+                            <div class ="registrStep2__column2">
+                                <label for="belt"><input type="checkbox" id="belt" value="Замена ремня ГРМ" >Замена ремня ГРМ</label>
+                                <label for="driveBelt"><input type="checkbox" id="driveBelt" value="Замена приводного ремня" >Замена приводного ремня</label>
+                                <label for="driveRollers"><input type="checkbox" id="driveRollers" value="Замена роликов привода" >Замена роликов привода</label>
+                                <label for="engineFlushing"><input type="checkbox" id="engineFlushing" value="Промывка двигателя" >Промывка двигателя</label>
+                                <label for="replacement"><input type="checkbox" id="replacement" value="Замена комплекта ремня ГРМ с роликами и водяной помпой" >Замена комплекта ремня ГРМ с роликами и водяной помпой</label>
+                            </div>
                         </div>
-
+                    </div>
                 </div>
                 <hr>
-                
+                <div class="registrStep2__services":class="{'opened': brakeSystShow}" >
+                    <div  class="registrStep2__servicename" @click = "brakeSystShow = !brakeSystShow">
+                        <span>Тормозная система</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': brakeSystShow}">
+                    </div>
+                </div>
+                <hr>
+                 <div class="registrStep2__services":class="{'opened': suspensionShow}" >
+                    <div  class="registrStep2__servicename" @click = "suspensionShow = !suspensionShow">
+                        <span>Подвеска</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': suspensionShow}">
+                    </div>
+                </div>
+                <hr>
+                <div class="registrStep2__services":class="{'opened': steerageShow}" >
+                    <div  class="registrStep2__servicename" @click = "steerageShow = !steerageShow">
+                        <span>Рулевое управление</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': steerageShow}">
+                    </div>
+                </div>
+                <hr>
+                <div class="registrStep2__services":class="{'opened': enginegeShow}" >
+                    <div  class="registrStep2__servicename" @click = "enginegeShow = !enginegeShow">
+                        <span>Двигатель</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': enginegeShow}">
+                    </div>
+                </div>
+                <hr>
+                <div class="registrStep2__services":class="{'opened': wiringShow}" >
+                    <div  class="registrStep2__servicename" @click = "wiringShow = !wiringShow">
+                        <span>Электрика</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': wiringShow}">
+                    </div>
+                </div>
+                <hr>
+                <div class="registrStep2__services":class="{'opened': exhaustShow}" >
+                    <div  class="registrStep2__servicename" @click = "exhaustShow = !exhaustShow">
+                        <span>Выхлопная система</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': exhaustShow}">
+                    </div>
+                </div>
+                <hr>
+                <div class="registrStep2__services":class="{'opened': clutchShow}" >
+                    <div  class="registrStep2__servicename" @click = "clutchShow = !clutchShow">
+                        <span>Сцепление</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': clutchShow}">
+                    </div>
+                </div>
+                <hr>
+                <div class="registrStep2__services":class="{'opened': transmissionShow}" >
+                    <div  class="registrStep2__servicename" @click = "transmissionShow = !transmissionShow">
+                        <span>Трансмиссия</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': transmissionShow}">
+                    </div>
+                </div>
+                <hr>
+                <div class="registrStep2__services":class="{'opened': climateShow}" >
+                    <div  class="registrStep2__servicename" @click = "climateShow = !climateShow">
+                        <span>Климат-контроль</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': climateShow}">
+                    </div>
+                </div>
+                <hr>
+                <div class="registrStep2__services":class="{'opened': carcassShow}" >
+                    <div  class="registrStep2__servicename" @click = "carcassShow = !carcassShow">
+                        <span>Кузов</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': carcassShow}">
+                    </div>
+                </div>
+                <hr>
+                <div class="registrStep2__services":class="{'opened': gasShow}" >
+                    <div  class="registrStep2__servicename" @click = "gasShow = !gasShow">
+                        <span>ГБО</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': gasShow}">
+                    </div>
+                </div>
+                <hr>
+                <div class="registrStep2__services":class="{'opened': extraShow}" >
+                    <div  class="registrStep2__servicename" @click = "extraShow = !extraShow">
+                        <span>Дополнительно</span>
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': extraShow}">
+                    </div>
+                </div>
+                <hr>
                 <div class="registrStep2__buttons">
                     <input type="reset" value="Отмена" class="registrStep2__secondaryButton">
-                    <input type="submit" value="Продолжить 1/3" class="registrStep2__primaryButton">    
+                    <input type="submit" value="Продолжить 2/3" class="registrStep2__primaryButton">    
                 </div>
 
         </div>  
@@ -55,6 +147,18 @@ export default {
         return {
             typesShow: false,
             serviceShow: false,
+            brakeSystShow: false,
+            suspensionShow: false,
+            steerageShow: false,
+            enginegeShow: false,
+            wiringShow: false,
+            exhaustShow: false,
+            clutchShow: false,
+            transmissionShow: false,
+            climateShow: false,
+            carcassShow: false,
+            gasShow: false,
+            extraShow: false,
             business_types: this.$store.dispatch("data/getData", '/api/catalog/business_types'),//this.$store.state.authentication.user;// [{"id":1,"name":"CTO"},{"id":2,"name":"shinomantazh"},{"id":3,"name":"shop"},{"id":4,"name":"test"}], //   http://localhost:8080/api/catalog/business_types   GET
             // service_types_2: [{"id":4,"name":"gum","businessType":{"id":2,"name":"shinomantazh"}},{"id":5,"name":"disk","businessType":{"id":2,"name":"shinomantazh"}},{"id":6,"name":"test","businessType":{"id":2,"name":"shinomantazh"}}], //   http://localhost:8080/api/catalog/business_types/2/service_types   GET
             // services_3: [{"id":30,"name":"balancing 8","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":2,"name":"balancing 1","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":14,"name":"balancing 4","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":26,"name":"balancing 7","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":10,"name":"balancing 3","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":22,"name":"balancing 6","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":6,"name":"balancing 2","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":18,"name":"balancing 5","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}}], //   http://localhost:8080/api/catalog/service_types/2/services   GET
@@ -157,6 +261,38 @@ export default {
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
+}
+.registrStep2__checkwrapp {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    color: #0E1E2E;
+}
+.registrStep2__checkAll {
+    padding-right: 86px;
+    padding-bottom: 28px;
+}
+.registrStep2__check {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 10px;
+}
+.registrStep2__check label {
+    font-size: 16px;
+    line-height: 117%;
+    padding-bottom: 18px;
+}
+.registrStep2__column1 {
+    padding-right: 80px;
+}
+.registrStep2__column1, .registrStep2__column2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 .registrStep2__item {
     display: inline-block;

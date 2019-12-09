@@ -283,6 +283,7 @@ export default {
     margin-bottom: 16px;
     border: 1px solid #6F7E95;
     border-radius: 4px;
+    padding: 5px;
 }
 .registrStep1__buttons {
     display: flex;
