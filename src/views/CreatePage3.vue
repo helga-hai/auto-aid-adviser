@@ -1,4 +1,4 @@
-<template>
+ <template>
     <business-layout>
         <div class="registrStep2">
             <h1>Реєстрація об’єкту</h1>
