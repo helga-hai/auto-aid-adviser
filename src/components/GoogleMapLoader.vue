@@ -1,13 +1,12 @@
 <template>
   <div>
-    <slot name="autocomplete" id="autocompletePannel"/>
+    <!-- <slot name="acompl"/> -->
     <div class="google-map" ref="googleMap"></div>
     <template v-if="Boolean(this.google) && Boolean(this.map)">
       <slot
         :google="google"
         :map="map"
       />
-      
     </template>
     <button id="dir" @click="calculateAndDisplayRoute( {from:paramOrigin,to:paramDest} )">get directions</button>
   </div>
@@ -27,12 +26,15 @@ export default {
             google: null,
             map: null,
             directionsDisplay: null,
-            directionsService: null
+            directionsService: null,
+            //navigator_location: null
         }
     },
     watch: {
       map(newValue,oldValue) {
         if (newValue) {
+            console.log('GoogleMapLoader WATCH map $emit')
+          this.$emit('isDoneFuncInTravel')
         }
       },
       google(newValue,oldValue) {
@@ -41,6 +43,8 @@ export default {
       }
     },
     async mounted() {
+        //console.log('navigator')
+        //console.log(this.$store.state.selfLocation.gettingLocation)
         const googleMapApi = await GoogleMapsApiLoader({
             apiKey: this.apiKey,
             libraries: ['places, directions, drawing'],
@@ -78,13 +82,15 @@ export default {
             this.directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 
             var control = document.getElementById('autocompletePannel');
-            control.style.display = 'block';
-            map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+            if(control) { 
+              control.style.display = 'block';
+              map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+            }
 
             
-            var buttonD = document.getElementById('dir');
-            buttonD.style.display = 'block';
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(buttonD);
+            // // var buttonD = document.getElementById('dir');
+            // // buttonD.style.display = 'block';
+            // // map.controls[google.maps.ControlPosition.TOP_LEFT].push(buttonD);
             //map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(button);
             //var onChangeHandler = function() {
             //  this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);

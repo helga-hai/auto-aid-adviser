@@ -32,13 +32,20 @@
       <a href="#" class="button orange">Знайти</a>
     </div>
     </div>
+
+
     <div class="modal-login-registration " :class="{'active-modal': loginShow}">
       <button class="close-x" @click="loginHideFunc">
         <span class="close">x</span>
       </button>
 
-      <div class="entrance">
-        <div class="mode active">
+      <!-- <div class="entrance"> -->
+
+
+      <div>
+        <Authorization></Authorization>
+        
+        <!-- <div class="mode active">
           <span>Вхід</span>
         </div>
         <div class="divider">
@@ -47,7 +54,10 @@
         <div class="mode">
           <span>Реєстрація</span>
         </div>
+
       </div>
+
+      
       <form class="login-form active-form" method="post">
         <div class="form-input">
           <input type="email" placeholder="E-mail">
@@ -68,7 +78,10 @@
       <div class="lost-password">
           <a href="#">Забули пароль?</a>
       </div>
-      <div class="media-login">
+      <div class="media-login"> 
+
+
+
         <p>Увійти за допомогою соцмереж</p>
         <ul class="social-providers">
           <li>
@@ -77,7 +90,7 @@
           <li>
             G
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>
@@ -86,11 +99,17 @@
 <script>
 import NavComponent from '../components/NavComponent';
 import websocket from '../components/websocket';
+import Authorization from '../views/AuthorizationPage';
+
+import LoginPage from '@/views/LoginPage.vue'
+import RegisterPage from '@/views/RegisterPage.vue'
+
 export default {
     name: 'HomePublic',
     components: {
         NavComponent,
-        websocket
+        websocket,
+        Authorization
     },
     data () {
       return {

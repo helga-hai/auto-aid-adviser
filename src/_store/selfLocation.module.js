@@ -7,6 +7,11 @@ export const selfLocation = {
         gettingLocation: false,
         errorStr: null
     },
+    getters: {
+        doneLocation: state => {
+            return state.location
+        }
+    },
     actions: {
         getLocation({ commit }, payload) {
             //do we support geolocation
