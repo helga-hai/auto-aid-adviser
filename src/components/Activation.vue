@@ -3,18 +3,21 @@
     <h1>ACTIVATION</h1>
     <h1>{{key()}}</h1>
     <p>{{targetURL()}}{{req()}}</p>
+    <p>{{role}}</p>
   </div>
   </template>
 
 <script>
 import {userService} from '../_services/user.service';
+import { router } from '../_helpers';
 export default {
 name:'Activation',
 data(){
   return{
     key: function() {return this.getKey()},
     targetURL: function() {return this.redirect()},
-    req: function(){this.requestKey()}
+    req: function(){this.requestKey()},
+    role: '',
     }
   },
 methods:{
@@ -45,8 +48,27 @@ methods:{
         let respToken = JSON.parse(text);
         console.log(typeof text)
         console.log(respToken.token)
+
+
+        // console.log(respToken.role)
+        // data.role = respToken.role;
+        // console.log(role)
+
+
         return respToken})
-      .then(function(respToken){localStorage.setItem('token',respToken.token)});
+      .then(function(respToken){
+        localStorage.setItem('token',respToken.token)
+        console.log(respToken.role)
+        // this.role = respToken.role;
+        // console.log(this.role)
+        if(respToken.role==="ROLE_USER"){
+          router.push('/user');
+        }else if(respToken.role==="ROLE_BUSINESS"){
+          router.push('/business')
+        }else{
+          router.push('*')
+        };})
+      // return role
   });
   }
 }
