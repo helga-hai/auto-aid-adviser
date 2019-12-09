@@ -1,224 +1,283 @@
 <template>
-<div>
-  <header>
-        <a href="#">
-            <img :src="require('../assets/aaa_logo.svg')">
-        </a>
-        <nav>
-            <ul class="topMenu">
-                <li><a href="#">Пошук</a></li>
-                <li><a href="#">Про нас</a></li>
-                <li class="topMenu__language">
-                    <div class="topMenu__selected">
-                        <span class="topMenu__langLabel selLabel">Укр</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="topMenu__icon">
+    <business-layout>
+        <div class="registrStep1">
+            <h1>Реєстрація об’єкту</h1>
+            <form>
+                <div class="registrStep1__address">
+                    <label for="name">Вкажіть місцезнаходження об’єкту на карті або введіть адресу</label>
+                    
+                    <div class="auto-complete-input" slot="acompl" v-if="isDone">
+                        <vue-google-autocomplete 
+                            ref="vAutoComplete"
+                            :country="['ua']"
+                            id="autocompletePannel"
+                            classname="search-input home-input"
+                            placeholder="enter the address"
+                            :enableGeolocation="enableGeolocation"
+                            v-on:placechanged="getAddressData"
+                        ></vue-google-autocomplete>
+                        {{sendObject}}<br><br>
                     </div>
-                    <div class="topMenu__langSwitch">
-                        <a>
-                            <span class="topMenu__langLabel">Укр</span>
-                        </a>
-                        <a>
-                            <span class="topMenu__langLabel">Рус</span>
-                        </a>
-                    </div>
-                </li>
-                <li><a href="#">Особистий кабінет</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="sideBar">
-            <p>Особистий кабінет</p>
-            <ul>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Особисті данні</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Мої об‘єкти</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Заявки клієнтів</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Налаштування</a></li>
-            </ul>
-        </section>
-        <section class="registrStep1">
-            <div class="registrStep1__formWrapp">
-                <h1>Реєстрація об’єкту</h1>
-                <form>
-                    <div class="registrStep1__address">
-                        <label for="name">Вкажіть місцезнаходження об’єкту на карті або введіть адресу</label>
-                        <input type="text" name="address" id="address">
-                    </div>
-                    <label>Данные обьекта</label>
-                    <input type="text" name="title" id="title">
-                    <input type="text" name="phone" id="phone">
-                    <input type="text" name="site" id="site">
-                    <div class="registrStep1__buttons">
-                        <input type="reset" value="Отмена" class="registrStep1__secondaryButton">
-                        <input type="submit" value="Продолжить 1/3" class="registrStep1__primaryButton">    
-                    </div>
-                </form>
+                    <!-- <h3 class="title is-4">Start typing an address and below you will see found result,
+                        <a v-on:click="$refs.vAutoComplete.geolocate()">or force current location</a>
+                    </h3> -->
+
+                </div>
+                <label>Данные обьекта</label>
+                <input type="text" name="title" id="title" placeholder="title">
+                <input type="text" name="phone" id="phone" placeholder="phone">
+                <input type="text" name="site" id="site" placeholder="site">
+                <div class="registrStep1__buttons">
+                    <input type="reset" value="Отмена" class="registrStep1__secondaryButton">
+                    <input type="submit" value="Продолжить 1/3" class="registrStep1__primaryButton">    
+                </div>
+            </form>
+        </div>
+        <div class="Step1Image">your here: {{location.position}}
+            <div class="Step1Image__labe" >
+                <div v-if="gettingLocation">loading...</div>
+                <div v-else>
+                    <travel-map class="guide"
+                        ref="mapr" 
+                        :mapCenter="curMarker.position" 
+                        @isDoneFunc="isDoneFunc" 
+                        :address="address" 
+                        :curMarker="curMarker"
+                        />
+                </div>
+                <!-- <GoogleMapLoader:location="location" 
+                    :mapConfig="mapConfig" //v-if="location.position"
+                    apiKey="AIzaSyB_nA80Ha1asyGCQtdcgAGZNtd6Vzr8p3A"
+                >
+
+                    <template v-slot:default="{ google, map }"> 
+                        <h3 class="title is-4" >
+                            <button @click="$refs.vAutoComplete.geolocate()">force current location</button>
+                        </h3>
+
+                        <GoogleMapMarker v-if="address"
+                            :google="google"
+                            :map="map"
+                            :marker= "marker"
+                        />
+                    </template>
+                </GoogleMapLoader> -->
             </div>
-            <div class="registrStep1__image" :style="{backgroundImage: 'url('+require('../assets/mapa.jpg')+')'}"></div>
-        </section>
-    </main>
-</div>
+        </div>    
+    </business-layout>
 </template>
 
 <script>
+import BusinessLayout from "@/layouts/BusinessLayout";
+import TravelMap from '@/components/TravelMap.vue';
+import GoogleMapLoader from "../components/GoogleMapLoader";
+import GoogleMapMarker from "../components/GoogleMapMarker";
+import { mapSettings } from "@/constants/mapSettings";
+import VueGoogleAutocomplete from 'vue-google-autocomplete';
+
 export default {
+    name: 'CreatePage',
+    components: {
+        BusinessLayout,
+        TravelMap,
+        // GoogleMapLoader,
+        // GoogleMapMarker,
+        // GoogleMapLine,
+        VueGoogleAutocomplete,
+    },
     data() {
         return {
+            acLatLng:{},
+            isDone: false,
+            enableGeolocation: true,
+            location: this.$store.state.selfLocation.location,
+            groups: ['СТО','Шиномонтаж','Мойка'],
+            curMarker: {
+                id: "a",
+                position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }
+                content:'Place de la Bastille'
+            },
+            address: '',
+            markers: [
+                {
+                    id: "a",
+                    position: { lat: 50.456376, lng: 30.380989 }// { lat: 3, lng: 101 }
+                },
+                {
+                    id: "b",
+                    position: { lat: 50.455939, lng: 30.372777 }// { lat: 5, lng: 99 }
+                },
+                {
+                    id: "c",
+                    position: { lat: 50.452482, lng: 30.372232 }// { lat: 6, lng: 97 }
+                }
+            ],
+            sendObject: {
+                "contact": {
+                    "phone": "string"
+                },
+                "id": 0,
+                "location": {
+                    "address": "string",
+                    "latitude": 0,
+                    "longitude": 0
+                },
+                "name": "string",
+                "serviceForBusinesses": [
+                    {"id": 0}
+                ],
+                "workTimes": [
+                    {
+                    "day": 0,
+                    "fromTime": {
+                        "hour": 0,
+                        "minute": 0,
+                        "nano": 0,
+                        "second": 0
+                        },
+                    "id": 0,
+                    "toTime": {
+                        "hour": 0,
+                        "minute": 0,
+                        "nano": 0,
+                        "second": 0
+                        }
+                    }
+                ]
+            },
+
         }
+    },
+    watch: {
+        location(newVal, oldVal) {
+            console.log('location',newVal, oldVal)
+            //this.locationDone = true
+        }
+    },
+    computed: {
+        errorStr() {
+            return this.$store.state.selfLocation.errorStr;
+        },
+        gettingLocation() {
+            return this.$store.state.selfLocation.gettingLocation;
+        },
+        // location() {
+        //     //console.log(this.$store.state.selfLocation.location)
+        //     this.locationPos = this.$store.state.selfLocation.location;
+        // },///////
+        // mapConfig () {
+        //     return {
+        //         //...mapSettings, // індивідуальні налаштування для вигляду карти
+        //         //center: { lat: 0, lng: 0 }
+        //         center: this.mapCenter,
+        //         zoom: 15,
+        //     }
+        // },
+        // mapCenter() {
+        //     //console.log(this.markers[1].position)
+        //     //console.dir(this.myPosition.position)
+        //     //map.setCenter({lat:lat, lng:lng});
+        //     //return this.markers[1].position || this.myPosition.position  
+        //     console.log('mapCenter')
+        //     console.log(this.markers[1].position || {lat: this.marker.address.latitude, lng: this.marker.address.longitude})
+        //     //return this.markers[1].position || {lat: this.marker.address.latitude, lng: this.marker.address.longitude}
+        //     return this.markers[1].position || {lat: this.marker.address.latitude, lng: this.marker.address.longitude}
+        // },
+        // marker () {
+        //     return {
+        //         id: "a",
+        //         position: { lat: this.address.latitude, lng: this.address.longitude }// { lat: address.latitude, lng: address.longitude }
+        //     }
+        // },
+    },
+    update() {
+        navigator.geolocate()
+         console.log('navigator')
+         console.log(navigator)
+         console.log(this.$refs.vAutoComplete)
+    },
+    created() {
+        //do we support geolocation
+        this.$store.dispatch('selfLocation/getLocation');
+    },
+    methods: {
+        isDoneFunc(e){
+            console.log('isDoneFunc') // google map is load 
+            this.isDone=true; // - start autocomplete
+            //this.$refs.vAutoComplete.geolocate(); // - start autocomplete geolocale -not workinfg here
+        },
+        getAddressData: function (addressData, placeResultData, id) {
+            console.log('getAddressData')
+            console.log('addressData=')
+            console.dir(addressData)
+            console.log('placeResultData=')
+            console.dir(placeResultData)
+            let lat=placeResultData.geometry.location.lat()
+            let lng=placeResultData.geometry.location.lng()
+            console.log(lat,lng)
+            this.acLatLng={lat:lat,lng:lng}
+            this.sendObject.location={latitude:lat,longitude:lng}
+            this.sendObject.location={
+                address: placeResultData.formatted_address,
+                latitude: placeResultData.geometry.location.lat(),
+                longitude: placeResultData.geometry.location.lng()
+            }
+            this.address = addressData;
+        },
+        geolocate() {
+            // if (this.enableGeolocation) {
+            //     if (navigator.geolocation) {
+            //         console.log(navigator.geolocation)
+            //         navigator.geolocation.getCurrentPosition(position => {
+            //         let geolocation = {
+            //             lat: position.coords.latitude,
+            //             lng: position.coords.longitude
+            //         };
+            //         console.log('geolocation',geolocation)
+            //         let circle = new google.maps.Circle({
+            //             center: geolocation,
+            //             radius: position.coords.accuracy
+            //         });
+            //         console.log('circle',circle)
+            //         this.autocomplete.setBounds(circle.getBounds());
+            //         });
+            //     }
+            // }
+        },
     }
 }
 </script>
 
-<style scoped>
-/*  TOP MENU  */
-* {
-    box-sizing: border-box;
-}
-ul {
-    list-style-type: none; 
-    margin: 0;
-    padding: 0;
-} 
-a {
-    text-decoration: none;
-    cursor: pointer; 
-    color: #4B5E7A; }
-html,
-body {
-  width: 100%;
-  margin: 0;}
-body {
-    font-family: 'Roboto', sans-serif; 
-    background-color:  rgb(255, 255, 255);
-    color: #4B5E7A;}
-input {
-    font-family: 'Roboto', sans-serif; 
-    color: #4B5E7A;
-}
-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 50px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
-    background-color:  rgb(255, 255, 255);
-    z-index: 3;
-}
-.topMenu {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;  
-    font-size: 16px;
-    line-height: 19px;
-}
-.topMenu li {
-    margin-left: 40px;
-}
-.topMenu li :hover {
-    color: black;
-}
-.topMenu__language {
-    position: relative;
-}
-.topMenu__selected {
-    cursor: pointer;
-}
-.topMenu__icon {
-    width: 20px;
-    height: 15px;
-}
-.topMenu__langSwitch {
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;  
-}
-
-/*  sideBar.css  */
-main {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: stretch;
-    width: 100%;
-    z-index: 2;
-}
-.sideBar {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 216px;
-    padding-top: 56px;
-    background-color: #F6F7F8;
-}
-.sideBar p {
-    color: #0E1E2E;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 24px;
-    margin: 0;
-    padding: 0px 28px;
-}
-.sideBar ul {
-    padding: 36px 0px 0px 16px;
-}
-.sideBar__list ::before {
-    content: '';
-    display: inline-block;
-    width: 16px;
-    height: 8px;
-    background-color: #E4E7EB;
-    margin-right: 16px ;
-}
-.sideBar__button {
-    display: inline-block;
-    font-size: 16px;
-    padding-bottom: 26px;
-}
-.sideBar__button:hover {
-    color: black;
-}
-
+<style>
 /* step01.css */
-.registrStep1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: calc(100% - 216px);
+.Step1Image {
+    height: 100%;
 }
-.registrStep1__image {
+.Step1Image__labe {
     width: 673px;
-    height: 687px;
-    /* background-image: url(img/mapa.jpg); */
+    height: 100%;
 }
-.registrStep1__formWrapp {
-    padding: 56px 48px 0px 48px;
+.registrStep1 {
+    padding: 56px 48px 56px 48px;
 }
-.registrStep1__formWrapp form {
+.registrStep1 form {
     width: 379px;
 }
-.registrStep1__formWrapp h1 {
+.registrStep1 h1 {
     margin-top: 0px;
     margin-bottom: 40px;
     font-weight: 500;
     font-size: 24px;
     line-height: 36px;
 }
-.registrStep1__formWrapp label {
+.registrStep1 label {
     display: inline-block;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
     margin-bottom: 24px;
 }
-.registrStep1__formWrapp input {
+.registrStep1 input {
     width: 100%;
     height: 56px;
     margin-bottom: 16px;
@@ -255,5 +314,4 @@ main {
     border: none;
     border-radius: 4px;
 }
-
 </style>
