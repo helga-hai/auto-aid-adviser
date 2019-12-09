@@ -85,7 +85,8 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 24px 50px;
+    height: 80px;
+    padding: 0px 50px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
     background-color:  rgb(255, 255, 255);
     z-index: 3;

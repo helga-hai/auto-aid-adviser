@@ -1,38 +1,39 @@
 <template>
   <div class = 'wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
     <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
-    <div class="res" >
-    <div class="one">
-      <label for="">Оберіть тип объекту</label>
-      <!-- <button type="button" name="button" >
-        <div class="selected-option">Аргонна сварка</div>
-        <div class="arrow-down"></div>
-      </button> -->
-      <websocket />
-      <ul class="submenu">
-        <li class="submenu-item"><a href="#">Аргонна сварка</a></li>
-        <li class="submenu-item"><a href="#">item2_2</a></li>
-        <li class="submenu-item"><a href="#">item2_3</a></li>
-      </ul>
-    </div>
+    <main>
+      <div class="res" >
+        <div class="one">
+          <label for="">Що шукаємо</label>
+          <!-- <button type="button" name="button" >
+            <div class="selected-option">Аргонна сварка</div>
+            <div class="arrow-down"></div>
+          </button> -->
+          <websocket />
+          <ul class="submenu">
+            <li class="submenu-item"><a href="#">Аргонна сварка</a></li>
+            <li class="submenu-item"><a href="#">item2_2</a></li>
+            <li class="submenu-item"><a href="#">item2_3</a></li>
+          </ul>
+        </div>
 
-    <div class="two">
-      <label for="">Де шукати</label>
-      <button type="button" name="button">
-        <div class="selected-option">Аргонна сварка</div>
-        <div class="arrow-down"></div>
-      </button>
-      <ul class="sub">
-        <li class="submenu"><a href="#">Аргонна сварка</a></li>
-        <li class="submenu"><a href="#">item2_2</a></li>
-        <li class="submenu"><a href="#">item2_3</a></li>
-      </ul>
-    </div>
-    <div class="btn">
-      <a href="#" class="button orange">Знайти</a>
-    </div>
-    </div>
-
+        <div class="two">
+          <label for="">Де шукати</label>
+          <button type="button" name="button">
+            <div class="selected-option">Вказати локацію</div>
+            <div class="arrow-down"></div>
+          </button>
+          <ul class="sub">
+            <li class="submenu"><a href="#">Аргонна сварка</a></li>
+            <li class="submenu"><a href="#">item2_2</a></li>
+            <li class="submenu"><a href="#">item2_3</a></li>
+          </ul>
+        </div>
+        <div class="btn">
+          <a href="#" class="btn__button orange">Знайти</a>
+        </div>
+      </div>
+    </main>
 
     <div class="modal-login-registration " :class="{'active-modal': loginShow}">
       <button class="close-x" @click="loginHideFunc">
@@ -92,7 +93,7 @@
           </li>
         </ul> -->
       </div>
-    </div>
+    </div>  
   </div>
 </template>
 
@@ -129,7 +130,27 @@ export default {
 </script>
 
 <style scoped>
-
+* {
+  box-sizing: border-box;
+}
+ul {
+  list-style-type: none; 
+  margin: 0;
+  padding: 0;
+} 
+a {
+  text-decoration: none;
+  cursor: pointer;  
+}
+html,
+body, 
+#app {
+  width: 100%;
+  margin: 0;}
+body,
+#app {
+  font-family: 'Roboto', sans-serif;
+}
 button{
   border: 1px solid #000;
   border-radius: 4px;
@@ -139,37 +160,39 @@ button{
   height: 100vh;
   background-size: cover;
 }
+main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+}
 .res {
-  /*background: url(require('@/assets/backgroundimage.jpg'));*/
-  position: absolute;
-  width: 1131px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 1052px;
   height: 132px;
-  left: 139px;
-  top: 325px;
-  padding: 20px 16px 26px;
-  box-sizing: border-box;
+  padding: 0px 20px;
+  margin-bottom: 80px;
   background: rgba(10, 5, 23, 0.6);
-  mix-blend-mode: normal;
-  backdrop-filter: blur(20px);
-
-display: flex;
-align-content: center;
-
-
-
-border-radius: 8px;
+  border-radius: 8px;
 }
 .one{
-  width: 558px;
+  width: 555px;
 }
 .two{
-  width: 380px;
+  width: 305px;
 }
-.one label {
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 8px;
+.one label, .two label {
   display: block;
+  text-align: left;
+  margin-bottom: 8px;
+  padding-left: 16px;
+  font-size: 16px;
+  line-height: 22px;
+  color: #fff; 
 }
 .one button {
   width: 100%;
@@ -228,15 +251,6 @@ border-top: 8px solid #000;
   cursor: pointer;
 }
 
-
-
-
-.two label {
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 8px;
-  display: block;
-}
 .two button {
   width: 100%;
   height: 56px;
@@ -246,9 +260,11 @@ border-top: 8px solid #000;
   border-color: rgba(10, 5, 23, 0.6);
 }
 .two .selected-option {
+  font-size: 16px;
+  line-height: 22px;
   text-align: left;
-  line-height: 50px;
   max-width: 200px;
+  color: #A5AEBC;
 }
 .two .arrow-down {
   position: absolute;
@@ -262,11 +278,11 @@ content: '';
 display: block;
 margin-top: 10px;
 border: 6px solid transparent;
-border-top: 8px solid #000;
+border-top: 8px solid #00BCD4;
 
 }
 .two.open .arrow-down::after {
- border-bottom: 8px solid #000;
+ border-bottom: 8px solid #00BCD4;
  border-top: none;
 }
 .sub{
@@ -294,24 +310,22 @@ background: #FFF5C0;
 cursor: pointer;
 }
 
-
 .btn{
-  width: 180px;
-  height: 55px;
-  position: relative;
-  top: 26px;
+  margin-top: 29.6px;
 }
-a.button.orange {
-  font-size: 11px;
-  text-decoration: none;
+.btn__button {
+  display:block;
+  width: 146px;
+  height: 56px;
+  padding: 19px 0px;
+  font-size: 16px;
+  line-height: 18px;
   text-transform: uppercase;
-  width: 180px;
-  height: 55px;
-  display: block;
+  color: #0E1E2E;
   text-align: center;
-  line-height: 60px;
-  font-family: Roboto;
   border-radius: 4px;
+}
+.btn__button.orange {
   background-color: #FFC700;
 }
 body{
