@@ -1,13 +1,13 @@
 <template>
     <div>
     <header>
-        <a href="#" class ="logo">
+        <router-link to="/" class ="logo">
             <img :src="require('../assets/aaa_logo.svg')">
-        </a>
+        </router-link>
         <nav>
             <ul class="topMenu">
-                <li><a href="#">Пошук</a></li>
-                <li><a href="#">Про нас</a></li>
+                <li><router-link to="/"><img src="../assets/ico-search.png"/></router-link></li>
+                <li><router-link to="/about">Про нас</router-link></li>
                 <li class="topMenu__language">
                     <div class="topMenu__selected">
                         <span class="topMenu__langLabel selLabel">Укр</span>
@@ -22,7 +22,7 @@
                         </a>
                     </div>
                 </li>
-                <li><a href="#">Особистий кабінет</a></li>
+                <li><router-link to="/">Вхід</router-link></li>
             </ul>
         </nav>
     </header>
@@ -30,10 +30,10 @@
         <section class="sideBar">
             <p>Особистий кабінет</p>
             <ul>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Особисті данні</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Мої об‘єкти</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Заявки клієнтів</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Налаштування</a></li>
+                <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Особисті данні</router-link></li>
+                <li class="sideBar__list "><router-link to="/create" class="sideBar__button">Мої об‘єкти</router-link></li>
+                <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Заявки клієнтів</router-link></li>
+                <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Налаштування</router-link></li>
             </ul>
         </section>
         <section class="objectsWrapp">
@@ -162,13 +162,14 @@ main {
 .sideBar ul {
     padding: 36px 0px 0px 16px;
 }
-.sideBar__list ::before {
+.sideBar__list a::before {
     content: '';
     display: inline-block;
     width: 16px;
     height: 8px;
     background-color: #E4E7EB;
     margin-right: 16px ;
+    border-radius: 3px;
 }
 .sideBar__button {
     display: inline-block;
@@ -178,6 +179,12 @@ main {
 }
 .sideBar__button:hover {
     color: black;
+}
+.sideBar__list a.router-link-exact-active {
+  color: #0E1E2E;
+}
+.sideBar__list a.router-link-exact-active::before {
+    background-color: #FFC700;
 }
 /*content*/
 .objectsWrapp {
