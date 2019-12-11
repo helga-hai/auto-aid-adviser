@@ -37,19 +37,20 @@
         <form @submit.prevent="handleSubmit" class="login-form active-form">
             <div class="form-input">
                 <label for="email">email</label>
-                <input type="text" v-model="email" name="email" class="form-control" :class="{ 'is-invalid': submitted && !email }" />
+                <input type="text" v-model="email" name="email" placeholder="E-mail" class="form-control" :class="{ 'is-invalid': submitted && !email }" />
                 <div v-show="submitted && !email" class="invalid-feedback">email is required</div>
             </div>
             <div class="form-input">
                 <label htmlFor="password">Password</label>
-                <input type="password" v-model="password" name="password" class="form-control" :class="{ 'is-invalid': submitted && !password }" />
+                <input type="password" v-model="password" name="password" placeholder="Введіть пароль" class="form-control" :class="{ 'is-invalid': submitted && !password }" />
                 <div v-show="submitted && !password" class="invalid-feedback">Password is required</div>
             </div>
             <div class="form-group">
-                <button class="form-input submit-button" :disabled="loggingIn">Login</button>
+                <button class="form-input submit-button disabled" :disabled="loggingIn">увійти</button>
                 <img v-show="loggingIn" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
             </div>
         </form>
+        <div class = "passRecovery"><p>Забули пароль?</p></div>
     </div>
 </template>
 
@@ -87,7 +88,7 @@ export default {
 
 <style scoped>
 
-button{
+  /*button{
   border: 1px solid #000;
   border-radius: 4px;
 
@@ -118,7 +119,7 @@ div,input {
   padding: 32px 50px;
   width: 400px;
   position: absolute;
-  /* left: auto; */
+  /* left: auto; 
   right: -400px;
   top: 0;
   bottom: 0px;
@@ -161,9 +162,9 @@ div,input {
 }
 .entrance .mode.active {
   opacity: 1;
-}
+} */
 .login-form {
-  margin-top: 26px;
+  margin-top: 38px;
 }
 .login-form .form-input {
   margin-bottom: 36px;
@@ -174,6 +175,39 @@ div,input {
   padding-left: 16px;
   border: 1px solid #6F7E95;
   border-radius: 4px;
+  font-size: 16px;
+  line-height: 22px;
+  color: #0E1E2E;
+}
+::-webkit-input-placeholder {
+  font-size: 16px;
+  line-height: 18px;
+  color:#A5AEBC;
+}
+::-moz-placeholder {
+  font-size: 16px;
+  line-height: 18px;
+  color:#A5AEBC;
+}/* Firefox 19+ */
+:-moz-placeholder {
+  font-size: 16px;
+  line-height: 18px;
+  color:#A5AEBC;
+}/* Firefox 18- */
+:-ms-input-placeholder {
+  font-size: 16px;
+  line-height: 18px;
+  color:#A5AEBC;
+}
+.login-form .form-input label {
+  display: none;
+}
+.passRecovery p {
+  font-size: 16px;
+  line-height: 22px;
+  text-decoration-line: underline;
+  margin-bottom: 36px;
+  text-align: center;
 }
 .login-form .submit-button {
   background: #FFC700;
@@ -183,10 +217,11 @@ div,input {
   width: 300px;
   height: 56px;
   border: 0;
+  text-transform: uppercase;
 }
-.lost-password {
-  margin-bottom: 36px;
-  text-align: center;
+.login-form .submit-button.disabled {
+  background: #E4E7EB;
+  color: #A5AEBC;
 }
 .media-login {
   margin-bottom: 36px;

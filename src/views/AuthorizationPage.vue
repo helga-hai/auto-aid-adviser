@@ -15,24 +15,15 @@
           <router-link to="/register">Register</router-link> -->
           <!-- <p><navigation-link url="login">Вхід</navigation-link><span>|</span><span>Реєстрація</span></p> -->
 
-            <div class="mode active"><span id="login" @click="toggler=true">Вхід</span></div>
-            <div class="divider"><span>&nbsp;|&nbsp;</span></div>
-            <div class="mode"><span id="registrtion" @click="toggler=false">Реєстрація</span></div>
+            <div class="mode step" :class="{'active': toggler}"><span id="login" @click="toggler=true">Вхід</span></div>
+            <div class="divider step"><span>&nbsp;|&nbsp;</span></div>
+            <div class="mode" :class="{'active': !toggler}"><span id="registrtion" @click="toggler=false">Реєстрація</span></div>
         </div>
           <div id='logRegContainer'>
             <login-page v-if="toggler"/>
             <register-page v-else/>
           </div>
- 
-              <p>Увійти за допомогою соцмереж</p>
-        <ul class="social-providers">
-          <li>
-            f
-          </li>
-          <li>
-            G
-          </li>
-        </ul>
+
        <!-- </div> -->
       <!-- </div> -->
   </div>
@@ -66,12 +57,27 @@ export default {
 
 <style scoped>
 
+* {
+  box-sizing: border-box;
+}
+ul {
+  list-style-type: none; 
+  margin: 0;
+  padding: 0;
+} 
+a {
+  text-decoration: none;
+  cursor: pointer;  
+}
+body,
+#app {
+  font-family: 'Roboto', sans-serif;
+}
 button{
   border: 1px solid #000;
   border-radius: 4px;
 
 }
-
 .btn{
   width: 180px;
   height: 55px;
@@ -87,12 +93,15 @@ a.button.orange {
   display: block;
   text-align: center;
   line-height: 60px;
-  font-family: Roboto;
   border-radius: 4px;
   background-color: #FFC700;
 }
 
 .modal-login-registration {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
   padding: 32px 50px;
   width: 400px;
   position: absolute;
@@ -107,42 +116,27 @@ a.button.orange {
 .modal-login-registration.active-modal {
   right: 0;
 }
-.close-x {
-  display: flex;
-  justify-content: flex-end;
-}
-.close-x .close {
-  display: block;
-  width: 15px;
-  height: 15px;
-}
-.close:hover {
-  cursor: pointer;
-}
 .entrance {
-  margin-top: 43px;
   display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-content: center;
-  flex-direction: row !important;
-
-}
-.entrance .mode, .entrance .divider {
-  display: flex;
-  align-content: center;
-}
-.entrance .mode span {
-  font-family: Roboto;
-  font-style: normal;
+  margin-top: 57px;
   font-weight: 500;
   font-size: 24px;
-  color: #0E1E2E;
-  opacity: 0.5;
+  line-height: 24px;
+  color: rgba(14,30,46,0.5);
 }
-.entrance .mode.active {
-  opacity: 1;
+.entrance .step {
+  padding-right: 26px;
 }
-.login-form {
+.entrance .mode.active{
+  color: rgba(14,30,46, 1);
+}
+.entrance .mode {
+  cursor: pointer;
+}
+/*.login-form {
   margin-top: 26px;
 }
 .login-form .form-input {
@@ -183,5 +177,5 @@ a.button.orange {
 
 span#registrtion, span#login{
   cursor: pointer;
-}
+}*/
 </style>
