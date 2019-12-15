@@ -16,6 +16,8 @@ import AboutPage from '../views/About';
 import CreatePage from '../views/CreatePage';
 import CreatePage2 from '../views/CreatePage2';
 import CreatePage3 from '../views/CreatePage3';
+import CreatePage4 from '../views/CreatePage4';
+import CreatePage5 from '../views/CreatePage5';
 
 
 
@@ -44,6 +46,8 @@ export const router = new Router({
         { path: '/create', component: CreatePage },
         { path: '/create2', component: CreatePage2 },
         { path: '/create3', component: CreatePage3 },
+        { path: '/create4', component: CreatePage4 },
+        { path: '/create5', component: CreatePage5 },
 
 
         //test path
@@ -61,7 +65,7 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
 
-    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/user/activation'];
+    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
 
     const authRequired = !publicPages.includes(to.path);
 
