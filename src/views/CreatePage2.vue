@@ -5,6 +5,7 @@
             <p>Наразі у вас немає об’єктів.</p>
             <p>Якщо бажаєте, то можемо створити новий об’єкт саме зараз.</p>         
             <span><a href="#" class="objects__button" @click="createStepOne">Додати об'єкт</a></span>
+            <card-min/>
         </div>
         <div class="Image">
             <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/illustration1.jpg')+')'}"></div>
@@ -14,10 +15,12 @@
 
 <script>
 import BusinessLayout from "@/layouts/BusinessLayout";
+import CardMin from "../components/cardMin";
 export default {
     name: 'CreatePage2',
     components: {
         BusinessLayout,
+        CardMin
     },
     methods: {
         createStepOne() {
