@@ -4,17 +4,17 @@
             <img src="../assets/aaa_logo.svg"/> 
         </div>   
         <div class="header__nav">
-            <router-link to="/">Пошук</router-link>
+            <router-link to="/"><img src="../assets/ico-search.png"/></router-link>
             <router-link to="/about">Про нас</router-link>
             <span class="header__lang">Укр </span> 
             <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
             <div class="enterRegExit">
                 <span v-if="ifToken()===true && isLog" @click="logout" id='logout'>Вихід</span>
-                <a href="#" @click="loginShowFunc" v-if="ifToken()===false&&!isLog">Вхід / Реєстрація</a>
+                <a href="#" @click="loginShowFunc" v-if="ifToken()===false&&!isLog">Вхід</a>
             </div>
             
 
-            <router-link to="/create">Особистий кабінет</router-link>
+            <!--<router-link to="/create">Особистий кабінет</router-link> -->
             <!-- <a href="#" @click="loginShowFunc">Вхід / Реєстрація</a>
             <router-link to="/create">Особистий кабінет</router-link> -->
         </div>
@@ -62,8 +62,10 @@ export default {
 .header {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    justify-content: space-between;
     align-items: center;
+    height: 80px;
+    padding: 0px 50px;
     &__privat {
         background: #0E1E2E;
         color: #0E1E2E;
@@ -100,11 +102,26 @@ export default {
     padding: 0 30px;
     display:inline-block;
     height: 56px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;  
     font-size: 16px;
-    line-height: 56px;
+    line-height: 19px;
+    //margin-left: auto;
+    //display: inline-block;
+    //align-self: flex-start;
 }
-.header__nav a {
+
+.header__nav a, .header__lang {
+    // padding: 0 30px;
+    // display: inline-block;
+    // height: 56px;
+    // font-size: 16px;
+    // line-height: 56px;
     text-decoration: none;
+    color: #6F7E95;
+    margin-left: 40px;
 }
 .header__nav a.router-link-exact-active {
   color: #42b983;

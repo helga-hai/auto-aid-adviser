@@ -41,12 +41,12 @@
 
       <label for="email" >E-Mail Address</label>
       <div class="form-input">
-          <input id="email" type="email" v-model="email" required>
+          <input id="email" placeholder="E-mail" type="email" v-model="email" required>
       </div>
 
       <label for="password">Password</label>
       <div class="form-input">
-          <input id="password" type="password" v-model="password" required >
+          <input id="password" placeholder="Введіть пароль" type="password" v-model="password" required >
           <span id='checkPass'></span>
       </div>
 
@@ -54,15 +54,15 @@
 
       <label for="password-confirm">Confirm Password</label>
       <div class="form-input">
-          <input id="password-confirm" type="password" v-model="password_confirmation" required>
+          <input id="password-confirm" placeholder="Повторіть пароль" type="password" v-model="password_confirmation" required>
           <span id='checkPass_Conf'></span>
       </div>
-      <checkbox-component title="if Business owner" id="role" true-value="ROLE_BUSINESS" false-value="ROLE_USER" @toggleFunc='toggleFunc' />
+      <checkbox-component class="accept" title="Я власник бизнесу" id="role" true-value="ROLE_BUSINESS" false-value="ROLE_USER" @toggleFunc='toggleFunc' />
+      <p class="acceptText">Натискаючи кнопку ви погоджуєтесь з
+        <router-link to="/">Умовами використання</router-link>
+      </p>
       <div>
-          <button class="form-input submit-button" type="submit">Register</button>
-      </div>
-      <div class="lost-password">
-          <a href="#">Забули пароль?</a>
+          <button class="form-input submit-button disabled" type="submit">зареєструватися</button>
       </div>
     </form>
   </div>
@@ -154,7 +154,7 @@ export default {
 
 <style scoped>
 
-button{
+/*button{
   border: 1px solid #000;
   border-radius: 4px;
 }
@@ -187,7 +187,7 @@ div,input {
   padding: 32px 50px;
   width: 400px;
   position: absolute;
-  /* left: auto; */
+  /* left: auto; 
   right: -400px;
   top: 0;
   bottom: 0px;
@@ -230,9 +230,12 @@ div,input {
 }
 .entrance .mode.active {
   opacity: 1;
-}
+} */
 .login-form {
-  margin-top: 26px;
+  margin-top: 38px;
+}
+.login-form label {
+  display: none;
 }
 .login-form .form-input {
   margin-bottom: 36px;
@@ -243,6 +246,29 @@ div,input {
   padding-left: 16px;
   border: 1px solid #6F7E95;
   border-radius: 4px;
+  font-size: 16px;
+  line-height: 22px;
+  color: #0E1E2E;
+}
+::-webkit-input-placeholder {
+  font-size: 16px;
+  line-height: 18px;
+  color:#A5AEBC;
+}
+::-moz-placeholder {
+  font-size: 16px;
+  line-height: 18px;
+  color:#A5AEBC;
+}/* Firefox 19+ */
+:-moz-placeholder {
+  font-size: 16px;
+  line-height: 18px;
+  color:#A5AEBC;
+}/* Firefox 18- */
+:-ms-input-placeholder {
+  font-size: 16px;
+  line-height: 18px;
+  color:#A5AEBC;
 }
 .login-form .submit-button {
   background: #FFC700;
@@ -252,10 +278,11 @@ div,input {
   width: 300px;
   height: 56px;
   border: 0;
+  text-transform: uppercase;
 }
-.lost-password {
-  margin-bottom: 36px;
-  text-align: center;
+.login-form .submit-button.disabled {
+  background: #E4E7EB;
+  color: #A5AEBC;
 }
 .media-login {
   margin-bottom: 36px;
@@ -264,5 +291,21 @@ div,input {
 .social-providers {
   margin: 0px;
   padding: 0px;
+}
+.accept {
+  text-align: left;
+  font-size: 16px;
+  line-height: 19px;
+  margin-bottom: 38px;
+}
+.acceptText {
+  text-align: left;
+  font-size: 16px;
+  line-height: 22px;
+  margin-bottom: 28px;
+}
+.acceptText a{
+  text-decoration-line: underline;
+  color: #3cccde;
 }
 </style>
