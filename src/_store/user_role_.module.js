@@ -6,11 +6,11 @@ import { userService } from '../_services';
 export const user_data_service = {
     namespaced: true,
     state: {
-        user_data: {
-            id: null,
-            role: null,
+
+            firs_name: null,
+            last_name: null,
             email: null,
-        }
+
     },
     actions: {
         getData(){

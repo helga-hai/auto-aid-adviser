@@ -1,14 +1,15 @@
 <template>
   <div>
       <h1>
-          <nav-component/>
+          <!-- <nav-component/> -->
           Hello, I am: {{role}}{{info()}}
       </h1>
       <h1>
-          e-mail:{{email}}
+          e-mail:{{email()}}
       </h1>
-        <user-create-page2 v-if="step1" @stepOneFunction="stepOneFunction"/>
-      <user-create-page1 v-if="step2"/>
+      <user-create-page1/>
+        <!-- <user-create-page2 v-if="step1" @stepOneFunction="stepOneFunction"/>
+      <user-create-page1 v-if="step2"/> -->
   </div>
 </template>
 
@@ -30,13 +31,13 @@ export default {
     data(){
         return {
             role: this.$store.state.authentication.role,
-            email: this.$store.state.authentication.email,
+            email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
             info: function(){
                 
                 console.log(this.$store.state.authentication.email)         /////test
                 console.log(this.$store.state.authentication.role)         /////test
                 let role = this.$store.state.authentication.role;
-                let email = this.$store.state.authentication.email;
+                let email = this.$store.state.authentication.email||localStorage.getItem('email');
                 return {role, email};
 
                 // return this.$store.state.authentication.role, this.$store.state.authentication.email;

@@ -22,7 +22,7 @@
                         </a>
                     </div>
                 </li>
-                <li><a href="#">Особистий кабінет</a></li>
+                <li><a href="#" >{{email}}</a></li>
                 <li><a href="#">Вийти</a></li>
             </ul>
         </nav>
@@ -46,6 +46,20 @@
     </footer>
     </div>
 </template>
+
+
+<script>
+export default {
+    props:['email'],
+    data(){
+        return{
+
+        }
+    }
+
+}
+
+</script>
 
 <style>
 /*  TOP MENU  */
