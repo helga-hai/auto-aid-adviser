@@ -125,6 +125,7 @@ function login(email, password) {
             console.log(JSON.stringify(user));
 
             localStorage.setItem('token', JSON.stringify(user.token));
+            localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
             console.log(JSON.stringify(user.role));
 
             return user;
@@ -143,6 +144,7 @@ function logout() {
     // localStorage.removeItem('user');
     console.log('localStor: ' + localStorage);
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
 
 }
 

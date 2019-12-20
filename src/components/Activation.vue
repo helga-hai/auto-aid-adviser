@@ -58,6 +58,7 @@ methods:{
         return respToken})
       .then(function(respToken){
         localStorage.setItem('token',respToken.token)
+        localStorage.setItem('email',respToken.email) ////////email////////////////////////////////
         console.log(respToken.role)
         // this.role = respToken.role;
         // console.log(this.role)
