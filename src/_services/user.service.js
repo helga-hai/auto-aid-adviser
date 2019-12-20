@@ -17,7 +17,7 @@ function getConfig() {
         }
     }
 }
-const config = getConfig()
+const config = getConfig();
 export const userService = {
     config,
     regist,

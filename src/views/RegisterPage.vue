@@ -116,9 +116,9 @@ export default {
       let bigL = /[A-Z]/;
       let letter = /[a-z]/;
       let msg = document.getElementById('checkPass');
-      msg.style.backgroundColor = 'red';
+      msg.style.color = 'red';
       let msg2 = document.getElementById('checkPass_Conf');
-      msg2.style.backgroundColor = 'red';
+      msg2.style.color = 'red';
 
       if(this.password.length<8||this.password.search(numRE)<0||this.password.search(bigL)<0||this.password.search(letter)<0){
         console.log(this.password.search(numRE));
@@ -140,6 +140,7 @@ export default {
       msg.innerText = '';
       msg2.innerText = '';
       this.$store.dispatch("registration/register", data)
+
       };
     },
 
@@ -156,13 +157,7 @@ export default {
 button{
   border: 1px solid #000;
   border-radius: 4px;
-
 }
-
-
-
-
-
 
 .btn{
   width: 180px;
@@ -170,6 +165,7 @@ button{
   position: relative;
   top: 26px;
 }
+
 a.button.orange {
   font-size: 11px;
   text-decoration: none;

@@ -96,7 +96,7 @@ export default {
     align-self: flex-start;
 }
 
-.header__nav a {
+.header__nav a, span.header__lang,#logout {
     padding: 0 30px;
     display:inline-block;
     height: 56px;
@@ -115,4 +115,5 @@ export default {
 #logout{
     cursor: pointer;
 }
+
 </style>
