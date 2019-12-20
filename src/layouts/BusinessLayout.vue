@@ -1,13 +1,13 @@
 <template>
     <div>
     <header>
-        <a href="#" class ="logo">
+        <router-link to="/" class ="logo">
             <img :src="require('../assets/aaa_logo.svg')">
-        </a>
+        </router-link>
         <nav>
             <ul class="topMenu">
-                <li><a href="#">Пошук</a></li>
-                <li><a href="#">Про нас</a></li>
+                <li><router-link to="/"><img src="../assets/ico-search.png"/></router-link></li>
+                <li><router-link to="/about">Про нас</router-link></li>
                 <li class="topMenu__language">
                     <div class="topMenu__selected">
                         <span class="topMenu__langLabel selLabel">Укр</span>
@@ -22,7 +22,7 @@
                         </a>
                     </div>
                 </li>
-                <li><a href="#">Особистий кабінет</a></li>
+                <li><router-link to="/">Вхід</router-link></li>
             </ul>
         </nav>
     </header>
@@ -30,10 +30,10 @@
         <section class="sideBar">
             <p>Особистий кабінет</p>
             <ul>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Особисті данні</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Мої об‘єкти</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Заявки клієнтів</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Налаштування</a></li>
+                <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Особисті данні</router-link></li>
+                <li class="sideBar__list "><router-link to="/create" class="sideBar__button">Мої об‘єкти</router-link></li>
+                <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Заявки клієнтів</router-link></li>
+                <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Налаштування</router-link></li>
             </ul>
         </section>
         <section class="objectsWrapp">
@@ -41,7 +41,13 @@
         </section>
     </main>
     <footer>
+        <a href="#" class ="logoFooter">
+            <img :src="require('../assets/Group 195.png')">
+        </a>
+        <div class="Evo">
+        <img :src="require('../assets/Group 194.png')">
         <p class="footerTitle">2019 Hillel EVO project. Auto Aid Adviser</p>
+        </div>
     </footer>
     </div>
 </template>
@@ -79,7 +85,8 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 24px 50px;
+    height: 80px;
+    padding: 0px 50px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
     background-color:  rgb(255, 255, 255);
     z-index: 3;
@@ -155,13 +162,14 @@ main {
 .sideBar ul {
     padding: 36px 0px 0px 16px;
 }
-.sideBar__list ::before {
+.sideBar__list a::before {
     content: '';
     display: inline-block;
     width: 16px;
     height: 8px;
     background-color: #E4E7EB;
     margin-right: 16px ;
+    border-radius: 3px;
 }
 .sideBar__button {
     display: inline-block;
@@ -171,6 +179,12 @@ main {
 }
 .sideBar__button:hover {
     color: black;
+}
+.sideBar__list a.router-link-exact-active {
+  color: #0E1E2E;
+}
+.sideBar__list a.router-link-exact-active::before {
+    background-color: #FFC700;
 }
 /*content*/
 .objectsWrapp {
@@ -184,14 +198,25 @@ main {
 }
 /*  footer  */
 footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    padding: 29px 50px;
-    text-align: right;
+    height: 80px;
+    padding: 0px 50px;
     background-color: #0E1E2E;
 }
+.Evo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
 .footerTitle {
-    font-size: 16px;
-    line-height: 22px;
+    padding-left:16px;
+    font-size: 12px;
+    line-height: 12px;
     color: #FFFFFF;
 }
 </style>

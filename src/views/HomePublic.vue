@@ -1,49 +1,50 @@
 <template>
   <div class = 'wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
     <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
-    <div class="res" >
-    <div class="one">
-      <label for="">Оберіть тип объекту</label>
-      <!-- <button type="button" name="button" >
-        <div class="selected-option">Аргонна сварка</div>
-        <div class="arrow-down"></div>
-      </button> -->
-      <websocket />
-      <ul class="submenu">
-        <li class="submenu-item"><a href="#">Аргонна сварка</a></li>
-        <li class="submenu-item"><a href="#">item2_2</a></li>
-        <li class="submenu-item"><a href="#">item2_3</a></li>
-      </ul>
-    </div>
+    <main>
+      <div class="res" >
+        <div class="one">
+          <label for="">Що шукаємо</label>
+          <!-- <button type="button" name="button" >
+            <div class="selected-option">Аргонна сварка</div>
+            <div class="arrow-down"></div>
+          </button> -->
+          <websocket />
+          <ul class="submenu">
+            <li class="submenu-item"><a href="#">Аргонна сварка</a></li>
+            <li class="submenu-item"><a href="#">item2_2</a></li>
+            <li class="submenu-item"><a href="#">item2_3</a></li>
+          </ul>
+        </div>
 
-    <div class="two">
-      <label for="">Де шукати</label>
-      <button type="button" name="button">
-        <div class="selected-option">Аргонна сварка</div>
-        <div class="arrow-down"></div>
-      </button>
-      <ul class="sub">
-        <li class="submenu"><a href="#">Аргонна сварка</a></li>
-        <li class="submenu"><a href="#">item2_2</a></li>
-        <li class="submenu"><a href="#">item2_3</a></li>
-      </ul>
-    </div>
-    <div class="btn">
-      <a href="#" class="button orange">Знайти</a>
-    </div>
-    </div>
-
-
+        <div class="two">
+          <label for="">Де шукати</label>
+          <button type="button" name="button">
+            <div class="selected-option">Вказати локацію</div>
+            <div class="arrow-down"></div>
+          </button>
+          <ul class="sub">
+            <li class="submenu"><a href="#">Аргонна сварка</a></li>
+            <li class="submenu"><a href="#">item2_2</a></li>
+            <li class="submenu"><a href="#">item2_3</a></li>
+          </ul>
+        </div>
+        <div class="btn">
+          <a href="#" class="btn__button orange">Знайти</a>
+        </div>
+      </div>
+    </main>
     <div class="modal-login-registration " :class="{'active-modal': loginShow}">
-      <button class="close-x" @click="loginHideFunc">
-        <span class="close">x</span>
-      </button>
-
+      <button class="close-x" @click="loginHideFunc"></button>
       <!-- <div class="entrance"> -->
-
-
-      <div>
         <Authorization></Authorization>
+        <div class="social-providers">
+          <p>Увійти за допомогою соцмереж</p>
+          <div class="social-providers__icons">
+            <router-link to="https://m.facebook.com/"><img src="../assets/fb.png"/></router-link>
+            <router-link to="https://www.google.com.ua/"><img src="../assets/google.png"/></router-link>
+          </div>
+        </div>
         
         <!-- <div class="mode active">
           <span>Вхід</span>
@@ -91,8 +92,7 @@
             G
           </li>
         </ul> -->
-      </div>
-    </div>
+    </div>  
   </div>
 </template>
 
@@ -129,7 +129,27 @@ export default {
 </script>
 
 <style scoped>
-
+* {
+  box-sizing: border-box;
+}
+ul {
+  list-style-type: none; 
+  margin: 0;
+  padding: 0;
+} 
+a {
+  text-decoration: none;
+  cursor: pointer;  
+}
+html,
+body, 
+#app {
+  width: 100%;
+  margin: 0;}
+body,
+#app {
+  font-family: 'Roboto', sans-serif;
+}
 button{
   border: 1px solid #000;
   border-radius: 4px;
@@ -139,37 +159,39 @@ button{
   height: 100vh;
   background-size: cover;
 }
+main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+}
 .res {
-  /*background: url(require('@/assets/backgroundimage.jpg'));*/
-  position: absolute;
-  width: 1131px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 1052px;
   height: 132px;
-  left: 139px;
-  top: 325px;
-  padding: 20px 16px 26px;
-  box-sizing: border-box;
+  padding: 0px 20px;
+  margin-bottom: 80px;
   background: rgba(10, 5, 23, 0.6);
-  mix-blend-mode: normal;
-  backdrop-filter: blur(20px);
-
-display: flex;
-align-content: center;
-
-
-
-border-radius: 8px;
+  border-radius: 8px;
 }
 .one{
-  width: 558px;
+  width: 555px;
 }
 .two{
-  width: 380px;
+  width: 305px;
 }
-.one label {
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 8px;
+.one label, .two label {
   display: block;
+  text-align: left;
+  margin-bottom: 8px;
+  padding-left: 16px;
+  font-size: 16px;
+  line-height: 22px;
+  color: #fff; 
 }
 .one button {
   width: 100%;
@@ -228,15 +250,6 @@ border-top: 8px solid #000;
   cursor: pointer;
 }
 
-
-
-
-.two label {
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 8px;
-  display: block;
-}
 .two button {
   width: 100%;
   height: 56px;
@@ -246,9 +259,11 @@ border-top: 8px solid #000;
   border-color: rgba(10, 5, 23, 0.6);
 }
 .two .selected-option {
+  font-size: 16px;
+  line-height: 22px;
   text-align: left;
-  line-height: 50px;
   max-width: 200px;
+  color: #A5AEBC;
 }
 .two .arrow-down {
   position: absolute;
@@ -262,11 +277,11 @@ content: '';
 display: block;
 margin-top: 10px;
 border: 6px solid transparent;
-border-top: 8px solid #000;
+border-top: 8px solid #00BCD4;
 
 }
 .two.open .arrow-down::after {
- border-bottom: 8px solid #000;
+ border-bottom: 8px solid #00BCD4;
  border-top: none;
 }
 .sub{
@@ -294,37 +309,37 @@ background: #FFF5C0;
 cursor: pointer;
 }
 
-
 .btn{
-  width: 180px;
-  height: 55px;
-  position: relative;
-  top: 26px;
+  margin-top: 29.6px;
 }
-a.button.orange {
-  font-size: 11px;
-  text-decoration: none;
+.btn__button {
+  display:block;
+  width: 146px;
+  height: 56px;
+  padding: 19px 0px;
+  font-size: 16px;
+  line-height: 18px;
   text-transform: uppercase;
-  width: 180px;
-  height: 55px;
-  display: block;
+  color: #0E1E2E;
   text-align: center;
-  line-height: 60px;
-  font-family: Roboto;
   border-radius: 4px;
+}
+.btn__button.orange {
   background-color: #FFC700;
 }
-body{
+/*body{
   width: 800px;
   border: 1px solid;
   height: 100%;
-}
-div,input {
-  box-sizing: border-box;
-}
+}*/
 .modal-login-registration {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
   padding: 32px 50px;
   width: 400px;
+  height: 100vh;
   position: absolute;
   /* left: auto; */
   right: -400px;
@@ -337,71 +352,45 @@ div,input {
 .modal-login-registration.active-modal {
   right: 0;
 }
-.close-x {
-  display: flex;
-  justify-content: flex-end;
-}
-.close-x .close {
-  display: block;
-  width: 15px;
-  height: 15px;
-}
-.close:hover {
+.close-x  {
+  position: absolute;
+  right: 45px;
+  top: 27px;
+  width: 14px;
+  height: 14px;
+  border: none;
   cursor: pointer;
 }
-.entrance {
-  margin-top: 43px;
+.close-x:before, .close-x:after {
+  position: absolute;
+  top: 0px;
+  right: 6px;
+  content: ' ';
+  height: 16px;
+  width: 2px;
+  background-color: #6F7E95;
+}
+.close-x:before {
+  transform: rotate(45deg);
+}
+.close-x:after {
+  transform: rotate(-45deg);
+}
+.social-providers p{
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 22px;
+}
+.social-providers .social-providers__icons {
   display: flex;
-  justify-content: flex-start;
+  flex-direction: row;
+  justify-content: center;
   align-content: center;
 }
-.entrance .mode, .entrance .divider {
-  display: flex;
-  align-content: center;
+.social-providers__icons a{
+  margin-right: 20px;
 }
-.entrance .mode span {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  color: #0E1E2E;
-  opacity: 0.5;
-}
-.entrance .mode.active {
-  opacity: 1;
-}
-.login-form {
-  margin-top: 26px;
-}
-.login-form .form-input {
-  margin-bottom: 36px;
-}
-.login-form .form-input input {
-  width: 300px;
-  height: 56px;
-  padding-left: 16px;
-  border: 1px solid #6F7E95;
-  border-radius: 4px;
-}
-.login-form .submit-button {
-  background: #FFC700;
-  border-radius: 4px;
-  padding-left: 0px;
-  text-align: center;
-  width: 300px;
-  height: 56px;
-  border: 0;
-}
-.lost-password {
-  margin-bottom: 36px;
-  text-align: center;
-}
-.media-login {
-  margin-bottom: 36px;
-  text-align: center;
-}
-.social-providers {
-  margin: 0px;
-  padding: 0px;
+.social-providers__icons a:last-child{
+  margin-right: 0px;
 }
 </style>

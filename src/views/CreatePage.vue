@@ -12,7 +12,7 @@
                             :country="['ua']"
                             id="autocompletePannel"
                             classname="search-input home-input"
-                            placeholder="enter the address"
+                            placeholder="Адреса"
                             :enableGeolocation="enableGeolocation"
                             v-on:placechanged="getAddressData"
                         ></vue-google-autocomplete>
@@ -23,13 +23,13 @@
                     </h3> -->
 
                 </div>
-                <label>Данные обьекта</label>
-                <input type="text" name="title" id="title" placeholder="title">
-                <input type="text" name="phone" id="phone" placeholder="phone">
-                <input type="text" name="site" id="site" placeholder="site">
+                <label>Дані об’єкта</label>
+                <input type="text" name="title" id="title" placeholder="Назва">
+                <input type="text" name="phone" id="phone" placeholder="Телефон">
+                <input type="text" name="site" id="site" placeholder="Сайт (опционально)">
                 <div class="registrStep1__buttons">
-                    <input type="reset" value="Отмена" class="registrStep1__secondaryButton">
-                    <input type="submit" value="Продолжить 1/3" class="registrStep1__primaryButton">    
+                    <input type="reset" value="Відмінити" class="registrStep1__secondaryButton">
+                    <input type="submit" value="Продовжити 1/3" class="registrStep1__primaryButton">    
                 </div>
             </form>
         </div>
@@ -255,7 +255,6 @@ export default {
 }
 .Step1Image__labe {
     width: 673px;
-    height: 100%;
 }
 .registrStep1 {
     padding: 56px 48px 56px 48px;
@@ -283,6 +282,7 @@ export default {
     margin-bottom: 16px;
     border: 1px solid #6F7E95;
     border-radius: 4px;
+    padding: 19px 16px;
 }
 .registrStep1__buttons {
     display: flex;
