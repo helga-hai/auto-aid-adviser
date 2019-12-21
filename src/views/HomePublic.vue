@@ -10,23 +10,27 @@
             <div class="arrow-down"></div>
           </button> -->
           <websocket />
-          <ul class="submenu">
+          <!-- <ul class="submenu">
             <li class="submenu-item"><a href="#">Аргонна сварка</a></li>
             <li class="submenu-item"><a href="#">item2_2</a></li>
             <li class="submenu-item"><a href="#">item2_3</a></li>
-          </ul>
+          </ul>-->
         </div>
 
         <div class="two">
           <label for="">Де шукати</label>
-          <button type="button" name="button">
-            <div class="selected-option">Вказати локацію</div>
-            <div class="arrow-down"></div>
+          <button type="button" name="button" @click = "submenuShow = !submenuShow">
+            <div class="selected-option">{{plase}}</div>
+            <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon":class="{'transform': submenuShow}">
           </button>
-          <ul class="sub">
-            <li class="submenu"><a href="#">Аргонна сварка</a></li>
-            <li class="submenu"><a href="#">item2_2</a></li>
-            <li class="submenu"><a href="#">item2_3</a></li>
+          <ul class="two_submenu" :class="{'opened': submenuShow}">
+            <li class="two_submenuItem1 flex" @click = "submenuShow = !submenuShow">
+              <p>Moe місцезнаходження</p>
+               <img :src="require('../assets/XMLID 1.png')">
+            </li>
+            <li class="two_submenuItem2" @keyup.enter = "addPlace">
+              <input type = "text" placeholder = "Вказати адресу" v-model="selected" >
+            </li>
           </ul>
         </div>
         <div class="btn">
@@ -114,10 +118,16 @@ export default {
     data () {
       return {
         loginShow: false,
-        registerShow: false
+        registerShow: false,
+        submenuShow: false,
+        plase: "Вказати локацію"
       }
     },
     methods: {
+      addPlace() {
+        this.plase =  this.selected,
+        this.submenuShow = !this.submenuShow
+      },
       loginShowFunc() {
         this.loginShow = true
       },
@@ -178,11 +188,12 @@ main {
   background: rgba(10, 5, 23, 0.6);
   border-radius: 8px;
 }
-.one{
+ .one{
   width: 555px;
 }
 .two{
   width: 305px;
+  position: relative;
 }
 .one label, .two label {
   display: block;
@@ -225,7 +236,7 @@ border-top: 8px solid #000;
  border-bottom: 8px solid #000;
  border-top: none;
 }
-.submenu{
+/*.submenu{
  display: none;
   background-color: #fff;
   margin: 0;
@@ -248,13 +259,17 @@ border-top: 8px solid #000;
 .submenu li.selected, .submenu li:hover{
   background: #FFF5C0;
   cursor: pointer;
-}
+}*/
 
 .two button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: 56px;
   position: relative;
-  padding-left: 16px;
+  padding: 0px 16px;
   background-color: #fff;
   border-color: rgba(10, 5, 23, 0.6);
 }
@@ -284,7 +299,7 @@ border-top: 8px solid #00BCD4;
  border-bottom: 8px solid #00BCD4;
  border-top: none;
 }
-.sub{
+/*.sub{
  display: none;
  background-color: #fff;
  margin: 0;
@@ -307,8 +322,41 @@ box-sizing: border-box;
 .sub li.selected, .sub li:hover{
 background: #FFF5C0;
 cursor: pointer;
+}*/
+.two_submenu {
+  visibility: hidden;
+  opacity: 0;
+  position:absolute;
+  left: 2px;
+  top: 100%;
+  transition: 0.5s;
 }
-
+.two_submenuItem1, .two_submenuItem2 input {
+  width:300px;
+  height:48px;
+  background-color: #fff;
+  text-align: left;
+  padding:12px 16px;
+  font-size: 16px;
+  line-height: 24px;
+}
+.two_submenuItem1:hover, .two_submenuItem2 input:hover {
+  background-color: #FFF5C0;
+  color: #0E1E2E;
+}
+.two_submenuItem1.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.opened {
+  visibility: visible;
+  opacity: 1;
+}
+.transform {
+  transform: scale(1, -1); 
+}
 .btn{
   margin-top: 29.6px;
 }
