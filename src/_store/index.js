@@ -8,6 +8,7 @@ import { selfLocation } from './selfLocation.module';
 import { maploader } from './maploader.module';
 import { registration } from './registration.module';
 import { data } from './data.module';
+import { create } from './create.module';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export const store = new Vuex.Store({
         selfLocation,
         maploader,
         registration,
-        data
+        data,
+        create
     }
 });
