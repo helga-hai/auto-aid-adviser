@@ -21,12 +21,11 @@
                     <!-- <h3 class="title is-4">Start typing an address and below you will see found result,
                         <a v-on:click="$refs.vAutoComplete.geolocate()">or force current location</a>
                     </h3> -->
-
                 </div>
                 <label>Дані об’єкта</label>
                 <input type="text" name="title" id="title" placeholder="Назва" @change="setName">
-                <input type="text" name="phone" id="phone" placeholder="Телефон">
-                <input type="text" name="site" id="site" placeholder="Сайт (опционально)">
+                <input type="text" name="phone" id="phone" placeholder="Телефон" @change="setPhone">
+                <input type="text" name="site" id="site" placeholder="Сайт (опционально)" @change="setSite">
                 <div class="registrStep1__buttons">
                     <input type="reset" value="Відмінити" class="registrStep1__secondaryButton">
                     <input type="submit" value="Продовжити 1/3" class="registrStep1__primaryButton">    
@@ -192,9 +191,9 @@ export default {
     },
     update() {
         navigator.geolocate()
-         console.log('navigator')
-         console.log(navigator)
-         console.log(this.$refs.vAutoComplete)
+            console.log('navigator')
+            console.log(navigator)
+            console.log(this.$refs.vAutoComplete)
     },
     created() {
         //do we support geolocation
@@ -205,6 +204,18 @@ export default {
             // this.$store.commit.create.fillName(e.target.value)
             // this.$store.dispatch('create/fillName');
             this.$store.commit('create/fillName', e.target.value)
+            // this.sendObject.name = e.target.value
+        },
+        setPhone(e){
+            // this.$store.commit.create.fillName(e.target.value)
+            // this.$store.dispatch('create/fillName');
+            this.$store.commit('create/fillPhone', e.target.value)
+            // this.sendObject.name = e.target.value
+        },
+        setSite(e){
+            // this.$store.commit.create.fillName(e.target.value)
+            // this.$store.dispatch('create/fillName');
+            this.$store.commit('create/fillSite', e.target.value)
             // this.sendObject.name = e.target.value
         },
         isDoneFunc(e){
