@@ -5,7 +5,7 @@
           Hello, I am: {{role}}{{info()}}
       </h1>
       <h1>
-          e-mail:{{email()}}
+          e-mail:{{email()}}{{menuPos}}{{mePos()}}
       </h1>
       <user-create-page1/>
         <!-- <user-create-page2 v-if="step1" @stepOneFunction="stepOneFunction"/>
@@ -20,13 +20,19 @@ import NavComponent from '../components/NavComponent';
 
 import UserCreatePage1 from '../views/UserCreatePage1';
 import UserCreatePage2 from '../views/UserCreatePage2';
+import UserLayout from '../layouts/UserLayout'
+import userdataservice from '../_store/userdataservice.module'
 
 export default {
     name: 'UserCabPage',
+
     components: {
         NavComponent,
         UserCreatePage1,
-        UserCreatePage2
+        UserCreatePage2,
+        UserLayout,////////////////////////////////////////
+        userdataservice,//////////////////////////////////////////////////////////////////////////
+
     },
     data(){
         return {
@@ -42,6 +48,8 @@ export default {
 
                 // return this.$store.state.authentication.role, this.$store.state.authentication.email;
             },
+            mePos() { console.log(this.$store.state.userdataservice)
+            return this.$store.state.userdataservice},     ///////////////////////////
 
             step1: true,
             step2: false,
@@ -51,8 +59,24 @@ export default {
         stepOneFunction() {
             this.step1 = false;
             this.step2 = true;
-        }
+        },
+
+    },
+
+/////////////////////////////////////////////
+    computed:{
+        menuPos() {
+            return UserLayout.data().mIt
+        },
+    },
+    watch:{
+        menuPos() {
+            return UserLayout.data().mIt
+        },
     }
+
+
+    ////////////////////////////////////////
 }
 </script>
 

@@ -31,10 +31,11 @@
         <section class="sideBar">
             <p>Особистий кабінет</p>
             <ul>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Особисті данні</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Мої автомобілі</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">записи до станції</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Налаштування</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuItem()" >Особисті данні</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuItem()">Мої автомобілі</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuItem()">записи до станції</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuItem()">Налаштування</a></li>
+                <li>text: {{mIt}}</li>
             </ul>
         </section>
         <section class="objectsWrapp">
@@ -53,9 +54,18 @@ export default {
     props:['email'],
     data(){
         return{
-
+            mIt:"Особисті данні",
         }
-    }
+    },
+    methods:{
+        menuItem(){
+            console.log(document.activeElement.innerText)
+            this.mIt=document.activeElement.innerText;
+
+            this.$store.dispatch('userdataservice/menuVal',document.activeElement.innerText);
+            // return document.activeElement.innerText;
+        }
+    },
 
 }
 
