@@ -3,13 +3,13 @@
 import { authHeader, router } from '../_helpers';
 import { userService } from '../_services';
 
-export const user_data_service = {
+export const userdataservice = {
     namespaced: true,
     state: {
 
-            firs_name: null,
-            last_name: null,
-            email: null,
+        firsName: null,
+        lastName: null,
+        menuItem: null,
 
     },
     actions: {
@@ -23,7 +23,7 @@ export const user_data_service = {
                 return fetch(`${userService.config.apiUrl}/users`, requestOptions)
                 .then(userService.handleResponse);
             
-        }
+        },
         // getAll({ commit }) {
         //     commit('getAllRequest');
 
@@ -33,10 +33,19 @@ export const user_data_service = {
         //             error => commit('getAllFailure', error)
         //         );
         // }
+        menuVal({ commit },val){
+            // console.log(data);
+            commit('changeItem',val);
+        }
     },
+
     mutations: {
-        setData(state, resp){
-            return state.user_data.role.resp.role = resp.role;
+        changeItem(state,val){
+            // console.log(data);
+            state.menuItem = val;
+        },
+        // setData(state, resp){
+        //     return state.user_data.role.resp.role = resp.role;
                 // {
                 //     id: resp.id,
                 //     role: resp.role,
@@ -53,5 +62,5 @@ export const user_data_service = {
         // getAllFailure(state, error) {
         //     state.all = { error };
         // }
-    }
+    // }
 };
