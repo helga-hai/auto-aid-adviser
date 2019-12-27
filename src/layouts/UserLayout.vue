@@ -23,7 +23,7 @@
                     </div>
                 </li>
                 <li><a href="#" >{{email}}</a></li>
-                <li><a href="#">Вийти</a></li>
+                <li><a href="#"><router-link to="/">Вийти</router-link></a></li>
             </ul>
         </nav>
     </header>
@@ -31,8 +31,8 @@
         <section class="sideBar">
             <p>Особистий кабінет</p>
             <ul>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Особисті данні</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Мої автомобілі</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuChoose">Особисті данні</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuChoose">Мої автомобілі</a></li>
                 <li class="sideBar__list "><a href="#" class="sideBar__button">записи до станції</a></li>
                 <li class="sideBar__list "><a href="#" class="sideBar__button">Налаштування</a></li>
             </ul>
@@ -55,7 +55,13 @@ export default {
         return{
 
         }
-    }
+    },
+    methods: {
+        menuChoose() {
+            console.log("foo");
+            this.$emit('menuToggler')
+        }
+    },
 
 }
 

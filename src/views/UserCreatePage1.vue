@@ -3,38 +3,22 @@
         <div class="registrStep1">
             <h1>Особисті дані</h1>
             <form>
-                <div class="registrStep1__address">
-                    
-                    <div class="auto-complete-input" slot="acompl" v-if="isDone">
-                        <vue-google-autocomplete 
-                            ref="vAutoComplete"
-                            :country="['ua']"
-                            id="autocompletePannel"
-                            classname="search-input home-input"
-                            placeholder="enter the address"
-                            :enableGeolocation="enableGeolocation"
-                            v-on:placechanged="getAddressData"
-                        ></vue-google-autocomplete>
-                        {{sendObject}}<br><br>
-                    </div>
-                    <!-- <h3 class="title is-4">Start typing an address and below you will see found result,
-                        <a v-on:click="$refs.vAutoComplete.geolocate()">or force current location</a>
-                    </h3> -->
-
-                </div>
-                    <label>Контактні дані</label>
-                    <input type="text" name="surname" id="surname" placeholder="Прізвище">
-                    <input type="text" name="name" id="name" placeholder="Ім'я">
-                    <input type="text" name="phone" id="phone" placeholder="Телефон">
-                    <input type="e-mail" name="e-mail" id="e-mail" placeholder="e-mail" :value='email()'>
+                <label>Контактні дані</label>
+                <input type="text" name="surname" id="surname" placeholder="Прізвище" v-model="surname" required>
+                <input type="text" name="name" id="name" placeholder="Ім'я" v-model="name" required>
+                <input type="text" name="phone" id="phone" placeholder="Телефон" v-model="phone">
+                <input type="e-mail" name="e-mail" id="e-mail" placeholder="e-mail" :value='email()'>
+                <div class="avatar">
+                    <p><span>Додати аватар</span></p>
                     <div class="photo">
-                    <label>Додати аватар</label>
+                        <label>+ фото</label>
+                    </div>
+                    <p><span>розмір файлу до 500Кб кожна</span></p>
                 </div>
-
                 <label>Змінити пароль</label>
-                <input type="password" name="oldPassword" id="oldPassword" placeholder="Існуючий пароль">
-                <input type="password" name="newPassword" id="newPassword" placeholder="Новий пароль">
-                <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Підтвердження нового паролю">
+                <input type="password" name="oldPassword" id="oldPassword" placeholder="Існуючий пароль" v-model="oldPassword">
+                <input type="password" name="newPassword" id="newPassword" placeholder="Новий пароль" v-model="newPassword">
+                <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Підтвердження нового паролю" v-model="confirmPassword">
 
                 <div class="registrStep1__buttons">
 
@@ -47,32 +31,23 @@
 </template>
 
 <script>
+
 import UserLayout from "@/layouts/UserLayout";
-
-
-// import TravelMap from '@/components/TravelMap.vue';
-// import GoogleMapLoader from "../components/GoogleMapLoader";
-// import GoogleMapMarker from "../components/GoogleMapMarker";
-// import { mapSettings } from "@/constants/mapSettings";
-// import VueGoogleAutocomplete from 'vue-google-autocomplete';
 
 export default {
     name: 'UserCreatePage1',
 
     components: {
         UserLayout,
-        // TravelMap,
-        // GoogleMapLoader,
-        // GoogleMapMarker,
-        // GoogleMapLine,
-        // VueGoogleAutocomplete,
     },
     data() {
         return {
-
-            
-            isDone: false,
-
+            surname:"",
+            name:"",
+            phone:"",
+            oldPassword:"",
+            newPassword:"",
+            confirmPassword:"",
             email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
         }
     },
@@ -160,5 +135,15 @@ export default {
     color: #000000;
     border: none;
     border-radius: 4px;
+}
+.photo{
+    height: 120px;
+    width: 100px;
+    border: 3px dashed #6F7E95;
+    border-radius: 4px;
+    margin: 15px 0px
+}
+div.avatar{
+    margin: 15px 0 15px 0;
 }
 </style>
