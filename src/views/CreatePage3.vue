@@ -173,17 +173,17 @@ export default {
 /* step02.css */
 .registrStep2 {
     width: 100%;
-    padding: 56px 48px 56px 48px;
+    padding: 64px 48px 64px 48px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
 }
 .registrStep2 h1 {
-    margin-bottom: 34px;
+    margin-bottom: 64px;
     font-weight: 500;
     font-size: 24px;
-    line-height: 36px;
+    line-height: 28px;
 }
 .registrStep2 p {
     padding: 28px 0px;
