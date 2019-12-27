@@ -68,7 +68,7 @@ export const registration = {
         },
 
         auth_request(state) {
-            console.log('loading')
+            console.log('loading');
             state.status = 'loading';
         },
         auth_success(state, // token, 
