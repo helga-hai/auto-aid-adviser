@@ -16,7 +16,7 @@
                             :enableGeolocation="enableGeolocation"
                             v-on:placechanged="getAddressData"
                         ></vue-google-autocomplete>
-                        {{sendObject}}<br><br> 
+                        <!-- {{sendObject}}<br><br>  -->
                     </div>
                     <!-- <h3 class="title is-4">Start typing an address and below you will see found result,
                         <a v-on:click="$refs.vAutoComplete.geolocate()">or force current location</a>
@@ -32,6 +32,7 @@
                 </div>
             </form>
         </div>
+        <h1>{{ele}}</h1>
         <div class="Step1Image">your here: {{location.position}}
             <div class="Step1Image__labe" >
                 <div v-if="gettingLocation">loading...</div>
@@ -89,6 +90,7 @@ export default {
             acLatLng:{},//store
             isDone: false,
             enableGeolocation: true,
+            ele: this.$store.state.create.sendObject,
             location: this.$store.state.selfLocation.location,
             groups: ['СТО','Шиномонтаж','Мойка'],
             curMarker: {

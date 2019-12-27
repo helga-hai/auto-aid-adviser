@@ -41,7 +41,7 @@ export const create = {
         },
     },
     getters: {
-        sendObject: state => {
+        SendObject: state => {
             return state.sendObject
         },
         
@@ -60,7 +60,7 @@ export const create = {
     mutations: {
         fillName(state, payload) {
             console.log('payload',payload)
-            state.sendObject.contact.phone = payload
+            state.sendObject.name = payload
         },
         // fillLocation(state, payload){
         //     state.sendObject.location.address = payload
@@ -68,13 +68,13 @@ export const create = {
         //     state.sendObject.location.longitude = payload
         // },
         fillPhone(state, payload){
-            console.log('phoneNamber',payload, state.contact)
-            state.sendObject.phone = payload
+            console.log('phoneNamber',payload)
+            state.sendObject.contact.phone = payload
         },
         fillSite(state, payload){
             console.log('site',payload)
             state.sendObject.contact.site = payload
-            console.log(state.sendObject.contact.site)
+            // console.log(state.sendObject.contact.site)
         },
         getAddressData(state, {addressData, placeResultData, id}) {
             console.log('STORE getAddressData',{addressData, placeResultData, id})
