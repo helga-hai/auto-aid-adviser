@@ -8,7 +8,7 @@
             <card-min/>
         </div>
         <div class="Image">
-            <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/illustration1.jpg')+')'}"></div>
+            <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/serevice.svg')+')'}"></div>
         </div>
     </business-layout>
 </template>
@@ -67,8 +67,9 @@ export default {
     padding: 56px 50px 0px 0px;
 }
 .Image__labe {
-    width: 516px;
-    height: 377px;
+    width: 409px;
+    height: 250px;
+    background-repeat: no-repeat;
   
 }
 </style>
