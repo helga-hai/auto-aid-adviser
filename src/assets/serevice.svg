@@ -1,0 +1,25 @@
+<svg width="409" height="250" viewBox="0 0 409 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="409" height="250" fill="white"/>
+<circle cx="168" cy="144" r="74" fill="#FFC700"/>
+<ellipse cx="320.5" cy="136" rx="22.5" ry="24" fill="#FFC700"/>
+<circle cx="93.6543" cy="76" r="10" fill="#FFC700"/>
+<path d="M105 51L119 51V224H105V51Z" stroke="#0E1E2E" stroke-width="6"/>
+<path d="M294 51L308 51L308 224H294V51Z" stroke="#0E1E2E" stroke-width="6"/>
+<path d="M79 224V216.916L105 205.581V224H79Z" stroke="#0E1E2E" stroke-width="6"/>
+<path d="M334 224V216.916L308 205.581V224H334Z" stroke="#0E1E2E" stroke-width="6"/>
+<line x1="120" y1="167" x2="293" y2="167" stroke="#0E1E2E" stroke-width="6"/>
+<line x1="147" y1="169" x2="147" y2="156" stroke="#0E1E2E" stroke-width="6"/>
+<line x1="164" y1="168" x2="164" y2="157" stroke="#0E1E2E" stroke-width="6"/>
+<line x1="265" y1="169" x2="265" y2="156" stroke="#0E1E2E" stroke-width="6"/>
+<line y1="-3" x2="11" y2="-3" transform="matrix(0 -1 -1 0 245 168)" stroke="#0E1E2E" stroke-width="6"/>
+<line x1="180" y1="141" x2="180" y2="130" stroke="#0E1E2E" stroke-width="6"/>
+<line y1="-3" x2="11" y2="-3" transform="matrix(0 -1 -1 0 229 141)" stroke="#0E1E2E" stroke-width="6"/>
+<rect x="143" y="143" width="126" height="11" rx="5.5" stroke="#0E1E2E" stroke-width="6"/>
+<rect x="175" y="114" width="62" height="15" rx="7" stroke="#0E1E2E" stroke-width="6"/>
+<circle cx="155" cy="121" r="7" stroke="#0E1E2E" stroke-width="6"/>
+<circle cx="257" cy="121" r="7" stroke="#0E1E2E" stroke-width="6"/>
+<path d="M269 149L275.662 141.958C279.753 137.635 282.166 131.993 282.469 126.049L282.662 122.272C283.39 107.984 272.001 96 257.694 96H154.323C140.01 96 128.619 107.994 129.356 122.288L129.525 125.568C129.832 131.506 132.245 137.141 136.332 141.461L143 148.509" stroke="#0E1E2E" stroke-width="6"/>
+<path d="M168.613 65.6527C170.35 61.6158 174.323 59 178.717 59H233.283C237.677 59 241.65 61.6158 243.387 65.6527L256.443 96H155.557L168.613 65.6527Z" stroke="#0E1E2E" stroke-width="6"/>
+<line x1="120" y1="133" x2="132" y2="133" stroke="#0E1E2E" stroke-width="6"/>
+<line x1="280" y1="133" x2="292" y2="133" stroke="#0E1E2E" stroke-width="6"/>
+</svg>

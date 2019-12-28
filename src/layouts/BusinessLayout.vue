@@ -65,7 +65,7 @@ ul {
 a {
     text-decoration: none;
     cursor: pointer; 
-    color: #4B5E7A; }
+    color: #fff; }
 html,
 body, 
 #app {
@@ -161,6 +161,9 @@ main {
 }
 .sideBar ul {
     padding: 36px 0px 0px 16px;
+}
+.sideBar__list a{
+    color: #0E1E2E;
 }
 .sideBar__list a::before {
     content: '';

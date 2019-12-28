@@ -177,7 +177,7 @@ export default {
     position: absolute;
     background: white;
     box-shadow: 1px 1px 3px #ccc;
-    position: relative;
+    // position: relative;
     &_item {
       padding: 6px 17px;
       width: 100%;

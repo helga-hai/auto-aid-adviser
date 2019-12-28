@@ -190,6 +190,7 @@ main {
 }
  .one{
   width: 555px;
+  position: relative;
 }
 .two{
   width: 305px;
