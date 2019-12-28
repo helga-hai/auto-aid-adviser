@@ -23,7 +23,7 @@
                         <div class="registrStep2__checkAll">
                             <label for="All"><input type="checkbox" id="All" value="Обрати все">Обрати все</label>
                         </div>
-                        <div class="registrStep2__check">
+                        <div class="registrStep2__check" >
                             <div class ="registrStep2__column1">
                                 <label for="oil"><input type="checkbox" id="oil" value="Замена масла в двигателе" checked>Замена масла в двигателе</label>
                                 <label for="diagnostics"><input type="checkbox" id="diagnostics" value="Компьютерная диагностика" >Компьютерная диагностика</label>
@@ -129,7 +129,7 @@
                 <hr>
                 <div class="registrStep2__buttons">
                     <input type="reset" value="Отмена" class="registrStep2__secondaryButton">
-                    <input type="submit" value="Продолжить 2/3" class="registrStep2__primaryButton">    
+                    <input type="submit" value="Продолжить 2/3" class="registrStep2__primaryButton" @click="createStepThree">    
                 </div>
 
         </div>  
@@ -165,7 +165,12 @@ export default {
             // service_types_byid: {"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}, //   http://localhost:8080/api/catalog/service_types/3   GET
             // services_3: [{"id":7,"name":"oil change 2","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":19,"name":"oil change 5","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":31,"name":"oil change 8","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":3,"name":"oil change 1","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":15,"name":"oil change 4","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":27,"name":"oil change 7","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":11,"name":"oil change 3","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":23,"name":"oil change 6","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}}], //   http://localhost:8080/api/catalog/service_types/3/services   GET
         }
-    }
+    },
+    methods: {
+        createStepThree() {
+            this.$emit('stepThreeFunction')
+        }
+    },
 }
 </script>
 

@@ -25,6 +25,7 @@ export const userService = {
     logout,
     getAll,
     successRegist,
+    getAllBusinessDate,
 
     activate,
 
@@ -155,6 +156,16 @@ function getAll() {
     };
 
     return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+}
+
+
+function getAllBusinessDate(path) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader.authHeader
+    };
+
+    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

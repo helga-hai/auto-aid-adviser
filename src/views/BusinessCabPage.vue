@@ -27,7 +27,10 @@ export default {
     components: {
         NavComponent,
         CreatePage2,
-        CreatePage
+        CreatePage,
+        CreatePage3,
+        CreatePage4,
+        CreatePage5
     },
     data(){
         return {
@@ -42,32 +45,23 @@ export default {
     methods: {
         stepOneFunction() {
             this.step1 = false;
-            this.step2 = true
-            this.step3 = false;
-            this.step4 = false;
-            this.step5 = false;
+            this.step2 = true;
         },
         stepTwoFunction() {
-            this.step1 = false;
             this.step2 = false
             this.step3 = true;
-            this.step4 = false;
-            this.step5 = false;
         },
         stepThreeFunction() {
-            this.step1 = false;
-            this.step2 = false
             this.step3 = false;
             this.step4 = true;
-            this.step5 = false;
         },
         stepFourFunction() {
-            this.step1 = false;
-            this.step2 = false
-            this.step3 = false;
             this.step4 = false;
             this.step5 = true;
         },
+        stepFiveFunction(){
+
+        }
     }
 }
 </script>
