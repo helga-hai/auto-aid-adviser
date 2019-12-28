@@ -5,19 +5,19 @@
             <img class="registrStep2_img2" src = "../assets/Group 133.png">
             <h1>Реєстрація об’єкту</h1>
                 <p>Выберите из списка типы обслуживаемых автомобилей</p>
-                <div class="registrStep2__types":class="{'opened': typesShow}" >
+                <div class="registrStep2__types" :class="{'opened': typesShow}" >
                     <div  class="registrStep2__typename" @click = "typesShow = !typesShow">
                         <span>Типы авто</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': typesShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': typesShow}">
                     </div>
                     <div class="registrStep2__item"></div>
                 </div>
                 <hr>
                 <p>Выберите из списка основные услуги, которые оказывает обьект</p>
-                <div class="registrStep2__services":class="{'opened': serviceShow}" >
+                <div class="registrStep2__services" :class="{'opened': serviceShow}" >
                     <div  class="registrStep2__servicename" @click = "serviceShow = !serviceShow">
                         <span>Сервисное ТО</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': serviceShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': serviceShow}">
                     </div> 
                     <div class="registrStep2__checkwrapp">
                         <div class="registrStep2__checkAll">
@@ -43,87 +43,87 @@
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': brakeSystShow}" >
+                <div class="registrStep2__services" :class="{'opened': brakeSystShow}" >
                     <div  class="registrStep2__servicename" @click = "brakeSystShow = !brakeSystShow">
                         <span>Тормозная система</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': brakeSystShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': brakeSystShow}">
                     </div>
                 </div>
                 <hr>
-                 <div class="registrStep2__services":class="{'opened': suspensionShow}" >
+                 <div class="registrStep2__services" :class="{'opened': suspensionShow}" >
                     <div  class="registrStep2__servicename" @click = "suspensionShow = !suspensionShow">
                         <span>Подвеска</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': suspensionShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': suspensionShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': steerageShow}" >
+                <div class="registrStep2__services" :class="{'opened': steerageShow}" >
                     <div  class="registrStep2__servicename" @click = "steerageShow = !steerageShow">
                         <span>Рулевое управление</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': steerageShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': steerageShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': enginegeShow}" >
+                <div class="registrStep2__services" :class="{'opened': enginegeShow}" >
                     <div  class="registrStep2__servicename" @click = "enginegeShow = !enginegeShow">
                         <span>Двигатель</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': enginegeShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': enginegeShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': wiringShow}" >
+                <div class="registrStep2__services" :class="{'opened': wiringShow}" >
                     <div  class="registrStep2__servicename" @click = "wiringShow = !wiringShow">
                         <span>Электрика</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': wiringShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': wiringShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': exhaustShow}" >
+                <div class="registrStep2__services" :class="{'opened': exhaustShow}" >
                     <div  class="registrStep2__servicename" @click = "exhaustShow = !exhaustShow">
                         <span>Выхлопная система</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': exhaustShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': exhaustShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': clutchShow}" >
+                <div class="registrStep2__services" :class="{'opened': clutchShow}" >
                     <div  class="registrStep2__servicename" @click = "clutchShow = !clutchShow">
                         <span>Сцепление</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': clutchShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': clutchShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': transmissionShow}" >
+                <div class="registrStep2__services" :class="{'opened': transmissionShow}" >
                     <div  class="registrStep2__servicename" @click = "transmissionShow = !transmissionShow">
                         <span>Трансмиссия</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': transmissionShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': transmissionShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': climateShow}" >
+                <div class="registrStep2__services" :class="{'opened': climateShow}" >
                     <div  class="registrStep2__servicename" @click = "climateShow = !climateShow">
                         <span>Климат-контроль</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': climateShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': climateShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': carcassShow}" >
+                <div class="registrStep2__services" :class="{'opened': carcassShow}" >
                     <div  class="registrStep2__servicename" @click = "carcassShow = !carcassShow">
                         <span>Кузов</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': carcassShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': carcassShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': gasShow}" >
+                <div class="registrStep2__services" :class="{'opened': gasShow}" >
                     <div  class="registrStep2__servicename" @click = "gasShow = !gasShow">
                         <span>ГБО</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': gasShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': gasShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': extraShow}" >
+                <div class="registrStep2__services" :class="{'opened': extraShow}" >
                     <div  class="registrStep2__servicename" @click = "extraShow = !extraShow">
                         <span>Дополнительно</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': extraShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': extraShow}">
                     </div>
                 </div>
                 <hr>

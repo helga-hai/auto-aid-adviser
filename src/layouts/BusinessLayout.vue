@@ -31,7 +31,7 @@
             <p>Особистий кабінет</p>
             <ul>
                 <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Особисті данні</router-link></li>
-                <li class="sideBar__list "><router-link to="/create" class="sideBar__button">Мої об‘єкти</router-link></li>
+                <li class="sideBar__list "><router-link to="/create2" class="sideBar__button">Мої об‘єкти</router-link></li>
                 <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Заявки клієнтів</router-link></li>
                 <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Налаштування</router-link></li>
             </ul>
