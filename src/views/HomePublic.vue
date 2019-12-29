@@ -2,13 +2,22 @@
   <div class = 'wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
     <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
     <main>
+      <!-- /// -->
+      <div v-if="gettingLocation">loading...</div>
+      <div v-else>
+          <travel-map class="guide"
+              ref="mapr"
+              :curMarker="curMarker"
+              @isDoneFunc="isDoneFunc" 
+          />
+      </div>
+      <!-- /// 
+      :mapCenter="curMarker.position" 
+      :address="address" 
+      :curMarker="curMarker"-->
       <div class="res" >
         <div class="one">
           <label for="">Що шукаємо</label>
-          <!-- <button type="button" name="button" >
-            <div class="selected-option">Аргонна сварка</div>
-            <div class="arrow-down"></div>
-          </button> -->
           <websocket />
           <!-- <ul class="submenu">
             <li class="submenu-item"><a href="#">Аргонна сварка</a></li>
@@ -19,17 +28,30 @@
 
         <div class="two">
           <label for="">Де шукати</label>
-          <button type="button" name="button" @click = "submenuShow = !submenuShow">
-            <div class="selected-option">{{plase}}</div>
-            <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon":class="{'transform': submenuShow}">
+          <button type="button" name="button" @click="submenuShow = !submenuShow" v-if="!ac">
+            <div class="selected-option">{{curLoc ? curLoc : plase}}</div>
+            <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon" :class="{'transform': submenuShow}">
           </button>
+          <div class="ac-input" slot="acompl" v-if="isDone && ac" >
+              <vue-google-autocomplete 
+                  ref="vAutoComplete"
+                  :country="['ua']"
+                  id="autocompletePannel"
+                  classname="search-input home-input"
+                  placeholder="Адреса"
+                  
+                  v-on:placechanged="getAddressData"
+              ></vue-google-autocomplete>
+              <!-- {{sendObject}}<br><br>  :enableGeolocation="enableGeolocation"-->
+          </div>
+
           <ul class="two_submenu" :class="{'opened': submenuShow}">
-            <li class="two_submenuItem1 flex" @click = "submenuShow = !submenuShow">
+            <li class="two_submenuItem1 flex" @click="chooseMyLocation">
               <p>Moe місцезнаходження</p>
                <img :src="require('../assets/XMLID 1.png')">
             </li>
-            <li class="two_submenuItem2" @keyup.enter = "addPlace">
-              <input type = "text" placeholder = "Вказати адресу" v-model="selected" >
+            <li class="two_submenuItem2" @click="openAutocomplete"><!--@keyup.enter="addPlace"-->
+              <input type="text" placeholder="Вказати адресу" v-model="selected" >
             </li>
           </ul>
         </div>
@@ -101,19 +123,23 @@
 </template>
 
 <script>
+import TravelMap from '@/components/TravelMap.vue';
 import NavComponent from '../components/NavComponent';
 import websocket from '../components/websocket';
 import Authorization from '../views/AuthorizationPage';
 
-import LoginPage from '@/views/LoginPage.vue'
-import RegisterPage from '@/views/RegisterPage.vue'
+import LoginPage from '@/views/LoginPage.vue';
+import RegisterPage from '@/views/RegisterPage.vue';
+import VueGoogleAutocomplete from 'vue-google-autocomplete';
 
 export default {
     name: 'HomePublic',
     components: {
+        TravelMap,
         NavComponent,
         websocket,
         Authorization,
+        VueGoogleAutocomplete,
     },
     data () {
       return {
@@ -121,8 +147,24 @@ export default {
         registerShow: false,
         submenuShow: false,
         plase: "Вказати локацію",
-        selected: ''
+        selected: '',
+        isDone: false,
+        curMarker: {
+            id: "a",
+            position: {
+              "lat": 50.4704839,
+              "lng": 30.3854665
+            },// { lat: 3, lng: 101 }
+            content:'my position now'
+        },
+        curLoc: false,
+        ac: false
       }
+    },
+    computed: {
+        gettingLocation() {
+            return this.$store.state.selfLocation.gettingLocation;
+        },
     },
     methods: {
       addPlace() {
@@ -134,7 +176,37 @@ export default {
       },
       loginHideFunc() {
         this.loginShow = false
-      }
+      },
+      success(pos) {
+        var crd = pos.coords;
+        console.log('Ваше текущее метоположение:');
+        console.log(`Широта: ${crd.latitude}`);
+        console.log(`Долгота: ${crd.longitude}`);
+        console.log(`Плюс-минус ${crd.accuracy} метров.`);
+        this.curLoc = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
+        }
+      },
+      error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      },
+      chooseMyLocation(){
+        const position = navigator.geolocation.getCurrentPosition(this.success, this.error);
+        this.submenuShow = !this.submenuShow;
+      },
+      openAutocomplete(){
+        this.ac = true;
+        this.submenuShow = !this.submenuShow;
+      },
+      getAddressData(addressData, placeResultData, id){
+          this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
+      },
+      isDoneFunc(e){
+          console.log('isDoneFunc') // google map is load 
+          this.isDone=true; // - start autocomplete
+          //this.$refs.vAutoComplete.geolocate(); // - start autocomplete geolocale -not workinfg here
+      },
     }
 }
 </script>
@@ -443,5 +515,17 @@ cursor: pointer;
 }
 .social-providers__icons a:last-child{
   margin-right: 0px;
+}
+.ac-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 56px;
+  position: relative;
+  padding: 0px 16px;
+  background-color: #fff;
+  border-color: rgba(10, 5, 23, 0.6);
 }
 </style>

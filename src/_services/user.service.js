@@ -57,7 +57,6 @@ function regist(user) {
             //}
             return resolve;
         })
-        .catch(error => console.dir(error))
 }
 
 function successRegist() {
@@ -195,9 +194,6 @@ function handleResponseGetData(response) {
                 return Promise.reject([error, errorStatus]);
                 //}
             }
-
-            // const error = (data && data.message) || response.statusText;
-            // return Promise.reject(error);
         }
         console.log(data);
         return data;
