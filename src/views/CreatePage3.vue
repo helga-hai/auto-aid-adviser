@@ -5,25 +5,25 @@
             <img class="registrStep2_img2" src = "../assets/Group 133.png">
             <h1>Реєстрація об’єкту</h1>
                 <p>Выберите из списка типы обслуживаемых автомобилей</p>
-                <div class="registrStep2__types":class="{'opened': typesShow}" >
+                <div class="registrStep2__types" :class="{'opened': typesShow}" >
                     <div  class="registrStep2__typename" @click = "typesShow = !typesShow">
                         <span>Типы авто</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': typesShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': typesShow}">
                     </div>
                     <div class="registrStep2__item"></div>
                 </div>
                 <hr>
                 <p>Выберите из списка основные услуги, которые оказывает обьект</p>
-                <div class="registrStep2__services":class="{'opened': serviceShow}" >
+                <div class="registrStep2__services" :class="{'opened': serviceShow}" >
                     <div  class="registrStep2__servicename" @click = "serviceShow = !serviceShow">
                         <span>Сервисное ТО</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': serviceShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': serviceShow}">
                     </div> 
                     <div class="registrStep2__checkwrapp">
                         <div class="registrStep2__checkAll">
                             <label for="All"><input type="checkbox" id="All" value="Обрати все">Обрати все</label>
                         </div>
-                        <div class="registrStep2__check">
+                        <div class="registrStep2__check" >
                             <div class ="registrStep2__column1">
                                 <label for="oil"><input type="checkbox" id="oil" value="Замена масла в двигателе" checked>Замена масла в двигателе</label>
                                 <label for="diagnostics"><input type="checkbox" id="diagnostics" value="Компьютерная диагностика" >Компьютерная диагностика</label>
@@ -43,93 +43,93 @@
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': brakeSystShow}" >
+                <div class="registrStep2__services" :class="{'opened': brakeSystShow}" >
                     <div  class="registrStep2__servicename" @click = "brakeSystShow = !brakeSystShow">
                         <span>Тормозная система</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': brakeSystShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': brakeSystShow}">
                     </div>
                 </div>
                 <hr>
-                 <div class="registrStep2__services":class="{'opened': suspensionShow}" >
+                 <div class="registrStep2__services" :class="{'opened': suspensionShow}" >
                     <div  class="registrStep2__servicename" @click = "suspensionShow = !suspensionShow">
                         <span>Подвеска</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': suspensionShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': suspensionShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': steerageShow}" >
+                <div class="registrStep2__services" :class="{'opened': steerageShow}" >
                     <div  class="registrStep2__servicename" @click = "steerageShow = !steerageShow">
                         <span>Рулевое управление</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': steerageShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': steerageShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': enginegeShow}" >
+                <div class="registrStep2__services" :class="{'opened': enginegeShow}" >
                     <div  class="registrStep2__servicename" @click = "enginegeShow = !enginegeShow">
                         <span>Двигатель</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': enginegeShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': enginegeShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': wiringShow}" >
+                <div class="registrStep2__services" :class="{'opened': wiringShow}" >
                     <div  class="registrStep2__servicename" @click = "wiringShow = !wiringShow">
                         <span>Электрика</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': wiringShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': wiringShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': exhaustShow}" >
+                <div class="registrStep2__services" :class="{'opened': exhaustShow}" >
                     <div  class="registrStep2__servicename" @click = "exhaustShow = !exhaustShow">
                         <span>Выхлопная система</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': exhaustShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': exhaustShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': clutchShow}" >
+                <div class="registrStep2__services" :class="{'opened': clutchShow}" >
                     <div  class="registrStep2__servicename" @click = "clutchShow = !clutchShow">
                         <span>Сцепление</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': clutchShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': clutchShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': transmissionShow}" >
+                <div class="registrStep2__services" :class="{'opened': transmissionShow}" >
                     <div  class="registrStep2__servicename" @click = "transmissionShow = !transmissionShow">
                         <span>Трансмиссия</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': transmissionShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': transmissionShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': climateShow}" >
+                <div class="registrStep2__services" :class="{'opened': climateShow}" >
                     <div  class="registrStep2__servicename" @click = "climateShow = !climateShow">
                         <span>Климат-контроль</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': climateShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': climateShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': carcassShow}" >
+                <div class="registrStep2__services" :class="{'opened': carcassShow}" >
                     <div  class="registrStep2__servicename" @click = "carcassShow = !carcassShow">
                         <span>Кузов</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': carcassShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': carcassShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': gasShow}" >
+                <div class="registrStep2__services" :class="{'opened': gasShow}" >
                     <div  class="registrStep2__servicename" @click = "gasShow = !gasShow">
                         <span>ГБО</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': gasShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': gasShow}">
                     </div>
                 </div>
                 <hr>
-                <div class="registrStep2__services":class="{'opened': extraShow}" >
+                <div class="registrStep2__services" :class="{'opened': extraShow}" >
                     <div  class="registrStep2__servicename" @click = "extraShow = !extraShow">
                         <span>Дополнительно</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon":class="{'transform': extraShow}">
+                        <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': extraShow}">
                     </div>
                 </div>
                 <hr>
                 <div class="registrStep2__buttons">
                     <input type="reset" value="Отмена" class="registrStep2__secondaryButton">
-                    <input type="submit" value="Продолжить 2/3" class="registrStep2__primaryButton">    
+                    <input type="submit" value="Продолжить 2/3" class="registrStep2__primaryButton" @click="createStepThree">    
                 </div>
 
         </div>  
@@ -165,7 +165,12 @@ export default {
             // service_types_byid: {"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}, //   http://localhost:8080/api/catalog/service_types/3   GET
             // services_3: [{"id":7,"name":"oil change 2","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":19,"name":"oil change 5","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":31,"name":"oil change 8","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":3,"name":"oil change 1","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":15,"name":"oil change 4","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":27,"name":"oil change 7","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":11,"name":"oil change 3","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":23,"name":"oil change 6","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}}], //   http://localhost:8080/api/catalog/service_types/3/services   GET
         }
-    }
+    },
+    methods: {
+        createStepThree() {
+            this.$emit('stepThreeFunction')
+        }
+    },
 }
 </script>
 
