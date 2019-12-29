@@ -57,7 +57,7 @@ export default {
   },
   methods: {
       disabledCheck() {
-        return this.email && this.password && this.password_confirmation ? false : 'disabled';
+        return this.email && this.password && this.password_confirmation && !this.errorPass.check && !this.errorPassSame.check ? false : 'disabled';
       },
       FinishedEmail() {
         let email = document.querySelector(".email")
@@ -106,24 +106,23 @@ export default {
       }
     },
     checkPass(){
-      console.log(this.password)
+      console.log('checkPass',this.password)
       let numRE = /[0-9]/;
       let bigL = /[A-Z]/;
       let letter = /[a-z]/;
-      // let msg = document.getElementById('checkPass');
-      // //msg.style.backgroundColor = 'red';
-      // let msg2 = document.getElementById('checkPass_Conf');
-      // //msg2.style.backgroundColor = 'red';
 
       if(this.password.length<8||this.password.search(numRE)<0||this.password.search(bigL)<0||this.password.search(letter)<0){
         console.log(this.password.search(numRE));
         console.log(this.password.search(bigL));
         console.log(this.password.search(letter));
         this.errorPass.check = true
-        //return msg.innerText = 'Пароль має складатись мінімум з 8-и символів містити принаймні одну велику літеру та одну цифру';
         
       } else if(this.password.length>=8 && this.password.search(numRE)>=0 && this.password.search(bigL)>=0 && this.password.search(letter)>=0) {
         this.errorPass.check = false
+      }
+
+      if(this.password_confirmation!=='') {
+        this.checkPassSame()
       }
       
     },
