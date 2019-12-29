@@ -21,12 +21,20 @@ pipeline {
         stage('Deploy') {
             environment {
                 BUCKET = "s3://auto-aid-adviser-front/"
+                BUCKET_WITH_DNS_CO_UK = "s3://auto-aid-adviser.co.uk/"
+                BUCKET_WITH_DNS_NET = "s3://auto-aid-adviser.net/"
                 DIST = "./dist"
             }
             
             steps{
                 sh 'aws s3 rm --recursive ${BUCKET}'
                 sh 'aws s3 cp --recursive ${DIST} ${BUCKET}'
+
+                sh 'aws s3 rm --recursive ${BUCKET_WITH_DNS_CO_UK}'
+                sh 'aws s3 cp --recursive ${DIST} ${BUCKET_WITH_DNS_CO_UK}'
+
+                sh 'aws s3 rm --recursive ${BUCKET_WITH_DNS_NET}'
+                sh 'aws s3 cp --recursive ${DIST} ${BUCKET_WITH_DNS_NET}'
             }
         }
     }

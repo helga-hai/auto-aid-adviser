@@ -1,23 +1,58 @@
 <template>
-    <div class="header" :class="{'header__privat':privat, 'header__grey':grey}">
+    <div class="header" :class="{'header__privat':privat, 'header__grey':grey}" >
         <div class="header__logo">
             <img src="../assets/aaa_logo.svg"/> 
         </div>   
         <div class="header__nav">
-            <router-link to="/">Пошук</router-link>
+            <router-link to="/"><img src="../assets/ico-search.png"/></router-link>
             <router-link to="/about">Про нас</router-link>
             <span class="header__lang">Укр </span> 
-            <router-link to="/authorization">Вхід / Реєстрація</router-link>
-            <router-link to="#">Особистий кабінет</router-link>
+            <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
+            <div class="enterRegExit">
+                <a v-if="ifToken()===true && isLog" @click="logout" id='logout'>Вихід</a>
+                <a href="#" @click="loginShowFunc" v-if="ifToken()===false&&!isLog">Вхід</a>
+            </div>
+            
+
+            <!--<router-link to="/create">Особистий кабінет</router-link> -->
+            <!-- <a href="#" @click="loginShowFunc">Вхід / Реєстрація</a>
+            <router-link to="/create">Особистий кабінет</router-link> -->
         </div>
     </div>
 </template>
 
 <script>
+
+import { userService } from '../_services';
+import { router } from '../_helpers';
+
 export default {
-    props:['privat','grey'],
+
+
+    props:['privat','grey','loginShow'],
     data() {
         return {
+            isLog: false
+        }
+    },
+    methods: {
+        loginShowFunc() {
+            this.$emit('loginShowFunc')
+        },
+        ifToken(){
+            let token = localStorage.getItem('token');
+            if(token){
+                this.isLog=true;
+                return true;
+            }
+            return false;
+        },
+        logout(){
+            console.log("work");
+            userService.logout();
+            this.ifToken();
+            this.isLog=false;
+            router.push('/');
         }
     }
 }
@@ -27,11 +62,13 @@ export default {
 .header {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    justify-content: space-between;
     align-items: center;
+    height: 80px;
+    padding: 0px 50px;
     &__privat {
         background: #0E1E2E;
-        color: #0E1E2E;
+        color: #fff;
         text-transform: uppercase;
         margin:0;
         .block__nav{
@@ -56,22 +93,34 @@ export default {
     height: auto;
 }
 .header__nav {
-    margin-left: auto;
-    display: inline-block;
-    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;  
+    font-size: 16px;
+    line-height: 19px;
+    //margin-left: auto;
+    //display: inline-block;
+    //align-self: flex-start;
 }
 
-.header__nav a {
-    padding: 0 30px;
-    display:inline-block;
-    height: 56px;
-    font-size: 16px;
-    line-height: 56px;
-}
-.header__nav a {
+.header__nav a, .header__lang {
+    // padding: 0 30px;
+    // display: inline-block;
+    // height: 56px;
+    // font-size: 16px;
+    // line-height: 56px;
     text-decoration: none;
+    color: #fff;
+    margin-left: 40px;
 }
 .header__nav a.router-link-exact-active {
-  color: #42b983;
+  color: #FFC700;
+}
+.enterRegExit{
+    display: inline;
+}
+#logout{
+    cursor: pointer;
 }
 </style>

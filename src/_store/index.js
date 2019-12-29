@@ -7,6 +7,9 @@ import { users } from './users.module';
 import { selfLocation } from './selfLocation.module';
 import { maploader } from './maploader.module';
 import { registration } from './registration.module';
+import { data } from './data.module';
+import { create } from './create.module';
+import { templateB } from './templateB.module';
 
 Vue.use(Vuex);
 
@@ -17,6 +20,9 @@ export const store = new Vuex.Store({
         users,
         selfLocation,
         maploader,
-        registration
+        registration,
+        data,
+        create,
+        templateB
     }
 });
