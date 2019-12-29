@@ -5,7 +5,7 @@ const apiConfig = IS_DEVELOPMENT ? {
     host: 'localhost',
     port: 8080
 } : {
-    protocol: 'http',
+    protocol: 'https',
     host: 'ec2-34-247-199-110.eu-west-1.compute.amazonaws.com',
     port: ''
 }
