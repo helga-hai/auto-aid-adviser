@@ -12,6 +12,7 @@
                 <span v-if="ifToken()===true && isLog" @click="logout" id='logout'>Вихід</span>
                 <a href="#" @click="loginShowFunc" v-if="ifToken()===false&&!isLog">Вхід</a>
             </div>
+            <router-link to="/user">Особистий кабінет</router-link>
             
 
             <!--<router-link to="/create">Особистий кабінет</router-link> -->

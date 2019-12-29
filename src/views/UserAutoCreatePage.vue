@@ -1,5 +1,6 @@
 <template>
-    <user-layout :email = email()>
+    <!-- <user-layout :email = email()> -->
+    <div>    
         <div class="objects">
             <h1>Мої автомобілі</h1>
             <p>Наразі у вас немає автомобілів.</p>
@@ -17,25 +18,29 @@
         <div class="Image">
             <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/illustration1.jpg')+')'}"></div>
         </div>
-    </user-layout>
+    </div>    
+    <!-- </user-layout> -->
 </template>
 
 <script>
-import UserLayout from "@/layouts/UserLayout";
+// import UserLayout from "@/layouts/UserLayout";
 export default {
+
     name: 'UserAutoCreatePage',
-    components: {
-        UserLayout,
-    },
+    // components: {
+    //     UserLayout,
+    // },
     data(){
         return{
-            email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
+
+            visible: false,
         }
     },
 
     methods: {
         createStepOne() {
-            this.$emit('stepOneFunction')
+            console.log("work");
+            return this.$emit('switchView','user-auto-create-page2');
         },
     },
 }
@@ -44,6 +49,7 @@ export default {
 <style>
 .objects {
     padding: 56px 92px 56px 48px;
+    display: inline-block;
 }   
 .objects h1 {
     margin-top: 0;
@@ -76,6 +82,7 @@ export default {
 }
 .Image {
     padding: 56px 50px 0px 0px;
+    display: inline-block;
 }
 .Image__labe {
     width: 516px;

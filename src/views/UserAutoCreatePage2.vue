@@ -1,16 +1,22 @@
 <template>
-    <user-layout :email = email()>
+
+    <!-- <user-layout :email = email()> -->
+
         <div class="registerAuto">
             <h1>Реєстрація автомобіля</h1>
             <form>
                 <div class="registerAuto__car">
                     <p><span>Оберіть тип транспортного засобу</span></p>
-                    <div class="carType">
-                        <span>Мотоцикл</span>
-                        <span>Легкове</span>
+                    <div class="carType"
+                    v-for= 'type in types'
+                    :key='type'>
+                        <span>{{type}}</span>
+                        <!-- <span>Легкове</span>
                         <span>Вантажівка</span>
-                        <span>Автобус</span>
+                        <span>Автобус</span> -->
+
                     </div>
+
                 </div>
 
                 <input type="text" name="brand" id="brand" placeholder="Марка" v-model="brand" required>
@@ -23,34 +29,44 @@
                 </div>
                 <p><span>*максимум п`яти фото, до 500Кб кожна</span></p>
 
-
+                {{test}}
                 <div class="registerAuto__buttons">
-                    <input type="submit" value="Назад" class="registerAuto__secondaryButton">
+                    <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
                     <input type="submit" value="Зберегти" class="registerAuto__primaryButton">    
                 </div>
             </form>
         </div>
 
-    </user-layout>
+    <!-- </user-layout> -->
 </template>
 
 <script>
 
-import UserLayout from "@/layouts/UserLayout";
+import userdataservice from '../_store/userdataservice.module';
+import { userService } from '../_services';
+
 
 export default {
     name: 'UserAutoCreatePage2',
 
-    components: {
-        UserLayout,
-    },
+    // components: {
+
+    //     userService,
+    // },
     data() {
         return {
+            types:{
+                type1: 'Мотоцикл',
+                type2: 'Легкове',
+                type3: 'Вантажівка',
+                type4: 'Автобус',
+            },
             brand:"",
             model:"",
             fuelType:"",
             year:"",
-            email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
+            test:this.getTypes(),
+
         }
     },
     watch: {
@@ -67,7 +83,16 @@ export default {
 
     },
     methods: {
-
+        back(){
+            this.$emit('switchView','user-auto-create-page');
+        },
+        getTypes(){
+                console.log("Foo bar");
+                userService.getAllUserData('api/catalog/car/types');
+            },
+        // beforeCreate(){
+        //     getTypes();
+        // },
     }
 }
 </script>

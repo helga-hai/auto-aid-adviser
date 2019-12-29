@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :email = email()>
     <header>
         <a href="#" class ="logo">
             <img :src="require('../assets/aaa_logo.svg')">
@@ -22,7 +22,7 @@
                         </a>
                     </div>
                 </li>
-                <li><a href="#" >{{email}}</a></li>
+                <li><a href="#" >{{email()}}</a></li>
                 <li><a href="#"><router-link to="/">Вийти</router-link></a></li>
             </ul>
         </nav>
@@ -31,22 +31,21 @@
         <section class="sideBar">
             <p>Особистий кабінет</p>
             <ul>
-<<<<<<< HEAD
-                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuChoose">Особисті данні</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuChoose">Мої автомобілі</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">записи до станції</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button">Налаштування</a></li>
-=======
-                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuItem()" >Особисті данні</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuItem()">Мої автомобілі</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuItem()">записи до станції</a></li>
-                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="menuItem()">Налаштування</a></li>
-                <li>text: {{mIt}}</li>
->>>>>>> 721ec059698c9fbc0dbc6054982cedbb6bb880f4
+                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-create-page1')">Особисті данні</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-auto-create-page')">Мої автомобілі</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-station-recording')">Записи до станції</a></li>
+                <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-settings')">Налаштування</a></li>
+                <!-- <li>text: {{mIt}}</li> -->
             </ul>
         </section>
         <section class="objectsWrapp">
-            <slot></slot>
+            <!-- <slot></slot> -->
+            <component :is="currentView" @switchView='switchView'></component>
+            <!-- <user-create-page1 :email='email()'/>    
+            <user-auto-create-page/> -->
+            <!-- <user-auto-create-page2 v-if='step2'/> -->
+
+    
         </section>
     </main>
     <footer>
@@ -56,32 +55,52 @@
 </template>
 
 
+
+
+
+
 <script>
+
+import UserCreatePage1 from '../views/UserCreatePage1';
+import UserAutoCreatePage from '../views/UserAutoCreatePage';
+import UserAutoCreatePage2 from '../views/UserAutoCreatePage2';
+import UserSettings from '../views/UserSettings';
+import UserStationRecording from '../views/UserStationRecording'
+import UserProfileReadyPage from '../views/UserProfileReadyPage'
+
 export default {
-    props:['email'],
+    // props:['email'],
+
+    components: {
+        UserCreatePage1,
+        UserAutoCreatePage,
+        UserAutoCreatePage2,
+        UserSettings,
+        UserStationRecording,
+        UserProfileReadyPage,
+    },
     data(){
         return{
-            mIt:"Особисті данні",
+            currentView:"user-create-page1",
+            // mIt:"Особисті данні",
+            email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
+
         }
     },
     methods:{
-        menuItem(){
-            console.log(document.activeElement.innerText)
-            this.mIt=document.activeElement.innerText;
+        // menuItem(){
+        //     console.log(document.activeElement.innerText)
+        //     this.mIt=document.activeElement.innerText;
 
-            this.$store.dispatch('userdataservice/menuVal',document.activeElement.innerText);
-            // return document.activeElement.innerText;
-        }
+        //     this.$store.dispatch('userdataservice/menuVal',document.activeElement.innerText);
+
+        //     // return document.activeElement.innerText;
+        // },
+        switchView: function(view) {
+            this.currentView = view;
+        },
+
     },
-<<<<<<< HEAD
-    methods: {
-        menuChoose() {
-            console.log("foo");
-            this.$emit('menuToggler')
-        }
-    },
-=======
->>>>>>> 721ec059698c9fbc0dbc6054982cedbb6bb880f4
 
 }
 

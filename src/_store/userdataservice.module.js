@@ -6,23 +6,28 @@ import { userService } from '../_services';
 export const userdataservice = {
     namespaced: true,
     state: {
+        personalPageData: {
+            firsName: null,
+            lastName: null,
+            phoneNumber: null,
+        },
 
-        firsName: null,
-        lastName: null,
-        menuItem: null,
+
+
+        // menuItem: null,
 
     },
     actions: {
-        getData(){
+        getData(path) {
 
-                const requestOptions = {
-                    method: 'GET',
-                    headers: authHeader()
-                };
-            
-                return fetch(`${userService.config.apiUrl}/users`, requestOptions)
+            const requestOptions = {
+                method: 'GET',
+                headers: authHeader(),
+            };
+
+            return fetch(`${userService.config.apiUrl}/${path}`, requestOptions)
                 .then(userService.handleResponse);
-            
+
         },
         // getAll({ commit }) {
         //     commit('getAllRequest');
@@ -33,34 +38,34 @@ export const userdataservice = {
         //             error => commit('getAllFailure', error)
         //         );
         // }
-        menuVal({ commit },val){
+        fieldsVal({ commit }, val) {
             // console.log(data);
-            commit('changeItem',val);
+            commit('setData', val);
         }
     },
 
     mutations: {
-        changeItem(state,val){
-            // console.log(data);
-            state.menuItem = val;
+        setData(state, data) {
+            console.log(data);
+            state.personalPageData = { data };
         },
         // setData(state, resp){
         //     return state.user_data.role.resp.role = resp.role;
-                // {
-                //     id: resp.id,
-                //     role: resp.role,
-                //     email: resp.email,
-                // }
-            
-        }
-        // getAllRequest(state) {
-        //     state.all = { loading: true };
-        // },
-        // getAllSuccess(state, users) {
-        //     state.all = { items: users };
-        // },
-        // getAllFailure(state, error) {
-        //     state.all = { error };
+        // {
+        //     id: resp.id,
+        //     role: resp.role,
+        //     email: resp.email,
         // }
+
+    }
+    // getAllRequest(state) {
+    //     state.all = { loading: true };
+    // },
+    // getAllSuccess(state, users) {
+    //     state.all = { items: users };
+    // },
+    // getAllFailure(state, error) {
+    //     state.all = { error };
+    // }
     // }
 };

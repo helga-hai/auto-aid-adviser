@@ -1,14 +1,17 @@
 <template>
-    <user-layout :email = email()>
+
+    <!-- <user-layout :email = email()> -->
+
         <div class="registrStep1">
             <h1>Особисті дані</h1>
-            <form>
+            <form @submit.prevent='saveUserData'>
                 <label>Контактні дані</label>
                 <input type="text" name="surname" id="surname" placeholder="Прізвище" v-model="surname" required>
                 <input type="text" name="name" id="name" placeholder="Ім'я" v-model="name" required>
                 <input type="text" name="phone" id="phone" placeholder="Телефон" v-model="phone">
                 <input type="e-mail" name="e-mail" id="e-mail" placeholder="e-mail" :value='email()'>
                 <div class="avatar">
+                    <div>{{data()}}</div>
                     <p><span>Додати аватар</span></p>
                     <div class="photo">
                         <label>+ фото</label>
@@ -22,24 +25,24 @@
 
                 <div class="registrStep1__buttons">
 
-                    <input type="submit" value="Зберегти" class="registrStep1__primaryButton">    
+                    <input type="submit" value="Зберегти" class="registrStep1__primaryButton" @click="createStepOne">    
                 </div>
             </form>
         </div>
 
-    </user-layout>
+    <!-- </user-layout> -->
 </template>
 
 <script>
 
-import UserLayout from "@/layouts/UserLayout";
+// import UserLayout from "@/layouts/UserLayout";
 
 export default {
     name: 'UserCreatePage1',
 
-    components: {
-        UserLayout,
-    },
+    // components: {
+    //     UserLayout,
+    // },
     data() {
         return {
             surname:"",
@@ -49,6 +52,7 @@ export default {
             newPassword:"",
             confirmPassword:"",
             email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
+            data: function(){return this.$store.state.userdataservice.personalPageData}
         }
     },
     watch: {
@@ -65,8 +69,22 @@ export default {
 
     },
     methods: {
-
-    }
+        saveUserData: function(){
+            console.log("click work");
+            let data = {
+                surname: this.surname,
+                name: this.name,
+                phone: this.phone,
+            };
+            this.$store.dispatch("userdataservice/fieldsVal", data); 
+            this.$emit('switchView','user-profile-ready-page')  
+        },
+        createStepOne() {
+            console.log("work");
+            return this.$emit('switchView','user-profile-ready-page');
+        }
+        
+    },
 }
 </script>
 

@@ -27,6 +27,7 @@ export const userService = {
     successRegist,
 
     activate,
+    getAllUserData,
 
 };
 
@@ -145,10 +146,19 @@ function logout() {
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader()
+        headers: authHeader,
     };
 
     return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+}
+
+function getAllUserData(path) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader.authHeader,
+    };
+
+    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
