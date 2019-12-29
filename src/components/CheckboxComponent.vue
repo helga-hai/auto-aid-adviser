@@ -9,7 +9,7 @@
           v-bind:true-value="trueValue"
           v-bind:false-value="falseValue"/>
           <span class="accept__span"></span>
-          {{title}}{{toggle}}
+          {{title}}
         </label>
     </div>
 </template>

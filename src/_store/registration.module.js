@@ -35,8 +35,9 @@ export const registration = {
                     },
                     reject => {
                         console.log('register reject', reject);
-                        //commit('loginFailure', error);
-                        // dispatch('alert/error', reject, { root: true }); 
+                        console.dir(reject)
+                            //commit('loginFailure', error);
+                            // dispatch('alert/error', reject, { root: true }); 
                     });
             // return new Promise((resolve, reject) => {
             //     //commit('auth_request')

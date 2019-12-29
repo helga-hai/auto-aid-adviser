@@ -56,7 +56,8 @@ function regist(user) {
             // localStorage.setItem('user', JSON.stringify(user));
             //}
             return resolve;
-        });
+        })
+        .catch(error => console.dir(error))
 }
 
 function successRegist() {
@@ -168,13 +169,14 @@ function getAllBusinessDate(path) {
 
     return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
 }
+
 function handleResponseGetData(response) {
     //console.dir(JSON.parse(response))
     //var r = response.then(res=>res);
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         console.log(data);
-        
+
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -201,6 +203,7 @@ function handleResponseGetData(response) {
         return data;
     });
 };
+
 function handleResponse(response) {
     //console.dir(JSON.parse(response))
     return response.text().then(text => {
