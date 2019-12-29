@@ -162,12 +162,45 @@ function getAll() {
 function getAllBusinessDate(path) {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader.authHeader
+        headers: authHeader()
     };
+    console.log('getAllBusinessDate,')
 
-    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
 }
+function handleResponseGetData(response) {
+    //console.dir(JSON.parse(response))
+    //var r = response.then(res=>res);
+    return response.text().then(text => {
+        const data = text && JSON.parse(text);
+        console.log(data);
+        
+        if (!response.ok) {
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                //logout();
+                //location.reload(true);
+                console.log('у вас проблеми з токеном', response);
+            } else {
+                //console.log('response.status', response.status)
+                //if (response.status == 404) {
+                // dispatch('alert/error', error, { root: true });
+                console.log('data', data);
+                const error = (data && data.message) || response.statusText;
+                const errorStatus = (data && data.status) || response.status;
+                console.log('error, errorStatus', error, errorStatus);
 
+                return Promise.reject([error, errorStatus]);
+                //}
+            }
+
+            // const error = (data && data.message) || response.statusText;
+            // return Promise.reject(error);
+        }
+        console.log(data);
+        return data;
+    });
+};
 function handleResponse(response) {
     //console.dir(JSON.parse(response))
     return response.text().then(text => {

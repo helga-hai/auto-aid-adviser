@@ -23,12 +23,12 @@ export default {
     components: {
         BusinessLayout,
         CardMin,
-        userService,
     },
     methods: {
         createStepOne() {
             this.$emit('stepOneFunction');
-            userService.getAllBusinessDate('api/businesses');
+            userService.getAllBusinessDate('api/catalog/services');
+            // userService.getAllBusinessDate('api/businesses');
             
         }
     }

@@ -65,7 +65,7 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
 
-    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
+    const publicPages = ['/authorization', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
 
     const authRequired = !publicPages.includes(to.path);
 
@@ -77,7 +77,7 @@ router.beforeEach((to, from, next) => {
         console.log(router);
         return next();
     } else if (authRequired && !loggedIn) {
-        return next('/login');
+        return next('/');
     } else
 
         next();
