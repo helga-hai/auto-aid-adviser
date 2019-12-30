@@ -206,7 +206,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .google-map {
   width: 100%;
   /* min-height: calc(100vh - 56px); */

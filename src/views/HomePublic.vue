@@ -1,38 +1,39 @@
 <template>
-  <div class = 'wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
-    <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
-    <main>
-      <!-- /// -->
-      <div v-if="gettingLocation">loading...</div>
-      <div v-else>
-          <travel-map class="guide"
-              ref="mapr"
-              :curMarker="curMarker"
-              @isDoneFunc="isDoneFunc" 
-          />
-      </div>
-      <!-- /// 
-      :mapCenter="curMarker.position" 
-      :address="address" 
-      :curMarker="curMarker"-->
-      <div class="res" >
-        <div class="one">
-          <label for="">Що шукаємо</label>
-          <websocket />
-          <!-- <ul class="submenu">
-            <li class="submenu-item"><a href="#">Аргонна сварка</a></li>
-            <li class="submenu-item"><a href="#">item2_2</a></li>
-            <li class="submenu-item"><a href="#">item2_3</a></li>
-          </ul>-->
+  <div class='home wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
+    <div :class="{'blur-content': loginShow}">
+      <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
+      <main>
+        <!-- /// -->
+        <div v-if="gettingLocation">loading...</div>
+        <div v-else>
+            <travel-map class="guide"
+                ref="mapr"
+                :curMarker="curMarker"
+                @isDoneFunc="isDoneFunc" 
+            />
         </div>
+        <!-- /// 
+        :mapCenter="curMarker.position" 
+        :address="address" 
+        :curMarker="curMarker"-->
+        <div class="res" >
+          <div class="one">
+            <label for="">Що шукаємо</label>
+            <websocket />
+            <!-- <ul class="submenu">
+              <li class="submenu-item"><a href="#">Аргонна сварка</a></li>
+              <li class="submenu-item"><a href="#">item2_2</a></li>
+              <li class="submenu-item"><a href="#">item2_3</a></li>
+            </ul>-->
+          </div>
 
-        <div class="two">
-          <label for="">Де шукати</label>
-          <button type="button" name="button" @click="submenuShow = !submenuShow" v-if="!ac">
-            <div class="selected-option">{{curLoc ? curLoc : plase}}</div>
-            <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon" :class="{'transform': submenuShow}">
-          </button>
-          <div class="ac-input" slot="acompl" v-if="isDone && ac" >
+          <div class="two">
+            <label for="">Де шукати</label>
+            <button type="button" name="button" @click="submenuShow = !submenuShow" v-if="!ac">
+              <div class="selected-option">{{curLoc ? curLoc : plase}}</div>
+              <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon" :class="{'transform': submenuShow}">
+            </button>
+            <div class="ac-input" slot="acompl" v-if="isDone && ac" >
               <vue-google-autocomplete 
                   ref="vAutoComplete"
                   :country="['ua']"
@@ -42,27 +43,36 @@
                   
                   v-on:placechanged="getAddressData"
               ></vue-google-autocomplete>
+              <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon" :class="{'transform': submenuShow}" @click="submenuShow=!submenuShow; ac=!ac; plase='Вказати локацію'">
               <!-- {{sendObject}}<br><br>  :enableGeolocation="enableGeolocation"-->
-          </div>
+            </div>
 
-          <ul class="two_submenu" :class="{'opened': submenuShow}">
-            <li class="two_submenuItem1 flex" @click="chooseMyLocation">
-              <p>Moe місцезнаходження</p>
-               <img :src="require('../assets/XMLID 1.png')">
-            </li>
-            <li class="two_submenuItem2" @click="openAutocomplete"><!--@keyup.enter="addPlace"-->
-              <input type="text" placeholder="Вказати адресу" v-model="selected" >
-            </li>
-          </ul>
+            <ul class="two_submenu" :class="{'opened': submenuShow}">
+              <li class="two_submenuItem1 flex" @click="chooseMyLocation">
+                <p>Moe місцезнаходження</p>
+                <img :src="require('../assets/XMLID 1.png')">
+              </li>
+              <li class="two_submenuItem2" @click="openAutocomplete"><!--@keyup.enter="addPlace"-->
+                <input type="text" placeholder="Вказати адресу" v-model="selected" >
+              </li>
+            </ul>
+          </div>
+          <div class="btn">
+            <a href="#" class="btn__button orange">Знайти</a>
+          </div>
         </div>
-        <div class="btn">
-          <a href="#" class="btn__button orange">Знайти</a>
-        </div>
-      </div>
-    </main>
+      </main>
+    </div>
+    <!-- SVG Blur Filter -->
+    <svg id="svg-filter">
+      <filter id="svg-blur">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="4"></feGaussianBlur>
+      </filter>
+    </svg>
+
     <div class="modal-login-registration " :class="{'active-modal': loginShow}">
       <button class="close-x" @click="loginHideFunc"></button>
-      <!-- <div class="entrance"> -->
+
         <Authorization></Authorization>
         <div class="social-providers">
           <p>Увійти за допомогою соцмереж</p>
@@ -72,52 +82,6 @@
           </div>
         </div>
         
-        <!-- <div class="mode active">
-          <span>Вхід</span>
-        </div>
-        <div class="divider">
-          <span>&nbsp;|&nbsp;</span>
-        </div>
-        <div class="mode">
-          <span>Реєстрація</span>
-        </div>
-
-      </div>
-
-      
-      <form class="login-form active-form" method="post">
-        <div class="form-input">
-          <input type="email" placeholder="E-mail">
-          <div class="error-message">
-            <span>Невірний формат e-mail</span>
-          </div>
-        </div>
-        <div class="form-input">
-          <input type="password" placeholder="Введіть пароль">
-          <div class="error-message">
-            <span>Невірний формат e-mail</span>
-          </div>
-        </div>
-        <button class="form-input submit-button">
-          Увійти
-        </button>
-      </form>
-      <div class="lost-password">
-          <a href="#">Забули пароль?</a>
-      </div>
-      <div class="media-login"> 
-
-
-
-        <p>Увійти за допомогою соцмереж</p>
-        <ul class="social-providers">
-          <li>
-            f
-          </li>
-          <li>
-            G
-          </li>
-        </ul> -->
     </div>  
   </div>
 </template>
@@ -150,12 +114,12 @@ export default {
         selected: '',
         isDone: false,
         curMarker: {
-            id: "a",
-            position: {
-              "lat": 50.4704839,
-              "lng": 30.3854665
-            },// { lat: 3, lng: 101 }
-            content:'my position now'
+          id: "a",
+          position: {
+            "lat": 50.4704839,
+            "lng": 30.3854665
+          },// { lat: 3, lng: 101 }
+          content:'my position now'
         },
         curLoc: false,
         ac: false
@@ -211,7 +175,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 * {
   box-sizing: border-box;
 }
@@ -527,5 +491,39 @@ cursor: pointer;
   padding: 0px 16px;
   background-color: #fff;
   border-color: rgba(10, 5, 23, 0.6);
+  border-radius: 4px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  height: 56px;
+  border-color: rgba(10, 5, 23, 0.6);
+}
+.blur-content {
+  -webkit-filter: url(#svg-blur);
+  filter: url(#svg-blur);
+}
+.home .guide {
+  height:0;
+  width:0;
+}
+svg#svg-filter {
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+.home button#dir {
+    display: none;
+}
+.home #autocompletePannel {
+  position: static;
+  color: #000000;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 2px;
+  box-shadow: none;
+  text-align: left;
+  line-height: inherit;
+  padding-left: inherit;
+  width: auto;
 }
 </style>
