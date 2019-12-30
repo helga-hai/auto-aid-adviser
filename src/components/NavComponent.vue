@@ -9,7 +9,7 @@
             <span class="header__lang">Укр </span> 
             <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
             <div class="enterRegExit">
-                <span v-if="ifToken()===true && isLog" @click="logout" id='logout'>Вихід</span>
+                <a v-if="ifToken()===true && isLog" @click="logout" id='logout'>Вихід</a>
                 <a href="#" @click="loginShowFunc" v-if="ifToken()===false&&!isLog">Вхід</a>
             </div>
             <router-link to="/user">Особистий кабінет</router-link>
@@ -69,7 +69,7 @@ export default {
     padding: 0px 50px;
     &__privat {
         background: #0E1E2E;
-        color: #0E1E2E;
+        color: #fff;
         text-transform: uppercase;
         margin:0;
         .block__nav{
@@ -121,11 +121,11 @@ export default {
     // font-size: 16px;
     // line-height: 56px;
     text-decoration: none;
-    color: #6F7E95;
+    color: #fff;
     margin-left: 40px;
 }
 .header__nav a.router-link-exact-active {
-  color: #42b983;
+  color: #FFC700;
 }
 .enterRegExit{
     display: inline;

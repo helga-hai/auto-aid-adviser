@@ -9,6 +9,8 @@ import { maploader } from './maploader.module';
 import { registration } from './registration.module';
 import { data } from './data.module';
 import { userdataservice } from './userdataservice.module';
+import { create } from './create.module';
+import { templateB } from './templateB.module';
 
 Vue.use(Vuex);
 
@@ -22,5 +24,7 @@ export const store = new Vuex.Store({
         registration,
         data,
         userdataservice,
+        create,
+        templateB
     }
 });

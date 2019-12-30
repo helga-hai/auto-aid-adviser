@@ -13,7 +13,7 @@ function getConfig() {
         }
     } else if (process.env.NODE_ENV === 'production') {
         return {
-            apiUrl: 'http://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
+            apiUrl: 'https://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
         }
     }
 }
@@ -25,6 +25,7 @@ export const userService = {
     logout,
     getAll,
     successRegist,
+    getAllBusinessDate,
 
     activate,
     getAllUserData,
@@ -56,7 +57,7 @@ function regist(user) {
             // localStorage.setItem('user', JSON.stringify(user));
             //}
             return resolve;
-        });
+        })
 }
 
 function successRegist() {
@@ -155,11 +156,53 @@ function getAll() {
 function getAllUserData(path) {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader.authHeader,
+        headers: authHeader(),
     };
 
     return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponse);
 }
+
+
+function getAllBusinessDate(path) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+    console.log('getAllBusinessDate,')
+
+    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
+}
+
+function handleResponseGetData(response) {
+    //console.dir(JSON.parse(response))
+    //var r = response.then(res=>res);
+    return response.text().then(text => {
+        const data = text && JSON.parse(text);
+        console.log(data);
+
+        if (!response.ok) {
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                //logout();
+                //location.reload(true);
+                console.log('у вас проблеми з токеном', response);
+            } else {
+                //console.log('response.status', response.status)
+                //if (response.status == 404) {
+                // dispatch('alert/error', error, { root: true });
+                console.log('data', data);
+                const error = (data && data.message) || response.statusText;
+                const errorStatus = (data && data.status) || response.status;
+                console.log('error, errorStatus', error, errorStatus);
+
+                return Promise.reject([error, errorStatus]);
+                //}
+            }
+        }
+        console.log(data);
+        return data;
+    });
+};
 
 function handleResponse(response) {
     //console.dir(JSON.parse(response))

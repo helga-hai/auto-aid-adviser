@@ -31,7 +31,7 @@
             <p>Особистий кабінет</p>
             <ul>
                 <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Особисті данні</router-link></li>
-                <li class="sideBar__list "><router-link to="/create" class="sideBar__button">Мої об‘єкти</router-link></li>
+                <li class="sideBar__list "><router-link to="/create2" class="sideBar__button">Мої об‘єкти</router-link></li>
                 <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Заявки клієнтів</router-link></li>
                 <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Налаштування</router-link></li>
             </ul>
@@ -65,7 +65,7 @@ ul {
 a {
     text-decoration: none;
     cursor: pointer; 
-    color: #4B5E7A; }
+    color: #fff; }
 html,
 body, 
 #app {
@@ -161,6 +161,9 @@ main {
 }
 .sideBar ul {
     padding: 36px 0px 0px 16px;
+}
+.sideBar__list a{
+    color: #0E1E2E;
 }
 .sideBar__list a::before {
     content: '';

@@ -16,23 +16,23 @@
                             :enableGeolocation="enableGeolocation"
                             v-on:placechanged="getAddressData"
                         ></vue-google-autocomplete>
-                        {{sendObject}}<br><br>
+                        <!-- {{sendObject}}<br><br>  -->
                     </div>
                     <!-- <h3 class="title is-4">Start typing an address and below you will see found result,
                         <a v-on:click="$refs.vAutoComplete.geolocate()">or force current location</a>
                     </h3> -->
-
                 </div>
                 <label>Дані об’єкта</label>
-                <input type="text" name="title" id="title" placeholder="Назва">
-                <input type="text" name="phone" id="phone" placeholder="Телефон">
-                <input type="text" name="site" id="site" placeholder="Сайт (опционально)">
+                <input type="text" name="title" id="title" placeholder="Назва" @change="setName">
+                <input type="text" name="phone" id="phone" placeholder="Телефон" @change="setPhone">
+                <input type="text" name="site" id="site" placeholder="Сайт (опционально)" @change="setSite">
                 <div class="registrStep1__buttons">
                     <input type="reset" value="Відмінити" class="registrStep1__secondaryButton">
-                    <input type="submit" value="Продовжити 1/3" class="registrStep1__primaryButton">    
+                    <input type="submit" value="Продовжити 1/3" class="registrStep1__primaryButton" @click="createStepTwo">    
                 </div>
             </form>
         </div>
+        <h1>{{ele}}</h1>
         <div class="Step1Image">your here: {{location.position}}
             <div class="Step1Image__labe" >
                 <div v-if="gettingLocation">loading...</div>
@@ -87,9 +87,10 @@ export default {
     },
     data() {
         return {
-            acLatLng:{},
+            acLatLng:{},//store
             isDone: false,
             enableGeolocation: true,
+            ele: this.$store.state.create.sendObject,
             location: this.$store.state.selfLocation.location,
             groups: ['СТО','Шиномонтаж','Мойка'],
             curMarker: {
@@ -97,7 +98,7 @@ export default {
                 position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }
                 content:'Place de la Bastille'
             },
-            address: '',
+            address: '',//store
             markers: [
                 {
                     id: "a",
@@ -112,7 +113,7 @@ export default {
                     position: { lat: 50.452482, lng: 30.372232 }// { lat: 6, lng: 97 }
                 }
             ],
-            sendObject: {
+            sendObject: { //state
                 "contact": {
                     "phone": "string"
                 },
@@ -192,38 +193,59 @@ export default {
     },
     update() {
         navigator.geolocate()
-         console.log('navigator')
-         console.log(navigator)
-         console.log(this.$refs.vAutoComplete)
+            console.log('navigator')
+            console.log(navigator)
+            console.log(this.$refs.vAutoComplete)
     },
     created() {
         //do we support geolocation
         this.$store.dispatch('selfLocation/getLocation');
     },
     methods: {
+        setName(e){
+            // this.$store.commit.create.fillName(e.target.value)
+            // this.$store.dispatch('create/fillName');
+            this.$store.commit('create/fillName', e.target.value)
+            // this.sendObject.name = e.target.value
+        },
+        setPhone(e){
+            // this.$store.commit.create.fillName(e.target.value)
+            // this.$store.dispatch('create/fillName');
+            this.$store.commit('create/fillPhone', e.target.value)
+            // this.sendObject.name = e.target.value
+        },
+        setSite(e){
+            // this.$store.commit.create.fillName(e.target.value)
+            // this.$store.dispatch('create/fillName');
+            this.$store.commit('create/fillSite', e.target.value)
+            // this.sendObject.name = e.target.value
+        },
         isDoneFunc(e){
             console.log('isDoneFunc') // google map is load 
             this.isDone=true; // - start autocomplete
             //this.$refs.vAutoComplete.geolocate(); // - start autocomplete geolocale -not workinfg here
         },
-        getAddressData: function (addressData, placeResultData, id) {
-            console.log('getAddressData')
-            console.log('addressData=')
-            console.dir(addressData)
-            console.log('placeResultData=')
-            console.dir(placeResultData)
-            let lat=placeResultData.geometry.location.lat()
-            let lng=placeResultData.geometry.location.lng()
-            console.log(lat,lng)
-            this.acLatLng={lat:lat,lng:lng}
-            this.sendObject.location={latitude:lat,longitude:lng}
-            this.sendObject.location={
-                address: placeResultData.formatted_address,
-                latitude: placeResultData.geometry.location.lat(),
-                longitude: placeResultData.geometry.location.lng()
-            }
-            this.address = addressData;
+        getAddressData(addressData, placeResultData, id){
+            this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
         },
+        //getAddressData//: //function (addressData, placeResultData, id) { //state
+            // console.log('getAddressData')
+            // console.log('addressData=')
+            // console.dir(addressData)
+            // console.log('placeResultData=')
+            // console.dir(placeResultData)
+            // let lat=placeResultData.geometry.location.lat()
+            // let lng=placeResultData.geometry.location.lng()
+            // console.log(lat,lng)
+            // this.acLatLng={lat:lat,lng:lng}
+            // this.sendObject.location={latitude:lat,longitude:lng}
+            // this.sendObject.location={
+            //     address: placeResultData.formatted_address,
+            //     latitude: placeResultData.geometry.location.lat(),
+            //     longitude: placeResultData.geometry.location.lng()
+            // }
+            // this.address = addressData;
+        // },
         geolocate() {
             // if (this.enableGeolocation) {
             //     if (navigator.geolocation) {
@@ -244,6 +266,9 @@ export default {
             //     }
             // }
         },
+        createStepTwo(){
+            this.$emit('stepTwoFunction')
+        }
     }
 }
 </script>
