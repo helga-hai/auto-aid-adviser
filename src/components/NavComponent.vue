@@ -12,6 +12,7 @@
                 <a v-if="ifToken()===true && isLog" @click="logout" id='logout'>Вихід</a>
                 <a href="#" @click="loginShowFunc" v-if="ifToken()===false&&!isLog">Вхід</a>
             </div>
+            <router-link to="/user">Особистий кабінет</router-link>
             
 
             <!--<router-link to="/create">Особистий кабінет</router-link> -->
@@ -93,6 +94,15 @@ export default {
     height: auto;
 }
 .header__nav {
+    margin-left: auto;
+    display: inline-block;
+    align-self: flex-start;
+}
+
+.header__nav a, span.header__lang,#logout {
+    padding: 0 30px;
+    display:inline-block;
+    height: 56px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -123,4 +133,5 @@ export default {
 #logout{
     cursor: pointer;
 }
+
 </style>

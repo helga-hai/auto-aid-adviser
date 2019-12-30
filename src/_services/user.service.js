@@ -17,7 +17,7 @@ function getConfig() {
         }
     }
 }
-const config = getConfig()
+const config = getConfig();
 export const userService = {
     config,
     regist,
@@ -28,6 +28,7 @@ export const userService = {
     getAllBusinessDate,
 
     activate,
+    getAllUserData,
 
 };
 
@@ -122,20 +123,14 @@ function login(email, password) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
 
 
-            // localStorage.setItem('user', JSON.stringify(user));
             console.log(JSON.stringify(user));
 
             localStorage.setItem('token', JSON.stringify(user.token));
             localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
             console.log(JSON.stringify(user.role));
-
             return user;
         }
-
         return user;
-        // return token;
-
-
     });
 }
 
@@ -143,19 +138,28 @@ function logout() {
     // remove user from local storage to log user out
 
     // localStorage.removeItem('user');
-    console.log('localStor: ' + localStorage);
     localStorage.removeItem('token');
     localStorage.removeItem('email');
+    console.log('localStor: ' + localStorage);
 
 }
 
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader()
+        headers: authHeader,
     };
 
     return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+}
+
+function getAllUserData(path) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponse);
 }
 
 

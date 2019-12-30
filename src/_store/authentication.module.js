@@ -9,7 +9,14 @@ const initialState = user ? { status: { loggedIn: true }, user } : { status: {},
 
 export const authentication = {
     namespaced: true,
-    state: initialState,
+    state: {initialState,
+
+
+        email: null,            // test
+        role: null,             // test
+
+
+    },
     actions: {
         login({ dispatch, commit }, { email, password }) {
             console.log('store action login: email, password', email, password);
@@ -19,8 +26,8 @@ export const authentication = {
                 .then(
                     
                     user => {
-                        console.log()
                         commit('loginSuccess', user);
+                        commit('setVal',user);          /////////////test
                         if(user.role==='ROLE_USER'){
                             router.push('user');
                         }else if(user.role==='ROLE_BUSINESS'){
@@ -52,6 +59,16 @@ export const authentication = {
             state.status = { loggedIn: true };
             state.user = user;
         },
+
+
+        ///test
+        setVal(state, obj){
+            return state.email=obj.email, state.role = obj.role;
+                // state.role = obj.role;
+        },
+        ////
+
+
         loginFailure(state) {
             state.status = {};
             state.user = null;
