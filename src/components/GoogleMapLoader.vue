@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="map-loader">
     <!-- <slot name="acompl"/> -->
     <div class="google-map" ref="googleMap"></div>
     <template v-if="Boolean(this.google) && Boolean(this.map)">
@@ -206,53 +206,54 @@ export default {
 }
 </script>
 
-<style>
-.google-map {
-  width: 100%;
-  /* min-height: calc(100vh - 56px); */
-  min-height: calc(100vh - 86px);
-  position:relative
-}
+<style lang="scss">
+.map-loader {
+  .google-map {
+    width: 100%;
+    min-height: calc(100vh - 86px);
+    position:relative
+  }
 
-#directionsPanel {
-  width: 100%;
-  min-height: 40px;
-  max-height: 250px;
-  overflow-y:scroll;
-  transition: height 1s;
-  background: #dcdcdc
-        /* position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px; */
-}
-#autocompletePannel {
-  position: absolute;
-  top: 10px;
-  left: 211px;
-  color: #000000;
-  z-index: 5;
-  background-color: #fff;
-  padding: 5px;
-  border-radius: 2px;
-  box-shadow: 1px 1px 3px #c9c9c9;
-  text-align: center;
-  font-family: 'Roboto','sans-serif';
-  line-height: 30px;
-  padding-left: 10px;
-  width: calc(100% - 266px);
-}
-#dir {
-  position: absolute;
-  bottom:0;
-  text-transform: uppercase;
-  background: yellow;
+  #directionsPanel {
+    width: 100%;
+    min-height: 40px;
+    max-height: 250px;
+    overflow-y:scroll;
+    transition: height 1s;
+    background: #dcdcdc
+          /* position: absolute;
+          top: 10px;
+          left: 25%;
+          z-index: 5;
+          background-color: #fff;
+          padding: 5px;
+          border: 1px solid #999;
+          text-align: center;
+          font-family: 'Roboto','sans-serif';
+          line-height: 30px;
+          padding-left: 10px; */
+  }
+  #autocompletePannel {
+    position: absolute;
+    top: 10px;
+    left: 211px;
+    color: #000000;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 3px #c9c9c9;
+    text-align: center;
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+    width: calc(100% - 266px);
+  }
+  #dir {
+    position: absolute;
+    bottom:0;
+    text-transform: uppercase;
+    background: yellow;
+  }
 }
 </style>
