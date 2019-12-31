@@ -113,14 +113,15 @@ export default {
     components: {
         NavComponent,
         websocket,
-        Authorization
+        Authorization,
     },
     data () {
       return {
         loginShow: false,
         registerShow: false,
         submenuShow: false,
-        plase: "Вказати локацію"
+        plase: "Вказати локацію",
+        selected: ''
       }
     },
     methods: {
@@ -190,6 +191,7 @@ main {
 }
  .one{
   width: 555px;
+  position: relative;
 }
 .two{
   width: 305px;
@@ -388,6 +390,7 @@ cursor: pointer;
   padding: 32px 50px;
   width: 400px;
   height: 100vh;
+  overflow: scroll;
   position: absolute;
   /* left: auto; */
   right: -400px;
