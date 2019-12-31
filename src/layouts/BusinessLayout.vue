@@ -22,6 +22,7 @@
                             </a>
                         </div>
                     </li>
+                    <li> {{email()}} </li>
                     <li><router-link to="/">Вхід</router-link></li>
                 </ul>
             </nav>
@@ -51,6 +52,16 @@
         </footer>
     </div>
 </template>
+
+<script>
+export default {
+    data(){
+        return{
+            email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
+        }
+    }
+}
+</script>
 
 <style lang="scss">
 /*  TOP MENU  */
