@@ -37,7 +37,7 @@ export const registration = {
 
 
                         userService.successRegist();
-                        
+
                     },
                     reject => {
                         console.log('register reject', reject);

@@ -1,5 +1,9 @@
 <template>
-  <div class='home wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
+<div>
+  <div class="preloader" v-if="preloader">
+    <img :src="require('../assets/letter.gif')">
+  </div>
+  <div v-else class='home wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
     <div :class="{'blur-content': loginShow}">
       <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
       <main>
@@ -84,6 +88,7 @@
         
     </div>  
   </div>
+</div>
 </template>
 
 <script>
@@ -122,7 +127,8 @@ export default {
           content:'my position now'
         },
         curLoc: false,
-        ac: false
+        ac: false,
+        preloader: false
       }
     },
     computed: {
@@ -171,6 +177,19 @@ export default {
           this.isDone=true; // - start autocomplete
           //this.$refs.vAutoComplete.geolocate(); // - start autocomplete geolocale -not workinfg here
       },
+    },
+    beforeRouteLeave (to, from, next) {
+        // console.log(to, from, next)
+        // if(from.path=='/' && to.path =='/user/activation') {
+        //   console.log('!!!!');
+        //   this.preloader = true
+        // }
+        if(from.path=='/' && to.path =='/successRegister') {
+          this.preloader = true
+          setTimeout(next,2000)
+        }
+        // вызывается перед переходом от пути, соответствующего текущему компоненту;
+        // имеет доступ к контексту экземпляра компонента `this`.
     }
 }
 </script>
@@ -530,5 +549,11 @@ svg#svg-filter {
   line-height: inherit;
   padding-left: inherit;
   width: auto;
+}
+.preloader {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
 }
 </style>

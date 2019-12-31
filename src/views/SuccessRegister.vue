@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="success">
       <h1>
           Check your e-mail!
       </h1>
@@ -12,6 +12,16 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.success {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    h1 {
+        margin: 0 auto;
+        text-transform: uppercase;
+        width: 200px;
+    }
+}
 </style>
