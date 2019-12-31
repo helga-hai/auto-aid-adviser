@@ -143,7 +143,7 @@
       </div>
       <div class="registrStep3__buttons">
           <input type="reset" value="Отмена" class="registrStep3__secondaryButton">
-          <input type="submit" value="Продолжить 3/3" class="registrStep3__primaryButton">    
+          <input type="submit" value="Продолжить 3/3" @click="createStepFour" class="registrStep3__primaryButton">    
       </div>
     </div> 
   </business-layout>
