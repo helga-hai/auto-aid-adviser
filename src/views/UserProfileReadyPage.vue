@@ -13,9 +13,9 @@ export default {
 name:"UserProfileReadyPage",
 data(){
     return{
-        surname:this.$store.state.userdataservice.personalPageData.data.surname,
-        name:this.$store.state.userdataservice.personalPageData.data.name,
-        phone:this.$store.state.userdataservice.personalPageData.data.phone,
+        surname:this.$store.state.userdataservice.personalPageData.surname,
+        name:this.$store.state.userdataservice.personalPageData.name,
+        phone:this.$store.state.userdataservice.personalPageData.phone,
         }
     
     },

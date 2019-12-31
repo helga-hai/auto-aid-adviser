@@ -25,7 +25,7 @@
 
                 <div class="registrStep1__buttons">
 
-                    <input type="submit" value="Зберегти" class="registrStep1__primaryButton" @click="createStepOne">    
+                    <input type="submit" value="Зберегти" class="registrStep1__primaryButton" @click="saveUserData">    
                 </div>
             </form>
         </div>
@@ -77,7 +77,7 @@ export default {
                 phone: this.phone,
             };
             this.$store.dispatch("userdataservice/fieldsVal", data); 
-            this.$emit('switchView','user-profile-ready-page')  
+            this.$emit('switchView','user-profile-ready-page');  
         },
         createStepOne() {
             console.log("work");

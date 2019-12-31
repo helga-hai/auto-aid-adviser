@@ -7,9 +7,9 @@ export const userdataservice = {
     namespaced: true,
     state: {
         personalPageData: {
-            firsName: null,
-            lastName: null,
-            phoneNumber: null,
+            surname: null,
+            name: null,
+            phone: null,
         },
 
 
@@ -47,7 +47,7 @@ export const userdataservice = {
     mutations: {
         setData(state, data) {
             console.log(data);
-            state.personalPageData = { data };
+            state.personalPageData = data;
         },
         // setData(state, resp){
         //     return state.user_data.role.resp.role = resp.role;
