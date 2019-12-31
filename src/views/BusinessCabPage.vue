@@ -1,9 +1,7 @@
 <template>
     <div>
         <!-- <nav-component/> -->
-        <h1>
-            Hello, my role is: {{role()}}
-        </h1>
+        <span class="role">{{role()}}</span>
         <create-page2 v-if="step1" @stepOneFunction="stepOneFunction"/>
         <create-page v-if="step2" @stepTwoFunction="stepTwoFunction"/>
         <create-page3 v-if="step3" @stepThreeFunction="stepThreeFunction"/>
@@ -67,5 +65,14 @@ export default {
 </script>
 
 <style>
-
+span.role {
+    left: 170px;
+    position: absolute;
+    top: 33px;
+    background: aliceblue;
+    padding: 3px 11px;
+    border-radius: 11px;
+    font-size: 13px;
+    color: #6f9ac6;
+}
 </style>
