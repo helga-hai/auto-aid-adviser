@@ -95,8 +95,9 @@ export default {
 }
 .header__nav {
     margin-left: auto;
-    display: inline-block;
-    align-self: flex-start;
+    display: flex;
+    // display: inline-block;
+    // align-self: flex-start;
 }
 
 .header__nav a, span.header__lang,#logout {
@@ -122,7 +123,7 @@ export default {
     // line-height: 56px;
     text-decoration: none;
     color: #fff;
-    margin-left: 40px;
+    //margin-left: 40px;
 }
 .header__nav a.router-link-exact-active {
   color: #FFC700;
