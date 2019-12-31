@@ -74,10 +74,16 @@ router.beforeEach((to, from, next) => {
 
     if (registration.state.status === "success") {
         console.log("hi :" + registration.state.status);
+        //router.push({ path: 'home' })
         console.log(router);
         return next();
-    } else if (authRequired && !loggedIn) {
+    } else if (authRequired && !loggedIn && to.path != '/successRegister') {
+        // if (to.path == '/successRegister') {
+        //     console.log('authRequired && !loggedIn')
+        //     return next()
+        // } else {
         return next('/');
+        //}
     } else
 
         next();

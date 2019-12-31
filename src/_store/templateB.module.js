@@ -3,42 +3,42 @@
 export const templateB = {
     namespaced: true,
     state: {
-    //     acLatLng:{},
-    //     address: '',
-    //     sendObject: {//для відправки на бек для створення бізнесу
-    //         "contact": {
-    //             "phone": "string",
-    //             "site": ""
-    //         },
-    //         "id": 0,
-    //         "location": {
-    //             "address": "string",
-    //             "latitude": 0,
-    //             "longitude": 0
-    //         },
-    //         "name": "string",
-    //         "serviceForBusinesses": [
-    //             {"id": 0}
-    //         ],
-    //         "workTimes": [
-    //             {
-    //             "day": 0,
-    //             "fromTime": {
-    //                 "hour": 0,
-    //                 "minute": 0,
-    //                 "nano": 0,
-    //                 "second": 0
-    //                 },
-    //             "id": 0,
-    //             "toTime": {
-    //                 "hour": 0,
-    //                 "minute": 0,
-    //                 "nano": 0,
-    //                 "second": 0
-    //                 }
-    //             }
-    //         ]
-    //     },
+        //     acLatLng:{},
+        //     address: '',
+        //     sendObject: {//для відправки на бек для створення бізнесу
+        //         "contact": {
+        //             "phone": "string",
+        //             "site": ""
+        //         },
+        //         "id": 0,
+        //         "location": {
+        //             "address": "string",
+        //             "latitude": 0,
+        //             "longitude": 0
+        //         },
+        //         "name": "string",
+        //         "serviceForBusinesses": [
+        //             {"id": 0}
+        //         ],
+        //         "workTimes": [
+        //             {
+        //             "day": 0,
+        //             "fromTime": {
+        //                 "hour": 0,
+        //                 "minute": 0,
+        //                 "nano": 0,
+        //                 "second": 0
+        //                 },
+        //             "id": 0,
+        //             "toTime": {
+        //                 "hour": 0,
+        //                 "minute": 0,
+        //                 "nano": 0,
+        //                 "second": 0
+        //                 }
+        //             }
+        //         ]
+        //     },
     },
     actions: {
         // getAll({ commit }) {

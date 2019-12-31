@@ -17,7 +17,7 @@ function getConfig() {
         }
     }
 }
-const config = getConfig()
+const config = getConfig();
 export const userService = {
     config,
     regist,
@@ -28,6 +28,7 @@ export const userService = {
     getAllBusinessDate,
 
     activate,
+    getAllUserData,
 
 };
 
@@ -56,7 +57,7 @@ function regist(user) {
             // localStorage.setItem('user', JSON.stringify(user));
             //}
             return resolve;
-        });
+        })
 }
 
 function successRegist() {
@@ -122,20 +123,14 @@ function login(email, password) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
 
 
-            // localStorage.setItem('user', JSON.stringify(user));
             console.log(JSON.stringify(user));
 
             localStorage.setItem('token', JSON.stringify(user.token));
             localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
             console.log(JSON.stringify(user.role));
-
             return user;
         }
-
         return user;
-        // return token;
-
-
     });
 }
 
@@ -143,19 +138,28 @@ function logout() {
     // remove user from local storage to log user out
 
     // localStorage.removeItem('user');
-    console.log('localStor: ' + localStorage);
     localStorage.removeItem('token');
     localStorage.removeItem('email');
+    console.log('localStor: ' + localStorage);
 
 }
 
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader()
+        headers: authHeader,
     };
 
     return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+}
+
+function getAllUserData(path) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponse);
 }
 
 
@@ -168,13 +172,14 @@ function getAllBusinessDate(path) {
 
     return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
 }
+
 function handleResponseGetData(response) {
     //console.dir(JSON.parse(response))
     //var r = response.then(res=>res);
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         console.log(data);
-        
+
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -193,14 +198,12 @@ function handleResponseGetData(response) {
                 return Promise.reject([error, errorStatus]);
                 //}
             }
-
-            // const error = (data && data.message) || response.statusText;
-            // return Promise.reject(error);
         }
         console.log(data);
         return data;
     });
 };
+
 function handleResponse(response) {
     //console.dir(JSON.parse(response))
     return response.text().then(text => {

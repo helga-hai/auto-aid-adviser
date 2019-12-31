@@ -1,13 +1,13 @@
 <template>
-    <div class="bus">
+    <div :email = email() class="user-page">
         <header>
-            <router-link to="/" class ="logo">
+            <a href="#" class ="logo">
                 <img :src="require('../assets/aaa_logo.svg')">
-            </router-link>
+            </a>
             <nav>
                 <ul class="topMenu">
-                    <li><router-link to="/"><img src="../assets/ico-search.png"/></router-link></li>
-                    <li><router-link to="/about">Про нас</router-link></li>
+                    <li><a href="#">Пошук</a></li>
+                    <li><a href="#">Про нас</a></li>
                     <li class="topMenu__language">
                         <div class="topMenu__selected">
                             <span class="topMenu__langLabel selLabel">Укр</span>
@@ -22,7 +22,8 @@
                             </a>
                         </div>
                     </li>
-                    <li><router-link to="/">Вхід</router-link></li>
+                    <li><a href="#" >{{email()}}</a></li>
+                    <li><a href="#"><router-link to="/">Вийти</router-link></a></li>
                 </ul>
             </nav>
         </header>
@@ -30,27 +31,80 @@
             <section class="sideBar">
                 <p>Особистий кабінет</p>
                 <ul>
-                    <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Особисті данні</router-link></li>
-                    <li class="sideBar__list "><router-link to="/create2" class="sideBar__button">Мої об‘єкти</router-link></li>
-                    <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Заявки клієнтів</router-link></li>
-                    <li class="sideBar__list "><router-link to="/#" class="sideBar__button">Налаштування</router-link></li>
+                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-create-page1')">Особисті данні</a></li>
+                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-auto-create-page')">Мої автомобілі</a></li>
+                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-station-recording')">Записи до станції</a></li>
+                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-settings')">Налаштування</a></li>
+                    <!-- <li>text: {{mIt}}</li> -->
                 </ul>
             </section>
             <section class="objectsWrapp">
-                <slot></slot>
+                <!-- <slot></slot> -->
+                <component :is="currentView" @switchView='switchView'></component>
+                <!-- <user-create-page1 :email='email()'/>    
+                <user-auto-create-page/> -->
+                <!-- <user-auto-create-page2 v-if='step2'/> -->
+
+        
             </section>
         </main>
         <footer>
-            <a href="#" class ="logoFooter">
-                <img :src="require('../assets/Group 195.png')">
-            </a>
-            <div class="Evo">
-            <img :src="require('../assets/Group 194.png')">
             <p class="footerTitle">2019 Hillel EVO project. Auto Aid Adviser</p>
-            </div>
         </footer>
     </div>
 </template>
+
+
+
+
+
+
+<script>
+
+import UserCreatePage1 from '../views/UserCreatePage1';
+import UserAutoCreatePage from '../views/UserAutoCreatePage';
+import UserAutoCreatePage2 from '../views/UserAutoCreatePage2';
+import UserSettings from '../views/UserSettings';
+import UserStationRecording from '../views/UserStationRecording'
+import UserProfileReadyPage from '../views/UserProfileReadyPage'
+
+export default {
+    // props:['email'],
+
+    components: {
+        UserCreatePage1,
+        UserAutoCreatePage,
+        UserAutoCreatePage2,
+        UserSettings,
+        UserStationRecording,
+        UserProfileReadyPage,
+    },
+    data(){
+        return{
+            currentView:"user-create-page1",
+            // mIt:"Особисті данні",
+            email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
+
+        }
+    },
+    methods:{
+        // menuItem(){
+        //     console.log(document.activeElement.innerText)
+        //     this.mIt=document.activeElement.innerText;
+
+        //     this.$store.dispatch('userdataservice/menuVal',document.activeElement.innerText);
+
+        //     // return document.activeElement.innerText;
+        // },
+        switchView: function(view) {
+            this.currentView = view;
+        },
+
+    },
+
+}
+
+</script>
 
 <style lang="scss">
 /*  TOP MENU  */
@@ -65,7 +119,7 @@ ul {
 a {
     text-decoration: none;
     cursor: pointer; 
-    color: #fff; }
+    color: #4B5E7A; }
 html,
 body, 
 #app {
@@ -80,14 +134,13 @@ input {
     font-family: 'Roboto', sans-serif; 
     color: #4B5E7A;
 }
-.bus {
+.user-page {
     header {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        height: 80px;
-        padding: 0px 50px;
+        padding: 24px 50px;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
         background-color:  rgb(255, 255, 255);
         z-index: 3;
@@ -134,8 +187,8 @@ input {
     }
 }
 /*  sideBar.css  */
-.bus {
-        main {
+.user-page {
+    main {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
@@ -165,17 +218,13 @@ input {
     .sideBar ul {
         padding: 36px 0px 0px 16px;
     }
-    .sideBar__list a{
-        color: #0E1E2E;
-    }
-    .sideBar__list a::before {
+    .sideBar__list ::before {
         content: '';
         display: inline-block;
         width: 16px;
         height: 8px;
         background-color: #E4E7EB;
         margin-right: 16px ;
-        border-radius: 3px;
     }
     .sideBar__button {
         display: inline-block;
@@ -186,15 +235,8 @@ input {
     .sideBar__button:hover {
         color: black;
     }
-    .sideBar__list a.router-link-exact-active {
-    color: #0E1E2E;
-    }
-    .sideBar__list a.router-link-exact-active::before {
-        background-color: #FFC700;
-    }
-}
-/*content*/
-.bus {
+
+    /*content*/
     .objectsWrapp {
         display: flex;
         flex-direction: row;
@@ -206,26 +248,16 @@ input {
     }
     /*  footer  */
     footer {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
         width: 100%;
-        height: 80px;
-        padding: 0px 50px;
+        padding: 29px 50px;
+        text-align: right;
         background-color: #0E1E2E;
     }
-    .Evo {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-    }
     .footerTitle {
-        padding-left:16px;
-        font-size: 12px;
-        line-height: 12px;
+        font-size: 16px;
+        line-height: 22px;
         color: #FFFFFF;
     }
+
 }
 </style>
