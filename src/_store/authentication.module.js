@@ -9,32 +9,35 @@ const initialState = user ? { status: { loggedIn: true }, user } : { status: {},
 
 export const authentication = {
     namespaced: true,
-    state: {initialState,
+    state: {
+        initialState,
 
 
-        email: null,            // test
-        role: null,             // test
+        email: null, // test
+        role: null, // test
 
 
     },
     actions: {
         login({ dispatch, commit }, { email, password }) {
             console.log('store action login: email, password', email, password);
-            commit('loginRequest', { email, password});
+            commit('loginRequest', { email, password });
 
             userService.login(email, password)
                 .then(
-                    
+
                     user => {
                         commit('loginSuccess', user);
-                        commit('setVal',user);          /////////////test
-                        if(user.role==='ROLE_USER'){
+                        commit('setVal', user); /////////////test
+                        if (user.role === 'ROLE_USER') {
+                            console.log('userService.login ROLE_USER')
                             router.push('user');
-                        }else if(user.role==='ROLE_BUSINESS'){
-                        router.push('business');
-                        }else{
+                        } else if (user.role === 'ROLE_BUSINESS') {
+                            console.log('userService.login ROLE_BUSINESS')
+                            router.push('business');
+                        } else {
                             console.log(user.role);
-                        router.push('/');
+                            router.push('/');
                         }
                     },
                     ([error, errorStatus]) => {
@@ -51,7 +54,7 @@ export const authentication = {
     },
     mutations: {
         loginRequest(state, user) {
-            // console.log('store mutations loginRequest: state, user', state, user)
+            console.log('store mutations loginRequest: state, user', state, user)
             state.status = { loggingIn: true };
             state.user = user;
         },
@@ -62,9 +65,9 @@ export const authentication = {
 
 
         ///test
-        setVal(state, obj){
-            return state.email=obj.email, state.role = obj.role;
-                // state.role = obj.role;
+        setVal(state, obj) {
+            return state.email = obj.email, state.role = obj.role;
+            // state.role = obj.role;
         },
         ////
 

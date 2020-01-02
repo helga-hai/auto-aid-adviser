@@ -15,7 +15,7 @@ export default {
 <style lang="scss" scoped>
 .success {
     display: flex;
-    height: 100vh;
+    //height: 100vh;
     align-items: center;
     justify-content: center;
     h1 {
