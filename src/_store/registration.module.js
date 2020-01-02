@@ -31,11 +31,7 @@ export const registration = {
                         console.log('resp');
                         console.log(resp);
                         commit('auth_success', resp);
-
-
                         // this.$store.dispatch("user_role/dataSet", resp); //test row
-
-
                         userService.successRegist();
 
                     },

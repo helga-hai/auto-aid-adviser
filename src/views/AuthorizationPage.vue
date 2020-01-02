@@ -1,31 +1,29 @@
 <template>
-  <!-- <div class="auth"> -->
-      <div id="nav">
-        <div class="entrance">
-        <!-- <div class="mode active">
-          <span>Вхід</span>
+  <div id="nav">
+    <div class="entrance">
+      <div class="mode step" :class="{'active': toggler}"><span id="login" @click="toggler=true">Вхід</span></div>
+      <div class="divider step"><span>&nbsp;|&nbsp;</span></div>
+      <div class="mode" :class="{'active': !toggler}"><span id="registrtion" @click="toggler=false">Реєстрація</span></div>
+    </div>
+    <div id='logRegContainer'>
+      <div class="preloader" v-if="isPreload">
+        <img :src="require('../assets/letter.gif')">
+      </div>
+      <div class="preloader__text" v-else-if="afterPreloader">
+        <p>Перевірте пошту!<br>
+        Вам надіслано лист для підтвердження реєстрації. </p>
+        <img :src="require('../assets/illustration_E-MAIL.svg')">
+        <a class="preloader__text_btn">На головну</a>
+        <div class="preloader__text_append">
+          <p>Не прийшов лист?</p>
+          <a @click="afterPreloaderFunc">Спробувати ще раз</a>
         </div>
-        <div class="divider">
-          <span>&nbsp;|&nbsp;</span>
-        </div>
-        <div class="mode">
-          <span>Реєстрація</span>
-        </div> -->
-          <!-- <router-link to="/login">Login</router-link> |
-          <router-link to="/register">Register</router-link> -->
-          <!-- <p><navigation-link url="login">Вхід</navigation-link><span>|</span><span>Реєстрація</span></p> -->
-
-            <div class="mode step" :class="{'active': toggler}"><span id="login" @click="toggler=true">Вхід</span></div>
-            <div class="divider step"><span>&nbsp;|&nbsp;</span></div>
-            <div class="mode" :class="{'active': !toggler}"><span id="registrtion" @click="toggler=false">Реєстрація</span></div>
-        </div>
-          <div id='logRegContainer'>
-            <login-page v-if="toggler"/>
-            <register-page v-else/>
-          </div>
-
-       <!-- </div> -->
-      <!-- </div> -->
+      </div>
+      <div v-else>
+        <login-page v-if="toggler"/>
+        <register-page :innerPreload="isPreload" v-else/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -41,19 +39,21 @@ export default {
     LoginPage,
     RegisterPage,
   },
+  props: ["isPreload","afterPreloader"],
   data(){
     return{
       toggler: false,
+    }
+  },
+  methods: {
+    afterPreloaderFunc() {
+      this.$emit('afterPreloaderFuncMain')
     }
   }
 
 }
 </script>
 
-
-  /* .auth{
-    background-color: red;
-  } */
 
 <style scoped>
 
