@@ -3,42 +3,7 @@
 export const templateB = {
     namespaced: true,
     state: {
-        //     acLatLng:{},
-        //     address: '',
-        //     sendObject: {//для відправки на бек для створення бізнесу
-        //         "contact": {
-        //             "phone": "string",
-        //             "site": ""
-        //         },
-        //         "id": 0,
-        //         "location": {
-        //             "address": "string",
-        //             "latitude": 0,
-        //             "longitude": 0
-        //         },
-        //         "name": "string",
-        //         "serviceForBusinesses": [
-        //             {"id": 0}
-        //         ],
-        //         "workTimes": [
-        //             {
-        //             "day": 0,
-        //             "fromTime": {
-        //                 "hour": 0,
-        //                 "minute": 0,
-        //                 "nano": 0,
-        //                 "second": 0
-        //                 },
-        //             "id": 0,
-        //             "toTime": {
-        //                 "hour": 0,
-        //                 "minute": 0,
-        //                 "nano": 0,
-        //                 "second": 0
-        //                 }
-        //             }
-        //         ]
-        //     },
+        allBusinesServises: [{"name": "1"} ]
     },
     actions: {
         // getAll({ commit }) {
@@ -52,10 +17,11 @@ export const templateB = {
         // }
     },
     mutations: {
-        // fillName(state, payload) {
-        //     console.log('payload',payload)
-        //     state.sendObject.contact.phone = payload
-        // },
+        fillallBusinesServises(state, payload) {
+            // console.log('payloadqqq',payload)
+            state.allBusinesServises = payload
+            console.log("allBusinesServises1:"+ state.allBusinesServises)
+        },
         // // fillLocation(state, payload){
         // //     state.sendObject.location.address = payload
         // //     state.sendObject.location.latitude = payload
