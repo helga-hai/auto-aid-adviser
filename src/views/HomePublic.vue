@@ -84,7 +84,6 @@
 </template>
 
 <script>
-import DefaultLayout from '../layouts/DefaultLayout';
 import TravelMap from '@/components/TravelMap.vue';
 import NavComponent from '../components/NavComponent';
 import websocket from '../components/websocket';
@@ -102,7 +101,6 @@ export default {
         websocket,
         Authorization,
         VueGoogleAutocomplete,
-        DefaultLayout
     },
     data () {
       return {
