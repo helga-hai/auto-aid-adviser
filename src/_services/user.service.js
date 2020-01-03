@@ -49,7 +49,7 @@ function regist(user) {
     return fetch(`${config.apiUrl}/api/user/register`, requestOptions)
         .then(handleResponse)
         .then(resolve => {
-            console.log('requestOptions');
+            console.log('regist (user.service) requestOptions');
             console.log(requestOptions); //email password role
             // login successful if there's a jwt token in the response
             //if (user.token) {
@@ -128,6 +128,9 @@ function login(email, password) {
             localStorage.setItem('token', JSON.stringify(user.token));
             localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
             console.log(JSON.stringify(user.role));
+            console.log("router.push user");
+            //console.log(router.push);
+            //router.push('user');//not working
             return user;
         }
         return user;
@@ -220,12 +223,13 @@ function handleResponse(response) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
                 logout();
+                console.log('location', location)
                 location.reload(true);
             } else {
                 //console.log('response.status', response.status)
                 //if (response.status == 404) {
                 // dispatch('alert/error', error, { root: true });
-                console.log('data', data);
+                console.log('!response.ok data', data);
                 const error = (data && data.message) || response.statusText;
                 const errorStatus = (data && data.status) || response.status;
                 console.log('error, errorStatus', error, errorStatus);
@@ -237,7 +241,7 @@ function handleResponse(response) {
             // const error = (data && data.message) || response.statusText;
             // return Promise.reject(error);
         }
-        console.log(data);
+        console.log('handleResponse response.ok', data);
         return data;
     });
 };

@@ -1,6 +1,6 @@
 <template>
     <div :email = email() class="user-page">
-        <header>
+        <!-- <header>
             <a href="#" class ="logo">
                 <img :src="require('../assets/aaa_logo.svg')">
             </a>
@@ -26,7 +26,8 @@
                     <li><a href="#"><router-link to="/">Вийти</router-link></a></li>
                 </ul>
             </nav>
-        </header>
+        </header> -->
+        <nav-component class="dark" :isRole="'user'"/>
         <main>
             <section class="sideBar">
                 <p>Особистий кабінет</p>
@@ -40,7 +41,9 @@
             </section>
             <section class="objectsWrapp">
                 <!-- <slot></slot> -->
-                <component :is="currentView" @switchView='switchView'></component>
+                <keep-alive><!-- Неактивные компоненты будут закэшированы -->
+                    <component :is="currentView" @switchView='switchView'></component>
+                </keep-alive>
                 <!-- <user-create-page1 :email='email()'/>    
                 <user-auto-create-page/> -->
                 <!-- <user-auto-create-page2 v-if='step2'/> -->
@@ -49,8 +52,17 @@
             </section>
         </main>
         <footer>
-            <p class="footerTitle">2019 Hillel EVO project. Auto Aid Adviser</p>
+            <!-- <a href="#" class ="logoFooter">
+                <img :src="require('../assets/Group 195.png')">
+            </a> -->
+            <div class="Evo">
+                <img :src="require('../assets/Group 194.png')">
+                <p class="footerTitle">2019 Hillel EVO project. Auto Aid Adviser</p>
+            </div>
         </footer>
+        <!-- <footer>
+            <p class="footerTitle">2019 Hillel EVO project. Auto Aid Adviser</p>
+        </footer> -->
     </div>
 </template>
 
@@ -66,7 +78,8 @@ import UserAutoCreatePage from '../views/UserAutoCreatePage';
 import UserAutoCreatePage2 from '../views/UserAutoCreatePage2';
 import UserSettings from '../views/UserSettings';
 import UserStationRecording from '../views/UserStationRecording'
-import UserProfileReadyPage from '../views/UserProfileReadyPage'
+import UserProfileReadyPage from '../views/UserProfileReadyPage';
+import NavComponent from '../components/NavComponent';
 
 export default {
     // props:['email'],
@@ -78,6 +91,7 @@ export default {
         UserSettings,
         UserStationRecording,
         UserProfileReadyPage,
+        NavComponent,
     },
     data(){
         return{
@@ -202,9 +216,9 @@ input {
         justify-content: flex-start;
         align-items: flex-start;
         width: 216px;
-        padding-top: 56px;
-        background-color: #F6F7F8;
         text-align: left;
+            background-color: #F6F7F8;
+            padding-top: 56px;
     }
     .sideBar p {
         color: #0E1E2E;
@@ -259,5 +273,32 @@ input {
         color: #FFFFFF;
     }
 
+}
+.user-page {
+    
+    /*  footer  */
+    footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;//space-between;
+        align-items: center;
+        width: 100%;
+        height: 80px;
+        padding: 0px 50px;
+        background-color: #0E1E2E;
+    }
+    .Evo {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .footerTitle {
+        padding-left:16px;
+        font-size: 12px;
+        line-height: 12px;
+        color: #FFFFFF;
+        padding-top: 2px;
+    }
 }
 </style>
