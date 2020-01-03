@@ -187,6 +187,8 @@ export default {
         if(from.path=='/' && to.path =='/successRegister') {
           this.preloader = true
           setTimeout(next,2000)
+        }else{
+          next();
         }
         // вызывается перед переходом от пути, соответствующего текущему компоненту;
         // имеет доступ к контексту экземпляра компонента `this`.

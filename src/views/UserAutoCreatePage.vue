@@ -1,7 +1,7 @@
 <template>
     <!-- <user-layout :email = email()> -->
     <div>    
-        <div class="objects">
+        <div class="objects" @click.prevent="Foo">
             <h1>Мої автомобілі</h1>
             <p>Наразі у вас немає автомобілів.</p>
             <p>Якщо бажаєте, то можемо додати Ваш автомобіль саме зараз.</p>
@@ -23,13 +23,11 @@
 </template>
 
 <script>
-// import UserLayout from "@/layouts/UserLayout";
+import { userdataservice } from '../_store/userdataservice.module';
+import {userService} from '../_services/user.service'
 export default {
 
     name: 'UserAutoCreatePage',
-    // components: {
-    //     UserLayout,
-    // },
     data(){
         return{
 
@@ -42,6 +40,24 @@ export default {
             console.log("work");
             return this.$emit('switchView','user-auto-create-page2');
         },
+        Foo(){
+            // this.$store = self;
+            // this.$store.dispatch = self.dispatch;
+            console.log('FOOOOOO');
+            
+
+            console.log(userService.getAllUserData('api/catalog/car/types'));
+
+        },
+        // getTypes(){
+        //         console.log("Foo bar");
+        //         // let data = userService.getAllUserData('api/catalog/car/types');
+        //         // return data;
+        //         return userService.getAllUserData('api/catalog/car/types');
+        // },
+        // destroy(){
+        //     Foo();
+        // }
     },
 }
 </script>

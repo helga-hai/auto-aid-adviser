@@ -159,7 +159,13 @@ function getAllUserData(path) {
         headers: authHeader(),
     };
 
-    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponse);
+    fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponse);
+
+    
+
+
+        // .then(console.log('foo baz'))
+        // .then(data=>{return data;});
 }
 
 
@@ -171,6 +177,7 @@ function getAllBusinessDate(path) {
     console.log('getAllBusinessDate,')
 
     return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
+        
 }
 
 function handleResponseGetData(response) {

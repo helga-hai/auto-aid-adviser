@@ -11,6 +11,7 @@ export const userdataservice = {
             name: null,
             phone: null,
         },
+        types: null,
 
 
 
@@ -20,13 +21,16 @@ export const userdataservice = {
     actions: {
         getData(path) {
 
-            const requestOptions = {
-                method: 'GET',
-                headers: authHeader(),
-            };
 
-            return fetch(`${userService.config.apiUrl}/${path}`, requestOptions)
-                .then(userService.handleResponse);
+
+
+            // const requestOptions = {
+            //     method: 'GET',
+            //     headers: authHeader(),
+            // };
+
+            // return fetch(`${userService.config.apiUrl}/${path}`, requestOptions)
+            //     .then(userService.handleResponse);
 
         },
         // getAll({ commit }) {
@@ -46,8 +50,11 @@ export const userdataservice = {
 
     mutations: {
         setData(state, data) {
+            console.log(data[1]);
             console.log(data);
-            state.personalPageData = data;
+            let toState = data[1];
+            state[toState] = data[0];
+            console.log(state[toState]);
         },
         // setData(state, resp){
         //     return state.user_data.role.resp.role = resp.role;

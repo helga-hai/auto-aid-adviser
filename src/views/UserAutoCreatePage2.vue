@@ -65,7 +65,7 @@ export default {
             model:"",
             fuelType:"",
             year:"",
-            test:this.getTypes(),
+            test: this.$store.state.userdataservice.types,
 
         }
     },
@@ -86,10 +86,7 @@ export default {
         back(){
             this.$emit('switchView','user-auto-create-page');
         },
-        getTypes(){
-                console.log("Foo bar");
-                userService.getAllUserData('api/catalog/car/types');
-            },
+
         // beforeCreate(){
         //     getTypes();
         // },
