@@ -456,7 +456,7 @@ input[type="checkbox"]:checked ~ p:after{
   margin-bottom:8px;
 
 }
-.addFile span {
+.registrStep3__addFile span {
   font-size: 16px;
   line-height: 18px;
   color: #A5AEBC
