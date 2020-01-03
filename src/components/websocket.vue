@@ -1,47 +1,20 @@
 <template>
     <div>
-      <!-- <div class="col-md-6">
-          <form class="form-inline">
-              <div class="form-group">
-                  <label for="connect">WebSocket connection:</label>
-                  <button id="connect" class="btn btn-default" type="submit" :disabled="connected == true" @click.prevent="connect">Connect</button>
-                  <button id="disconnect" class="btn btn-default" type="submit" :disabled="connected == false" @click.prevent="disconnect">Disconnect
-                  </button>
-              </div>
-          </form>
-      </div> -->
-          <!-- <form class="form-inline">
-              <div class="servise"> -->
-                  <!-- <label for="content">ServiseType</label> -->
-                  <input type="text" id="content" class="servise__input" placeholder="ServiseType..." @focus="connect" @blur="disconnect" @input="fillMessageAndSend1" autocomplete="off"><!--v-model="send_message.content"-->
-                  <div class="servise__autocomplete"> <!-- v-for="(item,index) in received_messages" :key="index"-->
-                    <div class="servise__block">
-                      <div class="servise__autocomplete_item" v-for="(el, index) in received_messages[received_messages.length-1]" :key="index"> {{ el }} </div>
-                    </div>
-                  </div>
-              <!-- </div> -->
-              <!-- <button id="send" class="btn btn-default" type="submit" @click.prevent="send1">Send</button> -->
-          <!-- </form> -->
-          <!-- <form class="form-inline">
-              <div class="bussines">
-                  !-- <label for="content">BusinessType</label> --
-                  <input type="text" id="content" class="form-control" placeholder="BusinessType..." @focus="connect" @blur="disconnect" @input="fillMessage2">
-                  <div class="bussines__autocomplete"></div>
-              </div>
-              <button id="send" class="btn btn-default" type="submit" @click.prevent="send2">Send</button>
-          </form>
-          <table id="conversation" class="table table-striped">
-              <thead>
-                  <tr>
-                      <th>Greetings</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="(item, index) in received_messages" :key="index">
-                      <td>{{ item }}</td>
-                  </tr>
-              </tbody>
-          </table> -->
+      <input type="text" id="content" class="servise__input" placeholder="ServiseType..." 
+      @focus="connect" 
+      @blur="disconnect"
+      @input="fillMessageAndSend1" 
+      @click.once="fillMessageAndSend1" 
+      autocomplete="off"
+      :value ="current"
+      ><!--v-model="send_message.content"-->
+      <div class="servise__autocomplete"> <!-- v-for="(item,index) in received_messages" :key="index"-->
+        <div class="servise__block">
+          <div class="servise__autocomplete_item" v-for="(el, index) in received_messages[received_messages.length-1]" :key="index"> 
+            <button class="servise__btn" @click="getCurVal"> {{ el }} </button>
+          </div>
+        </div>
+      </div>
     </div>
 </template>
 
@@ -54,6 +27,7 @@ export default {
   name: "websocket",
   data() {
     return {
+      current:'',
       received_messages: [],
       send_message1: {
         searchType: String,
@@ -67,6 +41,9 @@ export default {
     }
   },
   methods: {
+    getCurVal(e) {
+      this.current = e.srcElement.innerText
+    },
     fillMessageAndSend1(e) {
       console.log(this.send_message1)
       this.send_message1.searchType = 'BusinessType';
@@ -177,7 +154,7 @@ export default {
     position: absolute;
     background: white;
     box-shadow: 1px 1px 3px #ccc;
-    position: relative;
+    // __langposition: relative;
     &_item {
       padding: 6px 17px;
       width: 100%;
@@ -188,5 +165,14 @@ export default {
   }
 }
 .servise__input {
+}
+.home .one .servise__btn {
+width: 100%;
+    height: auto;
+    position: relative;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    text-align:left;
 }
 </style>

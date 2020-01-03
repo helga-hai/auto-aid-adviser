@@ -5,7 +5,7 @@ function getConfig() {
         }
     } else if (process.env.NODE_ENV === 'production') {
         return {
-            apiUrl: 'http://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
+            apiUrl: 'https://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
         }
     }
 }

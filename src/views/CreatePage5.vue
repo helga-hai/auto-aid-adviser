@@ -1,7 +1,8 @@
 <template>
     <business-layout>
       <h1>CreatePage5<br>CardMax</h1>
-
+      <input type="reset" value="Отмена" class="registrStep2__secondaryButton">
+      <input type="submit" value="Опубликовать" class="registrStep2__primaryButton" @click="createStepFive">
     </business-layout>
 </template>
 
@@ -12,9 +13,13 @@ export default {
     name: 'CreatePage5',
     components: {
         BusinessLayout,
-        CardMax
+        // CardMax
     },
-
+    methods: {
+      createStepFive() {
+          this.$emit('stepFiveFunction')
+      }
+    }
 }
 </script>
 

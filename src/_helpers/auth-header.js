@@ -11,13 +11,13 @@ export function authHeader() {
 
 
 
-    let token = JSON.parse(localStorage.getItem('token'));
+    let token = localStorage.getItem('token');
 
     if (token) {
         console.log('Authorization: Bearer user.token', token);
-    //     return {
-    //         'Content-Type': 'application/json' ,
-    //         'Authorization': 'Bearer ' + token };
+        return {
+            'Content-Type': 'application/json' ,
+            'Authorization': 'Bearer ' + token };
     } else {
         return {};
     }

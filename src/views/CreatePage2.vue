@@ -4,11 +4,11 @@
             <h1>Мої об’єкти</h1>
             <p>Наразі у вас немає об’єктів.</p>
             <p>Якщо бажаєте, то можемо створити новий об’єкт саме зараз.</p>         
-            <span><a href="#" class="objects__button" @click="createStepOne">Додати об'єкт</a></span>
+            <span><a href="#" class="objects__button" @click="createStepOne" >Додати об'єкт</a></span>
             <card-min/>
         </div>
         <div class="Image">
-            <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/illustration1.jpg')+')'}"></div>
+            <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/serevice.svg')+')'}"></div>
         </div>
     </business-layout>
 </template>
@@ -16,15 +16,20 @@
 <script>
 import BusinessLayout from "@/layouts/BusinessLayout";
 import CardMin from "../components/cardMin";
+import {userService} from "../_services";
+
 export default {
     name: 'CreatePage2',
     components: {
         BusinessLayout,
-        CardMin
+        CardMin,
     },
     methods: {
         createStepOne() {
-            this.$emit('stepOneFunction')
+            this.$emit('stepOneFunction');
+            userService.getAllBusinessDate('api/catalog/services');
+            // userService.getAllBusinessDate('api/businesses');
+            
         }
     }
 }
@@ -67,8 +72,9 @@ export default {
     padding: 56px 50px 0px 0px;
 }
 .Image__labe {
-    width: 516px;
-    height: 377px;
+    width: 409px;
+    height: 250px;
+    background-repeat: no-repeat;
   
 }
 </style>

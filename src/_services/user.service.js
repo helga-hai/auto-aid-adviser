@@ -13,11 +13,11 @@ function getConfig() {
         }
     } else if (process.env.NODE_ENV === 'production') {
         return {
-            apiUrl: 'http://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
+            apiUrl: 'https://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
         }
     }
 }
-const config = getConfig()
+const config = getConfig();
 export const userService = {
     config,
     regist,
@@ -25,8 +25,10 @@ export const userService = {
     logout,
     getAll,
     successRegist,
+    getAllBusinessDate,
 
     activate,
+    getAllUserData,
 
 };
 
@@ -47,7 +49,7 @@ function regist(user) {
     return fetch(`${config.apiUrl}/api/user/register`, requestOptions)
         .then(handleResponse)
         .then(resolve => {
-            console.log('requestOptions');
+            console.log('regist (user.service) requestOptions');
             console.log(requestOptions); //email password role
             // login successful if there's a jwt token in the response
             //if (user.token) {
@@ -55,7 +57,7 @@ function regist(user) {
             // localStorage.setItem('user', JSON.stringify(user));
             //}
             return resolve;
-        });
+        })
 }
 
 function successRegist() {
@@ -121,20 +123,17 @@ function login(email, password) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
 
 
-            // localStorage.setItem('user', JSON.stringify(user));
             console.log(JSON.stringify(user));
 
             localStorage.setItem('token', JSON.stringify(user.token));
             localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
             console.log(JSON.stringify(user.role));
-
+            console.log("router.push user");
+            //console.log(router.push);
+            //router.push('user');//not working
             return user;
         }
-
         return user;
-        // return token;
-
-
     });
 }
 
@@ -142,31 +141,54 @@ function logout() {
     // remove user from local storage to log user out
 
     // localStorage.removeItem('user');
-    console.log('localStor: ' + localStorage);
     localStorage.removeItem('token');
     localStorage.removeItem('email');
+    console.log('localStor: ' + localStorage);
 
 }
 
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader()
+        headers: authHeader,
     };
 
     return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
 }
 
-function handleResponse(response) {
+function getAllUserData(path) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponse);
+}
+
+
+function getAllBusinessDate(path) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+    console.log('getAllBusinessDate,')
+
+    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
+}
+
+function handleResponseGetData(response) {
     //console.dir(JSON.parse(response))
+    //var r = response.then(res=>res);
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         console.log(data);
+
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
-                logout();
-                location.reload(true);
+                //logout();
+                //location.reload(true);
+                console.log('у вас проблеми з токеном', response);
             } else {
                 //console.log('response.status', response.status)
                 //if (response.status == 404) {
@@ -179,11 +201,40 @@ function handleResponse(response) {
                 return Promise.reject([error, errorStatus]);
                 //}
             }
+        }
+        console.log(data);
+        return data;
+    });
+};
+
+function handleResponse(response) {
+    //console.dir(JSON.parse(response))
+    return response.text().then(text => {
+        const data = text && JSON.parse(text);
+        console.log(data);
+        if (!response.ok) {
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                logout();
+                console.log('location', location)
+                location.reload(true);
+            } else {
+                //console.log('response.status', response.status)
+                //if (response.status == 404) {
+                // dispatch('alert/error', error, { root: true });
+                console.log('!response.ok data', data);
+                const error = (data && data.message) || response.statusText;
+                const errorStatus = (data && data.status) || response.status;
+                console.log('error, errorStatus', error, errorStatus);
+
+                return Promise.reject([error, errorStatus]);
+                //}
+            }
 
             // const error = (data && data.message) || response.statusText;
             // return Promise.reject(error);
         }
-        console.log(data);
+        console.log('handleResponse response.ok', data);
         return data;
     });
 };

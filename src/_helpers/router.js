@@ -32,8 +32,9 @@ Vue.use(Router);
 
 export const router = new Router({
     mode: 'history',
+    //base: '/', // __dirname,
     routes: [
-        { path: '/', component: HomePublic },
+        { path: '/', component: HomePublic, name: "HomePublic", },
         { path: '/authorization', component: AuthorizationPage },
         { path: '/register', component: RegisterPage },
         { path: '/login', component: LoginPage },
@@ -59,13 +60,16 @@ export const router = new Router({
 
         // otherwise redirect to home
         { path: '*', redirect: '/' }
-    ]
+    ],
+    // scrollBehavior: function() {
+    //     return { x: 0, y: 0 }
+    // }
 });
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-
-    const publicPages = ['/authorization', '/login', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
+    console.log("beforeEach:", to, from);
+    const publicPages = ['/authorization', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
 
     const authRequired = !publicPages.includes(to.path);
 
@@ -75,10 +79,16 @@ router.beforeEach((to, from, next) => {
     if (registration.state.status === "success") {
         console.log("hi :" + registration.state.status);
         console.log(router);
+        if (to.path == '/successRegister') {
+            console.log("to.path == '/successRegister'")
+        } else {
+            return next();
+        }
+    } else if (authRequired && !loggedIn && to.path != '/successRegister') {
+        console.log(`authRequired && !loggedIn && to.path!='/successRegister'`, router);
+        return next('/');
+    } else {
+        console.log(`else`, router);
         return next();
-    } else if (authRequired && !loggedIn) {
-        return next('/login');
-    } else
-
-        next();
+    }
 });

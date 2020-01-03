@@ -147,6 +147,7 @@
       </div>
     </div> 
   </business-layout>
+
 </template>
 
 <script>
@@ -156,6 +157,13 @@ export default {
     components: {
         BusinessLayout,
     },
+
+    methods: {
+      createStepFour() {
+          this.$emit('stepFourFunction')
+      }
+    },
+
     data() {
         return {
             komfort: false,
@@ -163,6 +171,7 @@ export default {
             
         }
     }
+
 }
 </script>
 

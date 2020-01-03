@@ -7,7 +7,8 @@ export const create = {
         address: '',
         sendObject: {//для відправки на бек для створення бізнесу
             "contact": {
-                "phone": "string"
+                "phone": "string",
+                "site": "string"
             },
             "id": 0,
             "location": {
@@ -39,6 +40,12 @@ export const create = {
             ]
         },
     },
+    getters: {
+        SendObject: state => {
+            return state.sendObject
+        },
+        
+    },
     actions: {
         // getAll({ commit }) {
         //     commit('getAllRequest');
@@ -54,13 +61,21 @@ export const create = {
         fillName(state, payload) {
             console.log('payload',payload)
             state.sendObject.name = payload
-
         },
         // fillLocation(state, payload){
         //     state.sendObject.location.address = payload
         //     state.sendObject.location.latitude = payload
-        //     state.sendObject.location.longitude = payload.
+        //     state.sendObject.location.longitude = payload
         // },
+        fillPhone(state, payload){
+            console.log('phoneNamber',payload)
+            state.sendObject.contact.phone = payload
+        },
+        fillSite(state, payload){
+            console.log('site',payload)
+            state.sendObject.contact.site = payload
+            // console.log(state.sendObject.contact.site)
+        },
         getAddressData(state, {addressData, placeResultData, id}) {
             console.log('STORE getAddressData',{addressData, placeResultData, id})
             // console.log('addressData=')
