@@ -12,6 +12,7 @@ export const userdataservice = {
             phone: null,
         },
         types: null,
+        brands:null,
 
 
 
@@ -19,7 +20,7 @@ export const userdataservice = {
 
     },
     actions: {
-        getData(path) {
+        // getData(path) {
 
 
 
@@ -32,6 +33,9 @@ export const userdataservice = {
             // return fetch(`${userService.config.apiUrl}/${path}`, requestOptions)
             //     .then(userService.handleResponse);
 
+        // },
+        getData(val){
+            return val;
         },
         // getAll({ commit }) {
         //     commit('getAllRequest');
@@ -56,6 +60,7 @@ export const userdataservice = {
             state[toState] = data[0];
             console.log(state[toState]);
         },
+
         // setData(state, resp){
         //     return state.user_data.role.resp.role = resp.role;
         // {

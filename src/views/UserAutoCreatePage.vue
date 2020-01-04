@@ -1,7 +1,9 @@
 <template>
     <!-- <user-layout :email = email()> -->
     <div>    
-        <div class="objects" @click.prevent="Foo">
+        <div class="objects" 
+        @click.prevent="getTypeAndBrand"
+        >
             <h1>Мої автомобілі</h1>
             <p>Наразі у вас немає автомобілів.</p>
             <p>Якщо бажаєте, то можемо додати Ваш автомобіль саме зараз.</p>
@@ -40,13 +42,14 @@ export default {
             console.log("work");
             return this.$emit('switchView','user-auto-create-page2');
         },
-        Foo(){
-            // this.$store = self;
-            // this.$store.dispatch = self.dispatch;
+        getTypeAndBrand(){
             console.log('FOOOOOO');
-            
-
-            console.log(userService.getAllUserData('api/catalog/car/types'));
+            userService.getAllUserData('api/catalog/car/types')
+            .then(function(result){return result})
+            .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'types']))
+            userService.getAllUserData('api/catalog/car/brands')
+            .then(function(result){return result})
+            .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'brands']))
 
         },
         // getTypes(){

@@ -27,7 +27,9 @@
                 </ul>
             </nav>
         </header> -->
-        <nav-component class="dark" :isRole="'user'"/>
+        <keep-alive>
+            <nav-component class="dark" :isRole="'user'"/>
+        </keep-alive>
         <main>
             <section class="sideBar">
                 <p>Особистий кабінет</p>
