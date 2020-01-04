@@ -12,16 +12,21 @@
                 <input type="e-mail" name="e-mail" id="e-mail" placeholder="e-mail" :value='email()'>
                 <div class="avatar">
                     <div>{{data()}}</div>
-                    <p><span>Додати аватар</span></p>
-                    <div class="photo">
-                        <label>+ фото</label>
+                    <div class="registrStep3__Foto">
+                        <p class = "registrStep3__ft">Додати аватар</p>
+                        <div>
+                        <label class= "registrStep3__addFile">
+                            <input type="file" accept="image/*">
+                            <span>+ Фото</span>
+                        </label>
+                        </div>
+                        <p class = "registrStep3__fp">* розмір файлу до 500 Кб</p>        
                     </div>
-                    <p><span>розмір файлу до 500Кб кожна</span></p>
                 </div>
-                <label>Змінити пароль</label>
+                <!-- <label>Змінити пароль</label>
                 <input type="password" name="oldPassword" id="oldPassword" placeholder="Існуючий пароль" v-model="oldPassword">
                 <input type="password" name="newPassword" id="newPassword" placeholder="Новий пароль" v-model="newPassword">
-                <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Підтвердження нового паролю" v-model="confirmPassword">
+                <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Підтвердження нового паролю" v-model="confirmPassword">-->
 
                 <div class="registrStep1__buttons">
 
@@ -164,4 +169,46 @@ export default {
 div.avatar{
     margin: 15px 0 15px 0;
 }
+.registrStep3__Foto {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 64px 0px;
+}
+.registrStep3__ft  {
+  font-size: 16px;
+  line-height: 22px;
+  margin-bottom:24px;
+}
+.registrStep3__Foto .registrStep3__addFile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  margin: 0px;
+  border: 1px dashed #6F7E95;
+  border-radius: 4px;
+}
+.registrStep3__addFile input {
+    margin: 0px;
+}
+
+.registrStep3__Foto div{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+
+}
+.registrStep3__addFile span {
+  font-size: 16px;
+  line-height: 18px;
+  text-transform: uppercase;
+  color: #A5AEBC;
+}
+
 </style>

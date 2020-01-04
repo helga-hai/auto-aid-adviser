@@ -24,6 +24,7 @@ import CreatePage5 from '../views/CreatePage5';
 
 import UserCabPage from '../views/UserCabPage';
 import BusinessCabPage from '../views/BusinessCabPage';
+import UserProfileReadyPage from '../views/UserProfileReadyPage';
 
 
 import { registration } from '../_store/registration.module';
@@ -54,6 +55,7 @@ export const router = new Router({
         //test path
         { path: '/business', component: BusinessCabPage },
         { path: '/user', component: UserCabPage },
+        { path: '/userprof', component: UserProfileReadyPage},
         /////////////////////////////////////////////
 
 
@@ -69,7 +71,7 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
     console.log("beforeEach:", to, from);
-    const publicPages = ['/authorization', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
+    const publicPages = ['/authorization', '/register', '/', '/user', '/business', '/userprof','/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
 
     const authRequired = !publicPages.includes(to.path);
 
