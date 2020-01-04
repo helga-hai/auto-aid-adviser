@@ -126,7 +126,8 @@ function login(email, password) {
             console.log(JSON.stringify(user));
 
             localStorage.setItem('token', JSON.stringify(user.token));
-            localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
+            localStorage.setItem('email', JSON.stringify(user.email));////email///////////////////////////
+            localStorage.setItem('role', JSON.stringify(user.role));////role///////////////////////////
             console.log(JSON.stringify(user.role));
             console.log("router.push user");
             //console.log(router.push);
@@ -143,6 +144,7 @@ function logout() {
     // localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('email');
+    localStorage.removeItem('role');
     console.log('localStor: ' + localStorage);
 
 }
@@ -162,7 +164,16 @@ function getAllUserData(path) {
         headers: authHeader(),
     };
 
-    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/${path}`, requestOptions)
+    .then(handleResponse)
+    .then(data=>{ 
+        console.log('getAllUserData '+JSON.stringify(data));
+        return data});
+
+
+
+        // .then(console.log('foo baz'))
+        // .then(data=>{return data;});
 }
 
 
@@ -174,6 +185,7 @@ function getAllBusinessDate(path) {
     console.log('getAllBusinessDate,')
 
     return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
+        
 }
 
 function handleResponseGetData(response) {

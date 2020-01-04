@@ -15,7 +15,7 @@
                 <a href="#" @click="loginShowFunc" v-if="ifToken()===false&&!isLog">Вхід</a>
             </div>
             <router-link v-if="isRole" :to="(isRole=='user') ? '/user' : (isRole=='business') ? '/business' : ''">Особистий кабінет</router-link>
-            
+
 
             <!--<router-link to="/create">Особистий кабінет</router-link> -->
             <!-- <a href="#" @click="loginShowFunc">Вхід / Реєстрація</a>
@@ -56,7 +56,7 @@ export default {
             this.ifToken();
             this.isLog=false;
             router.push('/');
-        }
+        },
         // checkRole() {
         //     let rol = 
         //     return '/user'

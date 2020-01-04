@@ -76,7 +76,7 @@ export default {
                 name: this.name,
                 phone: this.phone,
             };
-            this.$store.dispatch("userdataservice/fieldsVal", data); 
+            this.$store.dispatch("userdataservice/fieldsVal", [data, 'personalPageData']); 
             this.$emit('switchView','user-profile-ready-page');  
         },
         createStepOne() {
