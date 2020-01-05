@@ -27,7 +27,7 @@ export const data = {
     },
     mutatuins: {
         setData(state, payload) {
-            console.log(payload)
+            console.log(JSON.parse(payload))
                 //state.data = payload.list;
                 //state.events = payload.list;
         },

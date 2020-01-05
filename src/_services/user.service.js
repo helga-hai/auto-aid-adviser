@@ -126,8 +126,8 @@ function login(email, password) {
             console.log(JSON.stringify(user));
 
             localStorage.setItem('token', JSON.stringify(user.token));
-            localStorage.setItem('email', JSON.stringify(user.email));////email///////////////////////////
-            localStorage.setItem('role', JSON.stringify(user.role));////role///////////////////////////
+            localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
+            localStorage.setItem('role', JSON.stringify(user.role)); ////role///////////////////////////
             console.log(JSON.stringify(user.role));
             console.log("router.push user");
             //console.log(router.push);
@@ -165,15 +165,16 @@ function getAllUserData(path) {
     };
 
     return fetch(`${config.apiUrl}/${path}`, requestOptions)
-    .then(handleResponse)
-    .then(data=>{ 
-        console.log('getAllUserData '+JSON.stringify(data));
-        return data});
+        .then(handleResponse)
+        .then(data => {
+            console.log('getAllUserData ' + JSON.stringify(data));
+            return data
+        });
 
 
 
-        // .then(console.log('foo baz'))
-        // .then(data=>{return data;});
+    // .then(console.log('foo baz'))
+    // .then(data=>{return data;});
 }
 
 
@@ -185,7 +186,7 @@ function getAllBusinessDate(path) {
     console.log('getAllBusinessDate,')
 
     return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
-        
+
 }
 
 function handleResponseGetData(response) {
@@ -215,6 +216,41 @@ function handleResponseGetData(response) {
             }
         }
         console.log(data);
+        console.log(data.content);
+        let serviceTypesList = [];
+        data.content.forEach(item => {
+            if (serviceTypesList.indexOf(item.serviceType.name) < 0) {
+                serviceTypesList.push(item.serviceType.name)
+            }
+        })
+        console.log(serviceTypesList);
+        var serviceTypesList2 = serviceTypesList.map(item => {
+                let t = new Object()
+                t[item] = []
+                    //return { t: [] }
+            })
+            //let serviceTypesListObj = [];
+        data.content.forEach(item => {
+            //if (serviceTypesList.indexOf(item.serviceType.name) < 0) {
+            // var tmp = []
+            //     // serviceTypesList.forEach(el=>Object.keys(serviceTypesList))
+            // for (let i = 0; i < serviceTypesList.length - 1; i++) {
+            //     if (tmp.indexOf(serviceTypesList[i]) < 0)
+            //         tmp.push(serviceTypesList[i])
+            //         //console.log(Object.keys(serviceTypesList[i]))
+            // }
+            // console.log(tmp)
+            //console.log(Object.keys(serviceTypesList))
+            if (serviceTypesList.indexOf(item.serviceType.name) < 0) {
+                //console.log('')
+                //console.log(serviceTypesList, item.serviceType.name, serviceTypesList.indexOf(item.serviceType.name) < 0)
+                let tmpKey = {}
+                tmpKey[item.serviceType.name] = []
+                serviceTypesList.push(tmpKey)
+            }
+        })
+        console.log(serviceTypesList2);
+        // ["run":{}, "disk", "engine", "gum", "body"]
         return data;
     });
 };
