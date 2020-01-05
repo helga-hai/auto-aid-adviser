@@ -3,7 +3,7 @@
 export const templateB = {
     namespaced: true,
     state: {
-        allBusinesServises: [{"name": "1"} ]
+        allBusinesServises: []
     },
     actions: {
         // getAll({ commit }) {
@@ -20,7 +20,7 @@ export const templateB = {
         fillallBusinesServises(state, payload) {
             // console.log('payloadqqq',payload)
             state.allBusinesServises = payload
-            console.log("allBusinesServises1:"+ state.allBusinesServises)
+            console.log("allBusinesServises1:"+ JSON.stringify(state.allBusinesServises))
         },
         // // fillLocation(state, payload){
         // //     state.sendObject.location.address = payload

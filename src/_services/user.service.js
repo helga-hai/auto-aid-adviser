@@ -175,9 +175,9 @@ async function getAllBusinessDate(path) {
     return fetch(`${config.apiUrl}/${path}`, requestOptions)
     .then(handleResponseGetData)
     .then(response=>{
-        let content = JSON.stringify(response.content)
-        // console.log(content)
-        return content
+        response = response.content
+        // console.log(JSON.stringify(response))
+        return response
     })
 }
 
