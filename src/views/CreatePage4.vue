@@ -109,17 +109,17 @@
         </div>
       </div>
       <hr>
-      <div class="registrStep3__services":class="{'opened': komfort}" >
+      <div class="registrStep3__services" :class="{'opened': komfort}" >
         <div  class="registrStep3__servicename" @click = "komfort = !komfort">
             <span>Комфорт</span>
-            <img :src="require('../assets/arrow drop down.png')" class="registrStep3__icon":class="{'transform': komfort}">
+            <img :src="require('../assets/arrow drop down.png')" class="registrStep3__icon" :class="{'transform': komfort}">
         </div>
       </div>
       <hr>
-      <div class="registrStep3__services":class="{'opened': more}" >
+      <div class="registrStep3__services" :class="{'opened': more}" >
         <div  class="registrStep3__servicename" @click = "more = !more">
             <span>Додатково</span>
-            <img :src="require('../assets/arrow drop down.png')" class="registrStep3__icon":class="{'transform': more}">
+            <img :src="require('../assets/arrow drop down.png')" class="registrStep3__icon" :class="{'transform': more}">
         </div>
       </div>
       <hr>
@@ -143,11 +143,10 @@
       </div>
       <div class="registrStep3__buttons">
           <input type="reset" value="Отмена" class="registrStep3__secondaryButton">
-          <input type="submit" value="Продолжить 3/3" class="registrStep3__primaryButton">    
+          <input type="submit" value="Продолжить 3/3" @click="createStepFour" class="registrStep3__primaryButton">    
       </div>
     </div> 
   </business-layout>
-
 </template>
 
 <script>
@@ -157,13 +156,11 @@ export default {
     components: {
         BusinessLayout,
     },
-
     methods: {
       createStepFour() {
           this.$emit('stepFourFunction')
       }
     },
-
     data() {
         return {
             komfort: false,
@@ -171,7 +168,6 @@ export default {
             
         }
     }
-
 }
 </script>
 

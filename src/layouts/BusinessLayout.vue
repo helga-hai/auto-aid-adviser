@@ -22,6 +22,7 @@
                             </a>
                         </div>
                     </li>
+                    <li> {{email()}} </li>
                     <li><router-link to="/">Вхід</router-link></li>
                 </ul>
             </nav>
@@ -57,11 +58,17 @@
 import NavComponent from '../components/NavComponent';
 
 export default {
-    name: 'CreatePage',
+        name: 'CreatePage',
     components: {
         NavComponent,
     },
+    data(){
+        return{
+            email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
+        }
+    }
 }
+
 </script>
 
 <style lang="scss">

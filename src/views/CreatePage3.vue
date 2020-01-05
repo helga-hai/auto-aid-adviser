@@ -1,9 +1,32 @@
- <template>
+import { data } from '../_store/data.module';
+<template>
     <business-layout>
         <div class="registrStep2">
             <img class="registrStep2_img1" src = "../assets/027-checklist.png">
             <img class="registrStep2_img2" src = "../assets/Group 133.png">
             <h1>Реєстрація об’єкту</h1>
+                        {{services}}
+            <!-- <select v-model="typeBusiness">
+                <option disabled value="">Выберите один из вариантов</option>
+                <option >CTO</option>
+                <option>shinomantazh</option>
+            </select> -->
+            <!-- <div v-for="service in services" :key="service.id"> {{service.serviceType.businessType.name}} </div> -->
+            <!-- <div v-if="typeBusiness == 'CTO'">
+                <div v-for="service in services" :key="service.id">
+                    <div > {{ service | filterCTO}}</div>
+                </div>
+            </div> -->
+            <!-- <div v-if="services.serviceType.businessType.name == 'CTO'">
+                <div v-for="service in services" :key="service.id">
+                    <div > {{ service}}</div>
+                </div>
+            </div> -->
+            <!-- <div  v-if="typeBusiness == 'shinomantazh'">
+                <div v-for="service in services" :key="service.id">
+                    {{service | filterShinomantazh}} 
+                </div>
+            </div> -->
                 <p>Выберите из списка типы обслуживаемых автомобилей</p>
                 <div class="registrStep2__types" :class="{'opened': typesShow}" >
                     <div  class="registrStep2__typename" @click = "typesShow = !typesShow">
@@ -13,7 +36,39 @@
                     <div class="registrStep2__item"></div>
                 </div>
                 <hr>
+                
+
                 <p>Выберите из списка основные услуги, которые оказывает обьект</p>
+                <div  v-for="service in services">
+                    <div class="registrStep2__services" :class="{'opened': serviceShow}" >
+                        <div  class="registrStep2__servicename" @click = "serviceShow = !serviceShow">
+                            <span>{{service}}</span>
+                            <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': serviceShow}">
+                        </div> 
+                        <div class="registrStep2__checkwrapp">
+                            <div class="registrStep2__checkAll">    
+                                <label for="All"><input type="checkbox" id="All" value="Обрати все">Обрати все</label>
+                            </div>
+                            <div class="registrStep2__check" >
+                                <div class ="registrStep2__column1">
+                                    <label for="oil"><input type="checkbox" id="oil" value="Замена масла в двигателе" checked>Замена масла в двигателе</label>
+                                    <label for="diagnostics"><input type="checkbox" id="diagnostics" value="Компьютерная диагностика" >Компьютерная диагностика</label>
+                                    <label for="engineFilter"><input type="checkbox" id="engineFilter" value="Замена воздушного фильтра двигателя" checked>Замена воздушного фильтра двигателя</label>
+                                    <label for="cabinFilter"><input type="checkbox" id="cabinFilter" value="Замена воздушного фильтра салона" >Замена воздушного фильтра салона</label>
+                                    <label for="oil2"><input type="checkbox" id="oil2" value="Замена масла в КПП" >Замена масла в КПП</label>
+                                    <label for="coolant"><input type="checkbox" id="coolant" value="Замена охлаждающей жидкости" >Замена охлаждающей жидкости</label>
+                                </div>
+                                <div class ="registrStep2__column2">
+                                    <label for="belt"><input type="checkbox" id="belt" value="Замена ремня ГРМ" >Замена ремня ГРМ</label>
+                                    <label for="driveBelt"><input type="checkbox" id="driveBelt" value="Замена приводного ремня" >Замена приводного ремня</label>
+                                    <label for="driveRollers"><input type="checkbox" id="driveRollers" value="Замена роликов привода" >Замена роликов привода</label>
+                                    <label for="engineFlushing"><input type="checkbox" id="engineFlushing" value="Промывка двигателя" >Промывка двигателя</label>
+                                    <label for="replacement"><input type="checkbox" id="replacement" value="Замена комплекта ремня ГРМ с роликами и водяной помпой" >Замена комплекта ремня ГРМ с роликами и водяной помпой</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="registrStep2__services" :class="{'opened': serviceShow}" >
                     <div  class="registrStep2__servicename" @click = "serviceShow = !serviceShow">
                         <span>Сервисное ТО</span>
@@ -50,7 +105,7 @@
                     </div>
                 </div>
                 <hr>
-                 <div class="registrStep2__services" :class="{'opened': suspensionShow}" >
+                <div class="registrStep2__services" :class="{'opened': suspensionShow}" >
                     <div  class="registrStep2__servicename" @click = "suspensionShow = !suspensionShow">
                         <span>Подвеска</span>
                         <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': suspensionShow}">
@@ -145,6 +200,10 @@ export default {
     },
     data() {
         return {
+            typeBusiness: "",
+            filtreTemplate: "",
+            services: this.$store.state.templateB.serviceTypesList,
+            sendServices: '',
             typesShow: false,
             serviceShow: false,
             brakeSystShow: false,
@@ -159,7 +218,7 @@ export default {
             carcassShow: false,
             gasShow: false,
             extraShow: false,
-            business_types: this.$store.dispatch("data/getData", '/api/catalog/business_types'),//this.$store.state.authentication.user;// [{"id":1,"name":"CTO"},{"id":2,"name":"shinomantazh"},{"id":3,"name":"shop"},{"id":4,"name":"test"}], //   http://localhost:8080/api/catalog/business_types   GET
+            // business_types: this.$store.dispatch("data/getData", '/api/catalog/business_types'),//this.$store.state.authentication.user;// [{"id":1,"name":"CTO"},{"id":2,"name":"shinomantazh"},{"id":3,"name":"shop"},{"id":4,"name":"test"}], //   http://localhost:8080/api/catalog/business_types   GET
             // service_types_2: [{"id":4,"name":"gum","businessType":{"id":2,"name":"shinomantazh"}},{"id":5,"name":"disk","businessType":{"id":2,"name":"shinomantazh"}},{"id":6,"name":"test","businessType":{"id":2,"name":"shinomantazh"}}], //   http://localhost:8080/api/catalog/business_types/2/service_types   GET
             // services_3: [{"id":30,"name":"balancing 8","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":2,"name":"balancing 1","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":14,"name":"balancing 4","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":26,"name":"balancing 7","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":10,"name":"balancing 3","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":22,"name":"balancing 6","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":6,"name":"balancing 2","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":18,"name":"balancing 5","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}}], //   http://localhost:8080/api/catalog/service_types/2/services   GET
             // service_types_byid: {"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}, //   http://localhost:8080/api/catalog/service_types/3   GET
@@ -168,9 +227,33 @@ export default {
     },
     methods: {
         createStepThree() {
-            this.$emit('stepThreeFunction')
-        }
+            this.$emit('stepThreeFunction');        
+        },
+        // filteredCTO(){
+        //     console.log(this.services.name)
+        //     if(this.services.serviceType.businessType.name == "CTO"){return this.sendServices = this.services}
+            
+        // }
     },
+    computed: {
+        
+    },
+    watch: {
+       
+    },
+    filters: {
+        filterCTO: function (value) {
+            if (value.serviceType.businessType.name == "CTO"){
+            console.log(value)
+            return value
+            }
+        },
+        filterShinomantazh: function (value) {
+            if (value.serviceType.businessType.name  == "shinomantazh"){
+            return value
+            }
+        },
+    }
 }
 </script>
 
