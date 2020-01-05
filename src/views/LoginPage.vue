@@ -94,7 +94,9 @@ export default {
             this.submitted = true;
             const { email, password } = this;
             const { dispatch } = this.$store;
+            console.log("BeforeIfAuthMod "+email, password );
             if (email && password) {
+              console.log("AuthMod "+email, password );
                 dispatch('authentication/login', { email, password });
             }
         }

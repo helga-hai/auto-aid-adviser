@@ -12,7 +12,7 @@ export const authentication = {
     state: {
         initialState,
 
-
+        password: null,
         email: null, // test
         role: null, // test
 
@@ -31,10 +31,10 @@ export const authentication = {
                         commit('setVal', user); /////////////test
                         if (user.role === 'ROLE_USER') {
                             console.log('userService.login ROLE_USER')
-                            router.push('user');
+                            router.push('/user');
                         } else if (user.role === 'ROLE_BUSINESS') {
                             console.log('userService.login ROLE_BUSINESS')
-                            router.push('business');
+                            router.push('/business');
                         } else {
                             console.log(user.role);
                             router.push('/');

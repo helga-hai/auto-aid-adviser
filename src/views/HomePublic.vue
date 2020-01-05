@@ -2,7 +2,7 @@
 <div>
     <div class='home wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
       <div :class="{'blur-content': loginShow}">
-        <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
+        <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" :isRole="isRoleFunc()"/>
         <main>
           <!-- /// -->
           <div v-if="gettingLocation">loading...</div>
@@ -132,6 +132,15 @@ export default {
         },
     },
     methods: {
+      isRoleFunc(){
+        let role = localStorage.getItem('role');
+        if(role=="ROLE_USER"){
+          return "user";
+        }
+        else if(role=="ROLE_BUSINESS"){
+          return "business";
+        }
+      },
       addPlace() {
         this.plase =  this.selected,
         this.submenuShow = !this.submenuShow
