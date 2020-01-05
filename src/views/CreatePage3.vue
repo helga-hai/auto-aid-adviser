@@ -6,27 +6,27 @@ import { data } from '../_store/data.module';
             <img class="registrStep2_img2" src = "../assets/Group 133.png">
             <h1>Реєстрація об’єкту</h1>
                         {{services}}
-            <select v-model="typeBusiness">
+            <!-- <select v-model="typeBusiness">
                 <option disabled value="">Выберите один из вариантов</option>
                 <option >CTO</option>
                 <option>shinomantazh</option>
-            </select>
+            </select> -->
             <!-- <div v-for="service in services" :key="service.id"> {{service.serviceType.businessType.name}} </div> -->
-            <div v-if="typeBusiness == 'CTO'">
+            <!-- <div v-if="typeBusiness == 'CTO'">
                 <div v-for="service in services" :key="service.id">
                     <div > {{ service | filterCTO}}</div>
                 </div>
-            </div>
+            </div> -->
             <!-- <div v-if="services.serviceType.businessType.name == 'CTO'">
                 <div v-for="service in services" :key="service.id">
                     <div > {{ service}}</div>
                 </div>
             </div> -->
-            <div  v-if="typeBusiness == 'shinomantazh'">
+            <!-- <div  v-if="typeBusiness == 'shinomantazh'">
                 <div v-for="service in services" :key="service.id">
                     {{service | filterShinomantazh}} 
                 </div>
-            </div>
+            </div> -->
                 <p>Выберите из списка типы обслуживаемых автомобилей</p>
                 <div class="registrStep2__types" :class="{'opened': typesShow}" >
                     <div  class="registrStep2__typename" @click = "typesShow = !typesShow">
@@ -36,7 +36,39 @@ import { data } from '../_store/data.module';
                     <div class="registrStep2__item"></div>
                 </div>
                 <hr>
+                
+
                 <p>Выберите из списка основные услуги, которые оказывает обьект</p>
+                <div  v-for="service in services">
+                    <div class="registrStep2__services" :class="{'opened': serviceShow}" >
+                        <div  class="registrStep2__servicename" @click = "serviceShow = !serviceShow">
+                            <span>{{service}}</span>
+                            <img :src="require('../assets/arrow drop down.png')" class="registrStep2__icon" :class="{'transform': serviceShow}">
+                        </div> 
+                        <div class="registrStep2__checkwrapp">
+                            <div class="registrStep2__checkAll">    
+                                <label for="All"><input type="checkbox" id="All" value="Обрати все">Обрати все</label>
+                            </div>
+                            <div class="registrStep2__check" >
+                                <div class ="registrStep2__column1">
+                                    <label for="oil"><input type="checkbox" id="oil" value="Замена масла в двигателе" checked>Замена масла в двигателе</label>
+                                    <label for="diagnostics"><input type="checkbox" id="diagnostics" value="Компьютерная диагностика" >Компьютерная диагностика</label>
+                                    <label for="engineFilter"><input type="checkbox" id="engineFilter" value="Замена воздушного фильтра двигателя" checked>Замена воздушного фильтра двигателя</label>
+                                    <label for="cabinFilter"><input type="checkbox" id="cabinFilter" value="Замена воздушного фильтра салона" >Замена воздушного фильтра салона</label>
+                                    <label for="oil2"><input type="checkbox" id="oil2" value="Замена масла в КПП" >Замена масла в КПП</label>
+                                    <label for="coolant"><input type="checkbox" id="coolant" value="Замена охлаждающей жидкости" >Замена охлаждающей жидкости</label>
+                                </div>
+                                <div class ="registrStep2__column2">
+                                    <label for="belt"><input type="checkbox" id="belt" value="Замена ремня ГРМ" >Замена ремня ГРМ</label>
+                                    <label for="driveBelt"><input type="checkbox" id="driveBelt" value="Замена приводного ремня" >Замена приводного ремня</label>
+                                    <label for="driveRollers"><input type="checkbox" id="driveRollers" value="Замена роликов привода" >Замена роликов привода</label>
+                                    <label for="engineFlushing"><input type="checkbox" id="engineFlushing" value="Промывка двигателя" >Промывка двигателя</label>
+                                    <label for="replacement"><input type="checkbox" id="replacement" value="Замена комплекта ремня ГРМ с роликами и водяной помпой" >Замена комплекта ремня ГРМ с роликами и водяной помпой</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="registrStep2__services" :class="{'opened': serviceShow}" >
                     <div  class="registrStep2__servicename" @click = "serviceShow = !serviceShow">
                         <span>Сервисное ТО</span>
@@ -170,8 +202,8 @@ export default {
         return {
             typeBusiness: "",
             filtreTemplate: "",
-            services: this.$store.state.templateB.allBusinesServises,
-            sendServices: this.$store.state.templateB.allBusinesServises.map,
+            services: this.$store.state.templateB.serviceTypesList,
+            sendServices: '',
             typesShow: false,
             serviceShow: false,
             brakeSystShow: false,

@@ -24,6 +24,7 @@ import CreatePage5 from '../views/CreatePage5';
 
 import UserCabPage from '../views/UserCabPage';
 import BusinessCabPage from '../views/BusinessCabPage';
+import UserProfileReadyPage from '../views/UserProfileReadyPage';
 
 
 import { registration } from '../_store/registration.module';
@@ -32,8 +33,9 @@ Vue.use(Router);
 
 export const router = new Router({
     mode: 'history',
+    //base: '/', // __dirname,
     routes: [
-        { path: '/', component: HomePublic },
+        { path: '/', component: HomePublic, name: "HomePublic", },
         { path: '/authorization', component: AuthorizationPage },
         { path: '/register', component: RegisterPage },
         { path: '/login', component: LoginPage },
@@ -53,19 +55,23 @@ export const router = new Router({
         //test path
         { path: '/business', component: BusinessCabPage },
         { path: '/user', component: UserCabPage },
+        { path: '/userprof', component: UserProfileReadyPage},
         /////////////////////////////////////////////
 
 
 
         // otherwise redirect to home
         { path: '*', redirect: '/' }
-    ]
+    ],
+    // scrollBehavior: function() {
+    //     return { x: 0, y: 0 }
+    // }
 });
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-
-    const publicPages = ['/authorization', '/register', '/', '/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
+    console.log("beforeEach:", to, from);
+    const publicPages = ['/authorization', '/register', '/', '/user', '/business', '/userprof','/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
 
     const authRequired = !publicPages.includes(to.path);
 
@@ -74,17 +80,17 @@ router.beforeEach((to, from, next) => {
 
     if (registration.state.status === "success") {
         console.log("hi :" + registration.state.status);
-        //router.push({ path: 'home' })
         console.log(router);
-        return next();
+        if (to.path == '/successRegister') {
+            console.log("to.path == '/successRegister'")
+        } else {
+            return next();
+        }
     } else if (authRequired && !loggedIn && to.path != '/successRegister') {
-        // if (to.path == '/successRegister') {
-        //     console.log('authRequired && !loggedIn')
-        //     return next()
-        // } else {
+        console.log(`authRequired && !loggedIn && to.path!='/successRegister'`, router);
         return next('/');
-        //}
-    } else
-
-        next();
+    } else {
+        console.log(`else`, router);
+        return next();
+    }
 });

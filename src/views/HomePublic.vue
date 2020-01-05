@@ -1,93 +1,85 @@
 <template>
 <div>
-  <div class="preloader" v-if="preloader">
-    <img :src="require('../assets/letter.gif')">
-  </div>
-  <div v-else class='home wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
-    <div :class="{'blur-content': loginShow}">
-      <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
-      <main>
-        <!-- /// -->
-        <div v-if="gettingLocation">loading...</div>
-        <div v-else>
-            <travel-map class="guide"
-                ref="mapr"
-                :curMarker="curMarker"
-                @isDoneFunc="isDoneFunc" 
-            />
-        </div>
-        <!-- /// 
-        :mapCenter="curMarker.position" 
-        :address="address" 
-        :curMarker="curMarker"-->
-        <div class="res" >
-          <div class="one">
-            <label for="">Що шукаємо</label>
-            <websocket />
-            <!-- <ul class="submenu">
-              <li class="submenu-item"><a href="#">Аргонна сварка</a></li>
-              <li class="submenu-item"><a href="#">item2_2</a></li>
-              <li class="submenu-item"><a href="#">item2_3</a></li>
-            </ul>-->
+    <div class='home wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/backgroundimage.jpg') + ')'}">
+      <div :class="{'blur-content': loginShow}">
+        <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" />
+        <main>
+          <!-- /// -->
+          <div v-if="gettingLocation">loading...</div>
+          <div v-else>
+              <travel-map class="guide"
+                  ref="mapr"
+                  :curMarker="curMarker"
+                  @isDoneFunc="isDoneFunc" 
+              />
           </div>
-
-          <div class="two">
-            <label for="">Де шукати</label>
-            <button type="button" name="button" @click="submenuShow = !submenuShow" v-if="!ac">
-              <div class="selected-option">{{curLoc ? curLoc : plase}}</div>
-              <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon" :class="{'transform': submenuShow}">
-            </button>
-            <div class="ac-input" slot="acompl" v-if="isDone && ac" >
-              <vue-google-autocomplete 
-                  ref="vAutoComplete"
-                  :country="['ua']"
-                  id="autocompletePannel"
-                  classname="search-input home-input"
-                  placeholder="Адреса"
-                  
-                  v-on:placechanged="getAddressData"
-              ></vue-google-autocomplete>
-              <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon" :class="{'transform': submenuShow}" @click="submenuShow=!submenuShow; ac=!ac; plase='Вказати локацію'">
-              <!-- {{sendObject}}<br><br>  :enableGeolocation="enableGeolocation"-->
+          <!-- /// 
+          :mapCenter="curMarker.position" 
+          :address="address" 
+          :curMarker="curMarker"-->
+          <div class="res" >
+            <div class="one">
+              <label for="">Що шукаємо</label>
+              <websocket />
             </div>
 
-            <ul class="two_submenu" :class="{'opened': submenuShow}">
-              <li class="two_submenuItem1 flex" @click="chooseMyLocation">
-                <p>Moe місцезнаходження</p>
-                <img :src="require('../assets/XMLID 1.png')">
-              </li>
-              <li class="two_submenuItem2" @click="openAutocomplete"><!--@keyup.enter="addPlace"-->
-                <input type="text" placeholder="Вказати адресу" v-model="selected" >
-              </li>
-            </ul>
+            <div class="two">
+              <label for="">Де шукати</label>
+              <button type="button" name="button" @click="submenuShow = !submenuShow" v-if="!ac">
+                <div class="selected-option">{{curLoc ? curLoc : plase}}</div>
+                <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon" :class="{'transform': submenuShow}">
+              </button>
+              <div class="ac-input" slot="acompl" v-if="isDone && ac" >
+                <vue-google-autocomplete 
+                    ref="vAutoComplete"
+                    :country="['ua']"
+                    id="autocompletePannel"
+                    classname="search-input home-input"
+                    placeholder="Адреса"
+                    
+                    v-on:placechanged="getAddressData"
+                ></vue-google-autocomplete>
+                <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon" :class="{'transform': submenuShow}" @click="submenuShow=!submenuShow; ac=!ac; plase='Вказати локацію'">
+                <!-- {{sendObject}}<br><br>  :enableGeolocation="enableGeolocation"-->
+              </div>
+
+              <ul class="two_submenu" :class="{'opened': submenuShow}">
+                <li class="two_submenuItem1 flex" @click="chooseMyLocation">
+                  <p>Moe місцезнаходження</p>
+                  <img :src="require('../assets/XMLID 1.png')">
+                </li>
+                <li class="two_submenuItem2" @click="openAutocomplete"><!--@keyup.enter="addPlace"-->
+                  <input type="text" placeholder="Вказати адресу" v-model="selected" >
+                </li>
+              </ul>
+            </div>
+            <div class="btn">
+              <a href="#" class="btn__button orange">Знайти</a>
+            </div>
           </div>
-          <div class="btn">
-            <a href="#" class="btn__button orange">Знайти</a>
+        </main>
+      </div>
+      <!-- SVG Blur Filter -->
+      <svg id="svg-filter">
+        <filter id="svg-blur">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4"></feGaussianBlur>
+        </filter>
+      </svg>
+
+      <div class="modal-login-registration " :class="{'active-modal': loginShow}">
+        <button class="close-x" @click="loginHideFunc"></button>
+
+          <Authorization :isPreload="preloader" :afterPreloader="afterPreloader" @afterPreloaderFuncMain="afterPreloaderFuncMain"></Authorization>
+          <div v-if="!afterPreloader" class="social-providers">
+            <p>Увійти за допомогою соцмереж</p>
+            <div class="social-providers__icons">
+              <router-link to="https://m.facebook.com/"><img src="../assets/fb.png"/></router-link>
+              <router-link to="https://www.google.com.ua/"><img src="../assets/google.png"/></router-link>
+            </div>
           </div>
-        </div>
-      </main>
+          
+      </div>  
     </div>
-    <!-- SVG Blur Filter -->
-    <svg id="svg-filter">
-      <filter id="svg-blur">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="4"></feGaussianBlur>
-      </filter>
-    </svg>
-
-    <div class="modal-login-registration " :class="{'active-modal': loginShow}">
-      <button class="close-x" @click="loginHideFunc"></button>
-
-        <Authorization></Authorization>
-        <div class="social-providers">
-          <p>Увійти за допомогою соцмереж</p>
-          <div class="social-providers__icons">
-            <router-link to="https://m.facebook.com/"><img src="../assets/fb.png"/></router-link>
-            <router-link to="https://www.google.com.ua/"><img src="../assets/google.png"/></router-link>
-          </div>
-        </div>
-        
-    </div>  
-  </div>
 </div>
 </template>
 
@@ -123,16 +115,19 @@ export default {
           position: {
             "lat": 50.4704839,
             "lng": 30.3854665
-          },// { lat: 3, lng: 101 }
+          },
           content:'my position now'
         },
         curLoc: false,
         ac: false,
-        preloader: false
+        preloader: false,
+        afterPreloader: false
       }
     },
     computed: {
         gettingLocation() {
+          console.dir('this.$route')
+          console.dir(this.$route)
             return this.$store.state.selfLocation.gettingLocation;
         },
     },
@@ -177,19 +172,24 @@ export default {
           this.isDone=true; // - start autocomplete
           //this.$refs.vAutoComplete.geolocate(); // - start autocomplete geolocale -not workinfg here
       },
+      afterPreloaderFuncMain() {
+        this.preloader = false;
+        this.afterPreloader = false;
+      }
     },
     beforeRouteLeave (to, from, next) {
-        // console.log(to, from, next)
-        // if(from.path=='/' && to.path =='/user/activation') {
-        //   console.log('!!!!');
-        //   this.preloader = true
-        // }
         if(from.path=='/' && to.path =='/successRegister') {
           this.preloader = true
-          setTimeout(next,2000)
+          var th = this 
+          function showText(){
+            console.log('beforeRouteLeave showText',th.afterPreloader)
+            th.preloader = false;
+            th.afterPreloader = true;
+          }
+          setTimeout(showText,2000)
+        } else {
+          return next()
         }
-        // вызывается перед переходом от пути, соответствующего текущему компоненту;
-        // имеет доступ к контексту экземпляра компонента `this`.
     }
 }
 </script>
@@ -419,7 +419,7 @@ cursor: pointer;
     transform: scale(1, -1); 
   }
   .btn{
-    margin-top: 29.6px;
+    margin-top: 30.6px;
   }
   .btn__button {
     display:block;
@@ -552,8 +552,40 @@ svg#svg-filter {
 }
 .preloader {
     display: flex;
-    height: 100vh;
+    height: auto;//100vh;
     align-items: center;
     justify-content: center;
+    &__text {
+      text-align:left;
+      font-size: 16px;
+      line-height: 22px;
+      color: #0E1E2E;
+      padding: 40px 0;
+      img {
+        margin-top:35px;
+      }
+      &_btn {
+        background: #ffc700;
+        border-radius: 4px;
+        padding-left: 0;
+        text-align: center;
+        width: 300px;
+        height: 56px;
+        border: 0;
+        text-transform: uppercase;
+        display: block;
+        line-height: 56px;
+        margin: 48px 0 35px;
+      }
+      &_append {
+        text-align: center;
+        a {
+          text-decoration-line: underline;
+          color: #3cccde;
+          margin-top: 10px;
+          display: inline-block;
+        }
+      }
+    }
 }
 </style>

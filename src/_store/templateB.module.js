@@ -3,7 +3,11 @@
 export const templateB = {
     namespaced: true,
     state: {
-        allBusinesServises: []
+        allBusinesServises: [],
+        serviceTypesList: [],
+        service:{
+            run: []
+        }
     },
     actions: {
         // getAll({ commit }) {
@@ -19,7 +23,14 @@ export const templateB = {
     mutations: {
         fillallBusinesServises(state, payload) {
             // console.log('payloadqqq',payload)
-            state.allBusinesServises = payload
+            
+            state.allBusinesServises =  payload;
+            state.allBusinesServises.forEach(item => {
+            if (state.serviceTypesList.indexOf(item.serviceType.name) < 0) {
+                state.serviceTypesList.push(item.serviceType.name)
+            }
+
+        })
             console.log("allBusinesServises1:"+ JSON.stringify(state.allBusinesServises))
         },
         // // fillLocation(state, payload){

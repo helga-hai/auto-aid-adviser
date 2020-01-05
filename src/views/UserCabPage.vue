@@ -7,15 +7,12 @@
       <!-- <user-create-page1 v-if="p1" @menuToggler="menuToggler"/>
       <user-auto-create-page />
       <user-auto-create-page2 /> -->
-      <h1>
-          <!-- <nav-component/> -->
-          Hello, I am: {{role}}
+      <span class="role">
+          {{role}}
           {{info()}}
-      </h1>
-      <h1>
-          e-mail:{{email()}}
+          e-mail: {{email()}}
+      </span>
 
-      </h1>
       <user-layout/>
       <!-- <user-create-page1  @menuToggler="menuToggler"/>
       <user-auto-create-page  @menuToggler="menuToggler"/>
@@ -119,5 +116,14 @@ export default {
 </script>
 
 <style>
-
+span.role {
+    left: 170px;
+    position: absolute;
+    top: 33px;
+    background: aliceblue;
+    padding: 3px 11px;
+    border-radius: 11px;
+    font-size: 13px;
+    color: #6f9ac6;
+}
 </style>

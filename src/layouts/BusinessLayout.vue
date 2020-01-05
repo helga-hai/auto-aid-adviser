@@ -1,6 +1,6 @@
 <template>
     <div class="bus">
-        <header>
+        <!-- <header>
             <router-link to="/" class ="logo">
                 <img :src="require('../assets/aaa_logo.svg')">
             </router-link>
@@ -26,7 +26,8 @@
                     <li><router-link to="/">Вхід</router-link></li>
                 </ul>
             </nav>
-        </header>
+        </header> -->
+        <nav-component class="dark" :isRole="'business'"/>
         <main>
             <section class="sideBar">
                 <p>Особистий кабінет</p>
@@ -46,21 +47,28 @@
                 <img :src="require('../assets/Group 195.png')">
             </a>
             <div class="Evo">
-            <img :src="require('../assets/Group 194.png')">
-            <p class="footerTitle">2019 Hillel EVO project. Auto Aid Adviser</p>
+                <img :src="require('../assets/Group 194.png')">
+                <p class="footerTitle">2019 Hillel EVO project. Auto Aid Adviser</p>
             </div>
         </footer>
     </div>
 </template>
 
 <script>
+import NavComponent from '../components/NavComponent';
+
 export default {
+        name: 'CreatePage',
+    components: {
+        NavComponent,
+    },
     data(){
         return{
             email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
         }
     }
 }
+
 </script>
 
 <style lang="scss">

@@ -28,6 +28,7 @@ methods:{
       let key = urlWithKey[urlWithKey.length-1];
       return key;
     }
+    console.log('getKey')
     return this.$router.push('*');
   },
   redirect(){
@@ -58,15 +59,19 @@ methods:{
         return respToken})
       .then(function(respToken){
         localStorage.setItem('token',respToken.token)
-        localStorage.setItem('email',respToken.email) ////////email////////////////////////////////
+        localStorage.setItem('email',respToken.email)////////email////////////////////////////////
+        localStorage.setItem('role',respToken.role) ////////role////////////////////////////////
         console.log(respToken.role)
         // this.role = respToken.role;
         // console.log(this.role)
         if(respToken.role==="ROLE_USER"){
+          console.log('ROLE_USER *')
           router.push('/user');
         }else if(respToken.role==="ROLE_BUSINESS"){
+          console.log('ROLE_BUSINESS *')
           router.push('/business')
         }else{
+          console.log('router *')
           router.push('*')
         };})
       // return role

@@ -1,7 +1,8 @@
 <template>
     <div>
-        <!-- <nav-component/> -->
-        <span class="role">{{role()}}</span>
+        <span class="role">
+            {{role()}}
+        </span>
         <create-page2 v-if="step1" @stepOneFunction="stepOneFunction"/>
         <create-page v-if="step2" @stepTwoFunction="stepTwoFunction"/>
         <create-page3 v-if="step3" @stepThreeFunction="stepThreeFunction"/>
