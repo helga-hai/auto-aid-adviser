@@ -177,24 +177,36 @@ function getAllUserData(path) {
     // .then(data=>{return data;});
 }
 
+let content = null
+// this.$store.commit('templateB/fillallBusinesServises', content)
 
-function getAllBusinessDate(path) {
+async function getAllBusinessDate(path) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
     console.log('getAllBusinessDate,')
 
-    return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
+    return fetch(`${config.apiUrl}/${path}`, requestOptions)
+    .then(handleResponseGetData)
+    .then(response=>{
+        response = response.content
+        // console.log(JSON.stringify(response))
+        return response
+    })
+    // console.log('getAllBusinessDate,')
+
+    // return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
 
 }
+
 
 function handleResponseGetData(response) {
     //console.dir(JSON.parse(response))
     //var r = response.then(res=>res);
     return response.text().then(text => {
         const data = text && JSON.parse(text);
-        console.log(data);
+        // console.log('date: ' +data);
 
         if (!response.ok) {
             if (response.status === 401) {

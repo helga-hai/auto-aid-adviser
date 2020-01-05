@@ -66,5 +66,14 @@ export default {
 </script>
 
 <style>
-
+span.role {
+    left: 170px;
+    position: absolute;
+    top: 33px;
+    background: aliceblue;
+    padding: 3px 11px;
+    border-radius: 11px;
+    font-size: 13px;
+    color: #6f9ac6;
+}
 </style>
