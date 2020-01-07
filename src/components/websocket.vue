@@ -1,13 +1,13 @@
 <template>
     <div>
-      <input type="text" id="content" class="servise__input" placeholder="ServiseType..." 
+      <input type="text" id="content" class="servise__input" placeholder="ServiseType..." ref="wsRef"
       @focus="connect" 
       @blur="disconnect"
       @input="fillMessageAndSend1" 
-      @click.once="fillMessageAndSend1" 
+      
       autocomplete="off"
-      :value ="current"
-      ><!--v-model="send_message.content"-->
+      
+      ><!--v-model="send_message.content" @click.once="fillMessageAndSend1" :value ="current"-->
       <div class="servise__autocomplete"> <!-- v-for="(item,index) in received_messages" :key="index"-->
         <div class="servise__block">
           <div class="servise__autocomplete_item" v-for="(el, index) in received_messages[received_messages.length-1]" :key="index"> 
@@ -45,11 +45,15 @@ export default {
       this.current = e.srcElement.innerText
     },
     fillMessageAndSend1(e) {
+      console.log('fillMessageAndSend1')
+      console.dir(this.$refs.wsRef)
+      console.dir(e)
       console.log(this.send_message1)
-      this.send_message1.searchType = 'BusinessType';
+      this.send_message1.searchType = 'ServiceType';
       this.send_message1.content = e.target.value;
       console.log(this.send_message1)
-      console.dir(e)
+      console.log('this.stompClient=',this.stompClient)
+      //console.dir(e)
       // SEND //
       console.log("Send message.content1:" + this.send_message1.content);
       if (this.stompClient && this.stompClient.connected) {
@@ -79,15 +83,15 @@ export default {
       }
     },
     send2() {
-      console.log("Send message.content2:" + this.send_message2.content);
-      if (this.stompClient && this.stompClient.connected) {
-        //const msg = { content: this.send_message };
-        const msg = this.send_message1 ;
-        //this.stompClient.send("/app/socket/message", JSON.stringify(msg), {});// /app/hello
-        this.stompClient.send("/app/socket/message", JSON.stringify(msg), {});// /app/hello
-      }
+      // console.log("Send message.content2:" + this.send_message2.content);
+      // if (this.stompClient && this.stompClient.connected) {
+      //   //const msg = { content: this.send_message };
+      //   const msg = this.send_message1 ;
+      //   //this.stompClient.send("/app/socket/message", JSON.stringify(msg), {});// /app/hello
+      //   this.stompClient.send("/app/socket/message", JSON.stringify(msg), {});// /app/hello
+      // }
     },
-    connect() {
+    connect(e) {
       //this.socket = new SockJS("http://localhost:8080/api/socket");
       this.socket = new SockJS(userService.config.apiUrl+"/api/socket");
       this.stompClient = Stomp.over(this.socket);
@@ -95,9 +99,11 @@ export default {
         {},
         frame => {
           this.connected = true;
-          console.log('frame',frame);
+          console.log('frame=');
+          console.dir(frame);
           this.stompClient.subscribe("/list/result", tick => {
-            console.log('tick',tick);
+            console.log('tick=');
+            console.dir(tick);
             //this.received_messages.push(JSON.parse(tick.body).result);
             this.received_messages.push(JSON.parse(tick.body).result);
           });
@@ -107,6 +113,7 @@ export default {
           this.connected = false;
         }
       );
+      this.fillMessageAndSend1(e)
     },
     disconnect() {
       if (this.stompClient) {
@@ -119,7 +126,7 @@ export default {
     }
   },
   mounted() {
-    console.dir(userService)
+    //console.dir(userService)
     // this.connect();
   }
 };
