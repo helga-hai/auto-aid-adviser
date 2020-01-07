@@ -2,46 +2,55 @@
 
     <!-- <user-layout :email = email()> -->
 
-        <div class="registerAuto">
+        <div class="registerAuto" >
             <h1>Реєстрація автомобіля</h1>
             <form>
                 <div class="registerAuto__car">
                     <p><span>Оберіть тип транспортного засобу</span></p>
-                    <!-- <div class="carType"
-                    v-for= 'type in types'
-                    :key='type'>
-                        <span>{{type}}</span> -->
-                        <!-- <span>Легкове</span>
-                        <span>Вантажівка</span>
-                        <span>Автобус</span> -->
+
                 <ul class="carType">
                  <li
+                 
                  v-for="t in types()"
                 :key="t.id"
-                 >{{t.name}}</li> </ul>
-<!-- 
-                    </div> -->
+                @click='selectType'
+                :id="t.id"
+                tabindex = 1
+                 >{{t.name}}</li>
+                 </ul>
+
 
                 </div>
-
+                <span>Выбрано: {{ selectedType }} {{selectedTypeId}}</span>
                 <!-- <span>Выбрано: {{ selected }}</span> -->
-                <select type="text" name="brand" id="brand" placeholder="Марка" v-model='selectedBrand' required>
-                    <option disabled value="">Марка</option>
+                <select type="text" name="brand" id="brand" placeholder="Марка" v-model='selectedBrand' required >
+                    <option disabled value="" >Марка</option>
                     <option 
-                   
                     v-for="b in brands()"
-                    :key="b.id">
+                    :key="b.id"
+                    @click='selectBrand'
+                    :id="b.id"
+                    >
                     {{b.name}}
                     </option>
+                </select>
+                <span>Выбрано: 
+                    {{ selectedBrand }} 
 
-                </select><span>Выбрано: {{ selectedBrand }}</span>
+                </span>
                 <input type="text" name="model" id="model" placeholder="Модель" v-model="model" required>
                 <input type="text" name="fuelType" id="fuelType" placeholder="Тип палива" v-model="fuelType" required>
                 <input type="text" name="year" id="year" placeholder="Рік випуску" v-model="year" required>
-                <p><span>Додайте фотографії автомобілю</span></p>
-                <div class="photo">
-                    <span>+ фото</span>
-                </div>
+                    <div class="registrStep3__Foto">
+                        <p class = "registrStep3__ft">Додайте фотографії автомобілю</p>
+                        <div>
+                        <label class= "registrStep3__addFile">
+                            <input type="file" accept="image/*">
+                            <span>+ Фото</span>
+                        </label>
+                        </div>
+                        <p class = "registrStep3__fp">* розмір файлу до 500 Кб</p>        
+                    </div>
                 <p><span>*максимум п`яти фото, до 500Кб кожна </span></p>
 
                 <!-- <ul v-for="t in test"><li>{{t.name}}</li></ul> -->
@@ -78,13 +87,16 @@ export default {
             //     type3: 'Вантажівка',
             //     type4: 'Автобус',
             // },
-            selectedBrand:"",
+            selectedBrandId:'',
             model:"",
             fuelType:"",
             year:"",
             types() {return this.$store.state.userdataservice.types},
             selectedType:'',
+            selectedTypeId:'',
             brands(){return this.$store.state.userdataservice.brands},
+            selectedBrand:'',
+            
         }
     },
     watch: {
@@ -104,9 +116,18 @@ export default {
         back(){
             this.$emit('switchView','user-auto-create-page');
         },
-        selectType(){
-
-        }
+        selectType(e){
+            console.log(e.target.id);
+            console.log(e.target);
+            this.selectedType = e.target.textContent;
+            this.selectedTypeId = e.target.id
+            return e.target.textContent;
+        },
+        selectBrand(e){
+            console.log('work');
+            console.log(e.target.id);
+            return this.selectedBrandId = e.target.id
+        },
 
         // beforeCreate(){
         //     getTypes();
@@ -203,6 +224,14 @@ ul.carType>li{
 }
 ul.carType>li:hover{
     cursor: pointer;
+}
+ul.carType>li:focus{
+
+    background-color: #FFC700;
+}
+ul.carType>li:active{
+    cursor: pointer;
+    background-color: #FFC700;
 }
 
 </style>
