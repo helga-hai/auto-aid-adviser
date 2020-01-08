@@ -189,7 +189,7 @@ export default {
                 console.log(typeID,brandID);
                 let requestString = `api/catalog/car/model/type/${typeID}/brand/${brandID}`;
                 console.log(requestString);
-            userService.getAllUserData('requestString')
+            userService.getAllUserData(`${requestString}`)
             .then(function(result){return result})
             .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']))
             }
