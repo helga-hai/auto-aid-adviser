@@ -36,6 +36,7 @@
                 </select>
                 <span>Выбрано: 
                     {{ selectedBrand }} 
+                    {{ selectedBrandId }}
 
                 </span>
                 <input type="text" name="model" id="model" placeholder="Модель" v-model="model" required>
@@ -87,7 +88,7 @@ export default {
             //     type3: 'Вантажівка',
             //     type4: 'Автобус',
             // },
-            selectedBrandId:'',
+            selectedBrandId:'ln ln ',
             model:"",
             fuelType:"",
             year:"",
