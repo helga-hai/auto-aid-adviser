@@ -29,6 +29,7 @@ export const userService = {
 
     activate,
     getAllUserData,
+    postAllUserData,
 
 };
 
@@ -159,6 +160,25 @@ function getAll() {
 }
 
 function getAllUserData(path) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`${config.apiUrl}/${path}`, requestOptions)
+        .then(handleResponse)
+        .then(data => {
+            console.log('getAllUserData ' + JSON.stringify(data));
+            return data
+        });
+
+
+
+    // .then(console.log('foo baz'))
+    // .then(data=>{return data;});
+}
+
+function postAllUserData(path) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
