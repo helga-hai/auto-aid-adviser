@@ -36,7 +36,7 @@
                 </select>
                 <span>Выбрано: 
                     {{ selectedBrand }} 
-
+                    {{selectedBrandId}}
                 </span>
                 <input type="text" name="model" id="model" placeholder="Модель" v-model="model" required>
                 <input type="text" name="fuelType" id="fuelType" placeholder="Тип палива" v-model="fuelType" required>
@@ -87,7 +87,7 @@ export default {
             //     type3: 'Вантажівка',
             //     type4: 'Автобус',
             // },
-            selectedBrandId:'',
+
             model:"",
             fuelType:"",
             year:"",
@@ -96,6 +96,7 @@ export default {
             selectedTypeId:'',
             brands(){return this.$store.state.userdataservice.brands},
             selectedBrand:'',
+            selectedBrandId:'',
             
         }
     },
@@ -212,6 +213,7 @@ export default {
 }
 ul.carType{
     margin: 20px 0 20px 0;
+    display: inline-block;
 
 }
 ul.carType>li{
@@ -220,7 +222,7 @@ ul.carType>li{
     padding: 5px 10px 5px 10px;
     color: #000000;
     margin-left: 5px;
-    display: inline;
+    display: list-item inline;
 }
 ul.carType>li:hover{
     cursor: pointer;
