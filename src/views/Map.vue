@@ -33,7 +33,7 @@
               :draggable="true" 
               @click="center=myCoord"
               >
-                <!--@click="infoWindowShown = true"  <GmapInfoWindow :opened="infoWindowShown" @closeclick="infoWindowShown = false"->
+                --@click="infoWindowShown = true"  <GmapInfoWindow :opened="infoWindowShown" @closeclick="infoWindowShown = false"->
             </GmapMarker>  v-if="hasDirectionsResult"
               :directions="directionsResult" -->
             <DirectionsRenderer  v-if="hasDirectionsResult" :options='directOpt'
@@ -46,8 +46,8 @@
               title='Home'
               label="label"
               >
-                <!--@click="infoWindowShown = true"  <GmapInfoWindow :opened="infoWindowShown" @closeclick="infoWindowShown = false"-->
             </GmapMarker>
+                <!--@click="infoWindowShown = true"  <GmapInfoWindow :opened="infoWindowShown" @closeclick="infoWindowShown = false"-->
             <!-- <ground-overlay
               source="https://i.imgur.com/Jyech6X.png" 
               :bounds="{

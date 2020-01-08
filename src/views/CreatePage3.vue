@@ -39,7 +39,7 @@ import { data } from '../_store/data.module';
                 
 
                 <p>Выберите из списка основные услуги, которые оказывает обьект</p>
-                <div  v-for="service in services">
+                <div  v-for="service in services" :key="service.id">
                     <div class="registrStep2__services" :class="{'opened': serviceShow}" >
                         <div  class="registrStep2__servicename" @click = "serviceShow = !serviceShow">
                             <span>{{service}}</span>
