@@ -34,7 +34,7 @@ export const userService = {
 };
 
 //config()
-console.log(config.apiUrl)
+console.log(config.apiUrl);
 
 ///   REGISTRATION   /////
 
@@ -58,7 +58,7 @@ function regist(user) {
             // localStorage.setItem('user', JSON.stringify(user));
             //}
             return resolve;
-        })
+        });
 }
 
 function successRegist() {

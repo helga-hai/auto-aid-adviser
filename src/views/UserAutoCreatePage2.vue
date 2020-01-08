@@ -38,7 +38,27 @@
                     {{ selectedBrand }} 
                     {{selectedBrandId}}
                 </span>
-                <input type="text" name="model" id="model" placeholder="Модель" v-model="model" required>
+
+
+                <div class="modelShowMsg">
+                    <span v-if='formCheck.check===true'>{{formCheck.msg}}</span>
+                </div>
+                <select @click="getModel" type="text" name="model" id="model" placeholder="Модель" v-model="modelType" required>
+                    <option disabled value="" >Модель</option>
+                    <option 
+                    v-for="m in models()"
+                    :key="m.id"
+                    @click='select'
+                    :id="m.id"
+                    >
+                    {{m.name}}
+                    </option>
+                </select>
+                <span>{{modelId}}</span>
+
+
+
+
                 <input type="text" name="fuelType" id="fuelType" placeholder="Тип палива" v-model="fuelType" required>
                 <input type="text" name="year" id="year" placeholder="Рік випуску" v-model="year" required>
                     <div class="registrStep3__Foto">
@@ -72,6 +92,7 @@ import userdataservice from '../_store/userdataservice.module';
 import { userService } from '../_services';
 
 
+
 export default {
     name: 'UserAutoCreatePage2',
 
@@ -88,7 +109,10 @@ export default {
             //     type4: 'Автобус',
             // },
 
-            model:"",
+            models(selectedTypeId,selectedBrandId) {return this.$store.state.userdataservice.models},
+            // models: models(),
+            modelType:'',
+            modelId:'',
             fuelType:"",
             year:"",
             types() {return this.$store.state.userdataservice.types},
@@ -97,6 +121,11 @@ export default {
             brands(){return this.$store.state.userdataservice.brands},
             selectedBrand:'',
             selectedBrandId:'',
+            formCheck:{
+                check: false,
+                msg:'Спочатку оберить тип та марку авто!!!',
+            },
+            
             
         }
     },
@@ -105,7 +134,7 @@ export default {
 
     },
     computed: {
-   
+//    models(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
     },
     update() {
 
@@ -121,13 +150,50 @@ export default {
             console.log(e.target.id);
             console.log(e.target);
             this.selectedType = e.target.textContent;
-            this.selectedTypeId = e.target.id
+            this.selectedTypeId = e.target.id;
+            // this.getModel();
             return e.target.textContent;
         },
         selectBrand(e){
             console.log('work');
             console.log(e.target.id);
+            // this.getModel();
             return this.selectedBrandId = e.target.id
+        },
+        select(e,property){
+            console.log('work');
+            console.log(e.target.id);
+
+            return this.modelId= e.target.id
+        },
+        getModel(typeId,modelId){
+
+            if(!this.selectedTypeId||!this.selectedBrandId){
+                this.formCheck.check = true;
+                let checkMsg = document.querySelector("div.modelShowMsg");
+                console.log(checkMsg);
+                checkMsg.style.color='red'
+                let self = this
+                let select = document.querySelector("select#model")
+                select.onblur = function(){
+                    console.log("blur "+self.formCheck.check);
+                    self.formCheck.check=false;
+                    console.log("blur "+self.formCheck.check);
+                    };
+                return;
+            }else{
+                this.formCheck.check=false;
+                console.log('Search results .....');
+                let typeID = this.selectedTypeId;
+                let brandID = this.selectedBrandId;
+                console.log(typeID,brandID);
+                let requestString = `api/catalog/car/model/type/${typeID}/brand/${brandID}`;
+                console.log(requestString);
+            userService.getAllUserData('requestString')
+            .then(function(result){return result})
+            .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']))
+            }
+
         },
 
         // beforeCreate(){
@@ -235,5 +301,6 @@ ul.carType>li:active{
     cursor: pointer;
     background-color: #FFC700;
 }
+
 
 </style>
