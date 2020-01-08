@@ -12,7 +12,7 @@ export const authentication = {
     state: {
         initialState,
 
-        password: null,
+        // password: null,
         email: null, // test
         role: null, // test
 
@@ -54,7 +54,7 @@ export const authentication = {
     },
     mutations: {
         loginRequest(state, user) {
-            console.log('store mutations loginRequest: state, user', state, user)
+            console.log('store mutations loginRequest: state, user', state, user);
             state.status = { loggingIn: true };
             state.user = user;
         },

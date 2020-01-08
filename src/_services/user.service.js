@@ -129,7 +129,7 @@ function login(email, password) {
             localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
             localStorage.setItem('role', JSON.stringify(user.role)); ////role///////////////////////////
             console.log(JSON.stringify(user.role));
-            console.log("router.push user");
+            console.log("router.push user"+user.role);
             //console.log(router.push);
             //router.push('user');//not working
             return user;
