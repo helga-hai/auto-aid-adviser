@@ -12,10 +12,12 @@
             <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
             <div class="enterRegExit">
                 <a v-if="ifToken()===true && isLog" @click="logout" id='logout'>Вихід</a>
+                <a v-if="ifToken()===true && isLog" @click="perconalCab" id='personalCab'>Особистий кабінет</a>
                 <a href="#" @click="loginShowFunc" v-if="ifToken()===false&&!isLog">Вхід</a>
+            
+                
             </div>
-            <router-link v-if="isRole" :to="(isRole=='user') ? '/user' : (isRole=='business') ? '/business' : ''">Особистий кабінет</router-link>
-
+            <!-- <router-link v-if="isRole" :to="(isRole=='user') ? '/user' : (isRole=='business') ? '/business' : ''">Особистий кабінет</router-link> -->
 
             <!--<router-link to="/create">Особистий кабінет</router-link> -->
             <!-- <a href="#" @click="loginShowFunc">Вхід / Реєстрація</a>
@@ -36,6 +38,7 @@ export default {
     data() {
         return {
             isLog: false,
+            // currentPage: this.
         }
     },
     methods: {
@@ -56,6 +59,17 @@ export default {
             this.ifToken();
             this.isLog=false;
             router.push('/');
+        },
+        perconalCab(){
+            console.log('click');
+            let role = localStorage.getItem('role');
+            console.log(role);
+            if(role == '"ROLE_USER"'){
+                router.push('/user');
+            }
+            if(role == '"ROLE_BUSINESS"'){
+                router.push('/business');
+            }
         },
         // checkRole() {
         //     let rol = 

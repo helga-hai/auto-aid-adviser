@@ -14,7 +14,7 @@
 <script>
 
 import Activation from '../components/Activation';
-import NavComponent from '../components/NavComponent';
+//import NavComponent from '../components/NavComponent';
 import CreatePage2 from '../views/CreatePage2';
 import CreatePage from '../views/CreatePage';
 import CreatePage3 from '../views/CreatePage3';
@@ -24,7 +24,6 @@ import CreatePage5 from '../views/CreatePage5';
 export default {
     name: 'BusinessCabPage',
     components: {
-        NavComponent,
         CreatePage2,
         CreatePage,
         CreatePage3,

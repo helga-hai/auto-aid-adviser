@@ -12,8 +12,9 @@ export const userdataservice = {
             phone: null,
         },
         types: null,
-        brands:null,
-        model: null,
+        brands: null,
+        models: null,
+
 
 
 
@@ -26,16 +27,16 @@ export const userdataservice = {
 
 
 
-            // const requestOptions = {
-            //     method: 'GET',
-            //     headers: authHeader(),
-            // };
+        // const requestOptions = {
+        //     method: 'GET',
+        //     headers: authHeader(),
+        // };
 
-            // return fetch(`${userService.config.apiUrl}/${path}`, requestOptions)
-            //     .then(userService.handleResponse);
+        // return fetch(`${userService.config.apiUrl}/${path}`, requestOptions)
+        //     .then(userService.handleResponse);
 
         // },
-        getData(val){
+        getData(val) {
             return val;
         },
         // getAll({ commit }) {
