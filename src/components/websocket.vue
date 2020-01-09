@@ -4,14 +4,14 @@
       @focus="connect" 
       @blur="disconnect"
       @input="fillMessageAndSend1" 
-      
+      v-model="current"
       autocomplete="off"
       
       ><!--v-model="send_message.content" @click.once="fillMessageAndSend1" :value ="current"-->
       <div class="servise__autocomplete"> <!-- v-for="(item,index) in received_messages" :key="index"-->
         <div class="servise__block">
           <div class="servise__autocomplete_item" v-for="(el, index) in received_messages[received_messages.length-1]" :key="index"> 
-            <button class="servise__btn" @click="getCurVal"> {{ el }} </button>
+            <button class="servise__btn" @click="getCurVal" :value="el" > {{ el }} </button>
           </div>
         </div>
       </div>
@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       current:'',
+      currentChoosen: '',
       received_messages: [],
       send_message1: {
         searchType: String,
@@ -40,9 +41,22 @@ export default {
       connected: false
     }
   },
+  watch: {
+    current(newVal, oldVal){
+      if(newVal) {
+        this.received_messages = []
+      }
+    }
+  },
   methods: {
+    curFunc() {
+      return current 
+    },
     getCurVal(e) {
-      this.current = e.srcElement.innerText
+      // console.dir(e);
+      // console.log('!!!!!!!!! getCurVal',e.target.value)
+      this.current = e.target.value;//e.srcElement.innerText;
+      this.disconnect()
     },
     fillMessageAndSend1(e) {
       console.log('fillMessageAndSend1')
@@ -64,11 +78,11 @@ export default {
       }
     },
     fillMessage2(e) {
-      // this.send_message2.inputDTO.searchType = 'ServiceType';
-      // this.send_message2.inputDTO.content = e.target.value;
-      this.send_message2.searchType = 'BusinessType';
-      this.send_message2.content = e.target.value;
-      console.dir(e)
+      // // this.send_message2.inputDTO.searchType = 'ServiceType';
+      // // this.send_message2.inputDTO.content = e.target.value;
+      // this.send_message2.searchType = 'BusinessType';
+      // this.send_message2.content = e.target.value;
+      // console.dir(e)
     },
     isFocus(){
       console.log('focus true')
@@ -118,8 +132,10 @@ export default {
     disconnect() {
       if (this.stompClient) {
         this.stompClient.disconnect();
+        //this.received_messages = []
       }
       this.connected = false;
+      
     },
     tickleConnection() {
       this.connected ? this.disconnect() : this.connect();

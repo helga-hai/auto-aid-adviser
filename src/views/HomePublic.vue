@@ -124,6 +124,13 @@ export default {
         afterPreloader: false
       }
     },
+    watch: {
+      curLoc(newVal,oldVal) {
+        if(newVal) {
+          this.$store.dispatch('search/GET_POSITION_SELFLOCATION', newVal)
+        }
+      }
+    },
     computed: {
         gettingLocation() {
           console.dir('this.$route')
@@ -174,7 +181,13 @@ export default {
         this.submenuShow = !this.submenuShow;
       },
       getAddressData(addressData, placeResultData, id){
-          this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
+        console.dir('GGG getAddressData')
+        console.log(addressData.latitude, addressData.longitude)
+        console.dir(addressData)
+        console.dir(placeResultData)
+        console.dir(id)
+          //this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
+          this.$store.dispatch('search/GET_POSITION_AUTOCOMPLETE', {addressData, placeResultData, id})
       },
       isDoneFunc(e){
           console.log('isDoneFunc') // google map is load 
