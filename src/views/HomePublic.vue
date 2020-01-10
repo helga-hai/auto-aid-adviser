@@ -54,7 +54,7 @@
               </ul>
             </div>
             <div class="btn">
-              <a href="#" class="btn__button orange">Знайти</a>
+              <a href="#" class="btn__button orange" @click="startSearch" :disabled="this.$store.state.search.latitude ? this.$store.state.search.serviceForBusiness ? false : 'disabled' : 'disabled'">Знайти</a>
             </div>
           </div>
         </main>
@@ -139,6 +139,9 @@ export default {
         },
     },
     methods: {
+      startSearch() {
+        this.$store.dispatch('search/START_SEARCH')
+      },
       isRoleFunc(){
         let role = localStorage.getItem('role');
         if(role=="ROLE_USER"){
@@ -457,6 +460,13 @@ cursor: pointer;
   }
   .btn__button.orange {
     background-color: #FFC700;
+    &[disabled] {
+      cursor: default;
+      background-color: rgb(141, 141, 140);
+    }
+    &:active {
+      background-color: rgba(247, 181, 0, 0.932);
+    }
   }
   /*body{
     width: 800px;

@@ -44,6 +44,7 @@ export default {
   watch: {
     current(newVal, oldVal){
       if(newVal) {
+        this.$store.dispatch('search/GET_SERVICE', newVal)
         this.received_messages = []
       }
     }

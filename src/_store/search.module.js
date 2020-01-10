@@ -1,7 +1,6 @@
 import { userService } from '../_services';
+import { authHeader, router } from '../_helpers';
 
-
-import { router } from '../_helpers';
 import axios from 'axios';
 
 
@@ -21,12 +20,18 @@ export const search = {
         SET_SERVICE: (state, payload) => {
             state.serviceForBusiness = payload;
         },
+        SET_SEARCH: (state, payload) => {
+            console.log(payload)
+        },
     },
     actions: {
-        GET_DOTS: async(context, payload) => {
-            console.log('userService.config.apiUrl=', userService.config.apiUrl)
-                // let {data} = await Axios.get('http://yourwebsite.com/api/disk');///{serviceForBusiness}/{longtitude}/{latitude}
-                // context.commit('SET_TODO', data);
+        START_SEARCH: async(context, payload) => {
+            console.dir(authHeader())
+            let uri = userService.config.apiUrl + '/api/businesses/' + context.state.serviceForBusiness + '/' + context.state.latitude + '/' + context.state.longitude;
+            console.log('START_SEARCH', uri);
+            let options = authHeader() ? { headers: authHeader() } : {};
+            let { data } = await axios.get(uri, options); ///{serviceForBusiness}/{longtitude}/{latitude}
+            context.commit('SET_SEARCH', data);
         },
         GET_POSITION_AUTOCOMPLETE: async(context, { addressData, placeResultData, id }) => {
             let lat = addressData.latitude
