@@ -11,6 +11,7 @@ import { data } from './data.module';
 import { userdataservice } from './userdataservice.module';
 import { create } from './create.module';
 import { templateB } from './templateB.module';
+import { search } from './search.module';
 
 Vue.use(Vuex);
 
@@ -25,6 +26,7 @@ export const store = new Vuex.Store({
         data,
         userdataservice,
         create,
-        templateB
+        templateB,
+        search
     }
 });

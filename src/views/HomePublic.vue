@@ -54,7 +54,7 @@
               </ul>
             </div>
             <div class="btn">
-              <a href="#" class="btn__button orange">Знайти</a>
+              <a href="#" class="btn__button orange" @click="startSearch" :disabled="this.$store.state.search.latitude ? this.$store.state.search.serviceForBusiness ? false : 'disabled' : 'disabled'">Знайти</a>
             </div>
           </div>
         </main>
@@ -124,6 +124,13 @@ export default {
         afterPreloader: false
       }
     },
+    watch: {
+      curLoc(newVal,oldVal) {
+        if(newVal) {
+          this.$store.dispatch('search/GET_POSITION_SELFLOCATION', newVal)
+        }
+      }
+    },
     computed: {
         gettingLocation() {
           console.dir('this.$route')
@@ -132,6 +139,9 @@ export default {
         },
     },
     methods: {
+      startSearch() {
+        this.$store.dispatch('search/START_SEARCH')
+      },
       isRoleFunc(){
         let role = localStorage.getItem('role');
         if(role=="ROLE_USER"){
@@ -174,7 +184,13 @@ export default {
         this.submenuShow = !this.submenuShow;
       },
       getAddressData(addressData, placeResultData, id){
-          this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
+        console.dir('GGG getAddressData')
+        console.log(addressData.latitude, addressData.longitude)
+        console.dir(addressData)
+        console.dir(placeResultData)
+        console.dir(id)
+          //this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
+          this.$store.dispatch('search/GET_POSITION_AUTOCOMPLETE', {addressData, placeResultData, id})
       },
       isDoneFunc(e){
           console.log('isDoneFunc') // google map is load 
@@ -444,6 +460,13 @@ cursor: pointer;
   }
   .btn__button.orange {
     background-color: #FFC700;
+    &[disabled] {
+      cursor: default;
+      background-color: rgb(141, 141, 140);
+    }
+    &:active {
+      background-color: rgba(247, 181, 0, 0.932);
+    }
   }
   /*body{
     width: 800px;

@@ -251,6 +251,12 @@ input {
     .sideBar__button:hover {
         color: black;
     }
+    .sideBar__list a.router-link-exact-active {
+    color: #0E1E2E;
+    }
+    .sideBar__list a:focus::before {
+        background-color: #FFC700;
+    }
 
     /*content*/
     .objectsWrapp {
