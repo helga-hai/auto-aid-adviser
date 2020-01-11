@@ -27,11 +27,12 @@ export default {
     methods: {
         createStepOne() {
             this.$emit('stepOneFunction');
+            //this.$store.dispatch('templateB/fillallBusinesServises');
             userService.getAllBusinessDate('api/catalog/services')
                 .then(function(result) {
                     console.log("content"+result)
                     return result
-                }).then(result=>this.$store.commit('templateB/fillallBusinesServises', result)
+                }).then(result=>this.$store.dispatch('templateB/fillallBusinesServises', result)
             );
              userService.getAllBusinessDate('api/businesses/templates')
                 .then(function(result) {
