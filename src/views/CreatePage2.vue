@@ -29,9 +29,23 @@ export default {
             this.$emit('stepOneFunction');
             userService.getAllBusinessDate('api/catalog/services')
                 .then(function(result) {
-                    // console.log("content"+result)
+                    console.log("content"+result)
                     return result
-                }).then(result=>this.$store.commit('templateB/fillallBusinesServises', result) )  
+                }).then(result=>this.$store.commit('templateB/fillallBusinesServises', result)
+            );
+             userService.getAllBusinessDate('api/businesses/templates')
+                .then(function(result) {
+                    console.log("content"+result)
+                    return result
+                }).then(result=>this.$store.commit('create/fillBusinesTemplate', result)
+            );
+            // userService.getBusinesTemplate('api/businesses/templates')
+            //     .then(function(result) {
+            //         console.log("content"+result)
+            //         return result
+            //     }).then(result=>this.$store.commit('create/fillBusinesTemplate', result)
+            // );
+
 
 
             // this.$store.commit('templateB/fillallBusinesServises', result)

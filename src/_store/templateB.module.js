@@ -6,8 +6,13 @@ export const templateB = {
         allBusinesServises: [],
         serviceTypesList: [],
         service:{
-            run: []
-        }
+            run: [],
+            bite: [],
+            scream: []
+        },
+        test: [
+
+        ]
     },
     actions: {
         // getAll({ commit }) {
@@ -30,8 +35,44 @@ export const templateB = {
                 state.serviceTypesList.push(item.serviceType.name)
             }
 
-        })
+            });
+            for(let i = 0; i < state.serviceTypesList.length; i++){
+                let serviceType = state.serviceTypesList[i];
+                // state.test.push(serviceType);
+                state.allBusinesServises.forEach(item => {
+                    if (state.test.indexOf(item.serviceType.name) < 0) {
+                        if( serviceType == item.serviceType.name){
+                        state.test.push(item.name)
+                    }
+                    }
+                })
+                
+            }
+            console.log(JSON.stringify(state.test))
+            
+            // for(let i = 0; i < state.serviceTypesList.length; i++){
+            //     console.log(state.serviceTypesList[i])
+            //     //     if(state.allBusinesServises.serviceType.name )
+            //     // }
+            // }
+            // for(let i=0; i < state.allBusinesServises.length; i++){
+            //     // console.log(state.allBusinesServises[i])
+            //     for(let key of state.allBusinesServises[i]){
+            //         console.log(key)
+            //     }
+            // }
+            // for(let i=0; i < state.allBusinesServises.length; i++){
+            //     console.log(state.allBusinesServises[i])
+            //     for(let j = 0; j < state.serviceTypesList; j++ ){
+            //         console.log("sssssssssssssss"+state.serviceTypesList[j])
+            //         if(state.allBusinesServises.serviceType.name[i] == state.serviceTypesList[j]){
+                        
+            //         }
+            //     }
+            // }
+            
             console.log("allBusinesServises1:"+ JSON.stringify(state.allBusinesServises))
+            console.log("serviceTypesList:"+ JSON.stringify(state.serviceTypesList))
         },
         // // fillLocation(state, payload){
         // //     state.sendObject.location.address = payload

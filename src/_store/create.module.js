@@ -58,6 +58,11 @@ export const create = {
         // }
     },
     mutations: {
+        fillBusinesTemplate(state, payload) {
+            console.log('dawdawdaw',payload)            
+            state.sendObject =  payload;
+        },
+        
         fillName(state, payload) {
             console.log('payload',payload)
             state.sendObject.name = payload
