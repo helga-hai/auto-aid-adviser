@@ -15,9 +15,15 @@ export const templateB = {
             bite: [],
             scream: []
         },
-        test: [
-
-        ]
+        dataList: []
+    },
+    getters: {
+        SERVICE: state => {
+            return state.service; //let name = this.$store.getters.NAME
+        },
+        DATALIST: state => {
+            return state.dataList; //let name = this.$store.getters.NAME
+        },
     },
     actions: {
         // getAll({ commit }) {
@@ -67,10 +73,44 @@ export const templateB = {
 
             // state.st = getUnique(state.serviceTypesObj, 'id')
         },
+        GET_DATALIST: async(context, payload) => {
+            console.log('GET_DATALIST')
+            const requestOptions = {
+                //method: 'GET',
+                headers: authHeader()
+            };
+            const config = {
+                method: 'get',
+                url: userService.config.apiUrl + '/api/catalog/services',
+                headers: authHeader()
+            }
+            let { data } = await axios(config);
+            context.commit('SET_DATALIST', data);
+        },
+
+        SAVE_DATALIST: async(context, payload) => {
+            console.log('SAVE_DATALIST')
+            let { data } = await axios.post(userService.config.apiUrl + '/api/catalog/services', requestOptions);
+            context.commit('ADD_DATALIST', payload);
+        },
     },
     mutations: {
+        SET_DATALIST: (state, payload) => {
+            console.log('SET_DATALIST')
+            state.dataList = payload;
+        },
+        ADD_DATALIST: (state, payload) => {
+            console.log('ADD_DATALIST')
+            state.datsList.push(payload);
+        },
         fillallBusinesServises(state, payload) {
             state.allBusinesServises = payload;
+
+            //
+            payload.filter(item => {
+
+                })
+                //
             payload.forEach(item => {
                 if (state.serviceTypesList.indexOf(item.serviceType.name) < 0) {
                     state.serviceTypesList.push(item.serviceType.name)
