@@ -24,14 +24,40 @@ export default {
         BusinessLayout,
         CardMin,
     },
+    mounted() {
+        this.$store.dispatch('templateB/GET_DATALIST');
+    },
+    computed: {
+        dataList() {
+            return this.$store.getters.DATALIST; 
+            // import {mapGetters} from 'vuex';
+            // ...mapGetters(['DATALIST']), 
+            // <div class="todo-item" v-for="item in DATALIST"></div>
+        },
+    },
     methods: {
         createStepOne() {
             this.$emit('stepOneFunction');
+            //this.$store.dispatch('templateB/fillallBusinesServises');
             userService.getAllBusinessDate('api/catalog/services')
                 .then(function(result) {
-                    // console.log("content"+result)
+                    console.log("content"+result)
                     return result
-                }).then(result=>this.$store.commit('templateB/fillallBusinesServises', result) )  
+                }).then(result=>this.$store.dispatch('templateB/fillallBusinesServises', result)
+            );
+             userService.getAllBusinessDate('api/businesses/templates')
+                .then(function(result) {
+                    console.log("content"+result)
+                    return result
+                }).then(result=>this.$store.commit('create/fillBusinesTemplate', result)
+            );
+            // userService.getBusinesTemplate('api/businesses/templates')
+            //     .then(function(result) {
+            //         console.log("content"+result)
+            //         return result
+            //     }).then(result=>this.$store.commit('create/fillBusinesTemplate', result)
+            // );
+
 
 
             // this.$store.commit('templateB/fillallBusinesServises', result)

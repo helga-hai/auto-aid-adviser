@@ -1,13 +1,29 @@
-// import { userService } from '../_services';
+import { userService } from '../_services';
+import { authHeader, router } from '../_helpers';
+
+import axios from 'axios';
 
 export const templateB = {
     namespaced: true,
     state: {
         allBusinesServises: [],
         serviceTypesList: [],
-        service:{
-            run: []
-        }
+        serviceTypesObj: [],
+        st: [],
+        service: {
+            run: [],
+            bite: [],
+            scream: []
+        },
+        dataList: []
+    },
+    getters: {
+        SERVICE: state => {
+            return state.service; //let name = this.$store.getters.NAME
+        },
+        DATALIST: state => {
+            return state.dataList; //let name = this.$store.getters.NAME
+        },
     },
     actions: {
         // getAll({ commit }) {
@@ -19,60 +35,109 @@ export const templateB = {
         //             error => commit('getAllFailure', error)
         //         );
         // }
+        // fillallBusinesServises: async(context) => {
+        //     let { data } = await axios.post(userService.config.apiUrl + '/api/catalog/services', { headers: authHeader() });
+
+        //     if (data.status == 200) {
+        //         context.commit('fillallBusinesServises');
+        //     }
+        // },
+        fillallBusinesServises(state, payload) {
+            state.commit('fillallBusinesServises', payload);
+            // state.allBusinesServises = payload;
+            // payload.forEach(item => {
+            //     if (state.serviceTypesList.indexOf(item.serviceType.name) < 0) {
+            //         state.serviceTypesList.push(item.serviceType.name)
+            //     }
+            // });
+            // state.serviceTypesList.forEach(item => {
+            //     for (let i = 0; i < state.allBusinesServises.length; i++) {
+            //         if (state.allBusinesServises[i].serviceType.name == item) {
+            //             let tmpObj = {}
+            //             tmpObj['id'] = state.allBusinesServises[i].serviceType.id
+            //             tmpObj['name'] = state.allBusinesServises[i].serviceType.name
+            //             state.serviceTypesObj.push(tmpObj)
+            //         }
+            //     }
+            // })
+
+            // function getUnique(arr, comp) {
+            //     const unique = arr
+            //         .map(e => e[comp])
+            //         // store the keys of the unique objects
+            //         .map((e, i, final) => final.indexOf(e) === i && i)
+            //         // eliminate the dead keys & store unique objects
+            //         .filter(e => arr[e]).map(e => arr[e]);
+            //     return unique;
+            // }
+
+            // state.st = getUnique(state.serviceTypesObj, 'id')
+        },
+        GET_DATALIST: async(context, payload) => {
+            console.log('GET_DATALIST')
+            const requestOptions = {
+                //method: 'GET',
+                headers: authHeader()
+            };
+            const config = {
+                method: 'get',
+                url: userService.config.apiUrl + '/api/catalog/services',
+                headers: authHeader()
+            }
+            let { data } = await axios(config);
+            context.commit('SET_DATALIST', data);
+        },
+
+        SAVE_DATALIST: async(context, payload) => {
+            console.log('SAVE_DATALIST')
+            let { data } = await axios.post(userService.config.apiUrl + '/api/catalog/services', requestOptions);
+            context.commit('ADD_DATALIST', payload);
+        },
     },
     mutations: {
+        SET_DATALIST: (state, payload) => {
+            console.log('SET_DATALIST')
+            state.dataList = payload;
+        },
+        ADD_DATALIST: (state, payload) => {
+            console.log('ADD_DATALIST')
+            state.datsList.push(payload);
+        },
         fillallBusinesServises(state, payload) {
-            // console.log('payloadqqq',payload)
-            
-            state.allBusinesServises =  payload;
-            state.allBusinesServises.forEach(item => {
-            if (state.serviceTypesList.indexOf(item.serviceType.name) < 0) {
-                state.serviceTypesList.push(item.serviceType.name)
+            state.allBusinesServises = payload;
+
+            //
+            payload.filter(item => {
+
+                })
+                //
+            payload.forEach(item => {
+                if (state.serviceTypesList.indexOf(item.serviceType.name) < 0) {
+                    state.serviceTypesList.push(item.serviceType.name)
+                }
+            });
+            state.serviceTypesList.forEach(item => {
+                for (let i = 0; i < state.allBusinesServises.length; i++) {
+                    if (state.allBusinesServises[i].serviceType.name == item) {
+                        let tmpObj = {}
+                        tmpObj['id'] = state.allBusinesServises[i].serviceType.id
+                        tmpObj['name'] = state.allBusinesServises[i].serviceType.name
+                        state.serviceTypesObj.push(tmpObj)
+                    }
+                }
+            })
+
+            function getUnique(arr, comp) {
+                const unique = arr
+                    .map(e => e[comp])
+                    // store the keys of the unique objects
+                    .map((e, i, final) => final.indexOf(e) === i && i)
+                    // eliminate the dead keys & store unique objects
+                    .filter(e => arr[e]).map(e => arr[e]);
+                return unique;
             }
 
-        })
-            console.log("allBusinesServises1:"+ JSON.stringify(state.allBusinesServises))
+            state.st = getUnique(state.serviceTypesObj, 'id')
         },
-        // // fillLocation(state, payload){
-        // //     state.sendObject.location.address = payload
-        // //     state.sendObject.location.latitude = payload
-        // //     state.sendObject.location.longitude = payload
-        // // },
-        // fillPhone(state, payload){
-        //     console.log('phoneNamber',payload, state.contact)
-        //     state.sendObject.phone = payload
-        // },
-        // fillSite(state, payload){
-        //     console.log('site',payload, this.state)
-        //     state.sendObject.site = payload
-        // },
-        // getAddressData(state, {addressData, placeResultData, id}) {
-        //     console.log('STORE getAddressData',{addressData, placeResultData, id})
-        //     // console.log('addressData=')
-        //     // console.dir(addressData)
-        //     // console.log('placeResultData=')
-        //     // console.dir(placeResultData)
-        //     let lat=placeResultData.geometry.location.lat()
-        //     let lng=placeResultData.geometry.location.lng()
-        //     console.log(lat,lng)
-        //     state.acLatLng={lat:lat,lng:lng}
-        //     state.sendObject.location={latitude:lat,longitude:lng}
-        //     state.sendObject.location={
-        //         address: placeResultData.formatted_address,
-        //         latitude: placeResultData.geometry.location.lat(),
-        //         longitude: placeResultData.geometry.location.lng()
-        //     }
-        //     state.address = addressData;
-        // },
-
-        // getAllRequest(state) {
-        //     state.all = { loading: true };
-        // },
-        // getAllSuccess(state, users) {
-        //     state.all = { items: users };
-        // },
-        // getAllFailure(state, error) {
-        //     state.all = { error };
-        // }
     }
 }
