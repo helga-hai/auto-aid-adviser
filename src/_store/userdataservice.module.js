@@ -14,6 +14,8 @@ export const userdataservice = {
         types: null,
         brands: null,
         models: null,
+        selectedModelId: null,
+        currentIndex: null,
 
 
 

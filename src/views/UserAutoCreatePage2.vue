@@ -14,6 +14,7 @@
                     @click='selectType'
                     :id="t.id"
                     tabindex = 1
+                    :class="{'active': t.id==selectedTypeId}"
                     >{{t.name}}</li>
                  </ul>
 
@@ -106,20 +107,33 @@
                 <select @click='getModel' type="text" name="model" id="model" placeholder="Модель" v-model="modelType" required>
                     <option disabled value="" >Модель</option>
                     <option 
-                    v-for="m in models()"
+                    v-for="m in models"
                     :key="m.id"
                     :id="m.id"
                     >
                     {{m.name}}
                     </option>
                 </select>
-                <span>{{selectedModelId}}</span>
+                <!-- <p>{{currentIndex}}</p> -->
+                <p>{{selectedModelId()||selectedModelIdVal}}</p>
 
 
 
 
-                <input type="text" name="fuelType" id="fuelType" placeholder="Тип палива" v-model="fuelType" required>
-                <input type="text" name="year" id="year" placeholder="Рік випуску" v-model="year" required>
+                <!-- <input type="text" name="fuelType" id="fuelType" placeholder="Тип палива" v-model="fuelType" required> -->
+
+                <input type="text" name="individualCarNaming" id="individualCarNaming" placeholder="індивідуальна назва авто" v-model="individualCarNaming">
+                <input type="textarea" name="description" id="description" placeholder="Пару слів про авто..." v-model="description">
+                <select @click='releaseYear' type="text" name="releaseYear" id="releaseYear" placeholder="Рік випуску" v-model="year" required>
+                    <option disabled value="" >Рік випуску</option>
+                    <option 
+                    v-for="y in releaseYear()"
+                    :key="y.index"
+
+                    >
+                    {{y.year}}
+                    </option>
+                </select>
                     <div class="registrStep3__Foto">
                         <p class = "registrStep3__ft">Додайте фотографії автомобілю</p>
                         <div>
@@ -133,7 +147,7 @@
                 <p><span>*максимум п`яти фото, до 500Кб кожна </span></p>
 
                 <!-- <ul v-for="t in test"><li>{{t.name}}</li></ul> -->
-
+                <p>{{releaseYear()}}</p>
 
                 <div class="registerAuto__buttons">
                     <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
@@ -168,11 +182,29 @@ export default {
             //     type4: 'Автобус',
             // },
             
-            models(selectedTypeId,selectedBrandId) {return this.$store.state.userdataservice.models},
+            // models(selectedTypeId,selectedBrandId) {return this.$store.state.userdataservice.models},
             // models: models(),
             modelType:'',
-            selectedModelId:'',
-            fuelType:"",
+            // selectedModelId:'',
+            selectedModelIdVal:'',
+            selectedModelId: function() {
+            if(this.currentIndex<0||!this.currentIndex){
+                return '';
+            }else{
+            return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
+            },
+            currentIndex:''||this.$store.state.userdataservice.currentIndex,
+            // currentIndex(){
+            //     if(this.$store.state.userdataservice.currentIndex==null){
+            //         return "";
+            //     }else{
+
+            //         return this.$store.state.userdataservice.currentIndex
+
+            //     }
+            // },
+            // // selectedModelId(){return this.$store.state.userdataservice.selectedModelId},
+            // fuelType:"",
             year:"",
             types() {return this.$store.state.userdataservice.types},
             selectedType:'',
@@ -184,8 +216,22 @@ export default {
                 check: false,
                 msg:'Спочатку оберить тип та марку авто!!!',
             },
-            
-            
+            individualCarNaming:'',
+            description:'',
+            releaseYear: function(){ 
+                let yearArr = [];
+                let yearStart = 1900;
+                let yearCurrent = 2020;
+                let keyCounter = 0;
+                for(let i = yearStart;i<=yearCurrent;i++){
+                    let year = {};
+                    year.index = keyCounter++;
+                    year.year = i;
+                    yearArr.push(year);
+                    console.log(year)
+                }
+                return yearArr;
+            },
         }
     },
     watch: {
@@ -193,7 +239,14 @@ export default {
 
     },
     computed: {
-//    models(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
+        // selectedModelId: function() {
+        //     if(this.currentIndex<=0||!this.currentIndex){
+        //         return '';
+        //     }else{
+        //     return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
+        // },
+        models: function(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
+        
     },
     update() {
 
@@ -218,14 +271,16 @@ export default {
             console.log(e.target);
             this.selectedType = e.target.textContent;
             this.selectedTypeId = e.target.id;
+            this.clearField('modelType', 'models','currentIndex');
             return e.target.textContent;
         },
         select(currentFieldWithID,$event){
             console.log('work');
             // console.log($event.target.selectedIndex);
             let index = $event.target.selectedIndex;
-            let currentIDField = currentFieldWithID[1]
-            let currentIDValue = currentFieldWithID[0][index-1].id
+            let currentIDField = currentFieldWithID[1];
+            let currentIDValue = currentFieldWithID[0][index-1].id;
+            this.clearField('modelType', 'models','currentIndex');
             // currentIDField=currentIDValue;
             console.log(currentIDField);
             switch(currentIDField){
@@ -236,37 +291,96 @@ export default {
             }
 
         },
-        getModel(){
+        getModel(e){
+            setTimeout(() => {
+            let select = document.querySelector("select#model")
+            let mySetAttr = select.setAttribute
             if(!this.selectedTypeId||!this.selectedBrandId){
                 this.formCheck.check = true;
                 let checkMsg = document.querySelector("div.modelShowMsg");
                 console.dir(checkMsg);
                 checkMsg.style.color='red'
                 let self = this
-                let select = document.querySelector("select#model")
+                
                 select.onblur = function(){
                     console.log("blur "+self.formCheck.check);
                     self.formCheck.check=false;
+                    this.modelType="";
                     console.log("blur "+self.formCheck.check);
                     };
                 return;
             }else{
                 
-                this.formCheck.check=false;
-                console.log('Search results .....');
-                let typeID = this.selectedTypeId;
-                let brandID = this.selectedBrandId;
-                console.log(typeID,brandID);
-                let requestString = `api/catalog/car/model/type/${typeID}/brand/${brandID}`;
-                console.log(requestString);
-                userService.getAllUserData(requestString)
-                .then(function(result){return result})
-                .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']))
-                .then(console.log('end '+this.$store.state.userdataservice.models));
+                    console.log('Search results .....');
+                    let typeID = this.selectedTypeId;
+                    let brandID = this.selectedBrandId;
+                    this.formCheck.check=false;
+                    console.log(typeID,brandID);
+                    let requestString = `api/catalog/car/model/type/${typeID}/brand/${brandID}`;
+                    console.log(requestString);
+                    userService.getAllUserData(requestString)
+                    .then(function(result){
+                        console.log("resulTTTTT "+result);
+                        return result})
+                    .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']));
+                    // setTimeout(() => {
+                    //     let index = e.target.selectedIndex;
+                    //     console.log(index + '????????????????????????????????????');
+                    //     if(index==0){
+                    //         this.currentIndex = '';
+                    //     }else{
+                    //         this.currentIndex = index;}
+                    // }, 300);
+                    // clearTimeout();
+                    
+                    console.log('ID '+e.target.id);
+                    console.log('ID '+e.target.options);
+                    let index = e.target.selectedIndex;
+                    console.log(index + '????????????????????????????????????');
+
+                    if(index==0){
+                    this.currentIndex = '';
+                    }else{
+                        this.$store.dispatch('userdataservice/fieldsVal',[index,'currentIndex']);
+                        this.currentIndex = index;
+                    ;}
+
+                    if(e.target.id!='model'){
+                    this.selectedModelIdVal = e.target.id
+                    }
+
+                
+
+
+
+
+                // let currentIDField = this.selectedModelId;
+                // console.log('CURRENT '+currentIDField);
+                // let currentIDValue = this.models()[index-1].id;
+                // console.log('CURRENT CURRENT '+ currentIDField);
+
+
+                // let options = select.childNodes
+                // console.log("options JJJJJJJJJJJJJJJJJJJ"+options)
+                // console.log(e.target.id)
+                // console.log('end '+this.$store.state.userdataservice.models[0].id);
+                    //  console.log('end '+ e.target.options);
+
+                    // this.$store.dispatch('userdataservice/fieldsVal',[this.$store.state.userdataservice.models[index-1].id,'selectedModelId'])});
+
+                // select.addEventListener('click',function(){console.log("THIS SELECT")})
             // userService.getAllUserData(`${requestString}`)
             // .then(function(result){return result})
             // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']))
             }
+            }, 1000);
+            clearTimeout();
+        },
+
+        clearField(dataField, stateField, index){
+            this[dataField] = '';
+            this.$store.dispatch('userdataservice/fieldsVal',[null, stateField]);
+            this[index] = '';
         },
     }
 }
