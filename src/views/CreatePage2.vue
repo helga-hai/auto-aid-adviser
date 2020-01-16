@@ -17,24 +17,42 @@
 import BusinessLayout from "@/layouts/BusinessLayout";
 import CardMin from "../components/cardMin";
 import {userService} from "../_services";
-
+import {mapGetters} from 'vuex';
 export default {
     name: 'CreatePage2',
     components: {
         BusinessLayout,
         CardMin,
     },
+    data() {
+        return {
+        } 
+    },
+    async created () {
+        await this.$store.dispatch('templateB/GET_CATTEGORY_LIST')
+        await this.$store.dispatch('templateB/GET_SERVICE_LIST',this.category.map(item=>item.id))
+    },
+    computed: {
+        ...mapGetters({
+            category: 'templateB/CATEGORYLIST',
+         }),
+    },
     methods: {
         createStepOne() {
             this.$emit('stepOneFunction');
+
             userService.getAllBusinessDate('api/catalog/services')
                 .then(function(result) {
-                    // console.log("content"+result)
+                    console.log("content"+result)
                     return result
-                }).then(result=>this.$store.commit('templateB/fillallBusinesServises', result) )  
-
-
-            // this.$store.commit('templateB/fillallBusinesServises', result)
+                }).then(result=>this.$store.dispatch('templateB/fillallBusinesServises', result)
+            );
+             userService.getAllBusinessDate('api/businesses/templates')
+                .then(function(result) {
+                    console.log("content"+result)
+                    return result
+                }).then(result=>this.$store.commit('create/fillBusinesTemplate', result)
+            );
         }
     }
 }

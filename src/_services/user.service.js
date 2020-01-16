@@ -200,6 +200,26 @@ function postAllUserData(path) {
 let content = null
 // this.$store.commit('templateB/fillallBusinesServises', content)
 
+
+function getBusinesTemplate(path) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+    console.log('getAllBusinessDate,')
+
+    return fetch(`${config.apiUrl}/${path}`, requestOptions)
+    .then(handleResponse)
+    .then(response=>{
+        console.log("ssssssssssssssssssssssssssssssss"+JSON.stringify(response))
+        return response
+    })
+    // console.log('getAllBusinessDate,')
+
+    // return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
+
+}
+
 async function getAllBusinessDate(path) {
     const requestOptions = {
         method: 'GET',
@@ -281,7 +301,7 @@ function handleResponseGetData(response) {
                 serviceTypesList.push(tmpKey)
             }
         })
-        console.log(serviceTypesList2);
+        // console.log(serviceTypesList2);
         // ["run":{}, "disk", "engine", "gum", "body"]
         return data;
     });
