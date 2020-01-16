@@ -63,10 +63,10 @@ export default {
             console.log('click');
             let role = localStorage.getItem('role');
             console.log(role);
-            if(role == '"ROLE_USER"'){
+            if(role =='ROLE_USER'||role =='"ROLE_USER"'){
                 router.push('/user');
             }
-            if(role == '"ROLE_BUSINESS"'){
+            if(role == 'ROLE_BUSINESS'||role == '"ROLE_BUSINESS"'){
                 router.push('/business');
             }
         },
