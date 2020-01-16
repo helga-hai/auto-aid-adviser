@@ -13,7 +13,8 @@ export const userdataservice = {
         },
         types: null,
         brands: null,
-        model: null,
+        models: null,
+
 
 
 

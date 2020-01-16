@@ -4,31 +4,51 @@
 
         <div class="registerAuto" >
             <h1>Реєстрація автомобіля</h1>
-            <form>
-                <div class="registerAuto__car">
-                    <p><span>Оберіть тип транспортного засобу</span></p>
+            <div class="registerAuto__car">
+                <p><span>Оберіть тип транспортного засобу</span></p>
 
                 <ul class="carType">
                  <li
-                 
-                 v-for="t in types()"
-                :key="t.id"
-                @click='selectType'
-                :id="t.id"
-                tabindex = 1
-                 >{{t.name}}</li>
+                    v-for="t in types()"
+                    :key="t.id"
+                    @click='selectType'
+                    :id="t.id"
+                    tabindex = 1
+                    >{{t.name}}</li>
                  </ul>
 
 
-                </div>
+            </div>
                 <span>Выбрано: {{ selectedType }} {{selectedTypeId}}</span>
+            <form>
+
+
+                <!-- <div class="registerAuto__car">
+                    <p><span>Оберіть тип транспортного засобу</span></p>
+
+                <ul class="carType">
+
+                    <li
+                    v-for="t in types()" :key="t.id"
+                    @click='selectType'
+                    :id="t.id"
+                    tabindex = 1
+                    :class="{'active': t.id==selectedTypeId}"
+                    >{{t.name}}</li>
+                 
+                </ul>
+
+
+
+//////////////////////work in Firefox only!!!!!//////////////////////////////////
+                </div>
+                <span>Выбрано: {{ selectedType }} {{selectedTypeId}}</span> -->
                 <!-- <span>Выбрано: {{ selected }}</span> -->
-                <select type="text" name="brand" id="brand" placeholder="Марка" v-model='selectedBrand' required >
+                <!-- <select type="text" name="brand" id="brand" placeholder="Марка" v-model='selectedBrand' required >
+                <select type="text" name="brand" id="brand" placeholder="Марка" v-model='selectedBrand' @change="changeBrandFunc" required >
                     <option disabled value="" >Марка</option>
-                    <option 
-                    v-for="b in brands()"
+                    <option v-for="b in brands()"
                     :key="b.id"
-                    @click='selectBrand'
                     :id="b.id"
                     >
                     {{b.name}}
@@ -36,9 +56,68 @@
                 </select>
                 <span>Выбрано: 
                     {{ selectedBrand }} 
-
+                    {{selectedBrandId}}
                 </span>
-                <input type="text" name="model" id="model" placeholder="Модель" v-model="model" required>
+                ///////////////////////////////////////////////////////////////////////
+                -->
+
+
+                
+
+                <select type="text" name="brand" id="brand" placeholder="Марка" v-model='selectedBrand' @change='select([brands(), "selectedBrandId"] ,$event)' required >
+                    <option disabled value="" >Марка</option>
+                    <option 
+                    v-for="b in brands()"
+                    :key="b.id"
+                    :id="b.id"
+                    >
+                    {{b.name}}
+                    </option>
+                </select>
+                <span>Выбрано: 
+                    {{ selectedBrand }} 
+                    {{selectedBrandId}}
+                </span>
+
+
+                <!-- 
+                    //////////////////////work in Firefox only!!!!!//////////////////////////////////
+                    <div class="modelShowMsg">
+                    <span v-if='formCheck.check===true'>{{formCheck.msg}}</span>
+                </div>
+                <select @click="getModel" type="text" name="model" id="model" placeholder="Модель" v-model="modelType" required>
+                    <option disabled value="" >Модель</option>
+                    <option 
+                    v-for="m in models()"
+                    :key="m.id"
+                    @click='select'
+                    :id="m.id"
+                    >
+                    {{m.name}}
+                    </option>
+                </select>
+                <span>{{modelId}}</span>
+                ///////////////////////////////////////////////////////////////////////////////////
+                -->
+
+                <div class="modelShowMsg">
+                    <span v-if='formCheck.check===true'>{{formCheck.msg}}</span>
+                </div>
+                <select @click='getModel' type="text" name="model" id="model" placeholder="Модель" v-model="modelType" required>
+                    <option disabled value="" >Модель</option>
+                    <option 
+                    v-for="m in models()"
+                    :key="m.id"
+                    :id="m.id"
+                    >
+                    {{m.name}}
+                    </option>
+                </select>
+                <span>{{selectedModelId}}</span>
+
+
+
+
                 <input type="text" name="fuelType" id="fuelType" placeholder="Тип палива" v-model="fuelType" required>
                 <input type="text" name="year" id="year" placeholder="Рік випуску" v-model="year" required>
                     <div class="registrStep3__Foto">
@@ -72,6 +151,7 @@ import userdataservice from '../_store/userdataservice.module';
 import { userService } from '../_services';
 
 
+
 export default {
     name: 'UserAutoCreatePage2',
 
@@ -87,15 +167,24 @@ export default {
             //     type3: 'Вантажівка',
             //     type4: 'Автобус',
             // },
-            selectedBrandId:'',
-            model:"",
+            
+            models(selectedTypeId,selectedBrandId) {return this.$store.state.userdataservice.models},
+            // models: models(),
+            modelType:'',
+            selectedModelId:'',
             fuelType:"",
             year:"",
             types() {return this.$store.state.userdataservice.types},
             selectedType:'',
             selectedTypeId:'',
-            brands(){return this.$store.state.userdataservice.brands},
+            brands() {return this.$store.state.userdataservice.brands},
             selectedBrand:'',
+            selectedBrandId:'',
+            formCheck:{
+                check: false,
+                msg:'Спочатку оберить тип та марку авто!!!',
+            },
+            
             
         }
     },
@@ -104,7 +193,7 @@ export default {
 
     },
     computed: {
-   
+//    models(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
     },
     update() {
 
@@ -113,6 +202,14 @@ export default {
 
     },
     methods: {
+        // changeBrandFunc(e){
+        //     let b = this.brands()
+        //     let id 
+        //     b.forEach(item=>{
+        //         if(item.name==this.selectedBrand) {return this.selectedBrandId = item.id}
+        //     })
+            //this.selectedBrandId = id
+        // },
         back(){
             this.$emit('switchView','user-auto-create-page');
         },
@@ -120,18 +217,57 @@ export default {
             console.log(e.target.id);
             console.log(e.target);
             this.selectedType = e.target.textContent;
-            this.selectedTypeId = e.target.id
+            this.selectedTypeId = e.target.id;
             return e.target.textContent;
         },
-        selectBrand(e){
+        select(currentFieldWithID,$event){
             console.log('work');
-            console.log(e.target.id);
-            return this.selectedBrandId = e.target.id
-        },
+            // console.log($event.target.selectedIndex);
+            let index = $event.target.selectedIndex;
+            let currentIDField = currentFieldWithID[1]
+            let currentIDValue = currentFieldWithID[0][index-1].id
+            // currentIDField=currentIDValue;
+            console.log(currentIDField);
+            switch(currentIDField){
+                case "selectedBrandId":
+                    console.log('switch ' +currentIDValue);
+                    this.selectedBrandId=currentIDValue;
+                break;
+            }
 
-        // beforeCreate(){
-        //     getTypes();
-        // },
+        },
+        getModel(){
+            if(!this.selectedTypeId||!this.selectedBrandId){
+                this.formCheck.check = true;
+                let checkMsg = document.querySelector("div.modelShowMsg");
+                console.dir(checkMsg);
+                checkMsg.style.color='red'
+                let self = this
+                let select = document.querySelector("select#model")
+                select.onblur = function(){
+                    console.log("blur "+self.formCheck.check);
+                    self.formCheck.check=false;
+                    console.log("blur "+self.formCheck.check);
+                    };
+                return;
+            }else{
+                
+                this.formCheck.check=false;
+                console.log('Search results .....');
+                let typeID = this.selectedTypeId;
+                let brandID = this.selectedBrandId;
+                console.log(typeID,brandID);
+                let requestString = `api/catalog/car/model/type/${typeID}/brand/${brandID}`;
+                console.log(requestString);
+                userService.getAllUserData(requestString)
+                .then(function(result){return result})
+                .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']))
+                .then(console.log('end '+this.$store.state.userdataservice.models));
+            // userService.getAllUserData(`${requestString}`)
+            // .then(function(result){return result})
+            // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']))
+            }
+        },
     }
 }
 </script>
@@ -212,6 +348,7 @@ export default {
 }
 ul.carType{
     margin: 20px 0 20px 0;
+    display: inline-block;
 
 }
 ul.carType>li{
@@ -225,13 +362,17 @@ ul.carType>li{
 ul.carType>li:hover{
     cursor: pointer;
 }
-ul.carType>li:focus{
-
+ul.carType>li:focus,
+ul.carType>li:active{
+    background-color: #FFC700;
+}
+ul.carType>li.active {
     background-color: #FFC700;
 }
 ul.carType>li:active{
     cursor: pointer;
     background-color: #FFC700;
 }
+
 
 </style>

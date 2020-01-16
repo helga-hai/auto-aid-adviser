@@ -419,6 +419,7 @@ background: #FFF5C0;
 cursor: pointer;
 }*/
 .home {
+  background-size: cover;
   .two_submenu {
     visibility: hidden;
     opacity: 0;
