@@ -10,13 +10,12 @@
             <router-link to="/user">user</router-link>
             <span class="header__lang">Укр </span> 
             <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
-            <div class="enterRegExit">
-                <a v-if="ifToken()===true && isLog" @click="logout" id='logout'>Вихід</a>
-                <a v-if="ifToken()===true && isLog" @click="perconalCab" id='personalCab'>Особистий кабінет</a>
-                <a href="#" @click="loginShowFunc" v-if="ifToken()===false&&!isLog">Вхід</a>
+            <span v-if="ifToken()===true && isLog" class="enterRegExit"> <a @click="logout"  id='logout'>Вихід</a></span>
+            <span v-if="ifToken()===true && isLog" class="enterRegExit"> <a @click="perconalCab" id='personalCab'>Особистий кабінет</a></span>
+            <span v-if="ifToken()===false&&!isLog" class="enterRegExit"> <a @click="loginShowFunc" href="#">Вхід</a></span>
             
                 
-            </div>
+            
             <!-- <router-link v-if="isRole" :to="(isRole=='user') ? '/user' : (isRole=='business') ? '/business' : ''">Особистий кабінет</router-link> -->
 
             <!--<router-link to="/create">Особистий кабінет</router-link> -->

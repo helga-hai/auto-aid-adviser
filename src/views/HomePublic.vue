@@ -69,7 +69,13 @@
       <div class="modal-login-registration " :class="{'active-modal': loginShow}">
         <button class="close-x" @click="loginHideFunc"></button>
 
-          <Authorization :isPreload="preloader" :afterPreloader="afterPreloader" @afterPreloaderFuncMain="afterPreloaderFuncMain"></Authorization>
+          <!-- <Authorization :isPreload="preloader" :afterPreloader="afterPreloader" @afterPreloaderFuncMain="afterPreloaderFuncMain" -->
+          <Authorization 
+            :isPreload="preloader" 
+            :afterPreloader="afterPreloader" 
+            @afterPreloaderFuncMain="afterPreloaderFuncMain"
+            @afterPreloaderReturn="afterPreloaderReturn"
+            ></Authorization>
           <div v-if="!afterPreloader" class="social-providers">
             <p>Увійти за допомогою соцмереж</p>
             <div class="social-providers__icons">
@@ -199,6 +205,10 @@ export default {
       },
       afterPreloaderFuncMain() {
         this.preloader = false;
+        this.afterPreloader = false;
+      },
+      afterPreloaderReturn(){
+        console.log('afterPreloaderReturn')
         this.afterPreloader = false;
       }
     },
@@ -409,6 +419,7 @@ background: #FFF5C0;
 cursor: pointer;
 }*/
 .home {
+  background-size: cover;
   .two_submenu {
     visibility: hidden;
     opacity: 0;
