@@ -13,7 +13,7 @@
       </div>
 
       <div class="form-input pass2">
-          <input id="password-confirm" placeholder="Повторіть пароль" type="password" v-model="password_confirmation"  @focus="FocusPass2" @blur="checkPassSame" required >
+          <input id="password-confirm" placeholder="Повторіть пароль" type="password" v-model="password_confirmation"  @focus="FocusPass2" @input="checkPassSame" required >
           <span id='checkPass_Conf'></span>
           <div class="error" v-if="errorPassSame.check">{{errorPassSame.txt}}</div>
       </div>
@@ -35,7 +35,7 @@
 import CheckboxComponent from "@/components/CheckboxComponent.vue"
 export default {
   name: 'RegisterPage',
-
+  props: ['innerPreload'],
   data() {
     return {
       //name: "",
@@ -127,6 +127,7 @@ export default {
       
     },
     sendData() {
+      this.$emit('afterPreloaderFunc')
       let data = {
         email: this.email,
         password: this.password,

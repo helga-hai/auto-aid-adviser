@@ -16,12 +16,12 @@
         <a class="preloader__text_btn">На головну</a>
         <div class="preloader__text_append">
           <p>Не прийшов лист?</p>
-          <a @click="afterPreloaderFunc">Спробувати ще раз</a>
+          <a @click="afterPreloaderReturn">Спробувати ще раз</a>
         </div>
       </div>
       <div v-else>
         <login-page v-if="toggler"/>
-        <register-page :innerPreload="isPreload" v-else/>
+        <register-page :innerPreload="isPreload" v-else @afterPreloaderFunc="afterPreloaderFunc"/>
       </div>
     </div>
   </div>
@@ -48,6 +48,9 @@ export default {
   methods: {
     afterPreloaderFunc() {
       this.$emit('afterPreloaderFuncMain')
+    },
+    afterPreloaderReturn(){
+      this.$emit('afterPreloaderReturn')
     }
   }
 

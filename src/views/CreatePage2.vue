@@ -17,28 +17,30 @@
 import BusinessLayout from "@/layouts/BusinessLayout";
 import CardMin from "../components/cardMin";
 import {userService} from "../_services";
-
+import {mapGetters} from 'vuex';
 export default {
     name: 'CreatePage2',
     components: {
         BusinessLayout,
         CardMin,
     },
-    mounted() {
-        this.$store.dispatch('templateB/GET_DATALIST');
+    data() {
+        return {
+        } 
+    },
+    async created () {
+        await this.$store.dispatch('templateB/GET_CATTEGORY_LIST')
+        await this.$store.dispatch('templateB/GET_SERVICE_LIST',this.category.map(item=>item.id))
     },
     computed: {
-        dataList() {
-            return this.$store.getters.DATALIST; 
-            // import {mapGetters} from 'vuex';
-            // ...mapGetters(['DATALIST']), 
-            // <div class="todo-item" v-for="item in DATALIST"></div>
-        },
+        ...mapGetters({
+            category: 'templateB/CATEGORYLIST',
+         }),
     },
     methods: {
         createStepOne() {
             this.$emit('stepOneFunction');
-            //this.$store.dispatch('templateB/fillallBusinesServises');
+
             userService.getAllBusinessDate('api/catalog/services')
                 .then(function(result) {
                     console.log("content"+result)
@@ -51,16 +53,6 @@ export default {
                     return result
                 }).then(result=>this.$store.commit('create/fillBusinesTemplate', result)
             );
-            // userService.getBusinesTemplate('api/businesses/templates')
-            //     .then(function(result) {
-            //         console.log("content"+result)
-            //         return result
-            //     }).then(result=>this.$store.commit('create/fillBusinesTemplate', result)
-            // );
-
-
-
-            // this.$store.commit('templateB/fillallBusinesServises', result)
         }
     }
 }
