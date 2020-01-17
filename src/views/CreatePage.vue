@@ -281,6 +281,9 @@ export default {
 .Step1Image__labe {
     width: 673px;
 }
+.registrStep1+h1 {
+    font-size: 12px;
+}
 .registrStep1 {
     padding: 56px 48px 56px 48px;
 }

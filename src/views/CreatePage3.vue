@@ -4,150 +4,47 @@
             <img class="services_img1" src = "../assets/027-checklist.png">
             <img class="services_img2" src = "../assets/Group 133.png">
             <h1>Реєстрація об’єкту</h1>
-                        {{services}}
-                <p>Выберите из списка типы обслуживаемых автомобилей</p>
-                <div class="services__types" :class="{'opened': typesShow}" >
-                    <div  class="services__typename" @click = "typesShow = !typesShow">
-                        <span>Типы авто</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': typesShow}">
-                    </div>
-                    <div class="services__item"></div>
-                </div>
-                <hr>
-                
 
-                <p>Выберите из списка основные услуги, которые оказывает обьект</p>
-                <div v-for="item in category" :key="item.id">
-                    <div class="services__services" :class="{'opened': serviceShow}" ><!--@click="toggleOpen[item.id]-->
-                        <div class="services__servicename">
-                            <span>{{item.name}}</span>
-                            <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': serviceShow}">
-                        </div> 
-                        <div class="services__checkwrapp">
-                            <div class="services__checkAll">    
-                                <label :for="'all_'+item.id"><input type="checkbox" :id="'all_'+item.id" value="Обрати все">Обрати все</label>
-                            </div>
-                            <div class="services__autocontent" >
-                                <label  v-for="elem in item.list" :key="elem.id" :for="elem.id">
-                                    <input type="checkbox" :id="elem.id" :value="elem.name" checked>{{elem.name}}
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="services__services" :class="{'opened': serviceShow}" >
-                    <div  class="services__servicename" @click = "serviceShow = !serviceShow">
-                        <span>Сервисное ТО</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': serviceShow}">
-                    </div> 
+                <h4>Выберите из списка типы обслуживаемых автомобилей</h4>
+                
+                <ul class="carType">
+                 <li
+                    v-for="t in types()"
+                    :key="t.id"
+                    :id="t.id"
+                    >{{t.name}}</li>
+                 </ul>
+
+                <h4>Выберите из списка основные услуги, которые оказывает обьект</h4>
+                <hr>
+                <details v-for="item in category" :key="item.id" class="services__services opened" >
+                    <summary class="services__servicename">
+                        <span>{{item.name}}</span>
+                    </summary> 
                     <div class="services__checkwrapp">
-                        <div class="services__checkAll">
-                            <label for="All"><input type="checkbox" id="All" value="Обрати все">Обрати все</label>
+                        <div class="services__checkAll">    
+                            <label :for="'all_'+item.id">
+                                <input type="checkbox" :id="'all_'+item.id" value="Обрати все">
+                                <p>Обрати все</p>
+                                </label>
                         </div>
-                        <div class="services__check" >
-                            <div class ="services__column1">
-                                <label for="oil"><input type="checkbox" id="oil" value="Замена масла в двигателе" checked>Замена масла в двигателе</label>
-                                <label for="diagnostics"><input type="checkbox" id="diagnostics" value="Компьютерная диагностика" >Компьютерная диагностика</label>
-                                <label for="engineFilter"><input type="checkbox" id="engineFilter" value="Замена воздушного фильтра двигателя" checked>Замена воздушного фильтра двигателя</label>
-                                <label for="cabinFilter"><input type="checkbox" id="cabinFilter" value="Замена воздушного фильтра салона" >Замена воздушного фильтра салона</label>
-                                <label for="oil2"><input type="checkbox" id="oil2" value="Замена масла в КПП" >Замена масла в КПП</label>
-                                <label for="coolant"><input type="checkbox" id="coolant" value="Замена охлаждающей жидкости" >Замена охлаждающей жидкости</label>
-                            </div>
-                            <div class ="services__column2">
-                                <label for="belt"><input type="checkbox" id="belt" value="Замена ремня ГРМ" >Замена ремня ГРМ</label>
-                                <label for="driveBelt"><input type="checkbox" id="driveBelt" value="Замена приводного ремня" >Замена приводного ремня</label>
-                                <label for="driveRollers"><input type="checkbox" id="driveRollers" value="Замена роликов привода" >Замена роликов привода</label>
-                                <label for="engineFlushing"><input type="checkbox" id="engineFlushing" value="Промывка двигателя" >Промывка двигателя</label>
-                                <label for="replacement"><input type="checkbox" id="replacement" value="Замена комплекта ремня ГРМ с роликами и водяной помпой" >Замена комплекта ремня ГРМ с роликами и водяной помпой</label>
-                            </div>
+                        <div class="services__autocontent" >
+                            <label  v-for="elem in item.list" :key="elem.id" :for="elem.id">
+                                <div>
+                                    <input type="checkbox" :id="elem.id" :value="elem.name">
+                                    <p>{{elem.name}}</p>
+                                </div>
+                            </label>
                         </div>
                     </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': brakeSystShow}" >
-                    <div  class="services__servicename" @click = "brakeSystShow = !brakeSystShow">
-                        <span>Тормозная система</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': brakeSystShow}">
-                    </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': suspensionShow}" >
-                    <div  class="services__servicename" @click = "suspensionShow = !suspensionShow">
-                        <span>Подвеска</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': suspensionShow}">
-                    </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': steerageShow}" >
-                    <div  class="services__servicename" @click = "steerageShow = !steerageShow">
-                        <span>Рулевое управление</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': steerageShow}">
-                    </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': enginegeShow}" >
-                    <div  class="services__servicename" @click = "enginegeShow = !enginegeShow">
-                        <span>Двигатель</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': enginegeShow}">
-                    </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': wiringShow}" >
-                    <div  class="services__servicename" @click = "wiringShow = !wiringShow">
-                        <span>Электрика</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': wiringShow}">
-                    </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': exhaustShow}" >
-                    <div  class="services__servicename" @click = "exhaustShow = !exhaustShow">
-                        <span>Выхлопная система</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': exhaustShow}">
-                    </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': clutchShow}" >
-                    <div  class="services__servicename" @click = "clutchShow = !clutchShow">
-                        <span>Сцепление</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': clutchShow}">
-                    </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': transmissionShow}" >
-                    <div  class="services__servicename" @click = "transmissionShow = !transmissionShow">
-                        <span>Трансмиссия</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': transmissionShow}">
-                    </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': climateShow}" >
-                    <div  class="services__servicename" @click = "climateShow = !climateShow">
-                        <span>Климат-контроль</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': climateShow}">
-                    </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': carcassShow}" >
-                    <div  class="services__servicename" @click = "carcassShow = !carcassShow">
-                        <span>Кузов</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': carcassShow}">
-                    </div>
-                </div>
-                <hr>
-                <div class="services__services" :class="{'opened': gasShow}" >
-                    <div  class="services__servicename" @click = "gasShow = !gasShow">
-                        <span>ГБО</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': gasShow}">
-                    </div>
-                </div> -->
-                <hr>
-                <div class="services__services" :class="{'opened': extraShow}" >
-                    <div  class="services__servicename" @click = "extraShow = !extraShow">
+                </details>
+                
+                <details class="services__services opened" >
+                    <summary class="services__servicename">
                         <span>Дополнительно</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon" :class="{'transform': extraShow}">
-                    </div>
-                </div>
-                <hr>
+                        <img :src="require('../assets/arrow drop down.png')" class="services__icon">
+                    </summary>
+                </details>
                 <div class="services__buttons">
                     <input type="reset" value="Отмена" class="services__secondaryButton">
                     <input type="submit" value="Продолжить 2/3" class="services__primaryButton" @click="createStepThree">    
@@ -159,7 +56,6 @@
 
 <script>
 import BusinessLayout from "@/layouts/BusinessLayout";
-//import { data } from '../_store/data.module';
 import {mapGetters} from 'vuex';
 export default {
     name: 'CreatePage3',
@@ -173,29 +69,7 @@ export default {
     },
     data() {
         return {
-            typeBusiness: "",
-            filtreTemplate: "",
-            services: this.$store.state.templateB.serviceTypesList,
-            sendServices: '',
-            typesShow: false,
-            //serviceShow: false,
-            brakeSystShow: false,
-            suspensionShow: false,
-            steerageShow: false,
-            enginegeShow: false,
-            wiringShow: false,
-            exhaustShow: false,
-            clutchShow: false,
-            transmissionShow: false,
-            climateShow: false,
-            carcassShow: false,
-            gasShow: false,
-            extraShow: false,
-            // business_types: this.$store.dispatch("data/getData", '/api/catalog/business_types'),//this.$store.state.authentication.user;// [{"id":1,"name":"CTO"},{"id":2,"name":"shinomantazh"},{"id":3,"name":"shop"},{"id":4,"name":"test"}], //   http://localhost:8080/api/catalog/business_types   GET
-            // service_types_2: [{"id":4,"name":"gum","businessType":{"id":2,"name":"shinomantazh"}},{"id":5,"name":"disk","businessType":{"id":2,"name":"shinomantazh"}},{"id":6,"name":"test","businessType":{"id":2,"name":"shinomantazh"}}], //   http://localhost:8080/api/catalog/business_types/2/service_types   GET
-            // services_3: [{"id":30,"name":"balancing 8","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":2,"name":"balancing 1","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":14,"name":"balancing 4","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":26,"name":"balancing 7","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":10,"name":"balancing 3","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":22,"name":"balancing 6","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":6,"name":"balancing 2","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}},{"id":18,"name":"balancing 5","serviceType":{"id":2,"name":"run","businessType":{"id":1,"name":"CTO"}}}], //   http://localhost:8080/api/catalog/service_types/2/services   GET
-            // service_types_byid: {"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}, //   http://localhost:8080/api/catalog/service_types/3   GET
-            // services_3: [{"id":7,"name":"oil change 2","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":19,"name":"oil change 5","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":31,"name":"oil change 8","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":3,"name":"oil change 1","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":15,"name":"oil change 4","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":27,"name":"oil change 7","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":11,"name":"oil change 3","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}},{"id":23,"name":"oil change 6","serviceType":{"id":3,"name":"engine","businessType":{"id":1,"name":"CTO"}}}], //   http://localhost:8080/api/catalog/service_types/3/services   GET
+            types() {return this.$store.state.userdataservice.types},
         }
     },
     methods: {
@@ -210,7 +84,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 /* step02.css */
 .services {
     width: 100%;
@@ -227,7 +101,7 @@ export default {
     line-height: 28px;
 }
 .services p {
-    padding: 28px 0px;
+    margin-left: 43px;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
@@ -342,12 +216,147 @@ export default {
 }
 .services__autocontent {
   column-count: 2;
-  column-gap: 40px;
+  column-gap: 10px;
       width: 100%;
 }
 .services__autocontent label {
     display:block;
     font-size: 16px;
     line-height: 22px;
+}
+summary, details {
+    &:focus {
+        outline: -webkit-focus-ring-color auto 0px;
+    }
+}
+summary::-webkit-details-marker {
+  display: none
+}
+summary:after {
+  border-radius: 5px;
+  content: "▴";
+  color: #00BCD4;
+  float: left;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: -5px 10px 0 0;
+  padding: 0;
+  text-align: center;
+  width: 20px;
+  transition: transform .4s ease;
+  transform: scale(1, .7);
+    position: relative;
+    top: 4px;
+    left: 4px;
+}
+details[open] summary:after {
+    transform: scale(1, -.7);
+}
+///
+
+.services label {
+  position:relative;
+  //padding-left: 60px;
+  text-align:left;
+  color: #0E1E2E;
+  display: flex;
+  padding: 6px 0;
+}
+.services label p:before {
+  content:"";
+  box-sizing: border-box;
+  display:inline-block;
+  position:absolute;
+  top:10px;
+  left: 0;
+  width: 32px;
+  height: 16px;
+  border-radius: 8px;
+  background-color: #C9CFD7;
+  transition: transform .4s ease;
+}
+.services input[type="checkbox"]:checked ~ p:before{
+  background-color: #FFC700;
+  transition: transform .4s ease;
+}
+.services label p:after {
+  content:"";
+  box-sizing: border-box;
+  position:absolute;
+  top:12px;
+  transform: matrix(1,0,0,1,0,0);
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #6F7E95;
+  transition: transform .2s  cubic-bezier(0.39, 0.58, 0.57, 1);
+}
+.services input[type="checkbox"]:checked ~ p:after{
+  top:12px;
+  transform: matrix(1,0,0,1,16,0);
+  transition: transform .2s  cubic-bezier(0.39, 0.58, 0.57, 1);
+  //left: 18px;
+  left: 2px;
+  background-color: #0E1E2E;
+}
+.services .services__autocontent label {
+    //padding: 4px 0;
+}
+.services__services {
+    border-bottom:  1px solid #E4E7EB;
+}
+.services__services.opened[open] {
+    padding-bottom:50px;
+}
+label:focus, div:focus, p:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+}
+h4 {
+    font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 22px;
+/* identical to box height, or 137% */
+
+
+/* Neutral 80 */
+
+color: #6F7E95;
+margin-bottom:14px;
+}
+hr { border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    //border-bottom: 1px solid #E4E7EB
+}
+.services ul.carType{
+    margin: 20px 0 60px 0;
+    display: inline-block;
+
+}
+.services ul.carType>li{
+    background-color: #6F7E95;
+    border-radius: 15px 15px;
+    padding: 5px 10px 5px 10px;
+    color: #000000;
+    margin-left: 5px;
+    display: inline;
+}
+.services ul.carType>li:hover{
+    cursor: pointer;
+}
+.services ul.carType>li:focus,
+.services ul.carType>li:active{
+    background-color: #FFC700;
+}
+.services ul.carType>li.active {
+    background-color: #FFC700;
+}
+.services ul.carType>li:active{
+    cursor: pointer;
+    background-color: #FFC700;
 }
 </style>
