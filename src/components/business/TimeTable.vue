@@ -11,7 +11,7 @@
             <label for="always"><input type="radio" name="mode" id="always" value="always" v-model="picked"><span>Цілодобово</span></label>
             <label for="onTime"><input type="radio" name="mode" id="onTime" value="onTime" v-model="picked"><span>По годинах</span></label>
           </div>
-          <div class="registrStep3__schedule">
+          <div class="registrStep3__schedule" ref="sheduleBlock">
             <div class="registrStep3__workDays">
               <p class = "days">Робочі дні</p>
 
@@ -20,7 +20,7 @@
                     <input type="checkbox" name="" :id="item.name" :value="item.selected" v-model="item.selected">
                     <p>{{item.name}}</p>
                   </label>
-                  <div v-if="picked=='onTime' && item.selected">
+                  <div ><!--v-if="picked=='onTime' && item.selected"-->
                     <input type="time" name="" id="MondaySt" value="08:00" v-model="item.from">
                     <p>до</p>
                     <input type="time" name="" id="MondayF" value="18:00" v-model="item.to">
@@ -36,7 +36,7 @@
                       <input type="checkbox" name="" :id="item.name" :value="item.selected" v-model="item.selected">
                       <p>{{item.name}}</p>
                     </label>
-                    <div v-if="picked=='onTime' && item.selected">
+                    <div >
                       <input type="time" name="" id="MondaySt" value="08:00" v-model="item.from">
                       <p>до</p>
                       <input type="time" name="" id="MondayF" value="18:00" v-model="item.to">
@@ -49,14 +49,14 @@
       </div>
       <hr>
       <div class="registrStep3__services" :class="{'opened': komfort}" >
-        <div  class="registrStep3__servicename" @click = "komfort = !komfort">
+        <div  class="registrStep3__servicename" @click="komfort=!komfort">
             <span>Комфорт</span>
             <img :src="require('../../assets/arrow drop down.png')" class="registrStep3__icon" :class="{'transform': komfort}">
         </div>
       </div>
       <hr>
       <div class="registrStep3__services" :class="{'opened': more}" >
-        <div  class="registrStep3__servicename" @click = "more = !more">
+        <div  class="registrStep3__servicename" @click="more=!more">
             <span>Додатково</span>
             <img :src="require('../../assets/arrow drop down.png')" class="registrStep3__icon" :class="{'transform': more}">
         </div>
@@ -66,7 +66,7 @@
         <p class = "registrStep3__ft">Фото об’єкта</p>
         <div>
           <label class= "registrStep3__addFile">
-            <input type="file" accept="image/*">
+            <input type="file" accept="image/*" @change="uploadPhoto">
             <span>+ Фото</span>
           </label>
           <label class= "registrStep3__addFile">
@@ -107,31 +107,42 @@ export default {
               { id: 6, name: 'Субота', from: null, to: null, selected: false },
               { id: 7, name: 'Неділя', from: null, to: null, selected: false }
             ],
+            images:[]
         }
     },
     watch: {
       picked(newVal, oldVal){
         if(newVal == 'always') {
           this.week.forEach(item=>{
-            item.from = null;
-            item.to = null;
+            item.selected = true;
+            item.from = "00:00";
+            item.to = "23:59";
+            this.$refs.sheduleBlock.style.pointerEvents = "none"
           })
+        } else {
+            this.$refs.sheduleBlock.style.pointerEvents = "auto"
         }
       }
     },
     methods: {
       send() {
         let arr = this.week;
-        let shaduleWeek = []; 
+        let sheduleWeek = []; 
         for(let i=0; i<arr.length; i++) {
           let shaduleDay={};
           if(arr[i].selected) { shaduleDay.day = arr[i].id }
           if(arr[i].from) { shaduleDay.fromTime = arr[i].from.split(':') }
           if(arr[i].to) { shaduleDay.toTime = arr[i].to.split(':') }
-          if(arr[i].selected) { shaduleWeek.push(shaduleDay) }
+          if(arr[i].selected) { sheduleWeek.push(shaduleDay) }
         }
-        console.log(shaduleWeek);
-        this.$store.dispatch('create/SEND_BUSINESS', shaduleWeek)
+        console.log(sheduleWeek);
+        this.$store.dispatch('create/GET_TIME', sheduleWeek)
+      },
+      uploadPhoto(e) {
+        this.images.push(e.target.files[0])
+        console.log(typeof e.target.files[0])
+        console.log(this.images)
+        console.dir(this.images)
       }
     }
 }
