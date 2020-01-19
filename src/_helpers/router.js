@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import HomePublic from '../views/HomePublic';
-import CabinetPage from '../views/CabinetPage';
+import Cabinet from '../views/Cabinet';
 import LoginPage from '../views/LoginPage';
 
 import RegisterPage from '../views/RegisterPage';
@@ -18,6 +18,7 @@ import CreatePage2 from '../views/CreatePage2';
 import CreatePage3 from '../views/CreatePage3';
 import CreatePage4 from '../views/CreatePage4';
 import CreatePage5 from '../views/CreatePage5';
+// import AddObject from '../components/business/AddObject';
 
 
 
@@ -41,7 +42,7 @@ export const router = new Router({
         { path: '/login', component: LoginPage },
         { path: '/map', component: MapPage },
         { path: '/about', component: AboutPage },
-        { path: '/cabinet', component: CabinetPage },
+        { path: '/cabinet', component: Cabinet },
         { path: '/successRegister', component: SuccessRegister },
         { path: '/user/activation', component: Activation },
         { path: '/user/activation/*', redirect: '/user/activation' },
@@ -71,7 +72,7 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
     console.log("beforeEach:", to, from);
-    const publicPages = ['/authorization', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/business', '/userprof', '/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
+    const publicPages = ['/authorization', '/cabinet', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/business', '/userprof', '/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
 
     const authRequired = !publicPages.includes(to.path);
 

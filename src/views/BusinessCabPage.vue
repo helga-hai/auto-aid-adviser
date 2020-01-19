@@ -14,7 +14,6 @@
 <script>
 
 import Activation from '../components/Activation';
-//import NavComponent from '../components/NavComponent';
 import CreatePage2 from '../views/CreatePage2';
 import CreatePage from '../views/CreatePage';
 import CreatePage3 from '../views/CreatePage3';

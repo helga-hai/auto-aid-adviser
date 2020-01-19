@@ -34,7 +34,7 @@ export const authentication = {
                             router.push('/user');
                         } else if (user.role === 'ROLE_BUSINESS') {
                             console.log('userService.login ROLE_BUSINESS')
-                            router.push('/business');
+                            router.push('/cabinet');
                         } else {
                             console.log(user.role);
                             router.push('/');

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>ACTIVATION</h1>
-    <h1>{{key()}}</h1>
+    <h3>ACTIVATION</h3>
+    <p>{{key()}}</p>
     <p>{{targetURL()}}{{req()}}</p>
     <p>{{role}}</p>
   </div>
@@ -69,7 +69,7 @@ methods:{
           router.push('/user');
         }else if(respToken.role==="ROLE_BUSINESS"){
           console.log('ROLE_BUSINESS *')
-          router.push('/business')
+          router.push('/cabinet')
         }else{
           console.log('router *')
           router.push('*')

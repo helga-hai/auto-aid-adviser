@@ -6,7 +6,7 @@
         <div class="header__nav">
             <router-link to="/" exact><img src="../assets/ico-search.png"/></router-link>
             <router-link to="/about">Про нас</router-link>
-            <router-link to="/business">business</router-link>
+            <router-link to="/cabinet">business</router-link>
             <router-link to="/user">user</router-link>
             <span class="header__lang">Укр </span> 
             <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
@@ -67,7 +67,7 @@ export default {
                 router.push('/user');
             }
             if(role == 'ROLE_BUSINESS'||role == '"ROLE_BUSINESS"'){
-                router.push('/business');
+                router.push('/cabinet');
             }
         },
         // checkRole() {
