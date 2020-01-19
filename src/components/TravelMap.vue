@@ -15,6 +15,9 @@
                     :google="google"
                     :map="map"
                     :marker= "curMarker"
+                    :clickable="true"
+                    :draggable="true"
+                   
                 />
             </div>
             <!-- <GoogleMapMarker
@@ -165,6 +168,9 @@ export default {
     //     //console.log(this.$refs.vAutoComplete.geolocate())
     // },
     methods: {
+        onMarkerClick(){
+            console.log("dawdawd")
+        },
         isDoneFuncInTravel() {
             console.log('isDoneFuncInTravel')
             this.$emit('isDoneFunc')

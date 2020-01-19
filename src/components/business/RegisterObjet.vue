@@ -39,6 +39,7 @@
                         @isDoneFunc="isDoneFunc" 
                         :address="address" 
                         :curMarker="curMarker"
+                         @click="onMarkerClick"
                         />
                 </div>
                 <!-- <GoogleMapLoader:location="location" 
@@ -90,7 +91,7 @@ export default {
             curMarker: {
                 id: "a",
                 position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }
-                content:'Place de la Bastille'
+                content:'You are here'
             },
             address: '',//store
             markers: [
@@ -193,9 +194,12 @@ export default {
     },
     created() {
         //do we support geolocation
-        // this.$store.dispatch('selfLocation/getLocation');
+        // this.$store.dispatch('selfLocation/changeLocation');
     },
     methods: {
+            onMarkerClick(){
+            console.log("dawdawd")
+        },
         setName(e){
             // this.$store.commit.create.fillName(e.target.value)
             // this.$store.dispatch('create/fillName');
@@ -221,6 +225,9 @@ export default {
         },
         getAddressData(addressData, placeResultData, id){
             this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
+            this.$store.dispatch('selfLocation/changeLocation', {addressData, placeResultData, id});
+            console.log(addressData, placeResultData, id)
+            console.log(addressData.latitude)
         },
         //getAddressData//: //function (addressData, placeResultData, id) { //state
             // console.log('getAddressData')
