@@ -193,7 +193,7 @@ export default {
     },
     created() {
         //do we support geolocation
-        this.$store.dispatch('selfLocation/getLocation');
+        // this.$store.dispatch('selfLocation/getLocation');
     },
     methods: {
         setName(e){

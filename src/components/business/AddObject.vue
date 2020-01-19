@@ -32,6 +32,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch('userdataservice/GET_TYPES')
+        this.$store.dispatch('selfLocation/getLocation');
     },
     computed: {
         ...mapGetters({
