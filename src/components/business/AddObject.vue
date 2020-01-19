@@ -1,27 +1,25 @@
 <template>
-    <business-layout>
+    <div>
         <div class="objects">
             <h1>Мої об’єкти</h1>
             <p>Наразі у вас немає об’єктів.</p>
             <p>Якщо бажаєте, то можемо створити новий об’єкт саме зараз.</p>         
-            <span><a href="#" class="objects__button" @click="createStepOne" >Додати об'єкт</a></span>
+            <span><a href="#" class="objects__button" @click="switchView('register-object')" >Додати об'єкт</a></span>
             <card-min/>
         </div>
         <div class="Image">
-            <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/serevice.svg')+')'}"></div>
+            <div class="Image__labe" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}"></div>
         </div>
-    </business-layout>
+    </div>
 </template>
 
 <script>
-import BusinessLayout from "@/layouts/BusinessLayout";
-import CardMin from "../components/cardMin";
-import {userService} from "../_services";
+import CardMin from "../../components/cardMin";
+import {userService} from "../../_services";
 import {mapGetters} from 'vuex';
 export default {
-    name: 'CreatePage2',
+    name: 'AddObject',
     components: {
-        BusinessLayout,
         CardMin,
     },
     data() {
@@ -42,20 +40,24 @@ export default {
     },
     methods: {
         createStepOne() {
-            this.$emit('stepOneFunction');
+            // this.$emit('stepOneFunction');
 
-            userService.getAllBusinessDate('api/catalog/services')
-                .then(function(result) {
-                    console.log("content"+result)
-                    return result
-                }).then(result=>this.$store.dispatch('templateB/fillallBusinesServises', result)
-            );
-             userService.getAllBusinessDate('api/businesses/templates')
-                .then(function(result) {
-                    console.log("content"+result)
-                    return result
-                }).then(result=>this.$store.commit('create/fillBusinesTemplate', result)
-            );
+            // userService.getAllBusinessDate('api/catalog/services')
+            //     .then(function(result) {
+            //         console.log("content"+result)
+            //         return result
+            //     }).then(result=>this.$store.dispatch('templateB/fillallBusinesServises', result)
+            // );
+            //  userService.getAllBusinessDate('api/businesses/templates')
+            //     .then(function(result) {
+            //         console.log("content"+result)
+            //         return result
+            //     }).then(result=>this.$store.commit('create/fillBusinesTemplate', result)
+            // );
+        },
+        switchView(val){
+            this.$emit('switchView', val);
+            this.createStepOne();
         }
     }
 }

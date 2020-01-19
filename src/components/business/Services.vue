@@ -1,8 +1,8 @@
 <template>
-    <business-layout>
+    <div>
         <div class="services">
-            <img class="services_img1" src = "../assets/027-checklist.png">
-            <img class="services_img2" src = "../assets/Group 133.png">
+            <img class="services_img1" src = "../../assets/027-checklist.png">
+            <img class="services_img2" src = "../../assets/Group 133.png">
             <h1>Реєстрація об’єкту</h1>
 
                 <h4>Выберите из списка типы обслуживаемых автомобилей</h4>
@@ -42,25 +42,23 @@
                 <details class="services__services opened" >
                     <summary class="services__servicename">
                         <span>Дополнительно</span>
-                        <img :src="require('../assets/arrow drop down.png')" class="services__icon">
+                        <img :src="require('../../assets/arrow drop down.png')" class="services__icon">
                     </summary>
                 </details>
                 <div class="services__buttons">
                     <input type="reset" value="Отмена" class="services__secondaryButton">
-                    <input type="submit" value="Продолжить 2/3" class="services__primaryButton" @click="createStepThree">    
+                    <input type="submit" value="Продолжить 2/3" class="services__primaryButton" @click="switchView('time-table')">    
                 </div>
 
         </div>  
-    </business-layout>
+    </div>
 </template>
 
 <script>
-import BusinessLayout from "@/layouts/BusinessLayout";
 import {mapGetters} from 'vuex';
 export default {
-    name: 'CreatePage3',
+    name: 'Services',
     components: {
-        BusinessLayout,
     },
     computed: {
         ...mapGetters({
@@ -74,12 +72,16 @@ export default {
         }
     },
     methods: {
-        createStepThree() {
-            this.$emit('stepThreeFunction');        
-        },
+        // createStepThree() {
+        //     this.$emit('stepThreeFunction');        
+        // },
         serviceShow(e){
             console.dir(e.target)
 
+        },
+        switchView(val){
+            this.$emit('switchView', val);
+            this.$store.commit('create/getServiceForBusinesses',this.checkedServicesID)
         }
     },
 }

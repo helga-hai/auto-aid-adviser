@@ -1,50 +1,48 @@
-// import { userService } from '../_services';
+import { userService } from '../_services';
+import { authHeader, router } from '../_helpers';
+import axios from 'axios';
 
 export const create = {
     namespaced: true,
     state: {
-        acLatLng:{},
+        acLatLng: {},
         address: '',
-        sendObject: {//для відправки на бек для створення бізнесу
+        sendObject: { //для відправки на бек для створення бізнесу
             "contact": {
-                "phone": "string",
-                "site": "string"
+                "phone": "",
+                "url": ""
             },
-            "id": 0,
+            "id": null,
             "location": {
-                "address": "string",
-                "latitude": 0,
-                "longitude": 0
+                "address": "",
+                "latitude": null,
+                "longitude": null
             },
-            "name": "string",
-            "serviceForBusinesses": [
-                {"id": 0}
-            ],
-            "workTimes": [
-                {
-                "day": 0,
+            "name": "",
+            "serviceForBusinesses": [],
+            "workTimes": [{
+                "day": null,
                 "fromTime": {
-                    "hour": 0,
-                    "minute": 0,
-                    "nano": 0,
-                    "second": 0
-                    },
-                "id": 0,
+                    "hour": null,
+                    "minute": null,
+                    "nano": null,
+                    "second": null
+                },
+                "id": null,
                 "toTime": {
-                    "hour": 0,
-                    "minute": 0,
-                    "nano": 0,
-                    "second": 0
-                    }
+                    "hour": null,
+                    "minute": null,
+                    "nano": null,
+                    "second": null
                 }
-            ]
+            }]
         },
     },
     getters: {
         SendObject: state => {
             return state.sendObject
         },
-        
+
     },
     actions: {
         // getAll({ commit }) {
@@ -56,15 +54,26 @@ export const create = {
         //             error => commit('getAllFailure', error)
         //         );
         // }
+
+        SEND_BUSINESS: (context, payload) => {
+            console.log('SEND_BUSINESS', payload)
+                // const config = {
+                //     method: 'put',
+                //     url: userService.config.apiUrl + '/api/businesses',
+                //     headers: authHeader()
+                // }
+                // let { data } = await axios(config);
+                // context.commit('SEND_BUSINESS', data);
+        },
     },
     mutations: {
         fillBusinesTemplate(state, payload) {
-            console.log('dawdawdaw',payload)            
-            state.sendObject =  payload;
+            console.log('dawdawdaw', payload)
+            state.sendObject = payload;
         },
-        
+
         fillName(state, payload) {
-            console.log('payload',payload)
+            console.log('payload', payload)
             state.sendObject.name = payload
         },
         // fillLocation(state, payload){
@@ -72,34 +81,35 @@ export const create = {
         //     state.sendObject.location.latitude = payload
         //     state.sendObject.location.longitude = payload
         // },
-        fillPhone(state, payload){
-            console.log('phoneNamber',payload)
+        fillPhone(state, payload) {
             state.sendObject.contact.phone = payload
         },
-        fillSite(state, payload){
-            console.log('site',payload)
-            state.sendObject.contact.site = payload
-            // console.log(state.sendObject.contact.site)
+        fillSite(state, payload) {
+            state.sendObject.contact.url = payload
         },
-        getAddressData(state, {addressData, placeResultData, id}) {
-            console.log('STORE getAddressData',{addressData, placeResultData, id})
-            // console.log('addressData=')
-            // console.dir(addressData)
-            // console.log('placeResultData=')
-            // console.dir(placeResultData)
-            let lat=placeResultData.geometry.location.lat()
-            let lng=placeResultData.geometry.location.lng()
-            console.log(lat,lng)
-            state.acLatLng={lat:lat,lng:lng}
-            state.sendObject.location={latitude:lat,longitude:lng}
-            state.sendObject.location={
+        getAddressData(state, { addressData, placeResultData, id }) {
+            console.log('STORE getAddressData', { addressData, placeResultData, id })
+            let lat = placeResultData.geometry.location.lat()
+            let lng = placeResultData.geometry.location.lng()
+            console.log(lat, lng)
+            state.acLatLng = { lat: lat, lng: lng }
+            state.sendObject.location = { latitude: lat, longitude: lng }
+            state.sendObject.location = {
                 address: placeResultData.formatted_address,
                 latitude: placeResultData.geometry.location.lat(),
                 longitude: placeResultData.geometry.location.lng()
             }
             state.address = addressData;
         },
-
+        getServiceForBusinesses(state, payload) {
+            console.log('create/getServiceForBusinesses', payload)
+            payload.forEach(item => {
+                let tmp = {};
+                tmp.id = item
+                state.sendObject.serviceForBusinesses.push(tmp)
+            })
+        },
+        // SEND_BUSINESS
         // getAllRequest(state) {
         //     state.all = { loading: true };
         // },

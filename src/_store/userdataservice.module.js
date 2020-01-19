@@ -2,6 +2,7 @@
 
 import { authHeader, router } from '../_helpers';
 import { userService } from '../_services';
+import axios from 'axios';
 
 export const userdataservice = {
     namespaced: true,
@@ -23,7 +24,22 @@ export const userdataservice = {
         // menuItem: null,
 
     },
+    getters: {
+        TYPES: state => {
+            return state.types; //let name = this.$store.getters.types
+        },
+    },
     actions: {
+        GET_TYPES: async(context, payload) => {
+            console.log('GET_TYPES')
+            const config = {
+                method: 'get',
+                url: userService.config.apiUrl + '/api/catalog/car/types',
+                headers: authHeader()
+            }
+            let { data } = await axios(config);
+            context.commit('SET_TYPES', data);
+        },
         // getData(path) {
 
 
@@ -57,6 +73,9 @@ export const userdataservice = {
     },
 
     mutations: {
+        SET_TYPES: (state, payload) => {
+            state.types = payload;
+        },
         setData(state, data) {
             console.log(data[1]);
             console.log(data);
@@ -73,7 +92,7 @@ export const userdataservice = {
         //     email: resp.email,
         // }
 
-    }
+    },
     // getAllRequest(state) {
     //     state.all = { loading: true };
     // },

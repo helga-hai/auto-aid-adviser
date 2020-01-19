@@ -1,218 +1,269 @@
 <template>
   <div class="about">
-    <nav-component :grey="true"/>
+    <nav-component  class="dark"/>
 
-    <div class="page">
-      <aside class="aside">
-        <ul class="aside__items">
-          <li class="aside__item" v-for="(el, index) in groups" :key="index">{{el}}</li>
-        </ul>
-      </aside>
-      <div class="block">
-        <label class="block__label" for="search">Послуга</label>
-        <input class="block__search" id="search"/>
-        <div class="action">
-          <div class="action__result">Знайдено 23 варіанта</div>
-          <button class="action__filter">фільтрУватИ</button>
-        </div>
-        <div class="mark">Найближчі</div>
-        <div id="directionsPanel"></div>
-        <div class="point">
-          <div class="point__name">Stop&Go-Шиномонтаж</div>
-          <div class="point__type">Магазин шин</div>
-          <div class="point__address">ул. Поперечная, 21А</div>
-        </div>
-        <div class="point">
-          <div class="point__name">Stop&Go-Шиномонтаж</div>
-          <div class="point__type">Магазин шин</div>
-          <div class="point__address">ул. Поперечная, 21А</div>
-        </div>
-        <div class="point">
-          <div class="point__name">Stop&Go-Шиномонтаж</div>
-          <div class="point__type">Магазин шин</div>
-          <div class="point__address">ул. Поперечная, 21А</div>
-        </div>
+    <div class="content">
+        С помощью “Auto Aid Adviser”вы можете
       </div>
-      <travel-map class="guide" ref="mapr" :myPosition="location"/>
-      <!-- <button @click="getDirection">get directions</button> -->
-    </div>
+      <div class="container">
+        <div class="photo-start">
+          <img :src="require('@/assets/Group.jpg')" >
+          <p class="r">Найти ближайшие к вам СТО, мойки и шиномонтажи с полным и актуальным описанием услуг </p>
+        </div>
+        <div class="photto">
+          <img :src="require('@/assets/Group_1.jpg')">
+          <p class="t"> Оформить онлайн-запись на любую услугу в любое удобное для вас время </p>
+        </div>
+          
+        <div class="phottto">
+          <img :src="require('@/assets/Group_2.jpg')" >
+          <p class="w">Зарегистрироваться и получать БОНУСЫ за пользование сайтом от 
+          компаний-партнеров</p>
+        </div>
+      <div class="cont">
+        <div class="clon">
+        <img :src="require('@/assets/Group_4.jpg')" >
+          <p class="u">Иметь свой календарь записей и получать напоминания о предстоящих визитах</p>
+        </div>
+        <div class="map">
+          <img :src="require('@/assets/Group.jpg')" >
+          <p class="q">Найти ближайшие к вам СТО, мойки и шиномонтажи с полным и актуальным описанием услуг</p>
+        </div>
+      </div>	
+        <div class="content_1">
+        Для владельцев бизнеса!
+      </div>
+      <div class="block">
+        <p>У вас свой бизнес, связанный с автомобилями? Зарегистрируйте свое предприятие и ведите свой бизнес ОНЛАЙН.</p>
+        <p> Ведите запись всех ваших клиентов на любые услуги в онлайн режиме. Теперь вы можете управлять временем и графиком своей работы, а вашим сотрудникам будет намного проще контролировать поток обращений.</p>
+        <p>Информация о Вашем объекте с полным его описанием, услугами и режимом работы автоматически попадает в сеть Auto Aid Adviser, а у вас появляется возможность ежемесячно получать новых клиентов</p>
+      </div>
+      <div class="togl">
+        <img :src="require('@/assets/Group_1.jpg')" >
+      </div>
+      <button class="but">Зареєструвати бізнес</button>
+      </div>
 
-    
-    <div v-if="errorStr">
-      Sorry, but the following error occurred: {{errorStr}}
-    </div>
-    <div v-if="gettingLocation">
-      <i>Getting your location...</i>
-    </div>
-    <!-- <div v-if="location">
-      Your location data is {{ location.coords.latitude }}, {{ location.coords.longitude}}
-    </div> -->
+      <!-- <footer>
+          <div class="Evo">
+              <img :src="require('@/assets/Group 194.png')">
+              <p class="footerTitle">2019 Hillel EVO project. Auto Aid Adviser</p>
+          </div>
+      </footer> -->
 
   </div>
 </template>
 
 <script>
 import NavComponent from '../components/NavComponent';
-import TravelMap from '@/components/TravelMap.vue';
 export default {
-  components: {
-    NavComponent,
-    TravelMap,
-  },
-  data() {
-    return {
-      groups: ['СТО','Шиномонтаж','Мойка'],
-      markersOut: [
-          {
-              id: "a",
-              position: this.location
-          },
-          {
-              id: "b",
-              position: { lat: 50.455939, lng: 30.372777 }// { lat: 5, lng: 99 }
-          },
-          {
-              id: "c",
-              position: { lat: 50.452482, lng: 30.372232 }// { lat: 6, lng: 97 }
-          }
-      ],
-    }
-  },
-  computed: {
-    errorStr() {
-      return this.$store.state.selfLocation.errorStr;
+    name: 'About',
+    components: {
+        NavComponent,
     },
-    gettingLocation() {
-      return this.$store.state.selfLocation.gettingLocation;
-    },
-    location() {
-      return this.$store.state.selfLocation.location;
-    }
-  },
-  created() {
-    //do we support geolocation
-    this.$store.dispatch('selfLocation/getLocation');
-  },
-  // methods: {
-  //   getDirection: function() {
-  //}
 }
 </script>
 
-<style lang="scss">
-.page {
-  display: flex;
+<style scoped>
+	* {
+		margin: 0px;
+		padding: 0px;
+	}
+	.content {
+		position: relative;
+		height: 28px;
+		left: 451px;
+		top: 144px;
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: 500;
+		font-size: 24px;
+		line-height: 28px;
+		display: flex;
+		align-items: center;
+		color: #4B5E7A;
+	}
+	.container {
+		position: relative;
+		width: 1100px;
+		height: 286px;
+		left: 133px;
+		top: 237px;
+    text-align:left;
+	}
+	.photo-start {
+		width: 260px;
+		height: 179px;
+		
+	}
+	.r {
+		position: relative;
+		width: 260px;
+		height: 66px;
+		top: 50px;
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 16px;
+		line-height: 22px;
+		display: flex;
+		align-items: center;
+		color: #4B5E7A;
+	}
+	
+	.photto {
+		position: relative;
+		width: 260px;
+		height: 179px;
+		left: 400px;
+		top: -180px;
+	}
+	.t {
+		position: relative;
+		width: 260px;
+		height: 66px;
+		top: 50px;
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 16px;
+		line-height: 22px;
+		display: flex;
+		align-items: center;
+		color: #4B5E7A;
+	}
+	.phottto {
+		position: relative;
+		width: 260px;
+		height: 179px;
+		left: 800px;
+		top: -350px;
+	}
+	.w {
+		position: relative;
+		width: 260px;
+		height: 66px;
+		top: 50px;
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 16px;
+		line-height: 22px;
+		display: flex;
+		align-items: center;
+		color: #4B5E7A;
+	}
+	.cont {
+		position: relative;
+		width: 800px;
+		height: 286px;
+		left: 200px;
+		top: -150px;
 
-}
-.aside {
-  padding-top: 40px;
-  width:104px;
-  min-height: calc(100vh - 56px);
-  //background: #FFC700;
-  background: #F6F7F8;
-  &__items {
-    list-style: none;
-    text-align: left;
-    padding: 0;
-    margin:0;
-  }
-  &__item {
-    color: #0E1E2E;
-    text-align: center;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    width:100%;
-    display:block;
-    padding: 15px 0;
-    &:before{
-      content: '';
-      width: 24px;
-      height: 24px;
-      border: 1px solid #0E1E2E;
-      border-radius: 8px;
-      display:block;
-      margin: 4px auto;
+	}
+	.clon {
+		position: relative;
+		width: 260px;
+		height: 179px;
+	}
+	.u {
+		position: relative;
+		width: 260px;
+		height: 66px;
+		top: 50px;
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 16px;
+		line-height: 22px;
+		display: flex;
+		align-items: center;
+		color: #4B5E7A;
+	}
+	.map {
+		position: relative;
+		width: 260px;
+		height: 179px;
+		left: 450px;
+		top: -178px;
+
+	}
+	.q {
+		position: relative;
+		width: 260px;
+		height: 66px;
+		top: 50px;
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 16px;
+		line-height: 22px;
+		display: flex;
+		align-items: center;
+		color: #4B5E7A;
+	}
+	.content_1 {
+		position: relative;
+		width: 292px;
+		height: 28px;
+		left: 400px;
+		top: 7px;
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: 500;
+		font-size: 24px;
+		line-height: 28px;
+		display: flex;
+		align-items: center;
+		color: #4B5E7A;
+	}
+	.block {
+		position: relative;
+		width: 600px;
+		height: 240px;
+		left: 120px;
+		top: 64px;
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 24px;
+		color: #6F7E95;
+	}
+	.togl {
+		position: relative;
+		width: 260px;
+		height: 179px;
+		left: 800px;
+		top: -170px;
+	}
+	.but {
+		position: relative;
+		width: 280px;
+		height: 56px;
+		left: 120px;
+		top: -50px;
+		background: #0E1E2E;
+		border-radius: 4px;
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 16px;
+		line-height: 18px;
+		text-align: center;
+		text-transform: uppercase;
+		color: #FFFFFF;
+	}
+    /*  footer  */
+    footer {
+        width: 100%;
+        padding: 29px 50px;
+        text-align: right;
+        background-color: #0E1E2E;
     }
-  }
-}
-.block {
-  text-align:left;
-  padding:30px;
-  width: 418px;
-  background: #FFFFFF;
-  &__search {
-    border: 1px solid #6F7E95;
-    border-radius: 4px;
-    height:36px;
-    width: 100%;
-  }
-  &__label {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 12px;
-    color: #A5AEBC;
-  }
-}
-.action {
-  margin: 30px 0 10px;
-  &__result {
-    font-size: 14px;
-    line-height: 16px;
-    color: #6F7E95;
-    width: 60%;
-    display:inline-block;
-  }
-  &__filter {
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 16px;
-    text-transform: uppercase;
-    color: #00BCD4;
-    width: 40%;
-    display:inline-block;
-  }
-}
-.mark {
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 18px;
-  text-transform: uppercase;
-  color: #FFB100;
-}
-.point {
-  text-align:left;
-  margin: 15px 0;
-  &__name {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 20px;
-    color: #0E1E2E;
-  }
-  &__type {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 16px;
-    color: #6F7E95;
-  }
-  &__address {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 16px;
-    color: #6F7E95;
-  }
-}
-.guide {
-  //width: calc(100% - 104px);
-  width: calc(100% - 104px);
-  //min-height: 500px;
-  position: relative;
-}
+    .footerTitle {
+        font-size: 16px;
+        line-height: 22px;
+        color: #FFFFFF;
+    }
 </style>
