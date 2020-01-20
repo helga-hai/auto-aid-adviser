@@ -140,7 +140,8 @@
                         <label class= "registrStep3__addFile">
                             <input
                              @change='uploadPhoto' 
-                             type="file" accept="image/*">
+                             type="file"
+                             accept="image/*">
                             <span>+ Фото</span>
                         </label>
                         </div>
@@ -381,10 +382,10 @@ export default {
         },
         uploadPhoto(e){
             
-        //     console.dir(e.srcElement.files[0])
-        //     let photo = e.srcElement.files[0]
-        //     this.images[0] = photo;
-        //     console.log("consoleLOG"+this.images[0]);
+            console.dir(e.srcElement.files[0])
+            let photo = e.srcElement.files[0]
+            this.images[0] = photo;
+            console.log("consoleLOG"+this.images[0]);
 
         },
         saveAuto(){
@@ -393,14 +394,17 @@ export default {
                 releaseYear: parseInt(this.year),
                 individualCarNaming: this.individualCarNaming,
                 description: this.description,
-                carModel:
+                // carModel:
                 // this.selectedModelIdVal||this.selectedModelId,
+                carModel:
                 {
                     id: this.selectedModelIdVal||this.selectedModelId
                 },
-                // images: this.images,
+                // images: this.images
             }
-            this.$store.dispatch('userdataservice/GET_MULTIPART')
+            
+            // let autoInfo = JSON.stringify(auto);
+            this.$store.dispatch('userdataservice/GET_MULTIPART', auto)
 
 
             // console.log(auto)
