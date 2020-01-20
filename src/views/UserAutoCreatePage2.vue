@@ -21,7 +21,6 @@
 
             </div>
                 <span>Выбрано: {{ selectedType }} {{selectedTypeId}}</span>
-
             <form @submit.prevent='saveAuto'>
 
 
@@ -116,7 +115,7 @@
                     </option>
                 </select>
                 <!-- <p>{{currentIndex}}</p> -->
-                <p>{{selectedModelIdVal||selectedModelId}}</p>
+                <p>{{selectedModelIdVal||selectedModelId()}}</p>
 
 
 
@@ -130,6 +129,7 @@
                     <option 
                     v-for="y in releaseYear"
                     :key="y.index"
+
                     >
                     {{y.year}}
                     </option>
@@ -138,7 +138,9 @@
                         <p class = "registrStep3__ft">Додайте фотографії автомобілю</p>
                         <div>
                         <label class= "registrStep3__addFile">
-                            <input type="file" accept="image/*">
+                            <input
+                             @change='uploadPhoto' 
+                             type="file" accept="image/*">
                             <span>+ Фото</span>
                         </label>
                         </div>
@@ -147,10 +149,11 @@
                 <p><span>*максимум п`яти фото, до 500Кб кожна </span></p>
 
                 <!-- <ul v-for="t in test"><li>{{t.name}}</li></ul> -->
+                
 
                 <div class="registerAuto__buttons">
                     <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
-                    <input type="submit" value="Зберегти" class="registerAuto__primaryButton" @click="saveAuto">    
+                    <input type="submit" value="Зберегти" class="registerAuto__primaryButton"  @click="saveAuto">    
                 </div>
             </form>
         </div>
@@ -186,7 +189,12 @@ export default {
             modelType:'',
             // selectedModelId:'',
             selectedModelIdVal:'',
-
+            selectedModelId: function() {
+            if(this.currentIndex<0||!this.currentIndex){
+                return '';
+            }else{
+            return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
+            },
             currentIndex:''||this.$store.state.userdataservice.currentIndex,
             // currentIndex(){
             //     if(this.$store.state.userdataservice.currentIndex==null){
@@ -227,28 +235,21 @@ export default {
         //     }else{
         //     return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
         // },
-        models: function(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
-                releaseYear: function(){ 
-                    let yearArr = [];
-                    let yearStart = 1900;
-                    let yearCurrent = 2020;
-                    let keyCounter = 0;
-                    for(let i = yearStart;i<=yearCurrent;i++){
-                        let year = {};
-                        year.index = keyCounter++;
-                        year.year = i;
-                        yearArr.push(year);
-                        console.log(year)
-                    }
-                    return yearArr;
-                },
-            selectedModelId: function() {
-            if(this.currentIndex<0||!this.currentIndex){
-                return '';
-            }else{
-            return this.$store.state.userdataservice.models[this.currentIndex-1].id;
-            }
+        releaseYear: function(){ 
+                let yearArr = [];
+                let yearStart = 1900;
+                let yearCurrent = 2020;
+                let keyCounter = 0;
+                for(let i = yearStart;i<=yearCurrent;i++){
+                    let year = {};
+                    year.index = keyCounter++;
+                    year.year = i;
+                    yearArr.push(year);
+                    console.log(year)
+                }
+                return yearArr;
             },
+        models: function(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
         
     },
     update() {
@@ -295,7 +296,7 @@ export default {
 
         },
         getModel(e){
-            // setTimeout(() => {
+            
             let select = document.querySelector("select#model")
             let mySetAttr = select.setAttribute
             if(!this.selectedTypeId||!this.selectedBrandId){
@@ -376,14 +377,15 @@ export default {
             // .then(function(result){return result})
             // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']))
             }
-            // }, 1000);
-            // clearTimeout();
-        },
 
-        clearField(dataField, stateField, index){
-            this[dataField] = '';
-            this.$store.dispatch('userdataservice/fieldsVal',[null, stateField]);
-            this[index] = '';
+        },
+        uploadPhoto(e){
+            
+        //     console.dir(e.srcElement.files[0])
+        //     let photo = e.srcElement.files[0]
+        //     this.images[0] = photo;
+        //     console.log("consoleLOG"+this.images[0]);
+
         },
         saveAuto(){
             
@@ -396,16 +398,23 @@ export default {
                 {
                     id: this.selectedModelIdVal||this.selectedModelId
                 },
-                images: this.images,
+                // images: this.images,
             }
-            console.log(auto)
-            userService.postAllUserData(`api/user/profile/car`,auto)
-            .then(function(result){return result})
-            .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'car']))
-            console.log(this.$store.state.userdataservice.car)
+            this.$store.dispatch('userdataservice/GET_MULTIPART')
 
 
-        }
+            // console.log(auto)
+            // userService.postAllUserData(`api/user/profile/car`,auto)
+            // .then(function(result){return result})
+            // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'car']))
+            // console.log(this.$store.state.userdataservice.car)
+        },
+
+        clearField(dataField, stateField, index){
+            this[dataField] = '';
+            this.$store.dispatch('userdataservice/fieldsVal',[null, stateField]);
+            this[index] = '';
+        },
     }
 }
 </script>

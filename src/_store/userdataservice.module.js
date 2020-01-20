@@ -41,6 +41,20 @@ export const userdataservice = {
             let { data } = await axios(config);
             context.commit('SET_TYPES', data);
         },
+        GET_MULTIPART: async(context) => {
+            let customHeader = authHeader();
+            // console.log(customHeader)
+            customHeader['Content-Type'] = undefined;
+            customHeader['Content-Type'] = "undefined";
+            console.log(customHeader['Content-Type']);
+            // const config = {
+            //     method: 'post',
+            //     url: userService.config.apiUrl + '/api/catalog/car/types',
+            //     headers: authHeader()
+            // }
+            // let { data } = await axios(config);
+            // context.commit('SET_TYPES', data);
+        },
         // getData(path) {
 
 
