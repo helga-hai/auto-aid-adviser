@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="flex">
         <div class="objects">
             <h1>Мої об’єкти</h1>
             <p>Наразі у вас немає об’єктів.</p>
@@ -65,6 +65,9 @@ export default {
 </script>
 
 <style>
+.flex {
+    display: flex;
+}
 .objects {
     padding: 56px 92px 56px 48px;
 }   

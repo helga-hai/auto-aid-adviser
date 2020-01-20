@@ -20,22 +20,23 @@ export const create = {
             },
             "name": "",
             "serviceForBusinesses": [],
-            "workTimes": [{
-                "day": null,
-                "fromTime": {
-                    "hour": null,
-                    "minute": null,
-                    "nano": null,
-                    "second": null
-                },
-                "id": null,
-                "toTime": {
-                    "hour": null,
-                    "minute": null,
-                    "nano": null,
-                    "second": null
-                }
-            }]
+            "workTimes": []
+                //     {
+                //     "day": null,
+                //     "fromTime": {
+                //         "hour": null,
+                //         "minute": null,
+                //         "nano": null,
+                //         "second": null
+                //     },
+                //     "id": null,
+                //     "toTime": {
+                //         "hour": null,
+                //         "minute": null,
+                //         "nano": null,
+                //         "second": null
+                //     }
+                // }]
         },
     },
     getters: {
@@ -55,8 +56,40 @@ export const create = {
         //         );
         // }
 
-        SEND_BUSINESS: (context, payload) => {
-            console.log('SEND_BUSINESS', payload)
+        GET_TIME: (context, payload) => {
+            console.log('GET_TIME', payload)
+
+            payload.forEach(item => {
+                    let single = {}
+                    single.day = item.day;
+                    if (item.fromTime) {
+                        single.fromTime = {};
+                        single.fromTime.hour = parseInt(item.fromTime[0])
+                        single.fromTime.minute = parseInt(item.fromTime[1])
+
+                        single.toTime = {};
+                        single.toTime.hour = parseInt(item.toTime[0])
+                        single.toTime.minute = parseInt(item.toTime[1])
+                    }
+                    context.commit('SET_TIME', single);
+
+                })
+                // "workTimes": [{
+                //     "day": null,
+                //     "fromTime": {
+                //         "hour": null,
+                //         "minute": null,
+                //         "nano": null,
+                //         "second": null
+                //     },
+                //     "id": null,
+                //     "toTime": {
+                //         "hour": null,
+                //         "minute": null,
+                //         "nano": null,
+                //         "second": null
+                //     }
+                // }]
                 // const config = {
                 //     method: 'put',
                 //     url: userService.config.apiUrl + '/api/businesses',
@@ -109,7 +142,9 @@ export const create = {
                 state.sendObject.serviceForBusinesses.push(tmp)
             })
         },
-        // SEND_BUSINESS
+        SET_TIME(state, payload) {
+            state.sendObject.workTimes.push(payload)
+        }
         // getAllRequest(state) {
         //     state.all = { loading: true };
         // },
