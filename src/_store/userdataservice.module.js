@@ -17,6 +17,7 @@ export const userdataservice = {
         models: null,
         selectedModelId: null,
         currentIndex: null,
+        car:null,
 
 
 
@@ -39,6 +40,37 @@ export const userdataservice = {
             }
             let { data } = await axios(config);
             context.commit('SET_TYPES', data);
+        },
+
+        GET_MULTIPART: async(context, carInfo) => {
+            let customHeader = authHeader();
+            console.log(customHeader);
+            customHeader['Content-Type'] = undefined;
+            console.log("THIS " + customHeader['Content-Type']);
+            console.log("THIS " + customHeader['Authorization']);
+            console.log(customHeader);
+            let formData = new FormData();
+            // formData.append("file", carPhoto);
+            formData.append("json", JSON.stringify(carInfo));
+            // formData.append('properties', new Blob(JSON.stringify({
+            //     "name": "root",
+            //     "password": "root"                    
+            // }), {
+            //     type: "application/json"
+            // }));
+
+
+            const config = {
+                method: 'POST',
+                url: userService.config.apiUrl + '/api/user/profile/car',
+                headers: customHeader,
+                data: formData,
+            };
+
+
+            let { data } = await axios(config);
+            context.commit('SET_MULTIPART', data);
+
         },
         // getData(path) {
 
@@ -75,6 +107,12 @@ export const userdataservice = {
     mutations: {
         SET_TYPES: (state, payload) => {
             state.types = payload;
+        },
+        SET_MULTIPART: (state, payload)=>{
+
+            state.car = payload;
+            console.log(payload)
+
         },
         setData(state, data) {
             console.log(data[1]);
