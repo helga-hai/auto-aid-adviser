@@ -98,6 +98,31 @@ export const create = {
                 // let { data } = await axios(config);
                 // context.commit('SEND_BUSINESS', data);
         },
+        SEND_MULTIPART_BUSINESS: async(context, payload) => {
+            console.log('SEND_MULTIPART_BUSINESS', payload)
+            console.log(JSON.stringify(context.state.sendObject))
+            const str = JSON.stringify(context.state.sendObject)
+            var formData = new FormData();
+            formData.append("file", payload);
+            formData.append('properties', new Blob([str], {
+                type: "application/json"
+            }));
+            var businessHeader = authHeader()
+            businessHeader['Content-Type'] = undefined;
+            const config = {
+                method: 'POST',
+                url: userService.config.apiUrl + '/api/businesses',
+                headers: businessHeader,
+                data: formData
+            }
+            let { data } = await axios(config);
+            context.commit('SET_MULTIPART_BUSINESS', data);
+            // method: "POST",
+            // headers: {
+            //         "Content-Type": undefined
+            // },
+            // data: formData
+        }
     },
     mutations: {
         fillBusinesTemplate(state, payload) {
@@ -144,6 +169,9 @@ export const create = {
         },
         SET_TIME(state, payload) {
             state.sendObject.workTimes.push(payload)
+        },
+        SET_MULTIPART_BUSINESS(state, payload) {
+            console.log(payload)
         }
         // getAllRequest(state) {
         //     state.all = { loading: true };

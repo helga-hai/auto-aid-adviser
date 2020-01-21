@@ -100,50 +100,5 @@ export const templateB = {
                 }
             }
         },
-        // SET_DATALIST: (state, payload) => {
-        //     console.log('SET_DATALIST')
-        //     state.dataList = payload;
-        //     console.dir(state.dataList)
-        // },
-        // ADD_DATALIST: (state, payload) => {
-        //     console.log('ADD_DATALIST')
-        //     state.datsList.push(payload);
-        // },
-        // fillallBusinesServises(state, payload) {
-        //     state.allBusinesServises = payload;
-
-        //     //
-        //     payload.filter(item => {
-
-        //         })
-        //         //
-        //     payload.forEach(item => {
-        //         if (state.serviceTypesList.indexOf(item.serviceType.name) < 0) {
-        //             state.serviceTypesList.push(item.serviceType.name)
-        //         }
-        //     });
-        //     state.serviceTypesList.forEach(item => {
-        //         for (let i = 0; i < state.allBusinesServises.length; i++) {
-        //             if (state.allBusinesServises[i].serviceType.name == item) {
-        //                 let tmpObj = {}
-        //                 tmpObj['id'] = state.allBusinesServises[i].serviceType.id
-        //                 tmpObj['name'] = state.allBusinesServises[i].serviceType.name
-        //                 state.serviceTypesObj.push(tmpObj)
-        //             }
-        //         }
-        //     })
-
-        //     function getUnique(arr, comp) {
-        //         const unique = arr
-        //             .map(e => e[comp])
-        //             // store the keys of the unique objects
-        //             .map((e, i, final) => final.indexOf(e) === i && i)
-        //             // eliminate the dead keys & store unique objects
-        //             .filter(e => arr[e]).map(e => arr[e]);
-        //         return unique;
-        //     }
-
-        //     state.st = getUnique(state.serviceTypesObj, 'id')
-        // },
     }
 }

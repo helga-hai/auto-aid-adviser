@@ -137,12 +137,14 @@ export default {
         }
         console.log(sheduleWeek);
         this.$store.dispatch('create/GET_TIME', sheduleWeek)
+        this.$store.dispatch('create/SEND_MULTIPART_BUSINESS', this.images)
       },
       uploadPhoto(e) {
         this.images.push(e.target.files[0])
         console.log(typeof e.target.files[0])
         console.log(this.images)
         console.dir(this.images)
+        
       }
     }
 }
