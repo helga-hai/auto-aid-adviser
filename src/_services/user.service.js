@@ -91,13 +91,11 @@ function activate(k) {
 
 ///   AUTHENTIFICATION   /////
 function login(email, password) {
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-
-
         body: JSON.stringify({ email, password })
-            // body: JSON.stringify( email, password )
     };
 
     return fetch(`${config.apiUrl}/api/user/login`, requestOptions)
@@ -107,33 +105,37 @@ function login(email, password) {
         // .then(handleResponse => {
         //     console.log(JSON.stringify(response));
         //     return handleResponse;})
-
-
     .then(user => {
         // .then(token => {
-
-
         console.log('requestOptions')
-        console.log(requestOptions) //email password
+        console.log('requestOptions '+requestOptions); //email password
             // login successful if there's a jwt token in the response
-
         // if (user.token)
         if (user)
-
         {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
 
 
-            console.log(JSON.stringify(user));
+            console.log("USER_SERVICE "+JSON.stringify(user));
 
-            localStorage.setItem('token', JSON.stringify(user.token));
-            localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
-            localStorage.setItem('role', JSON.stringify(user.role)); ////role///////////////////////////
-            console.log(JSON.stringify(user.role));
-            console.log("router.push user"+user.role);
-            //console.log(router.push);
-            //router.push('user');//not working
-            return user;
+            if(JSON.stringify(user.status) == 401){
+                console.log("NO_USER");
+                console.log(JSON.stringify(user.error)); //:"Unauthorized"
+                console.log(JSON.stringify(user.message));
+                return user.error;
+                 //"message":"Authorization failed"
+                // return router.push('/');
+            }else{
+
+                localStorage.setItem('token', JSON.stringify(user.token));
+                localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
+                localStorage.setItem('role', JSON.stringify(user.role)); ////role///////////////////////////
+                console.log(JSON.stringify(user.role));
+                console.log("router.push user"+user.role);
+                //console.log(router.push);
+                //router.push('user');//not working
+                return user;
+            }
         }
         return user;
     });

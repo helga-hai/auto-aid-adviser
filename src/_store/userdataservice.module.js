@@ -51,7 +51,7 @@ export const userdataservice = {
             console.log(customHeader);
             let formData = new FormData();
             // formData.append("file", carPhoto);
-            formData.append("json", JSON.stringify(carInfo));
+            // formData.append("json", JSON.stringify(carInfo));
             // formData.append('properties', new Blob(JSON.stringify({
             //     "name": "root",
             //     "password": "root"                    
