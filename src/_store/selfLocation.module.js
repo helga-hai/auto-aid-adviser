@@ -38,7 +38,7 @@ export const selfLocation = {
             state.location.position = {};
             state.location.position.lat = placeResultData.geometry.location.lat();
             state.location.position.lng = placeResultData.geometry.location.lng()
-            console.log(state.location)
+            console.log(state.location.position)
             // state.acLatLng = { lat: lat, lng: lng }
             // state.sendObject.location = { latitude: lat, longitude: lng }
             // state.sendObject.location = {

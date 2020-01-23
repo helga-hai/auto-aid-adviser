@@ -28,7 +28,7 @@
                 </div>
             </form>
         </div>
-        <h1>{{ele}}</h1>
+        <!-- <h1>{{ele}}</h1> -->
         <div class="Step1Image">your here: {{location.position}}
             <div class="Step1Image__labe" >
                 <div v-if="gettingLocation">loading...</div>
@@ -148,7 +148,26 @@ export default {
         location(newVal, oldVal) {
             console.log('location',newVal, oldVal)
             //this.locationDone = true
+        },
+        // location(newVal, oldVal) {
+        //     console.log('location',newVal, oldVal)
+        //                 this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position
+        //     console.log("dawdawd"+val)
+        // },
+        // curMarker(){
+        //     this.curMarker = this.$store.getters['selfLocation/doneLocation'].position
+        //     console.log("dawdawd"+val)
+        // }
+    },
+    mounted() {
+        this.$store.subscribe((mutation, state) =>{
+       
+        if(mutation.type == "selfLocation/getAddressMarker"){
+             console.log(mutation)
+             this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position;
+             console.log(this.curMarker.position)
         }
+        })
     },
     computed: {
         errorStr() {
