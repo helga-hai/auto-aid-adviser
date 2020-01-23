@@ -103,12 +103,12 @@ export const create = {
             console.log(JSON.stringify(context.state.sendObject))
             const str = JSON.stringify(context.state.sendObject)
             var formData = new FormData();
-            formData.append("file", payload);
-            formData.append('properties', new Blob([str], {
+            formData.append("files", payload);
+            formData.append('json', new Blob([str], {
                 type: "application/json"
             }));
             var businessHeader = authHeader()
-            businessHeader['Content-Type'] = undefined;
+            businessHeader['Content-Type'] = 'multipart/form-data';
             const config = {
                 method: 'POST',
                 url: userService.config.apiUrl + '/api/businesses',
@@ -117,11 +117,6 @@ export const create = {
             }
             let { data } = await axios(config);
             context.commit('SET_MULTIPART_BUSINESS', data);
-            // method: "POST",
-            // headers: {
-            //         "Content-Type": undefined
-            // },
-            // data: formData
         }
     },
     mutations: {
