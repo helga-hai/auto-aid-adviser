@@ -21,9 +21,9 @@
                     <p>{{item.name}}</p>
                   </label>
                   <div ><!--v-if="picked=='onTime' && item.selected"-->
-                    <input type="time" name="" id="MondaySt" value="08:00" v-model="item.from">
+                    <input type="time" name=""  value="08:00" v-model="item.from">
                     <p>до</p>
-                    <input type="time" name="" id="MondayF" value="18:00" v-model="item.to">
+                    <input type="time" name=""  value="18:00" v-model="item.to">
                   </div>
               </div>
 
@@ -37,9 +37,9 @@
                       <p>{{item.name}}</p>
                     </label>
                     <div >
-                      <input type="time" name="" id="MondaySt" value="08:00" v-model="item.from">
+                      <input type="time" name="" value="08:00" v-model="item.from">
                       <p>до</p>
-                      <input type="time" name="" id="MondayF" value="18:00" v-model="item.to">
+                      <input type="time" name="" value="18:00" v-model="item.to">
                     </div>
                 </div>
 
@@ -132,8 +132,8 @@ export default {
         for(let i=0; i<arr.length; i++) {
           let shaduleDay={};
           if(arr[i].selected) { shaduleDay.day = arr[i].id }
-          if(arr[i].from) { shaduleDay.fromTime = arr[i].from.split(':') }
-          if(arr[i].to) { shaduleDay.toTime = arr[i].to.split(':') }
+          if(arr[i].from) { shaduleDay.fromTime = arr[i].from }//arr[i].from.split(':')
+          if(arr[i].to) { shaduleDay.toTime = arr[i].to }
           if(arr[i].selected) { sheduleWeek.push(shaduleDay) }
         }
         console.log(sheduleWeek);

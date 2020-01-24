@@ -62,15 +62,17 @@ export const create = {
             payload.forEach(item => {
                     let single = {}
                     single.day = item.day;
-                    if (item.fromTime) {
-                        single.fromTime = {};
-                        single.fromTime.hour = parseInt(item.fromTime[0])
-                        single.fromTime.minute = parseInt(item.fromTime[1])
+                    single.fromTime = item.fromTime;
+                    single.toTime = item.toTime;
+                    // if (item.fromTime) {
+                    //     single.fromTime = {};
+                    //     single.fromTime.hour = parseInt(item.fromTime[0])
+                    //     single.fromTime.minute = parseInt(item.fromTime[1])
 
-                        single.toTime = {};
-                        single.toTime.hour = parseInt(item.toTime[0])
-                        single.toTime.minute = parseInt(item.toTime[1])
-                    }
+                    //     single.toTime = {};
+                    //     single.toTime.hour = parseInt(item.toTime[0])
+                    //     single.toTime.minute = parseInt(item.toTime[1])
+                    // }
                     context.commit('SET_TIME', single);
 
                 })
