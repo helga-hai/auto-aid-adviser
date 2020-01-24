@@ -107,6 +107,7 @@ export const create = {
             formData.append('json', new Blob([str], {
                 type: "application/json"
             }));
+            console.log('str' + str)
             var businessHeader = authHeader()
             businessHeader['Content-Type'] = 'multipart/form-data';
             const config = {
@@ -115,6 +116,12 @@ export const create = {
                 headers: businessHeader,
                 data: formData
             }
+            console.log('config' + config)
+            console.log('config.data', config.data)
+            console.dir(config.data)
+            console.dir(formData)
+            console.log(config)
+            console.dir(config)
             let { data } = await axios(config);
             context.commit('SET_MULTIPART_BUSINESS', data);
         }

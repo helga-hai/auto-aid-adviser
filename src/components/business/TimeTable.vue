@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <form enctype="multipart/form-data" @submit.prevent="send"><!--@submit.prevent="upload"-->
     <div class="registrStep3">
       <h1>Реєстрація об’єкту</h1>
       <div class="registrStep3__workingWrapp">
@@ -66,7 +66,7 @@
         <p class = "registrStep3__ft">Фото об’єкта</p>
         <div>
           <label class= "registrStep3__addFile">
-            <input type="file" accept="image/*" @change="uploadPhoto">
+            <input type="file" id="upload" accept="image/*" @change="uploadPhoto">
             <span>+ Фото</span>
           </label>
           <label class= "registrStep3__addFile">
@@ -82,10 +82,10 @@
       </div>
       <div class="registrStep3__buttons">
           <input type="reset" value="Отмена" class="registrStep3__secondaryButton">
-          <input type="submit" value="Продолжить 3/3" @click="send" class="registrStep3__primaryButton">    
+          <input type="submit" value="Продолжить 3/3"  class="registrStep3__primaryButton">    
       </div>
     </div> 
-  </div>
+  </form>
 </template>
 
 <script>
@@ -125,7 +125,8 @@ export default {
       }
     },
     methods: {
-      send() {
+      send(e) {
+        console.dir(e)
         let arr = this.week;
         let sheduleWeek = []; 
         for(let i=0; i<arr.length; i++) {
