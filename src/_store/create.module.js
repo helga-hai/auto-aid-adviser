@@ -109,8 +109,6 @@ export const create = {
             }));
             console.log('str' + str)
             var businessHeader = authHeader()
-            console.log('businessHeader' + businessHeader)
-            console.log('authHeader() ' + authHeader())
             businessHeader['Content-Type'] = 'multipart/form-data';
             businessHeader['Authorization'] = `Bearer ${localStorage.getItem('token').split('"').join('')}`;
             console.log('businessHeader' + businessHeader)
@@ -118,13 +116,11 @@ export const create = {
                 method: 'POST',
                 url: userService.config.apiUrl + '/api/businesses',
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'undefined',
                     'Authorization': `Bearer ${localStorage.getItem('token').split('"').join('')}`
                 },
                 data: formData
             }
-            console.log('config' + config)
-            console.log('config.data', config.data)
             console.dir(config)
             let { data } = await axios(config);
             context.commit('SET_MULTIPART_BUSINESS', data);
