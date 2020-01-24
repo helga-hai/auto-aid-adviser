@@ -47,11 +47,11 @@ export default {
     },
     data(){
         return {
-            role: this.$store.state.authentication.role,
+            role: this.$store.state.authentication.role||localStorage.getItem('role'),
             email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
             info: function(){
                 
-                let role = this.$store.state.authentication.role;
+                let role = this.$store.state.authentication.role||localStorage.getItem('role');
                 let email = this.$store.state.authentication.email||localStorage.getItem('email');
                 return {role, email};
 
