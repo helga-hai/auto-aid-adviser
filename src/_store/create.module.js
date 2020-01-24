@@ -116,7 +116,7 @@ export const create = {
                 method: 'POST',
                 url: userService.config.apiUrl + '/api/businesses',
                 headers: {
-                    'Content-Type': 'undefined',
+                    'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${localStorage.getItem('token').split('"').join('')}`
                 },
                 data: formData
