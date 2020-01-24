@@ -21,7 +21,7 @@
 
             </div>
                 <span>Выбрано: {{ selectedType }} {{selectedTypeId}}</span>
-            <form>
+            <form @submit.prevent='saveAuto'>
 
 
                 <!-- <div class="registerAuto__car">
@@ -115,7 +115,7 @@
                     </option>
                 </select>
                 <!-- <p>{{currentIndex}}</p> -->
-                <p>{{selectedModelId()||selectedModelIdVal}}</p>
+                <p>{{selectedModelIdVal||selectedModelId()}}</p>
 
 
 
@@ -124,10 +124,12 @@
 
                 <input type="text" name="individualCarNaming" id="individualCarNaming" placeholder="індивідуальна назва авто" v-model="individualCarNaming">
                 <input type="textarea" name="description" id="description" placeholder="Пару слів про авто..." v-model="description">
-                <select @click='releaseYear' type="text" name="releaseYear" id="releaseYear" placeholder="Рік випуску" v-model="year" required>
+
+
+                <select type="text" name="releaseYear" id="releaseYear" placeholder="Рік випуску" v-model="year" required>
                     <option disabled value="" >Рік випуску</option>
                     <option 
-                    v-for="y in releaseYear()"
+                    v-for="y in releaseYear"
                     :key="y.index"
 
                     >
@@ -138,7 +140,10 @@
                         <p class = "registrStep3__ft">Додайте фотографії автомобілю</p>
                         <div>
                         <label class= "registrStep3__addFile">
-                            <input type="file" accept="image/*">
+                            <input id="carphoto"
+                             @change='uploadPhoto' 
+                             type="file"
+                             accept="image/*">
                             <span>+ Фото</span>
                         </label>
                         </div>
@@ -147,11 +152,11 @@
                 <p><span>*максимум п`яти фото, до 500Кб кожна </span></p>
 
                 <!-- <ul v-for="t in test"><li>{{t.name}}</li></ul> -->
-                <p>{{releaseYear()}}</p>
+                
 
                 <div class="registerAuto__buttons">
                     <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
-                    <input type="submit" value="Зберегти" class="registerAuto__primaryButton">    
+                    <input type="submit" value="Зберегти" class="registerAuto__primaryButton" > 
                 </div>
             </form>
         </div>
@@ -169,10 +174,10 @@ import { userService } from '../_services';
 export default {
     name: 'UserAutoCreatePage2',
 
-    // components: {
+    components: {
 
-    //     userService,
-    // },
+        userService,
+    },
     data() {
         return {
             // types:{
@@ -218,20 +223,8 @@ export default {
             },
             individualCarNaming:'',
             description:'',
-            releaseYear: function(){ 
-                let yearArr = [];
-                let yearStart = 1900;
-                let yearCurrent = 2020;
-                let keyCounter = 0;
-                for(let i = yearStart;i<=yearCurrent;i++){
-                    let year = {};
-                    year.index = keyCounter++;
-                    year.year = i;
-                    yearArr.push(year);
-                    console.log(year)
-                }
-                return yearArr;
-            },
+            images:[],
+
         }
     },
     watch: {
@@ -245,6 +238,20 @@ export default {
         //     }else{
         //     return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
         // },
+        releaseYear: function(){ 
+                let yearArr = [];
+                let yearStart = 1900;
+                let yearCurrent = 2020;
+                let keyCounter = 0;
+                for(let i = yearStart;i<=yearCurrent;i++){
+                    let year = {};
+                    year.index = keyCounter++;
+                    year.year = i;
+                    yearArr.push(year);
+                    console.log(year)
+                }
+                return yearArr;
+            },
         models: function(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
         
     },
@@ -292,7 +299,7 @@ export default {
 
         },
         getModel(e){
-            setTimeout(() => {
+            
             let select = document.querySelector("select#model")
             let mySetAttr = select.setAttribute
             if(!this.selectedTypeId||!this.selectedBrandId){
@@ -373,8 +380,42 @@ export default {
             // .then(function(result){return result})
             // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']))
             }
-            }, 1000);
-            clearTimeout();
+
+        },
+        uploadPhoto(e){
+            
+            console.dir(e.srcElement.files[0])
+            let photo = e.srcElement.files[0]
+            this.images[0] = photo;
+            console.log("consoleLOG"+this.images[0],e.srcElement.files[0]);
+
+        },
+        saveAuto() {
+            
+            let auto = {
+                releaseYear: parseInt(this.year) || 1910, /* 1900 Не работает, доступные данные лучше чтоб приходили с сервера */
+                individualCarNaming: this.individualCarNaming || 'мойа ластіука', 
+                description: this.description || 'спиздив у діда',
+                // carModel:
+                // this.selectedModelIdVal||this.selectedModelId,
+                carModel:
+                {
+                    id: parseInt( this.selectedModelIdVal || this.selectedModelId() ) || 1  /* null || 0  то сервер выпадает в 500 */
+                }
+                // images: this.images
+            };
+            
+
+            
+            // let autoInfo = JSON.stringify(auto);
+            this.$store.dispatch('userdataservice/GET_MULTIPART', auto)
+
+
+            // console.log(auto)
+            // userService.postAllUserData(`api/user/profile/car`,auto)
+            // .then(function(result){return result})
+            // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'car']))
+            // console.log(this.$store.state.userdataservice.car)
         },
 
         clearField(dataField, stateField, index){
