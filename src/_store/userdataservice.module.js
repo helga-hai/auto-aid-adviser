@@ -42,14 +42,16 @@ export const userdataservice = {
             context.commit('SET_TYPES', data);
         },
 
-        GET_MULTIPART: async(context, carInfo) => {
-            let customHeader = authHeader();
-            console.log(customHeader);
-            customHeader['Content-Type'] = undefined;
-            console.log("THIS " + customHeader['Content-Type']);
-            console.log("THIS " + customHeader['Authorization']);
-            console.log(customHeader);
-            let formData = new FormData();
+        GET_MULTIPART: async(context, carInfo ) => {
+            // let customHeader = authHeader();
+            // console.log(customHeader);
+            // //customHeader['Content-Type'] = undefined;
+            // console.log("THIS " + customHeader['Content-Type']);
+            // console.log("THIS " + customHeader['Authorization']);
+            // console.log(customHeader);
+            // let formData = new FormData();
+            // formData.append("test", '1');
+
             // formData.append("file", carPhoto);
             // formData.append("json", JSON.stringify(carInfo));
             // formData.append('properties', new Blob(JSON.stringify({
@@ -59,17 +61,128 @@ export const userdataservice = {
             //     type: "application/json"
             // }));
 
-
+/*
             const config = {
                 method: 'POST',
                 url: userService.config.apiUrl + '/api/user/profile/car',
                 headers: customHeader,
-                data: formData,
+                data: 'a'//formData,
             };
 
 
             let { data } = await axios(config);
             context.commit('SET_MULTIPART', data);
+
+*/
+
+
+/* NEVER DO LIKE THIS
+window.myfunction = function() {
+
+
+    var
+    bm = customHeader['Authorization'].split('"')[ 1 ];
+
+    console.log('test');
+    alert( bm );
+    
+    var
+    file = document.getElementById('myfile');
+
+    console.log( file )
+
+
+    var
+    fd = new FormData();
+    fd.append('json', file.files[0], file.value );
+
+    console.log( file.value )
+
+    var
+    xhr = new XMLHttpRequest();
+
+    xhr.open('POST', userService.config.apiUrl + '/api/user/profile/car', 1 );
+
+//    xhr.setRequestHeader('Content-Type', 'undefined' );
+    xhr.setRequestHeader('Authorization', ['Bearer', bm ].join(' ') );
+
+    xhr.send( fd );
+
+    xhr.onerror = function ( e ) {
+
+        console.error( xhr.statusText );
+    };
+
+
+    return false;
+}
+*/
+
+
+
+
+console.log( JSON.stringify({ carInfo }) );
+
+            var
+            myAuth = (function() {
+
+                var
+                t = localStorage.getItem('token');
+
+                return ( t ) ? ('Bearer ' + t.split('"').join(' ') ) : '';
+            })();
+
+/*
+            var
+            carInfo = {
+
+                "releaseYear": 2008,
+                "individualCarNaming": "ljhvljhvlkhgvkl",
+                "description": ".kjb.jn .j ,bj ",
+                "carModel": {
+                    "id": 2
+                }
+
+            };
+*/
+
+
+
+
+
+
+            var
+            fd = new FormData();
+
+            fd.append('json', new Blob( [ JSON.stringify(  carInfo  ) ], { type : 'application/json' } ) );
+/*
+
+
+var
+photo = document.getElementById('carphoto')
+
+if ( photo.files[ 0 ] ) {
+
+            fd.append('files', photo.files[ 0 ], photo.value  );
+}
+*/
+
+            var
+            xhr = new XMLHttpRequest();
+
+            xhr.open('POST', userService.config.apiUrl + '/api/user/profile/car', 1 );
+
+            xhr.setRequestHeader('Authorization', myAuth );
+
+            xhr.send( fd );
+
+            xhr.onerror = function ( e ) {
+
+                console.error( xhr.statusText );
+            };
+
+
+            return false;
 
         },
         // getData(path) {

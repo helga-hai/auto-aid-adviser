@@ -124,6 +124,8 @@
 
                 <input type="text" name="individualCarNaming" id="individualCarNaming" placeholder="індивідуальна назва авто" v-model="individualCarNaming">
                 <input type="textarea" name="description" id="description" placeholder="Пару слів про авто..." v-model="description">
+
+
                 <select type="text" name="releaseYear" id="releaseYear" placeholder="Рік випуску" v-model="year" required>
                     <option disabled value="" >Рік випуску</option>
                     <option 
@@ -138,7 +140,7 @@
                         <p class = "registrStep3__ft">Додайте фотографії автомобілю</p>
                         <div>
                         <label class= "registrStep3__addFile">
-                            <input
+                            <input id="carphoto"
                              @change='uploadPhoto' 
                              type="file"
                              accept="image/*">
@@ -154,7 +156,7 @@
 
                 <div class="registerAuto__buttons">
                     <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
-                    <input type="submit" value="Зберегти" class="registerAuto__primaryButton"  @click="saveAuto">    
+                    <input type="submit" value="Зберегти" class="registerAuto__primaryButton" > 
                 </div>
             </form>
         </div>
@@ -385,23 +387,25 @@ export default {
             console.dir(e.srcElement.files[0])
             let photo = e.srcElement.files[0]
             this.images[0] = photo;
-            console.log("consoleLOG"+this.images[0]);
+            console.log("consoleLOG"+this.images[0],e.srcElement.files[0]);
 
         },
-        saveAuto(){
+        saveAuto() {
             
             let auto = {
-                releaseYear: parseInt(this.year),
-                individualCarNaming: this.individualCarNaming,
-                description: this.description,
+                releaseYear: parseInt(this.year) || 1910, /* 1900 Не работает, доступные данные лучше чтоб приходили с сервера */
+                individualCarNaming: this.individualCarNaming || 'мойа ластіука', 
+                description: this.description || 'спиздив у діда',
                 // carModel:
                 // this.selectedModelIdVal||this.selectedModelId,
                 carModel:
                 {
-                    id: this.selectedModelIdVal||this.selectedModelId
-                },
+                    id: parseInt( this.selectedModelIdVal || this.selectedModelId() ) || 1  /* null || 0  то сервер выпадает в 500 */
+                }
                 // images: this.images
-            }
+            };
+            
+
             
             // let autoInfo = JSON.stringify(auto);
             this.$store.dispatch('userdataservice/GET_MULTIPART', auto)
