@@ -104,7 +104,7 @@ export const create = {
             console.log('SEND_MULTIPART_BUSINESS', payload)
                 // const str = JSON.stringify(context.state.sendObject)
             var formData = new FormData();
-            formData.append("file", payload);
+            formData.append("files", payload);
             // formData.append('json', new Blob([JSON.stringify(context.state.sendObject)], {
             //     type: "application/json"
             // }));

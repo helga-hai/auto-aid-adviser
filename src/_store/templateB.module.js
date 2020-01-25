@@ -34,7 +34,6 @@ export const templateB = {
             state.commit('fillallBusinesServises', payload);
         },
         GET_CATTEGORY_LIST: async(context, payload) => {
-            console.log('GET_CATTEGORY_LIST', userService.config.apiUrl + '/api/catalog/business/type/17/service/types')
             const config = {
                 method: 'get',
                 url: userService.config.apiUrl + '/api/catalog/business/type/17/service/types',
