@@ -1,7 +1,14 @@
 <template>
   <!--<form enctype="multipart/form-data" @submit.prevent="send">-->
-  <div>
-    <div class="registrStep3">
+  <div :class="{'spinner-wrap':waitResponse}">
+    <div v-if="waitResponse" >
+
+      <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+      </svg>
+
+    </div>
+    <div v-else class="registrStep3">
       <h1>Реєстрація об’єкту</h1>
       <div class="registrStep3__workingWrapp">
         <div  class="registrStep3__name">
@@ -63,7 +70,7 @@
         </div>
       </div>
       <hr>
-      <form  method="post" enctype="multipart/form-data" @submit.prevent="send">
+      <!-- <form  method="post" enctype="multipart/form-data" @submit.prevent="send"> -->
         <div class="registrStep3__Foto">
           <p class = "registrStep3__ft">Фото об’єкта</p>
           <div>
@@ -84,9 +91,9 @@
         </div>
         <div class="registrStep3__buttons">
             <input type="reset" value="Отмена" class="registrStep3__secondaryButton"/>
-            <button type="submit" value="Продолжить 3/3"  class="registrStep3__primaryButton"> Продолжить 3/3</button>  
+            <button type="submit" v-on:click="send()" value="Продолжить 3/3"  class="registrStep3__primaryButton" > Продолжить 3/3</button>  
         </div>
-      </form>
+      <!-- </form> -->
     </div> 
   </div>
 </template>
@@ -110,8 +117,14 @@ export default {
               { id: 6, name: 'Субота', from: null, to: null, selected: false },
               { id: 7, name: 'Неділя', from: null, to: null, selected: false }
             ],
-            images:[]
+            images:[],
+            waitResponse: false,
         }
+    },
+    computed: {
+      prepend () {
+        return this.$store.state.create.businessPrepend
+      }
     },
     watch: {
       picked(newVal, oldVal){
@@ -125,10 +138,18 @@ export default {
         } else {
             this.$refs.sheduleBlock.style.pointerEvents = "auto"
         }
+      },
+      prepend(newVal, oldVal) {
+          if(newVal) {
+            this.waitResponse = true
+            setTimeout(()=>{
+              this.$emit('switchView', 'preview-page');
+            },2000)
+          }
       }
     },
     methods: {
-      send(e) {
+      async send(e) {
         console.dir(e)
         let arr = this.week;
         let sheduleWeek = []; 
@@ -140,21 +161,28 @@ export default {
           if(arr[i].selected) { sheduleWeek.push(shaduleDay) }
         }
         console.log(sheduleWeek);
-        this.$store.dispatch('create/GET_TIME', sheduleWeek)
-        this.$store.dispatch('create/SEND_MULTIPART_BUSINESS', this.images)
+        await this.$store.dispatch('create/GET_TIME', sheduleWeek)
+        await this.$store.dispatch('create/SEND_MULTIPART_BUSINESS', this.images)
+        
       },
       uploadPhoto(e) {
         this.images.push(e.target.files[0])
         console.log(typeof e.target.files[0])
         console.log(this.images)
         console.dir(this.images)
-        
-      }
+      },
+      waitFunc() {
+        this.waitResponse = true
+        // setTimeout(()=>{
+        //   this.$emit('switchView', 'PreviewPage');
+        // },2000)
+        // this.$store.dispatch('create/GET_BUSINESS_DATA')
+      },
     }
 }
 </script>
 
-<style>
+<style lang="scss">
 .registrStep3 {
   width: 100%;
   padding: 64px 48px 64px 48px;
@@ -206,6 +234,7 @@ export default {
   color: #000000;
   border: none;
   border-radius: 4px;
+  height:57px;
 }
 
 .registrStep3__services {
@@ -444,5 +473,63 @@ input[type="checkbox"]:checked ~ p:after{
   border: 1px solid #6F7E95;
   border-radius: 4px;
   padding: 18px 33px;
+}
+// html, body { height: 100%; }
+
+// body {
+//    display: flex;
+//    align-items: center;
+//    justify-content: center;
+// }
+
+// Here is where the magic happens
+
+$offset: 187;
+$duration: 1.2s;
+
+.spinner {
+  animation: rotator $duration linear infinite;
+}
+
+@keyframes rotator {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+
+.path {
+  stroke-dasharray: $offset;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation:
+    dash $duration ease-in-out infinite, 
+    colors ($duration*4) ease-in-out infinite;
+}
+
+@keyframes colors {
+	0% { stroke: rgb(35, 50, 73); }
+	// 25% { stroke: #DE3E35; }
+	50% { stroke: #F7C223; }
+	// 75% { stroke: #1B9A59; }
+  100% { stroke: rgb(35, 50, 73); }
+}
+
+@keyframes dash {
+ 0% { stroke-dashoffset: $offset; }
+ 50% {
+   stroke-dashoffset: $offset/4;
+   transform:rotate(135deg);
+ }
+ 100% {
+   stroke-dashoffset: $offset;
+   transform:rotate(450deg);
+ }
+}
+.spinner-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: calc(100% - 100px);
+    height: 100%;
 }
 </style>

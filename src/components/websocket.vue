@@ -1,6 +1,6 @@
 <template>
     <div>
-      <input type="text" id="content" class="servise__input" placeholder="ServiseType..." ref="wsRef"
+      <input type="text" id="content" class="servise__input" placeholder="Service..." ref="wsRef"
       @focus="connect" 
       @blur="disconnect"
       @input="fillMessageAndSend1" 
@@ -64,7 +64,7 @@ export default {
       console.dir(this.$refs.wsRef)
       console.dir(e)
       console.log(this.send_message1)
-      this.send_message1.searchType = 'ServiceType';
+      this.send_message1.searchType = 'service';
       this.send_message1.content = e.target.value;
       console.log(this.send_message1)
       console.log('this.stompClient=',this.stompClient)

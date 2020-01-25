@@ -15,7 +15,8 @@ import AddObject from '../components/business/AddObject.vue';
 import RegisterObjet from '../components/business/RegisterObjet.vue';
 import Services from '../components/business/Services.vue';
 import TimeTable from '../components/business/TimeTable.vue';
-console.log(RegisterObjet)
+import PreviewPage from '../components/business/PreviewPage.vue';
+console.log(PreviewPage)
 export default {
     name:'Cabinet',
     components: {
@@ -24,6 +25,7 @@ export default {
       'register-object' :RegisterObjet,
       'services': Services,
       'time-table': TimeTable,
+      'preview-page': PreviewPage,
     },
     data(){
         return {
@@ -39,8 +41,12 @@ export default {
            currentView:'add-object',
         }
     },
+    mounted(){
+        this.$store.dispatch('templateB/GET_DATALIST')
+    },
     methods:{
         switchView(view) {
+            console.log(view)
           this.currentView = view;
         },
     },

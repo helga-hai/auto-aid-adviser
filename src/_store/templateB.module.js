@@ -15,16 +15,16 @@ export const templateB = {
         //     bite: [],
         //     scream: []
         // },
-        // dataList: [],
+        dataList: [],
         categoryList: [],
     },
     getters: {
         // SERVICE: state => {
         //     return state.service; //let name = this.$store.getters.NAME
         // },
-        // DATALIST: state => {
-        //     return state.dataList; //let name = this.$store.getters.NAME
-        // },
+        DATALIST: state => {
+            return state.dataList.content; //let name = this.$store.getters.NAME
+        },
         CATEGORYLIST: state => {
             return state.categoryList; //let name = this.$store.getters.NAME
         },
@@ -36,7 +36,7 @@ export const templateB = {
         GET_CATTEGORY_LIST: async(context, payload) => {
             const config = {
                 method: 'get',
-                url: userService.config.apiUrl + '/api/catalog/business/type/17/service/types',
+                url: userService.config.apiUrl + '/api/catalog/business/type/1/service/types',
                 headers: authHeader()
             }
             let { data } = await axios(config);
@@ -68,16 +68,27 @@ export const templateB = {
             //     console.log(num);
             //   })
         },
-        // GET_DATALIST: async(context, payload) => {
-        //     console.log('GET_DATALIST')
+        GET_DATALIST: async(context, payload) => {
+            console.log('GET_DATALIST')
+            const config = {
+                method: 'get',
+                url: userService.config.apiUrl + '/api/catalog/services',
+                headers: authHeader()
+            }
+            let { data } = await axios(config);
+            context.commit('SET_DATALIST', data);
+        },
+        // GET_SERVICES_BY_ID: async(context, payload) => {
+        //     console.log('GET_SERVICES_BY_ID')
         //     const config = {
         //         method: 'get',
-        //         url: userService.config.apiUrl + '/api/catalog/services',
         //         headers: authHeader()
         //     }
-        //     let { data } = await axios(config);
-        //     context.commit('SET_DATALIST', data);
-        // },
+        //     payload.forEach(item=>{
+        //         let { data } = await axios(userService.config.apiUrl + '/api/catalog/service/type/' + item + '/services', config);
+        //         context.commit('SET_SERVICES_BY_ID', data);
+        //     })
+        // }
 
         // SAVE_DATALIST: async(context, payload) => {
         //     console.log('SAVE_DATALIST')
@@ -99,5 +110,13 @@ export const templateB = {
                 }
             }
         },
+        SET_DATALIST: (state, payload) => {
+            console.log('SET_DATALIST')
+            state.dataList = payload;
+        },
+        // SET_SERVICES_BY_ID: (state, payload) => {
+        //     console.log('SET_SERVICES_BY_ID')
+        //     state.servicesById = payload;
+        // },
     }
 }

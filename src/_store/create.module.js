@@ -38,10 +38,14 @@ export const create = {
                 //     }
                 // }]
         },
+        businessPrepend: null,
     },
     getters: {
         SendObject: state => {
             return state.sendObject
+        },
+        businessPrepend: state => {
+            return state.businessPrepend
         },
 
     },
@@ -102,63 +106,38 @@ export const create = {
         },
         SEND_MULTIPART_BUSINESS: async(context, payload) => {
             console.log('SEND_MULTIPART_BUSINESS', payload)
-                // const str = JSON.stringify(context.state.sendObject)
+            var str = JSON.stringify(context.state.sendObject)
             var formData = new FormData();
             formData.append("files", payload);
-            // formData.append('json', new Blob([JSON.stringify(context.state.sendObject)], {
-            //     type: "application/json"
-            // }));
-            formData.append('json', new Blob([JSON.stringify(context.state.sendObject)], {
+            formData.append('json', new Blob([str], {
                 type: "application/json"
             }));
-            var businessHeader = authHeader()
-            businessHeader['Content-Type'] = undefined; //'multipart/form-data';
-            businessHeader['Authorization'] = `Bearer ${localStorage.getItem('token').split('"').join('')}`;
+            // var businessHeader = authHeader()
+            // businessHeader['Content-Type'] = undefined; //'multipart/form-data';
+            // businessHeader['Authorization'] = `Bearer ${localStorage.getItem('token').split('"').join('')}`;
 
             var config = {
                 method: "POST",
                 url: userService.config.apiUrl + '/api/businesses',
-                headers: businessHeader,
-                // headers: {
-                //     'Content-Type': 'multipart/form-data',
-                //     'Authorization': `Bearer ${localStorage.getItem('token').split('"').join('')}`
-                // },
+                // headers: businessHeader,
+                headers: {
+                    'Accept': 'application/json, */*',
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${localStorage.getItem('token').split('"').join(' ')}`
+                },
                 data: formData
             }
             console.dir(config)
-                // let { data } = await axios(config);
-                // context.commit('SET_MULTIPART_BUSINESS', data);
-            axios.post(userService.config.apiUrl + '/api/businesses',
-                    formData, {
-                        headers: {
-                            'Accept': 'application/json, */*',
-                            'Content-Type': 'multipart/form-data',
-                            'Authorization': `Bearer ${localStorage.getItem('token').split('"').join(' ')}`
-                        }
-                    }
-                ).then(function(e) {
-                    console.log(e)
-                    console.log('SUCCESS!!');
-                })
-                .catch(function(e) {
-                    console.log(e)
-                    console.log({
-                        "Content-Type": undefined,
-                        'Authorization': `Bearer ${localStorage.getItem('token').split('"').join('')}`
-                    })
-                    console.log('FAILURE!!');
-                });
-            //////////////////////////////////////////
-            // var formData = new FormData();
-            // formData.append('json', new Blob([JSON.stringify(context.state.sendObject)], { type: 'application/json' }));
-            // var xhr = new XMLHttpRequest();
-            // console.log(JSON.stringify(context.state.sendObject))
-            // xhr.open('POST', userService.config.apiUrl + '/api/businesses', 1);
-            // xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('token').split('"').join('')}`);
-            // xhr.send(formData);
-            // xhr.onerror = function(e) { console.error(xhr.statusText); };
-            // return false;
-        }
+            let { data } = await axios(config);
+            context.commit('SET_MULTIPART_BUSINESS', data);
+            context.dispatch('GET_BUSINESS_DATA', data.id);
+        },
+        GET_BUSINESS_DATA: async(context, payload) => { // попередній перегляд щойно створеного обєкту
+            const options = authHeader() ? { headers: authHeader() } : {};
+            const uri = userService.config.apiUrl + '/api/businesses/' + payload
+            let { data } = await axios.get(uri, options);
+            context.commit('SET_BUSINESS_DATA_PRPEND', data);
+        },
     },
     mutations: {
         fillBusinesTemplate(state, payload) {
@@ -207,8 +186,14 @@ export const create = {
             state.sendObject.workTimes.push(payload)
         },
         SET_MULTIPART_BUSINESS(state, payload) {
+            console.log('SET_MULTIPART_BUSINESS')
             console.log(payload)
-        }
+        },
+        SET_BUSINESS_DATA_PRPEND: (state, payload) => {
+            console.log('SET_BUSINESS_DATA_PRPEND')
+            state.businessPrepend = payload;
+            console.log(state.business)
+        },
         // getAllRequest(state) {
         //     state.all = { loading: true };
         // },
