@@ -1,5 +1,6 @@
 <template>
-  <form enctype="multipart/form-data" @submit.prevent="send"><!--@submit.prevent="upload"-->
+  <!--<form enctype="multipart/form-data" @submit.prevent="send">-->
+  <div>
     <div class="registrStep3">
       <h1>Реєстрація об’єкту</h1>
       <div class="registrStep3__workingWrapp">
@@ -62,30 +63,32 @@
         </div>
       </div>
       <hr>
-      <div class="registrStep3__Foto">
-        <p class = "registrStep3__ft">Фото об’єкта</p>
-        <div>
-          <label class= "registrStep3__addFile">
-            <input type="file" id="upload" accept="image/*" @change="uploadPhoto">
-            <span>+ Фото</span>
-          </label>
-          <label class= "registrStep3__addFile">
-            <input type="file" accept="image/*">
-            <span>+ Фото</span>
-          </label>
+      <form  method="post" enctype="multipart/form-data" @submit.prevent="send">
+        <div class="registrStep3__Foto">
+          <p class = "registrStep3__ft">Фото об’єкта</p>
+          <div>
+            <label class= "registrStep3__addFile" for="file">
+              <input  type="file" id="file" accept="image/*" @change="uploadPhoto">
+              <span>+ Фото</span>
+            </label>
+            <!-- <label class= "registrStep3__addFile">
+              <input type="file" accept="image/*">
+              <span>+ Фото</span>
+            </label> -->
+          </div>
+          <p class = "registrStep3__fp">* розмір файлу до 500 Кб</p>        
         </div>
-        <p class = "registrStep3__fp">* розмір файлу до 500 Кб</p>        
-      </div>
-      <div class="registrStep3__Info">
-        <p>Інформація о станціі</p>
-        <textarea placeholder ="Опишите ваш бизнес"></textarea>       
-      </div>
-      <div class="registrStep3__buttons">
-          <input type="reset" value="Отмена" class="registrStep3__secondaryButton">
-          <input type="submit" value="Продолжить 3/3"  class="registrStep3__primaryButton">    
-      </div>
+        <div class="registrStep3__Info">
+          <p>Інформація о станціі</p>
+          <textarea placeholder ="Опишите ваш бизнес"></textarea>       
+        </div>
+        <div class="registrStep3__buttons">
+            <input type="reset" value="Отмена" class="registrStep3__secondaryButton"/>
+            <button type="submit" value="Продолжить 3/3"  class="registrStep3__primaryButton"> Продолжить 3/3</button>  
+        </div>
+      </form>
     </div> 
-  </form>
+  </div>
 </template>
 
 <script>

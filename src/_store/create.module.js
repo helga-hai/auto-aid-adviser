@@ -102,30 +102,62 @@ export const create = {
         },
         SEND_MULTIPART_BUSINESS: async(context, payload) => {
             console.log('SEND_MULTIPART_BUSINESS', payload)
-            console.log(JSON.stringify(context.state.sendObject))
-            const str = JSON.stringify(context.state.sendObject)
+                // const str = JSON.stringify(context.state.sendObject)
             var formData = new FormData();
-            formData.append("files", payload);
-            formData.append('json', new Blob([str], {
+            formData.append("file", payload);
+            // formData.append('json', new Blob([JSON.stringify(context.state.sendObject)], {
+            //     type: "application/json"
+            // }));
+            formData.append('json', new Blob([JSON.stringify(context.state.sendObject)], {
                 type: "application/json"
             }));
-            console.log('str' + str)
             var businessHeader = authHeader()
-            businessHeader['Content-Type'] = 'multipart/form-data';
+            businessHeader['Content-Type'] = undefined; //'multipart/form-data';
             businessHeader['Authorization'] = `Bearer ${localStorage.getItem('token').split('"').join('')}`;
-            console.log('businessHeader' + businessHeader)
-            const config = {
-                method: 'POST',
+
+            var config = {
+                method: "POST",
                 url: userService.config.apiUrl + '/api/businesses',
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${localStorage.getItem('token').split('"').join('')}`
-                },
+                headers: businessHeader,
+                // headers: {
+                //     'Content-Type': 'multipart/form-data',
+                //     'Authorization': `Bearer ${localStorage.getItem('token').split('"').join('')}`
+                // },
                 data: formData
             }
             console.dir(config)
-            let { data } = await axios(config);
-            context.commit('SET_MULTIPART_BUSINESS', data);
+                // let { data } = await axios(config);
+                // context.commit('SET_MULTIPART_BUSINESS', data);
+            axios.post(userService.config.apiUrl + '/api/businesses',
+                    formData, {
+                        headers: {
+                            'Accept': 'application/json, */*',
+                            'Content-Type': 'multipart/form-data',
+                            'Authorization': `Bearer ${localStorage.getItem('token').split('"').join(' ')}`
+                        }
+                    }
+                ).then(function(e) {
+                    console.log(e)
+                    console.log('SUCCESS!!');
+                })
+                .catch(function(e) {
+                    console.log(e)
+                    console.log({
+                        "Content-Type": undefined,
+                        'Authorization': `Bearer ${localStorage.getItem('token').split('"').join('')}`
+                    })
+                    console.log('FAILURE!!');
+                });
+            //////////////////////////////////////////
+            // var formData = new FormData();
+            // formData.append('json', new Blob([JSON.stringify(context.state.sendObject)], { type: 'application/json' }));
+            // var xhr = new XMLHttpRequest();
+            // console.log(JSON.stringify(context.state.sendObject))
+            // xhr.open('POST', userService.config.apiUrl + '/api/businesses', 1);
+            // xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('token').split('"').join('')}`);
+            // xhr.send(formData);
+            // xhr.onerror = function(e) { console.error(xhr.statusText); };
+            // return false;
         }
     },
     mutations: {

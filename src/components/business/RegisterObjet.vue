@@ -2,7 +2,7 @@
     <div>
         <div class="registrStep1">
             <h1>Реєстрація об’єкту</h1>
-            <form>
+            <div>
                 <div class="registrStep1__address">
                     <label for="name">Вкажіть місцезнаходження об’єкту на карті або введіть адресу</label>
                     
@@ -24,9 +24,9 @@
                 <input type="text" name="site" id="site" placeholder="Сайт (опционально)" @change="setSite">
                 <div class="registrStep1__buttons">
                     <input type="reset" value="Відмінити" class="registrStep1__secondaryButton">
-                    <input type="submit" value="Продовжити 1/3" class="registrStep1__primaryButton" @click="switchView('services')">    
-                </div>
-            </form>
+                    <input  value="Продовжити 1/3" class="registrStep1__primaryButton" @click="switchView('services')">    
+                </div><!--type="submit"-->
+            </div>
         </div>
         <h1>{{ele}}</h1>
         <div class="Step1Image">your here: {{location.position}}
