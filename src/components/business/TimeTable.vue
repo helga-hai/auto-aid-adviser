@@ -169,7 +169,7 @@ export default {
       },
       uploadPhoto(e) {
         this.images.push(e.target.files[0])
-        console.log(typeof e.target.files[0])
+        console.log(e.target.files)
         console.log(this.images)
         console.dir(this.images)
       },

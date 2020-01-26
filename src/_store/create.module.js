@@ -109,7 +109,7 @@ export const create = {
                 // context.commit('SEND_BUSINESS', data);
         },
         SEND_MULTIPART_BUSINESS: async(context, payload) => {
-            console.log('SEND_MULTIPART_BUSINESS', payload)
+            console.log('SEND_MULTIPART_BUSINESS', payload[0])
             var str = JSON.stringify(context.state.sendObject)
             var formData = new FormData();
             formData.append("files", payload);

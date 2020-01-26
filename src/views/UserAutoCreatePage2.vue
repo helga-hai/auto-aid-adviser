@@ -159,6 +159,8 @@
                     <input type="submit" value="Зберегти" class="registerAuto__primaryButton" > 
                 </div>
             </form>
+            <p>{{car}}</p>
+
         </div>
 
     <!-- </user-layout> -->
@@ -223,6 +225,7 @@ export default {
             },
             individualCarNaming:'',
             description:'',
+            car: '',
             images:[],
 
         }
@@ -409,6 +412,7 @@ export default {
             
             // let autoInfo = JSON.stringify(auto);
             this.$store.dispatch('userdataservice/GET_MULTIPART', auto)
+            
 
 
             // console.log(auto)

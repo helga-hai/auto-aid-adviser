@@ -93,7 +93,7 @@ export default {
     },
     watch:{
         isLocationDone() {
-            console.log('isLocationDone',isLocationDone)
+            // console.log('isLocationDone',isLocationDone)
             this.isLocationDone=true
         },
         curMarker(newVal,oldVal){

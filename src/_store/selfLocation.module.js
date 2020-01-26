@@ -33,7 +33,7 @@ export const selfLocation = {
         }
     },
     mutations: {
-        getAddressMarker(state, { addressData, placeResultData, id }) {
+        getAddressMarker(state, { addressData, placeResultData, id }) { 
             console.log('STORE getAddressMarker', { addressData, placeResultData, id })
             state.location.position = {};
             state.location.position.lat = placeResultData.geometry.location.lat();

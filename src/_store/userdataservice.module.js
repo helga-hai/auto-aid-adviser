@@ -170,18 +170,44 @@ if ( photo.files[ 0 ] ) {
             var
             xhr = new XMLHttpRequest();
 
-            xhr.open('POST', userService.config.apiUrl + '/api/user/profile/car', 1 );
+            xhr.open('POST', userService.config.apiUrl + '/api/user/profile/car', true );
 
             xhr.setRequestHeader('Authorization', myAuth );
 
             xhr.send( fd );
 
-            xhr.onerror = function ( e ) {
+            // xhr.onerror = function ( e ) {
 
-                console.error( xhr.statusText );
-            };
+            //     console.error( this.statusText );
+            // };
+
+            xhr.onreadystatechange = function(){
+
+                if( xhr.readyState != 4 ) { return }
+
+                if(xhr.status>301){                    
+
+                    console.error( xhr.status + ': ' + this.responseText );
+
+                }
+
+                else{
 
 
+            var resp = xhr.responseText;
+
+            console.log( this.statusText );
+
+            console.log( resp );
+
+            console.log( this.statusText );
+
+            context.commit( 'setData' , [ 'car' , this.responseText ] );
+
+            console.log( "RESP " + resp );
+
+                }
+            }
             return false;
 
         },
@@ -227,9 +253,9 @@ if ( photo.files[ 0 ] ) {
             console.log(payload)
 
         },
-        setData(state, data) {
-            console.log(data[1]);
-            console.log(data);
+        setData( state, data ) {
+            console.log( "DATA " + data[1] );
+            console.log( data );
             let toState = data[1];
             state[toState] = data[0];
             console.log(state[toState]);
