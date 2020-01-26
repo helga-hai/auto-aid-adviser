@@ -39,6 +39,7 @@ export const create = {
                 // }]
         },
         businessPrepend: null,
+        myObjects: null
     },
     getters: {
         SendObject: state => {
@@ -46,6 +47,9 @@ export const create = {
         },
         businessPrepend: state => {
             return state.businessPrepend
+        },
+        MY_OBJECTS: state => {
+            return state.myObjects; //let name = this.$store.getters.NAME
         },
 
     },
@@ -138,6 +142,12 @@ export const create = {
             let { data } = await axios.get(uri, options);
             context.commit('SET_BUSINESS_DATA_PRPEND', data);
         },
+        GET_MY_BUSINESS_DATA: async(context, payload) => { // попередній перегляд щойно створеного обєкту
+            const options = authHeader() ? { headers: authHeader() } : {};
+            const uri = userService.config.apiUrl + '/api/businesses/'
+            let { data } = await axios.get(uri, options);
+            context.commit('SET_MY_BUSINESS_DATA', data);
+        },
     },
     mutations: {
         fillBusinesTemplate(state, payload) {
@@ -192,7 +202,12 @@ export const create = {
         SET_BUSINESS_DATA_PRPEND: (state, payload) => {
             console.log('SET_BUSINESS_DATA_PRPEND')
             state.businessPrepend = payload;
-            console.log(state.business)
+            console.dir(state.business)
+        },
+        SET_MY_BUSINESS_DATA: (state, payload) => {
+            console.log('SET_MY_BUSINESS_DATA')
+            console.dir(payload)
+            state.myObjects = payload;
         },
         // getAllRequest(state) {
         //     state.all = { loading: true };

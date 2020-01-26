@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import BusinessLayout from "@/layouts/BusinessLayout";
 import AddObject from '../components/business/AddObject.vue';
 import RegisterObjet from '../components/business/RegisterObjet.vue';
@@ -39,10 +40,17 @@ export default {
                 // return this.$store.state.authentication.role, this.$store.state.authentication.email;
             },
            currentView:'add-object',
+           
         }
+    },
+    computed: {
+        ...mapGetters({
+            myObjects: 'create/MY_OBJECTS',
+         }),
     },
     mounted(){
         this.$store.dispatch('templateB/GET_DATALIST')
+        this.$store.dispatch('create/GET_MY_BUSINESS_DATA')
     },
     methods:{
         switchView(view) {

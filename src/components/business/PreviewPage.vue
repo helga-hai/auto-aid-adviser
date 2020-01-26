@@ -47,6 +47,10 @@
                     </div> -->
                 </details>
             </div>
+            <div class="registrStep3__buttons">
+                <button type="reset" value="Назад" @click="switchView('time-table')" class="registrStep3__secondaryButton">Удалить</button>  
+                <button type="submit" @click="switchView('add-object')" class="registrStep3__primaryButton" > Опубликовать </button>  
+            </div>
         </div>
     </div>
 </template>
@@ -109,6 +113,9 @@ export default {
                 }
             })
 
+        },
+        switchView(val){
+            this.$emit('switchView', val);
         }
     }
 }

@@ -1,16 +1,39 @@
 <template>
+<div>
     <div class="flex">
         <div class="objects">
             <h1>Мої об’єкти</h1>
             <p>Наразі у вас немає об’єктів.</p>
             <p>Якщо бажаєте, то можемо створити новий об’єкт саме зараз.</p>         
             <span><a href="#" class="objects__button" @click="switchView('register-object')" >Додати об'єкт</a></span>
-            <card-min/>
+            <!-- <card-min/> -->
         </div>
         <div class="Image">
             <div class="Image__labe" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}"></div>
         </div>
     </div>
+        <div v-if="myObjects">
+            <!-- <div class="my-objects" v-for="obj in myObjects" :key="obj.id">
+            </div> -->
+            <div class="services-prev detail" v-for="cur in myObjects" :key="cur.id">
+                <div class="services-prev-img small" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}">
+                </div>
+                <div class="services-prev-info">
+                    <div class='name-prev'>{{cur.name}}</div>
+                    <p class="loc" v-if="cur.location.address">{{cur.location.address}}</p>
+                    <p class="time" v-if="cur.workTimes.length">
+                        <span v-for="d in cur.workTimes" :key="d.id">
+                            {{dayList[d.day - 1]}} <br> 
+                            {{d.fromTime.slice(0,-3)}} <br>
+                            {{d.toTime.slice(0,-3)}} <br>
+                        </span>
+                    </p>
+                    <p class="phone" v-if="cur.contact.phone">{{cur.contact.phone}}</p>
+                    <p class="internet" v-if="cur.contact.url">{{cur.contact.url}}</p>
+                </div>
+            </div>
+        </div>
+</div>
 </template>
 
 <script>
@@ -24,6 +47,7 @@ export default {
     },
     data() {
         return {
+           dayList: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'] ,
         } 
     },
     async created () {
@@ -37,6 +61,7 @@ export default {
     computed: {
         ...mapGetters({
             category: 'templateB/CATEGORYLIST',
+            myObjects: 'create/MY_OBJECTS',
          }),
     },
     methods: {
@@ -64,7 +89,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .flex {
     display: flex;
 }
@@ -108,5 +133,17 @@ export default {
     height: 250px;
     background-repeat: no-repeat;
   
+}
+.services-prev-img.small {
+    width:200px;
+    background-size: cover;
+}
+.services-prev.detail {
+    .name-prev {
+        padding-left:0px
+    }
+    .services-prev-info {
+        padding-left:30px;
+    }
 }
 </style>
