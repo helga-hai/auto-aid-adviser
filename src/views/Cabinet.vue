@@ -43,6 +43,11 @@ export default {
            
         }
     },
+    watch: {
+        currentView(newVal, oldVal) {
+            this.$store.dispatch('create/GET_MY_BUSINESS_DATA')
+        }
+    },
     computed: {
         ...mapGetters({
             myObjects: 'create/MY_OBJECTS',

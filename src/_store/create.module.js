@@ -148,6 +148,12 @@ export const create = {
             let { data } = await axios.get(uri, options);
             context.commit('SET_MY_BUSINESS_DATA', data);
         },
+        DELETE_BUSINESS: async(context, payload) => { // попередній перегляд щойно створеного обєкту
+            const options = authHeader() ? { headers: authHeader() } : {};
+            const uri = userService.config.apiUrl + '/api/businesses/' + payload
+            let { data } = await axios.delete(uri, options);
+            // context.commit('', data);
+        },
     },
     mutations: {
         fillBusinesTemplate(state, payload) {

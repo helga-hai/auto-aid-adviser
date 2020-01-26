@@ -150,15 +150,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// button, input {
-//   padding: 5px 20px;
-//   background: #cccccc;
-//   margin: 3px 5px;
-// }
-// input {
-//   background:#fff;
-//   border: 1px solid #666;
-// }
 .servise {
   &__input {
     border: 1px solid #000;
@@ -171,14 +162,14 @@ export default {
     border-color: rgba(10, 5, 23, 0.6);
   }
   &__autocomplete {
-    //margin: 0 5px 3px;
+    max-height: 37vh;
+    overflow-y: scroll;
     width: calc(100% - 6px);
     margin: 0 3px;
     text-align: left;
     position: absolute;
     background: white;
     box-shadow: 1px 1px 3px #ccc;
-    // __langposition: relative;
     &_item {
       padding: 6px 17px;
       width: 100%;

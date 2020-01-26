@@ -48,7 +48,7 @@
                 </details>
             </div>
             <div class="registrStep3__buttons">
-                <button type="reset" value="Назад" @click="switchView('time-table')" class="registrStep3__secondaryButton">Удалить</button>  
+                <button type="reset" value="Назад" @click="deleteFunc(cur.id)" class="registrStep3__secondaryButton">Удалить</button>  
                 <button type="submit" @click="switchView('add-object')" class="registrStep3__primaryButton" > Опубликовать </button>  
             </div>
         </div>
@@ -116,6 +116,10 @@ export default {
         },
         switchView(val){
             this.$emit('switchView', val);
+        },
+        deleteFunc(val){
+            this.$store.dispatch('create/DELETE_BUSINESS',val);
+            this.switchView('add-object')
         }
     }
 }
@@ -123,6 +127,11 @@ export default {
 
 <style lang="scss">
 .services-prev {
+    cursor:pointer;
+    margin-bottom:16px;
+    &:hover {
+        box-shadow: 0 0 11px rgba(33,33,33,.2);
+    }
     min-width: 590px;
     display: flex;
     align-items: center;
@@ -141,6 +150,9 @@ export default {
         text-align: left;
         padding: 0px 0 5px 30px;
         font-weight: 400;
+        span {
+            font-size: 15px;
+        }
         &.time {
             background: url('../../assets/time-icon.svg') no-repeat;
             display: flex;
@@ -166,16 +178,12 @@ export default {
     background-image: '../../assets/wrench.svg'
 }
 .name-prev {
-font-weight: 500;
-font-size: 32px;
-line-height: 34px;
-padding-left: 50px;
-padding-bottom: 20px;
-/* identical to box height, or 106% */
-
-
-/* Black */
-
-color: #0E1E2E;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 34px;
+    padding-left: 50px;
+    padding-bottom: 20px;
+    color: #0E1E2E;
+    text-align:left;
 }
 </style>
