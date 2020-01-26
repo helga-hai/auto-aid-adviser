@@ -27,7 +27,7 @@ export default {
         //     icon: POINT_MARKER_ICON_CONFIG
         // })
         const { Marker } = this.google.maps;
-
+        console.log('marker ')
         new Marker({
             position: this.marker.position,
             marker: this.marker,

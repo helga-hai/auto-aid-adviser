@@ -12,6 +12,7 @@ export const selfLocation = {
     getters: {
         doneLocation: state => {
             return state.location
+
         }
     },
     actions: {

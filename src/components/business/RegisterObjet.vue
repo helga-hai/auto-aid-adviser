@@ -15,6 +15,7 @@
                             placeholder="Адреса"
                             :enableGeolocation="enableGeolocation"
                             v-on:placechanged="getAddressData"
+                            @change="setMarker"
                         ></vue-google-autocomplete>
                     </div>
                 </div>
@@ -90,7 +91,7 @@ export default {
             groups: ['СТО','Шиномонтаж','Мойка'],
             curMarker: {
                 id: "a",
-                position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }
+                position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }{ lat: 50.510854099999996, lng: 30.491225300000004 }
                 content:'You are here'
             },
             address: '',//store
@@ -156,18 +157,23 @@ export default {
         // },
         // curMarker(){
         //     this.curMarker = this.$store.getters['selfLocation/doneLocation'].position
-        //     console.log("dawdawd"+val)
+        //     console.log("dawdawd")
         // }
     },
     mounted() {
-        this.$store.subscribe((mutation, state) =>{
-       
-        if(mutation.type == "selfLocation/getAddressMarker"){
-             console.log(mutation)
-             this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position;
-             console.log(this.curMarker.position)
-        }
-        })
+        // this.$store.dispatch('selfLocation/changeLocation');
+        // this.$store.subscribe((mutation, state) =>{     
+        // if(mutation.type == "selfLocation/getAddressMarker"){
+        //      console.log(mutation)
+        //      this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position;
+        //      console.log(this.curMarker.position)
+        // }
+        // })
+    },
+    beforeUpdate() {
+        this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position
+        console.dir(this.curMarker)
+       console.dir(this.location) 
     },
     computed: {
         errorStr() {
@@ -214,11 +220,21 @@ export default {
     created() {
         //do we support geolocation
         // this.$store.dispatch('selfLocation/changeLocation');
+        // this.$store.dispatch('selfLocation/getLocation');
     },
     methods: {
             onMarkerClick(){
             console.log("dawdawd")
         },
+        setMarker(){},
+        // setMarker: async function () {   
+        //     this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position 
+        //     console.log(this.curMarker)   
+        //    await $this.$nextTick()
+            // console.log(this.curMarker.position)
+            // this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position
+            // console.log(this.curMarker.position)
+        // },
         setName(e){
             // this.$store.commit.create.fillName(e.target.value)
             // this.$store.dispatch('create/fillName');

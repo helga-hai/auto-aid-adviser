@@ -109,8 +109,7 @@ export default {
         }
     },
     created() {
-        console.dir(this.$store.getters['selfLocation/doneLocation']);
-        console.log(this.$store);
+        console.dir(this.$store.getters['selfLocation/doneLocation'].position);
         // this.$store.watch(
         //     (state)=>{
         //         return this.$store.state.selfLocation.gettingLocation // could also put a Getter here
