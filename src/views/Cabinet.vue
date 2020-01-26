@@ -46,7 +46,6 @@ export default {
     },
     methods:{
         switchView(view) {
-            console.log(view)
           this.currentView = view;
         },
     },

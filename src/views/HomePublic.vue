@@ -146,7 +146,6 @@ export default {
     },
     mounted(){
       this.$store.dispatch('templateB/GET_DATALIST')
-      
     },
     methods: {
       startSearch() {

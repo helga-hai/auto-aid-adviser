@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="registrStep1">
-            <h1>Реєстрація об’єкту</h1>
+            <h1>Реєстрація об’єкту <span>1/3</span></h1>
             <div>
                 <div class="registrStep1__address">
                     <label for="name">Вкажіть місцезнаходження об’єкту на карті або введіть адресу</label>
@@ -23,7 +23,7 @@
                 <input type="text" name="phone" id="phone" placeholder="Телефон" @change="setPhone">
                 <input type="text" name="site" id="site" placeholder="Сайт (опционально)" @change="setSite">
                 <div class="registrStep1__buttons">
-                    <input type="reset" value="Відмінити" class="registrStep1__secondaryButton">
+                    <input type="reset" value="Відмінити" @click="switchView('add-object')" class="registrStep1__secondaryButton">
                     <input  value="Продовжити 1/3" class="registrStep1__primaryButton" @click="switchView('services')">    
                 </div><!--type="submit"-->
             </div>
@@ -338,6 +338,10 @@ export default {
     color: #6F7E95;
     border: 1px solid #6F7E95;
     border-radius: 4px;
+  cursor:pointer;
+}
+.registrStep1__buttons .registrStep1__secondaryButton:hover {
+  background-color: rgb(241, 241, 241);
 }
 .registrStep1__buttons .registrStep1__primaryButton {
     width: 238px;
@@ -345,5 +349,9 @@ export default {
     color: #000000;
     border: none;
     border-radius: 4px;
+    cursor:pointer;
+}
+.registrStep1__buttons .registrStep1__primaryButton:hover {
+  background-color: rgb(219, 173, 6);
 }
 </style>

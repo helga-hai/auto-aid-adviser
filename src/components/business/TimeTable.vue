@@ -9,7 +9,7 @@
 
     </div>
     <div v-else class="registrStep3">
-      <h1>Реєстрація об’єкту</h1>
+      <h1>Реєстрація об’єкту <span>3/3</span></h1>
       <div class="registrStep3__workingWrapp">
         <div  class="registrStep3__name">
             <span>Режим роботи</span>
@@ -90,7 +90,7 @@
           <textarea placeholder ="Опишите ваш бизнес"></textarea>       
         </div>
         <div class="registrStep3__buttons">
-            <input type="reset" value="Отмена" class="registrStep3__secondaryButton"/>
+            <button type="reset" value="Назад" @click="switchView('register-object')" class="registrStep3__secondaryButton">Назад</button>  
             <button type="submit" v-on:click="send()" value="Продолжить 3/3"  class="registrStep3__primaryButton" > Продолжить 3/3</button>  
         </div>
       <!-- </form> -->
@@ -134,9 +134,11 @@ export default {
             item.from = "00:00";
             item.to = "23:59";
             this.$refs.sheduleBlock.style.pointerEvents = "none"
+            this.$refs.sheduleBlock.style.opacity = ".7"
           })
         } else {
             this.$refs.sheduleBlock.style.pointerEvents = "auto"
+            this.$refs.sheduleBlock.style.opacity = "1"
         }
       },
       prepend(newVal, oldVal) {
@@ -178,11 +180,22 @@ export default {
         // },2000)
         // this.$store.dispatch('create/GET_BUSINESS_DATA')
       },
-    }
+      switchView(val){
+          this.$emit('switchView', val);
+      }
+    },
+    mounted(){
+      this.picked="always"
+    },
+
 }
 </script>
 
 <style lang="scss">
+h1 span {
+  color: #4B5E7A;
+  opacity: .7
+}
 .registrStep3 {
   width: 100%;
   padding: 64px 48px 64px 48px;
@@ -227,6 +240,11 @@ export default {
   color: #6F7E95;
   border: 1px solid #6F7E95;
   border-radius: 4px;
+  height:57px;
+  cursor:pointer;
+}
+.registrStep3__buttons .registrStep3__secondaryButton:hover {
+  background-color: rgb(241, 241, 241);
 }
 .registrStep3__buttons .registrStep3__primaryButton {
   width: 238px;
@@ -235,8 +253,11 @@ export default {
   border: none;
   border-radius: 4px;
   height:57px;
+  cursor: pointer;
 }
-
+.registrStep3__buttons .registrStep3__primaryButton:hover {
+  background-color: rgb(219, 173, 6);
+}
 .registrStep3__services {
   width: 100%;
   height: 80px;
@@ -337,7 +358,7 @@ input[type="time"]:active {
   border: 1px solid #00BCD4;
 }
 .registrStep3__schedule {
-  width:100%;
+  // width:100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -350,7 +371,7 @@ input[type="time"]:active {
   line-height: 24px;
 }
 .registrStep3__workDays, .registrStep3__daysOff {
-  width: 46%;
+  min-width: 369px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -360,13 +381,14 @@ input[type="time"]:active {
   margin-bottom: 31px;
 }
 .registrStep3__day {
-  width:100%;
+  min-width: 369px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   color: #0E1E2E;
   margin-bottom: 16px;
+  padding-right:20px;
 }
 
 .registrStep3__day label {
@@ -374,6 +396,7 @@ input[type="time"]:active {
   padding-left: 60px;
   text-align:center;
   color: #0E1E2E;
+  width: 162px;
 }
 .registrStep3__day label p:before {
   content:"";
