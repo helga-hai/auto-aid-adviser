@@ -34,7 +34,7 @@
             <section class="sideBar">
                 <p>Особистий кабінет</p>
                 <ul>
-                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-create-page1')">Особисті данні</a></li>
+                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-create-page1')" :class="{'active': currentView == 'user-create-page1' || currentView == 'user-profile-ready-page'}">Особисті данні</a></li>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-auto-create-page')">Мої автомобілі</a></li>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-station-recording')">Записи до станції</a></li>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-settings')">Налаштування</a></li>
@@ -307,6 +307,9 @@ input {
         line-height: 12px;
         color: #FFFFFF;
         padding-top: 2px;
+    }
+    .active::before{
+        background-color: #FFC700;
     }
 }
 </style>

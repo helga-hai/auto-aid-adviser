@@ -243,7 +243,7 @@ export default {
         // },
         releaseYear: function(){ 
                 let yearArr = [];
-                let yearStart = 1900;
+                let yearStart = 1910;
                 let yearCurrent = 2020;
                 let keyCounter = 0;
                 for(let i = yearStart;i<=yearCurrent;i++){
@@ -388,9 +388,16 @@ export default {
         uploadPhoto(e){
             
             console.dir(e.srcElement.files[0])
-            let photo = e.srcElement.files[0]
-            this.images[0] = photo;
-            console.log("consoleLOG"+this.images[0],e.srcElement.files[0]);
+            //let photo = e.srcElement.files[0]
+            //let photo = {};
+            //photo.img = e.srcElement.files[0];
+            //var _n = e.srcElement.value.split("\\").pop();
+            //photo.name = _n;
+            this.images[0] = e.srcElement.files[ 0 ];
+
+            //console.log("consoleLOG"+this.images[0],e.srcElement.files[0]);
+
+            console.dir(this.images[0]);
 
         },
         saveAuto() {
@@ -405,13 +412,14 @@ export default {
                 {
                     id: parseInt( this.selectedModelIdVal || this.selectedModelId() ) || 1  /* null || 0  то сервер выпадает в 500 */
                 }
-                // images: this.images
+                
             };
             
+            let images = this.images;
 
             
             // let autoInfo = JSON.stringify(auto);
-            this.$store.dispatch('userdataservice/GET_MULTIPART', auto)
+            this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images })
             
 
 
