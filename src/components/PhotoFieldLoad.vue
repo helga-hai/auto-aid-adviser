@@ -11,6 +11,7 @@ export default {
 
     data(){
         return{
+            photos: [],
         }
     },
     computed:{
@@ -45,6 +46,15 @@ export default {
                     itm._remove = itm.appendChild( document.createElement('a') );
                     itm._remove.appendChild( document.createTextNode('×') );
                     itm._remove.href = '#';
+
+	                for( var arr = [], i = 0; i < upload.elements.length; i++ ){
+
+		                if('file' == upload.elements[ i ].type && upload.elements[ i ].files[ 0 ] ) {
+
+			            arr.push( upload.elements[ i ].files[ 0 ] );
+			            console.log( )
+		                }	
+	                }
 
                     itm._remove.onclick = function() {
 

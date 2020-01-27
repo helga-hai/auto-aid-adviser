@@ -138,7 +138,14 @@
                 </select>
                     <div class="registrStep3__Foto">
                         <p class = "registrStep3__ft">Додайте фотографії автомобілю</p>
-                        <div>
+
+
+                        <div id="photoForm" class="formPhoto">
+
+                            <PhotoFieldLoad/>
+
+                        </div>
+                        <!-- <div>
                         <label class= "registrStep3__addFile">
                             <input id="carphoto"
                              @change='uploadPhoto' 
@@ -146,17 +153,13 @@
                              accept="image/*">
                             <span>+ Фото</span>
                         </label>
-                        </div>
+                        </div> -->
                         <p class = "registrStep3__fp">* розмір файлу до 500 Кб</p>        
                     </div>
                 <p><span>*максимум п`яти фото, до 500Кб кожна </span></p>
 
 
-                <div id="photoForm" class="formPhoto">
 
-                    <PhotoFieldLoad/>
-
-                </div>
                
                 <!-- <ul v-for="t in test"><li>{{t.name}}</li></ul> -->
                 
@@ -365,6 +368,9 @@ export default {
 
         },
         saveAuto() {
+
+            let photos = document.getElementById('photoForm');
+            console.log(photos.childNodes[0].elements);
             
             let auto = {
                 releaseYear: parseInt(this.year) || 1910, /* 1900 Не работает, доступные данные лучше чтоб приходили с сервера */
@@ -378,8 +384,22 @@ export default {
                 }
                 
             };
+
+            	for( var arr = [], i = 0; i < photos.childNodes[0].elements.length; i++ ){
+
+		        if('file' == photos.childNodes[0].elements[ i ].type && photos.childNodes[0].elements[ i ].files[ 0 ] ) {
+
+
+			    arr.push( photos.childNodes[0].elements[ i ].files[ 0 ] );
+			    console.log( )
+		        }	
+            }
             
-            let images = this.images;
+            console.log( arr )
+            
+            let images = arr;
+
+            console.log(images);
 
             
             // let autoInfo = JSON.stringify(auto);

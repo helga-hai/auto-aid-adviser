@@ -155,8 +155,17 @@ console.log(  carInfo.images[ 0 ] );
 
             var
             fd = new FormData();
-            console.log(carInfo.images[ 0 ]);
-            fd.append('files', carInfo.images[ 0 ] );
+            // console.log(carInfo.images[ 0 ]);
+            console.log(carInfo.images.length);
+
+            for(let i = 0; i<carInfo.images.length;i++){
+
+                fd.append('files', carInfo.images[ i ] );
+
+                console.log(carInfo.images[ i ]);
+
+            }
+            // fd.append('files', carInfo.images[ 0 ] );
             fd.append('json', new Blob( [ JSON.stringify(  carInfo.auto  ) ], { type : 'application/json' } ) );
 
             //fd.append('filess[]', carInfo.images[0], "jdjgfcj" );
