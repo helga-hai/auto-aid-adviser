@@ -151,15 +151,23 @@
                     </div>
                 <p><span>*максимум п`яти фото, до 500Кб кожна </span></p>
 
+
+                <div id="photoForm" class="formPhoto">
+
+                    <PhotoFieldLoad/>
+
+                </div>
+               
                 <!-- <ul v-for="t in test"><li>{{t.name}}</li></ul> -->
                 
 
-                <div class="registerAuto__buttons">
+                <div class="registerAuto__buttons" ref="foo">
                     <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
                     <input type="submit" value="Зберегти" class="registerAuto__primaryButton" > 
                 </div>
             </form>
             <p>{{car}}</p>
+
 
         </div>
 
@@ -170,6 +178,7 @@
 
 import userdataservice from '../_store/userdataservice.module';
 import { userService } from '../_services';
+import PhotoFieldLoad from '../components/PhotoFieldLoad';
 
 
 
@@ -179,6 +188,7 @@ export default {
     components: {
 
         userService,
+        PhotoFieldLoad,
     },
     data() {
         return {
@@ -201,17 +211,6 @@ export default {
             return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
             },
             currentIndex:''||this.$store.state.userdataservice.currentIndex,
-            // currentIndex(){
-            //     if(this.$store.state.userdataservice.currentIndex==null){
-            //         return "";
-            //     }else{
-
-            //         return this.$store.state.userdataservice.currentIndex
-
-            //     }
-            // },
-            // // selectedModelId(){return this.$store.state.userdataservice.selectedModelId},
-            // fuelType:"",
             year:"",
             types() {return this.$store.state.userdataservice.types},
             selectedType:'',
@@ -235,12 +234,7 @@ export default {
 
     },
     computed: {
-        // selectedModelId: function() {
-        //     if(this.currentIndex<=0||!this.currentIndex){
-        //         return '';
-        //     }else{
-        //     return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
-        // },
+
         releaseYear: function(){ 
                 let yearArr = [];
                 let yearStart = 1910;
@@ -265,14 +259,7 @@ export default {
 
     },
     methods: {
-        // changeBrandFunc(e){
-        //     let b = this.brands()
-        //     let id 
-        //     b.forEach(item=>{
-        //         if(item.name==this.selectedBrand) {return this.selectedBrandId = item.id}
-        //     })
-            //this.selectedBrandId = id
-        // },
+
         back(){
             this.$emit('switchView','user-auto-create-page');
         },
@@ -359,29 +346,6 @@ export default {
                     this.selectedModelIdVal = e.target.id
                     }
 
-                
-
-
-
-
-                // let currentIDField = this.selectedModelId;
-                // console.log('CURRENT '+currentIDField);
-                // let currentIDValue = this.models()[index-1].id;
-                // console.log('CURRENT CURRENT '+ currentIDField);
-
-
-                // let options = select.childNodes
-                // console.log("options JJJJJJJJJJJJJJJJJJJ"+options)
-                // console.log(e.target.id)
-                // console.log('end '+this.$store.state.userdataservice.models[0].id);
-                    //  console.log('end '+ e.target.options);
-
-                    // this.$store.dispatch('userdataservice/fieldsVal',[this.$store.state.userdataservice.models[index-1].id,'selectedModelId'])});
-
-                // select.addEventListener('click',function(){console.log("THIS SELECT")})
-            // userService.getAllUserData(`${requestString}`)
-            // .then(function(result){return result})
-            // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']))
             }
 
         },
@@ -541,5 +505,18 @@ ul.carType>li:active{
     background-color: #FFC700;
 }
 
+	.form			{}
+	.form label,
+	.form span		{width:100px; height:100px;}
+	.form label		{display:inline-block; border:1px #777 solid; overflow:hidden; margin:4px; position:relative;}
+	.form input		{visibility:hidden;}
+	.form span		{display:table-cell; text-align:center; vertical-align:middle; font-weight:bold; font-size:50px;}
+
+	.form label		{transition:background ease-out 0.2s;}
+	.form label:hover	{background:#ffa;}
+
+	.form a			{position:absolute; display:block; top:4px; right:4px; width:16px; height:16px; background:#f00; border-radius:50%; line-height:16px; text-decoration:none; color:#fff; text-align:center;}
+
+	.form img		{max-width:96%; max-heigth:96%;}
 
 </style>
