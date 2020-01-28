@@ -17,7 +17,8 @@ export const userdataservice = {
         models: null,
         selectedModelId: null,
         currentIndex: null,
-        car:null,
+        car: null,
+        images: null,
 
 
 
@@ -121,7 +122,8 @@ window.myfunction = function() {
 
 
 
-console.log( JSON.stringify({ carInfo }) );
+console.log( JSON.stringify( carInfo.auto ) );
+console.log(  carInfo.images[ 0 ] );
 
             var
             myAuth = (function() {
@@ -153,13 +155,31 @@ console.log( JSON.stringify({ carInfo }) );
 
             var
             fd = new FormData();
+            // console.log(carInfo.images[ 0 ]);
+            console.log(carInfo.images.length);
 
-            fd.append('json', new Blob( [ JSON.stringify(  carInfo  ) ], { type : 'application/json' } ) );
+            for(let i = 0; i<carInfo.images.length;i++){
+
+                fd.append('files', carInfo.images[ i ] );
+
+                console.log(carInfo.images[ i ]);
+
+            }
+            // fd.append('files', carInfo.images[ 0 ] );
+            fd.append('json', new Blob( [ JSON.stringify(  carInfo.auto  ) ], { type : 'application/json' } ) );
+
+            //fd.append('filess[]', carInfo.images[0], "jdjgfcj" );
 /*
+            
 
 
 var
 photo = document.getElementById('carphoto')
+
+for ( var i = 0; photo.files < 0; i++ ) {
+
+    fd.append('files', photo.files[ i ], photo.value  );
+}
 
 if ( photo.files[ 0 ] ) {
 
@@ -167,23 +187,52 @@ if ( photo.files[ 0 ] ) {
 }
 */
 
+
             var
             xhr = new XMLHttpRequest();
 
-            xhr.open('POST', userService.config.apiUrl + '/api/user/profile/car', 1 );
+            xhr.open('POST', userService.config.apiUrl + '/api/user/profile/car', true );
 
             xhr.setRequestHeader('Authorization', myAuth );
 
+            // xhr.setRequestHeader('Accept', 'application/json, */*' );
+
+            // xhr.setRequestHeader('Content-Type', 'multipart/form-data' );
+
             xhr.send( fd );
 
-            xhr.onerror = function ( e ) {
+            // xhr.onerror = function ( e ) {
 
-                console.error( xhr.statusText );
-            };
+            //     console.error( this.statusText );
+            // };
 
-            // console.log( xhr.statusText );
+            xhr.onreadystatechange = function(){
+
+                if( xhr.readyState != 4 ) { return }
+
+                if(xhr.status>301){                    
+
+                    console.error( xhr.status + ': ' + this.responseText );
+
+                }
+
+                else{
 
 
+            var resp = xhr.responseText;
+
+            console.log( this.statusText );
+
+            console.log( resp );
+
+            console.log( this.statusText );
+
+            context.commit( 'setData' , [ 'car' , this.responseText ] );
+
+            console.log( "RESP " + resp );
+
+                }
+            }
             return false;
 
         },
@@ -229,9 +278,9 @@ if ( photo.files[ 0 ] ) {
             console.log(payload)
 
         },
-        setData(state, data) {
-            console.log(data[1]);
-            console.log(data);
+        setData( state, data ) {
+            console.log( "DATA " + data[1] );
+            console.log( data );
             let toState = data[1];
             state[toState] = data[0];
             console.log(state[toState]);

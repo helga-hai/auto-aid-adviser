@@ -3,7 +3,7 @@
         <div class="services">
             <img class="services_img1" src = "../../assets/027-checklist.png">
             <img class="services_img2" src = "../../assets/Group 133.png">
-            <h1>Реєстрація об’єкту</h1>
+            <h1>Реєстрація об’єкту <span>2/3</span></h1>
 
                 <h4>Выберите из списка типы обслуживаемых автомобилей</h4>
                 
@@ -46,7 +46,7 @@
                     </summary>
                 </details>
                 <div class="services__buttons">
-                    <input type="reset" value="Отмена" class="services__secondaryButton">
+                    <input type="reset" value="Назад" @click="switchView('register-object')" class="services__secondaryButton">
                     <input type="submit" value="Продолжить 2/3" class="services__primaryButton" @click="switchView('time-table')">    
                 </div>
 
@@ -141,6 +141,10 @@ export default {
     color: #6F7E95;
     border: 1px solid #6F7E95;
     border-radius: 4px;
+  cursor:pointer;
+}
+.services__buttons .services__secondaryButton:hover {
+  background-color: rgb(241, 241, 241);
 }
 .services__buttons .services__primaryButton {
     width: 238px;
@@ -148,6 +152,10 @@ export default {
     color: #000000;
     border: none;
     border-radius: 4px;
+  cursor:pointer;
+}
+.services__buttons .services__primaryButton:hover {
+  background-color: rgb(219, 173, 6);
 }
 .services_img1 {
     position: absolute;

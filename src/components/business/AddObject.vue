@@ -1,16 +1,45 @@
 <template>
+<div>
     <div class="flex">
         <div class="objects">
             <h1>Мої об’єкти</h1>
-            <p>Наразі у вас немає об’єктів.</p>
-            <p>Якщо бажаєте, то можемо створити новий об’єкт саме зараз.</p>         
+            <div v-if="!myObjects">
+                <p>Наразі у вас немає об’єктів.</p>
+                <p>Якщо бажаєте, то можемо створити новий об’єкт саме зараз.</p>
+                <!-- <card-min/> -->
+            </div>
+            <button v-else class="services-prev detail" v-for="cur in myObjects" :key="cur.id" @click="goToDetail(cur.id)">
+                <div class="services-prev-img small" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}">
+                </div>
+                <div class="services-prev-info">
+                    <div class='name-prev'>{{cur.name}}</div>
+                    <p class="loc" v-if="cur.location.address">{{cur.location.address}}</p>
+                    <p class="time" v-if="cur.workTimes.length">
+                        <span v-for="d in cur.workTimes" :key="d.id">
+                            {{dayList[d.day - 1]}} <br> 
+                            {{d.fromTime.slice(0,-3)}} <br>
+                            {{d.toTime.slice(0,-3)}} <br>
+                        </span>
+                    </p>
+                    <!-- <p class="phone" v-if="cur.contact.phone">{{cur.contact.phone}}</p>
+                    <p class="internet" v-if="cur.contact.url">{{cur.contact.url}}</p> -->
+                </div>
+            </button>         
             <span><a href="#" class="objects__button" @click="switchView('register-object')" >Додати об'єкт</a></span>
-            <card-min/>
+        </div>
+        <div>
         </div>
         <div class="Image">
             <div class="Image__labe" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}"></div>
         </div>
     </div>
+    <div v-if="myObjects"  class="flex">
+        <div  class="objects">
+            <!-- <div class="my-objects" v-for="obj in myObjects" :key="obj.id">
+            </div> -->
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -24,6 +53,7 @@ export default {
     },
     data() {
         return {
+           dayList: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'] ,
         } 
     },
     async created () {
@@ -37,39 +67,28 @@ export default {
     computed: {
         ...mapGetters({
             category: 'templateB/CATEGORYLIST',
+            myObjects: 'create/MY_OBJECTS',
          }),
     },
     methods: {
-        createStepOne() {
-            // this.$emit('stepOneFunction');
-
-            // userService.getAllBusinessDate('api/catalog/services')
-            //     .then(function(result) {
-            //         console.log("content"+result)
-            //         return result
-            //     }).then(result=>this.$store.dispatch('templateB/fillallBusinesServises', result)
-            // );
-            //  userService.getAllBusinessDate('api/businesses/templates')
-            //     .then(function(result) {
-            //         console.log("content"+result)
-            //         return result
-            //     }).then(result=>this.$store.commit('create/fillBusinesTemplate', result)
-            // );
-        },
         switchView(val){
             this.$emit('switchView', val);
-            this.createStepOne();
+        },
+        goToDetail(id) {
+            this.$store.dispatch('create/GET_BUSINESS_DATA', id);
+            this.$emit('switchView', 'preview-page');
         }
     }
 }
 </script>
 
-<style>
+<style lang="scss">
 .flex {
     display: flex;
 }
 .objects {
-    padding: 56px 92px 56px 48px;
+    padding: 56px 30px 56px 48px;//56px 92px 56px 48px;
+    width: 685px;
 }   
 .objects h1 {
     margin-top: 0;
@@ -108,5 +127,30 @@ export default {
     height: 250px;
     background-repeat: no-repeat;
   
+}
+.services-prev-img.small {
+    width:200px;
+    background-size: cover;
+    height: 155px;
+}
+.services-prev.detail {
+    border: 2px solid #E5E5E5;
+    border-radius: 5px;
+        height: 160px;
+    .name-prev {
+        padding-left:0px
+    }
+    .services-prev-info {
+        padding-left:20px;
+    }
+    p.time span {
+        padding-right: 4px;
+    }
+    p.loc {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 331px;
+        white-space: nowrap;
+    }
 }
 </style>

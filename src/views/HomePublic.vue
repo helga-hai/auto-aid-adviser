@@ -144,6 +144,9 @@ export default {
             return this.$store.state.selfLocation.gettingLocation;
         },
     },
+    mounted(){
+      this.$store.dispatch('templateB/GET_DATALIST')
+    },
     methods: {
       startSearch() {
         this.$store.dispatch('search/START_SEARCH')

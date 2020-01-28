@@ -38,10 +38,18 @@ export const create = {
                 //     }
                 // }]
         },
+        businessPrepend: null,
+        myObjects: null
     },
     getters: {
         SendObject: state => {
             return state.sendObject
+        },
+        businessPrepend: state => {
+            return state.businessPrepend
+        },
+        MY_OBJECTS: state => {
+            return state.myObjects; //let name = this.$store.getters.NAME
         },
 
     },
@@ -101,32 +109,51 @@ export const create = {
                 // context.commit('SEND_BUSINESS', data);
         },
         SEND_MULTIPART_BUSINESS: async(context, payload) => {
-            console.log('SEND_MULTIPART_BUSINESS', payload)
-            console.log(JSON.stringify(context.state.sendObject))
-            const str = JSON.stringify(context.state.sendObject)
+            console.log('SEND_MULTIPART_BUSINESS', payload[0])
+            var str = JSON.stringify(context.state.sendObject)
             var formData = new FormData();
             formData.append("files", payload);
             formData.append('json', new Blob([str], {
                 type: "application/json"
             }));
-            console.log('str' + str)
-            var businessHeader = authHeader()
-            businessHeader['Content-Type'] = 'multipart/form-data';
-            businessHeader['Authorization'] = `Bearer ${localStorage.getItem('token').split('"').join('')}`;
-            console.log('businessHeader' + businessHeader)
-            const config = {
-                method: 'POST',
+            // var businessHeader = authHeader()
+            // businessHeader['Content-Type'] = undefined; //'multipart/form-data';
+            // businessHeader['Authorization'] = `Bearer ${localStorage.getItem('token').split('"').join('')}`;
+
+            var config = {
+                method: "POST",
                 url: userService.config.apiUrl + '/api/businesses',
+                // headers: businessHeader,
                 headers: {
+                    'Accept': 'application/json, */*',
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${localStorage.getItem('token').split('"').join('')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token').split('"').join(' ')}`
                 },
                 data: formData
             }
             console.dir(config)
             let { data } = await axios(config);
             context.commit('SET_MULTIPART_BUSINESS', data);
-        }
+            context.dispatch('GET_BUSINESS_DATA', data.id);
+        },
+        GET_BUSINESS_DATA: async(context, payload) => { // попередній перегляд щойно створеного обєкту
+            const options = authHeader() ? { headers: authHeader() } : {};
+            const uri = userService.config.apiUrl + '/api/businesses/' + payload
+            let { data } = await axios.get(uri, options);
+            context.commit('SET_BUSINESS_DATA_PRPEND', data);
+        },
+        GET_MY_BUSINESS_DATA: async(context, payload) => { // попередній перегляд щойно створеного обєкту
+            const options = authHeader() ? { headers: authHeader() } : {};
+            const uri = userService.config.apiUrl + '/api/businesses/'
+            let { data } = await axios.get(uri, options);
+            context.commit('SET_MY_BUSINESS_DATA', data);
+        },
+        DELETE_BUSINESS: async(context, payload) => { // попередній перегляд щойно створеного обєкту
+            const options = authHeader() ? { headers: authHeader() } : {};
+            const uri = userService.config.apiUrl + '/api/businesses/' + payload
+            let { data } = await axios.delete(uri, options);
+            // context.commit('', data);
+        },
     },
     mutations: {
         fillBusinesTemplate(state, payload) {
@@ -175,8 +202,19 @@ export const create = {
             state.sendObject.workTimes.push(payload)
         },
         SET_MULTIPART_BUSINESS(state, payload) {
+            console.log('SET_MULTIPART_BUSINESS')
             console.log(payload)
-        }
+        },
+        SET_BUSINESS_DATA_PRPEND: (state, payload) => {
+            console.log('SET_BUSINESS_DATA_PRPEND')
+            state.businessPrepend = payload;
+            console.dir(state.business)
+        },
+        SET_MY_BUSINESS_DATA: (state, payload) => {
+            console.log('SET_MY_BUSINESS_DATA')
+            console.dir(payload)
+            state.myObjects = payload;
+        },
         // getAllRequest(state) {
         //     state.all = { loading: true };
         // },
