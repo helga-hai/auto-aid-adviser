@@ -181,6 +181,8 @@ if ( photo.files[ 0 ] ) {
                 console.error( xhr.statusText );
             };
 
+            // console.log( xhr.statusText );
+
 
             return false;
 
