@@ -9,16 +9,16 @@
             <p>Якщо бажаєте, то можемо додати Ваш автомобіль саме зараз.</p>
             <div class="banner">
                 <span>Додайте</span>
-                <img src="" alt="car img" class="banner_img">
+                <img src="../assets/ico-car-36.svg" alt="car img" class="banner_img">
                 <span class="promise">ТА ОТРИМАЙТЕ</span>
-                <img src="" alt="gift img" class="banner_img">
+                <img src="../assets/present.svg" alt="gift img" class="banner_img">
                 <span>від компаній партнерів</span>
 
             </div>
             <span><a href="#" class="objects__button" @click="createStepOne">Додати автомобіль</a></span>
         </div>
         <div class="Image">
-            <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/illustration1.jpg')+')'}"></div>
+            <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/illustration_Car.svg')+')'}"></div>
         </div>
     </div>    
     <!-- </user-layout> -->
@@ -67,8 +67,9 @@ export default {
 
 <style>
 .objects {
-    padding: 56px 92px 56px 48px;
+    padding: 56px 5px 56px 48px;
     display: inline-block;
+    width:720px;
 }   
 .objects h1 {
     margin-top: 0;
@@ -104,7 +105,7 @@ export default {
     display: inline-block;
 }
 .Image__labe {
-    width: 516px;
+    width: 360px;
     height: 377px;
   
 }
@@ -113,10 +114,21 @@ div.banner{
     display: flex;
     flex-direction:row;
     justify-content: space-around;
-    padding: 36px 20px 36px 20px;
-    margin: 20px 0 0 0
+    padding: 20px 10px 20px 10px;
+    margin: 20px 0 0 0;
+    width: 666px;
+
 }
 img.banner_img{
     padding: 20px 15px 20px 15px;
+}
+
+.promise{
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    align-self: center;
+
 }
 </style>
