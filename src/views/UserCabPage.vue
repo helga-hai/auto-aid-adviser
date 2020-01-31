@@ -99,16 +99,16 @@ export default {
     },
 
 /////////////////////////////////////////////
-    computed:{
-        menuPos() {
-            return UserLayout.data().mIt
-        },
-    },
-    watch:{
-        menuPos() {
-            return UserLayout.data().mIt
-        },
-    }
+    // computed:{
+    //     menuPos() {
+    //         return UserLayout.data().mIt
+    //     },
+    // },
+    // watch:{
+    //     menuPos() {
+    //         return UserLayout.data().mIt
+    //     },
+    // }
 
 
     ////////////////////////////////////////
