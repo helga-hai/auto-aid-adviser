@@ -3,12 +3,12 @@
     <div class="flex">
         <div class="objects">
             <h1>Мої об’єкти</h1>
-            <div v-if="!myObjects">
+            <div v-if="!myObjects || !myObjects.length">
                 <p>Наразі у вас немає об’єктів.</p>
                 <p>Якщо бажаєте, то можемо створити новий об’єкт саме зараз.</p>
                 <!-- <card-min/> -->
             </div>
-            <button v-else class="services-prev detail" v-for="cur in myObjects" :key="cur.id" @click="goToDetail(cur.id)">
+            <button v-else class="services-prev detail" v-for="cur in myObjects" :key="cur.id" @click="goToDetail(cur.id)" :isPreview="false">
                 <div class="services-prev-img small" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}">
                 </div>
                 <div class="services-prev-info">

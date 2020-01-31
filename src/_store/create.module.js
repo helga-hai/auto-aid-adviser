@@ -21,25 +21,10 @@ export const create = {
             "name": "",
             "serviceForBusinesses": [],
             "workTimes": []
-                //     {
-                //     "day": null,
-                //     "fromTime": {
-                //         "hour": null,
-                //         "minute": null,
-                //         "nano": null,
-                //         "second": null
-                //     },
-                //     "id": null,
-                //     "toTime": {
-                //         "hour": null,
-                //         "minute": null,
-                //         "nano": null,
-                //         "second": null
-                //     }
-                // }]
         },
         businessPrepend: null,
-        myObjects: null
+        myObjects: null,
+        encoding: null
     },
     getters: {
         SendObject: state => {
@@ -51,7 +36,12 @@ export const create = {
         MY_OBJECTS: state => {
             return state.myObjects; //let name = this.$store.getters.NAME
         },
-
+        acLatLng: state => {
+            return state.acLatLng; //let name = this.$store.getters.NAME
+        },
+        encoding: state => {
+            return state.encoding; //let name = this.$store.getters.NAME
+        },
     },
     actions: {
         // getAll({ commit }) {
@@ -68,45 +58,22 @@ export const create = {
             console.log('GET_TIME', payload)
 
             payload.forEach(item => {
-                    let single = {}
-                    single.day = item.day;
-                    single.fromTime = item.fromTime;
-                    single.toTime = item.toTime;
-                    // if (item.fromTime) {
-                    //     single.fromTime = {};
-                    //     single.fromTime.hour = parseInt(item.fromTime[0])
-                    //     single.fromTime.minute = parseInt(item.fromTime[1])
+                let single = {}
+                single.day = item.day;
+                single.fromTime = item.fromTime;
+                single.toTime = item.toTime;
+                // if (item.fromTime) {
+                //     single.fromTime = {};
+                //     single.fromTime.hour = parseInt(item.fromTime[0])
+                //     single.fromTime.minute = parseInt(item.fromTime[1])
 
-                    //     single.toTime = {};
-                    //     single.toTime.hour = parseInt(item.toTime[0])
-                    //     single.toTime.minute = parseInt(item.toTime[1])
-                    // }
-                    context.commit('SET_TIME', single);
-
-                })
-                // "workTimes": [{
-                //     "day": null,
-                //     "fromTime": {
-                //         "hour": null,
-                //         "minute": null,
-                //         "nano": null,
-                //         "second": null
-                //     },
-                //     "id": null,
-                //     "toTime": {
-                //         "hour": null,
-                //         "minute": null,
-                //         "nano": null,
-                //         "second": null
-                //     }
-                // }]
-                // const config = {
-                //     method: 'put',
-                //     url: userService.config.apiUrl + '/api/businesses',
-                //     headers: authHeader()
+                //     single.toTime = {};
+                //     single.toTime.hour = parseInt(item.toTime[0])
+                //     single.toTime.minute = parseInt(item.toTime[1])
                 // }
-                // let { data } = await axios(config);
-                // context.commit('SEND_BUSINESS', data);
+                context.commit('SET_TIME', single);
+
+            })
         },
         SEND_MULTIPART_BUSINESS: async(context, payload) => {
             console.log('SEND_MULTIPART_BUSINESS', payload[0])
@@ -154,6 +121,21 @@ export const create = {
             let { data } = await axios.delete(uri, options);
             // context.commit('', data);
         },
+        GET_ENCODING: async(context, payload) => {
+            const lat = payload.lat();
+            const lng = payload.lng();
+            console.log('payload.lng ', typeof payload.lng())
+            let uri = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=' + 'AIzaSyBasISENNNlp6Immcd1Rr5pGhkQ5Um1ZVA'
+            var config = {
+                method: "GET",
+                url: uri,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            }
+            let { data } = await axios(uri, config);
+            context.commit('SET_ENCODING', data);
+        }
     },
     mutations: {
         fillBusinesTemplate(state, payload) {
@@ -214,6 +196,13 @@ export const create = {
             console.log('SET_MY_BUSINESS_DATA')
             console.dir(payload)
             state.myObjects = payload;
+        },
+        SET_ENCODING: (state, payload) => {
+            console.log('SET_ENCODING')
+            var longest = payload.results.reduce(function(a, b) { return a.formatted_address.length > b.formatted_address.length ? a : b; });
+            console.dir(payload.results)
+            state.encoding = longest.formatted_address;
+            console.log(longest.formatted_address)
         },
         // getAllRequest(state) {
         //     state.all = { loading: true };
