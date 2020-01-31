@@ -17,7 +17,7 @@ export const userdataservice = {
         models: null,
         selectedModelId: null,
         currentIndex: null,
-        car: null,
+        cars: [],
         images: null,
 
 
@@ -42,6 +42,20 @@ export const userdataservice = {
             let { data } = await axios(config);
             context.commit('SET_TYPES', data);
         },
+
+        POST_USER_DATA: async(context, payload) => {
+
+            console.log('GET_TYPES');
+            const config = {
+                method: 'post',
+                url: userService.config.apiUrl + '/api/catalog/car/types',
+                headers: authHeader()
+            }
+            let { data } = await axios(config);
+            context.commit('SET_TYPES', data);
+        },
+
+
 
         GET_MULTIPART: async(context, carInfo ) => {
             // let customHeader = authHeader();
@@ -134,24 +148,6 @@ console.log(  carInfo.images[ 0 ] );
                 return ( t ) ? ('Bearer ' + t.split('"').join(' ') ) : '';
             })();
 
-/*
-            var
-            carInfo = {
-
-                "releaseYear": 2008,
-                "individualCarNaming": "ljhvljhvlkhgvkl",
-                "description": ".kjb.jn .j ,bj ",
-                "carModel": {
-                    "id": 2
-                }
-
-            };
-*/
-
-
-
-
-
 
             var
             fd = new FormData();
@@ -218,21 +214,17 @@ if ( photo.files[ 0 ] ) {
 
                 else{
 
-
             var resp = xhr.responseText;
 
             console.log( this.statusText );
 
-            console.log( resp );
-
-            console.log( this.statusText );
-
-            context.commit( 'setData' , [ 'car' , this.responseText ] );
-
             console.log( "RESP " + resp );
 
+            context.commit( 'SET_MULTIPART' , JSON.parse(this.responseText) );
+
                 }
-            }
+            };
+            
             return false;
 
         },
@@ -268,16 +260,26 @@ if ( photo.files[ 0 ] ) {
         }
     },
 
+
+    
+
     mutations: {
+
+
+
         SET_TYPES: (state, payload) => {
+
             state.types = payload;
+
         },
+
         SET_MULTIPART: (state, payload)=>{
 
-            state.car = payload;
-            console.log(payload)
+            state.cars.push(payload);
+            console.log(payload);
 
         },
+
         setData( state, data ) {
             console.log( "DATA " + data[1] );
             console.log( data );
@@ -295,6 +297,8 @@ if ( photo.files[ 0 ] ) {
         // }
 
     },
+
+
     // getAllRequest(state) {
     //     state.all = { loading: true };
     // },

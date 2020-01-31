@@ -173,16 +173,13 @@ function getAllUserData(path) {
             return data
         });
 
-
-
-    // .then(console.log('foo baz'))
-    // .then(data=>{return data;});
 }
 
 function postAllUserData(path, data) {
 
     let token = localStorage.getItem('token');
 
+<<<<<<< HEAD
     //     var boundary = String(Math.random()).slice(2);
     //     var boundaryMiddle = '--' + boundary + '\r\n';
     //     var boundaryLast = '--' + boundary + '--\r\n'
@@ -195,6 +192,8 @@ function postAllUserData(path, data) {
     //     }
 
     // _body = _body.join(boundaryMiddle) + boundaryLast;
+=======
+>>>>>>> 3a32c437121ade58eb8e2962bf74446db09befff
     let _data = JSON.stringify(data);
 
     const requestOptions = {

@@ -169,9 +169,6 @@
                     <input type="submit" value="Зберегти" class="registerAuto__primaryButton" > 
                 </div>
             </form>
-            <p>{{car}}</p>
-
-
         </div>
 
     <!-- </user-layout> -->
@@ -255,13 +252,29 @@ export default {
         models: function(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
         
     },
-    update() {
 
-    },
+
     created() {
 
+        {{this.getTypeAndBrand()}}
+
     },
+
     methods: {
+
+        getTypeAndBrand(){
+
+            console.log('FOOOOOO');
+
+            userService.getAllUserData('api/catalog/car/types')
+            .then(function(result){return result})
+            .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'types']))
+
+            userService.getAllUserData('api/catalog/car/brands')
+            .then(function(result){return result})
+            .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'brands']))
+
+        },
 
         back(){
             this.$emit('switchView','user-auto-create-page');
@@ -312,26 +325,24 @@ export default {
             }else{
                 
                     console.log('Search results .....');
-                    let typeID = this.selectedTypeId;
-                    let brandID = this.selectedBrandId;
+
+                    let
+                    typeID = this.selectedTypeId,
+                    brandID = this.selectedBrandId;
+
                     this.formCheck.check=false;
+
                     console.log(typeID,brandID);
+
                     let requestString = `api/catalog/car/model/type/${typeID}/brand/${brandID}`;
+
                     console.log(requestString);
+                    
                     userService.getAllUserData(requestString)
                     .then(function(result){
                         console.log("resulTTTTT "+result);
                         return result})
                     .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']));
-                    // setTimeout(() => {
-                    //     let index = e.target.selectedIndex;
-                    //     console.log(index + '????????????????????????????????????');
-                    //     if(index==0){
-                    //         this.currentIndex = '';
-                    //     }else{
-                    //         this.currentIndex = index;}
-                    // }, 300);
-                    // clearTimeout();
                     
                     console.log('ID '+e.target.id);
                     console.log('ID '+e.target.options);
@@ -352,21 +363,21 @@ export default {
             }
 
         },
-        uploadPhoto(e){
+        // uploadPhoto(e){
             
-            console.dir(e.srcElement.files[0])
+        //     console.dir(e.srcElement.files[0])
             //let photo = e.srcElement.files[0]
             //let photo = {};
             //photo.img = e.srcElement.files[0];
             //var _n = e.srcElement.value.split("\\").pop();
             //photo.name = _n;
-            this.images[0] = e.srcElement.files[ 0 ];
+            // this.images[0] = e.srcElement.files[ 0 ];
 
             //console.log("consoleLOG"+this.images[0],e.srcElement.files[0]);
 
-            console.dir(this.images[0]);
+        //     console.dir(this.images[0]);
 
-        },
+        // },
         saveAuto() {
 
             let photos = document.getElementById('photoForm');
@@ -376,8 +387,6 @@ export default {
                 releaseYear: parseInt(this.year) || 1910, /* 1900 Не работает, доступные данные лучше чтоб приходили с сервера */
                 individualCarNaming: this.individualCarNaming || 'мойа ластіука', 
                 description: this.description || 'спиздив у діда',
-                // carModel:
-                // this.selectedModelIdVal||this.selectedModelId,
                 carModel:
                 {
                     id: parseInt( this.selectedModelIdVal || this.selectedModelId() ) || 1  /* null || 0  то сервер выпадает в 500 */
@@ -404,6 +413,8 @@ export default {
             
             // let autoInfo = JSON.stringify(auto);
             this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images })
+
+            this.$emit('switchView','user-auto-complite-car-cards-page');
             
 
 
@@ -419,7 +430,8 @@ export default {
             this.$store.dispatch('userdataservice/fieldsVal',[null, stateField]);
             this[index] = '';
         },
-    }
+    },
+
 }
 </script>
 
