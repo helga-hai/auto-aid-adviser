@@ -3,9 +3,9 @@
         <span class="role">
             {{info()}}
         </span>
-        <keep-alive><!-- Неактивные компоненты будут закэшированы -->
+        <!-- <keep-alive>Неактивные компоненты будут закэшированы -->
             <component :is="currentView" @switchView='switchView'></component>
-        </keep-alive>
+        <!-- </keep-alive> -->
     </business-layout>
 </template>
 

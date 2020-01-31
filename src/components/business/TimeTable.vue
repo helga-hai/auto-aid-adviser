@@ -72,9 +72,9 @@
       <hr>
       <!-- <form  method="post" enctype="multipart/form-data" @submit.prevent="send"> -->
         <div class="registrStep3__Foto">
-          <p class = "registrStep3__ft">Фото об’єкта</p>
+          <p class="registrStep3__ft" >Фото об’єкта</p>
           <div>
-            <label class= "registrStep3__addFile" for="file">
+            <label class= "registrStep3__addFile" for="file" ref="previewImg" :style="{ backgroundImage: 'url(' + bg || '' + ')' }">
               <input  type="file" id="file" accept="image/*" @change="uploadPhoto">
               <span>+ Фото</span>
             </label>
@@ -89,7 +89,7 @@
           <p>Інформація о станціі</p>
           <textarea placeholder ="Опишите ваш бизнес"></textarea>       
         </div>
-        <div class="registrStep3__buttons">
+        <div class="registrStep3__buttons" >
             <button type="reset" value="Назад" @click="switchView('register-object')" class="registrStep3__secondaryButton">Назад</button>  
             <button type="submit" v-on:click="send()" value="Продолжить 3/3"  class="registrStep3__primaryButton" > Продолжить 3/3</button>  
         </div>
@@ -119,6 +119,7 @@ export default {
             ],
             images:[],
             waitResponse: false,
+            bg:null
         }
     },
     computed: {
@@ -148,6 +149,23 @@ export default {
               this.$emit('switchView', 'preview-page');
             },2000)
           }
+      },
+      images(newVal, oldVal){
+        console.log(newVal, oldVal)
+        var reader  = new FileReader();
+        reader.onloadend = () => {
+          console.log(reader.result)
+          this.$refs.previewImg.style.backgroundImage = reader.result;
+        }
+
+        if (this.images[0]) {
+          reader.readAsDataURL(this.images[0]);
+          console.log(reader.result)
+          this.bg=reader.readAsDataURL(this.images[0]);
+        } else {
+          this.$refs.previewImg.style.backgroundImage = "";
+          console.log(this.$refs.previewImg)
+        }
       }
     },
     methods: {
@@ -182,6 +200,21 @@ export default {
       },
       switchView(val){
           this.$emit('switchView', val);
+      },
+      previewFile() {
+        // var preview = document.querySelector('img');
+        // var file    = document.querySelector('input[type=file]').files[0];
+        var reader  = new FileReader();
+
+        reader.onloadend = function () {
+          preview.src = reader.result;
+        }
+
+        if (this.images[0]) {
+          reader.readAsDataURL(this.images[0]);
+        } else {
+          preview.src = "";
+        }
       }
     },
     mounted(){

@@ -1,21 +1,25 @@
 <template>
-    <div>
+    <div class="register-wrap">
         <div class="registrStep1">
             <h1>Реєстрація об’єкту <span>1/3</span></h1>
             <div>
                 <div class="registrStep1__address">
                     <label for="name">Вкажіть місцезнаходження об’єкту на карті або введіть адресу</label>
-                    
-                    <div class="auto-complete-input" slot="acompl" v-if="isDone">
-                        <vue-google-autocomplete 
-                            ref="vAutoComplete"
-                            :country="['ua']"
-                            id="autocompletePannel"
-                            classname="search-input home-input"
-                            placeholder="Адреса"
-                            :enableGeolocation="enableGeolocation"
-                            v-on:placechanged="getAddressData"
-                        ></vue-google-autocomplete>
+                        <div class="auto-complete-input" slot="acompl" v-if="isDone">
+                            <vue-google-autocomplete v-if="!encoding"
+                                ref="vAutoComplete"
+                                :country="['ua']"
+                                id="autocompletePannel"
+                                classname="search-input home-input"
+                                placeholder="Адреса"
+                                :enableGeolocation="enableGeolocation"
+                                v-on:placechanged="getAddressData"
+                                @change="setMarker"
+                            ></vue-google-autocomplete>
+                        </div>
+                    <div class="auto-complete-input-wrap">
+                        <button v-if="encoding">+</button>
+                        <input v-if="encoding" type="text" :value="encoding" @click="deleteEncoding" ref="inputEncoding" class="input-encoding">
                     </div>
                 </div>
                 <label>Дані об’єкта</label>
@@ -28,18 +32,22 @@
                 </div><!--type="submit"-->
             </div>
         </div>
-        <h1>{{ele}}</h1>
-        <div class="Step1Image">your here: {{location.position}}
+        <!-- <h1>{{ele}}</h1> your here: {{location.position}}-->
+        <div class="Step1Image">
             <div class="Step1Image__labe" >
                 <div v-if="gettingLocation">loading...</div>
                 <div v-else>
                     <travel-map class="guide"
                         ref="mapr" 
-                        :mapCenter="curMarker.position" 
+                        :mapCenter="location.position" 
                         @isDoneFunc="isDoneFunc" 
                         :address="address" 
-                        :curMarker="curMarker"
-                         @click="onMarkerClick"
+                        :curMarker="location"
+                        :enterMarker="enterMarker"
+                         @mapClick="mapClick"
+                         @mapCenterChanged="mapCenterChanged"
+                         @ourMap="ourMap"
+                         :enterAddress="enterAddress"
                         />
                 </div>
                 <!-- <GoogleMapLoader:location="location" 
@@ -81,7 +89,9 @@ export default {
         VueGoogleAutocomplete,
     },
     data() {
+        var th = this
         return {
+            enterAddress: false,
             acLatLng:{},//store
             isDone: false,
             enableGeolocation: true,
@@ -90,8 +100,13 @@ export default {
             groups: ['СТО','Шиномонтаж','Мойка'],
             curMarker: {
                 id: "a",
-                position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }
+                position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }{ lat: 50.510854099999996, lng: 30.491225300000004 }
                 content:'You are here'
+            },
+            enterMarker: {
+                position: this.$store.getters['create/acLatLng'].position,// { lat: 3, lng: 101 }
+                content:'address',
+                id:"enterw"
             },
             address: '',//store
             markers: [
@@ -108,49 +123,37 @@ export default {
                     position: { lat: 50.452482, lng: 30.372232 }// { lat: 6, lng: 97 }
                 }
             ],
-            sendObject: { //state
-                "contact": {
-                    "phone": "string"
-                },
-                "id": 0,
-                "location": {
-                    "address": "string",
-                    "latitude": 0,
-                    "longitude": 0
-                },
-                "name": "string",
-                "serviceForBusinesses": [
-                    {"id": 0}
-                ],
-                "workTimes": [
-                    {
-                    "day": 0,
-                    "fromTime": {
-                        "hour": 0,
-                        "minute": 0,
-                        "nano": 0,
-                        "second": 0
-                        },
-                    "id": 0,
-                    "toTime": {
-                        "hour": 0,
-                        "minute": 0,
-                        "nano": 0,
-                        "second": 0
-                        }
-                    }
-                ]
+            sendObject: {
             },
-
+            ourM:null,
+            // encoding: this.$store.getters['create/encoding']
         }
     },
     watch: {
+        // encoding (newVal, oldVal) {
+        //     console.log(`We have ${newVal} fruits now, yaay!`)
+        // },
         location(newVal, oldVal) {
             console.log('location',newVal, oldVal)
             //this.locationDone = true
-        }
+        },
+        mapCenter(newVal, oldVal){
+            console.log(newVal, oldVal)
+        },
+        coords(newVal, oldVal) {
+            console.log('coords',newVal, oldVal)
+        },
     },
     computed: {
+        encoding () {
+            return this.$store.getters['create/encoding']
+        },
+        coords() {
+            return this.$store.getters['selfLocation/doneLocation']
+        },
+        // mapCenter(){
+        //     return this.curMarker.position
+        // },
         errorStr() {
             return this.$store.state.selfLocation.errorStr;
         },
@@ -195,28 +198,43 @@ export default {
     created() {
         //do we support geolocation
         // this.$store.dispatch('selfLocation/changeLocation');
+        // this.$store.dispatch('selfLocation/getLocation');
     },
     methods: {
-            onMarkerClick(){
-            console.log("dawdawd")
+        deleteEncoding(e){
+            console.log("deleteEncoding",e)
+            this.encoding=false
         },
+        ourMap(val){
+            this.ourM = val
+        },
+        mapClick({event, m}){
+            console.log("mapClick")
+            console.log({event, m})
+        },
+        mapCenterChanged(val){
+            console.log("mapCenterChanged")
+            console.log(val)
+        },
+        setMarker(e){
+            this.enterAddress = true
+        },
+        // setMarker: async function () {   
+        //     this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position 
+        //     console.log(this.curMarker)   
+        //    await $this.$nextTick()
+            // console.log(this.curMarker.position)
+            // this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position
+            // console.log(this.curMarker.position)
+        // },
         setName(e){
-            // this.$store.commit.create.fillName(e.target.value)
-            // this.$store.dispatch('create/fillName');
             this.$store.commit('create/fillName', e.target.value)
-            // this.sendObject.name = e.target.value
         },
         setPhone(e){
-            // this.$store.commit.create.fillName(e.target.value)
-            // this.$store.dispatch('create/fillName');
             this.$store.commit('create/fillPhone', e.target.value)
-            // this.sendObject.name = e.target.value
         },
         setSite(e){
-            // this.$store.commit.create.fillName(e.target.value)
-            // this.$store.dispatch('create/fillName');
             this.$store.commit('create/fillSite', e.target.value)
-            // this.sendObject.name = e.target.value
         },
         isDoneFunc(e){
             console.log('isDoneFunc') // google map is load 
@@ -228,59 +246,43 @@ export default {
             this.$store.dispatch('selfLocation/changeLocation', {addressData, placeResultData, id});
             console.log(addressData, placeResultData, id)
             console.log(addressData.latitude)
+            this.enterPosition( placeResultData )
         },
-        //getAddressData//: //function (addressData, placeResultData, id) { //state
-            // console.log('getAddressData')
-            // console.log('addressData=')
-            // console.dir(addressData)
-            // console.log('placeResultData=')
-            // console.dir(placeResultData)
-            // let lat=placeResultData.geometry.location.lat()
-            // let lng=placeResultData.geometry.location.lng()
-            // console.log(lat,lng)
-            // this.acLatLng={lat:lat,lng:lng}
-            // this.sendObject.location={latitude:lat,longitude:lng}
-            // this.sendObject.location={
+        enterPosition( placeResultData ){
+            console.log('enterPosition')
+            let lat = placeResultData.geometry.location.lat()
+            let lng = placeResultData.geometry.location.lng()
+            console.log(lat, lng)
+            this.enterMarker.position = { lat: lat, lng: lng }
+            // state.sendObject.location = { latitude: lat, longitude: lng }
+            // state.sendObject.location = {
             //     address: placeResultData.formatted_address,
             //     latitude: placeResultData.geometry.location.lat(),
             //     longitude: placeResultData.geometry.location.lng()
             // }
-            // this.address = addressData;
-        // },
-        geolocate() {
-            // if (this.enableGeolocation) {
-            //     if (navigator.geolocation) {
-            //         console.log(navigator.geolocation)
-            //         navigator.geolocation.getCurrentPosition(position => {
-            //         let geolocation = {
-            //             lat: position.coords.latitude,
-            //             lng: position.coords.longitude
-            //         };
-            //         console.log('geolocation',geolocation)
-            //         let circle = new google.maps.Circle({
-            //             center: geolocation,
-            //             radius: position.coords.accuracy
-            //         });
-            //         console.log('circle',circle)
-            //         this.autocomplete.setBounds(circle.getBounds());
-            //         });
-            //     }
-            // }
+            // state.address = addressData;
         },
-        // createStepTwo(){
-        //     this.$emit('stepTwoFunction')
-        // },
+        geolocate() {
+        },
         switchView(val){
             this.$emit('switchView', val);
-        }
+        },
+        beforeUpdate() {
+            // this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position
+        //     console.dir(this.curMarker)
+        // console.dir(this.location) 
+        },
     }
 }
 </script>
 
-<style>
-/* step01.css */
+<style lang="scss">
+.register-wrap {
+    display: flex;
+}
 .Step1Image {
     height: 100%;
+    min-height: 720px;
 }
 .Step1Image__labe {
     width: 673px;
@@ -353,5 +355,23 @@ export default {
 }
 .registrStep1__buttons .registrStep1__primaryButton:hover {
   background-color: rgb(219, 173, 6);
+}
+.auto-complete-input-wrap {
+    position: relative;
+    button {
+        position: absolute;
+        right: 13px;
+        top: 15px;
+        font-size: 24px;
+        transform: rotate(45deg);
+        display: block;
+        background: #FFFFFF;
+        padding: 0 7px;
+        z-index:10;
+        border: none;
+    }
+}
+.input-encoding {
+    padding-right:40px !important;
 }
 </style>

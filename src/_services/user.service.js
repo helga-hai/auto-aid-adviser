@@ -13,7 +13,7 @@ function getConfig() {
         }
     } else if (process.env.NODE_ENV === 'production') {
         return {
-            apiUrl: 'https://ec2-34-247-199-110.eu-west-1.compute.amazonaws.com'
+            apiUrl: 'https://ec2-34-243-67-208.eu-west-1.compute.amazonaws.com'
         }
     }
 }
@@ -105,40 +105,39 @@ function login(email, password) {
         // .then(handleResponse => {
         //     console.log(JSON.stringify(response));
         //     return handleResponse;})
-    .then(user => {
-        // .then(token => {
-        console.log('requestOptions')
-        console.log('requestOptions '+requestOptions); //email password
+        .then(user => {
+            // .then(token => {
+            console.log('requestOptions')
+            console.log('requestOptions ' + requestOptions); //email password
             // login successful if there's a jwt token in the response
-        // if (user.token)
-        if (user)
-        {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            // if (user.token)
+            if (user) {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
 
 
-            console.log("USER_SERVICE "+JSON.stringify(user));
+                console.log("USER_SERVICE " + JSON.stringify(user));
 
-            if(JSON.stringify(user.status) == 401){
-                console.log("NO_USER");
-                console.log(JSON.stringify(user.error)); //:"Unauthorized"
-                console.log(JSON.stringify(user.message));
-                return user.error;
-                 //"message":"Authorization failed"
-                // return router.push('/');
-            }else{
+                if (JSON.stringify(user.status) == 401) {
+                    console.log("NO_USER");
+                    console.log(JSON.stringify(user.error)); //:"Unauthorized"
+                    console.log(JSON.stringify(user.message));
+                    return user.error;
+                    //"message":"Authorization failed"
+                    // return router.push('/');
+                } else {
 
-                localStorage.setItem('token', JSON.stringify(user.token));
-                localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
-                localStorage.setItem('role', JSON.stringify(user.role)); ////role///////////////////////////
-                console.log(JSON.stringify(user.role));
-                console.log("router.push user"+user.role);
-                //console.log(router.push);
-                //router.push('user');//not working
-                return user;
+                    localStorage.setItem('token', JSON.stringify(user.token));
+                    localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
+                    localStorage.setItem('role', JSON.stringify(user.role)); ////role///////////////////////////
+                    console.log(JSON.stringify(user.role));
+                    console.log("router.push user" + user.role);
+                    //console.log(router.push);
+                    //router.push('user');//not working
+                    return user;
+                }
             }
-        }
-        return user;
-    });
+            return user;
+        });
 }
 
 function logout() {
@@ -176,10 +175,22 @@ function getAllUserData(path) {
 
 }
 
-function postAllUserData(path,data) {
+function postAllUserData(path, data) {
 
     let token = localStorage.getItem('token');
 
+    //     var boundary = String(Math.random()).slice(2);
+    //     var boundaryMiddle = '--' + boundary + '\r\n';
+    //     var boundaryLast = '--' + boundary + '--\r\n'
+
+    //     var _body = ['\r\n'];
+    //     var _data = data;
+    //     for (var key in _data) {
+    //   // добавление поля
+    //     _body.push('Content-Disposition: form-data; name="' + key + '"\r\n\r\n' + _data[key] + '\r\n');
+    //     }
+
+    // _body = _body.join(boundaryMiddle) + boundaryLast;
     let _data = JSON.stringify(data);
 
     const requestOptions = {
@@ -189,8 +200,9 @@ function postAllUserData(path,data) {
             'Content-Type': 'multipart/form-data',
             'Authorization': 'Bearer ' + token,
         },
-        body: {"multiPartFile": {
-            "json": _data,
+        body: {
+            "multiPartFile": {
+                "json": _data,
             }
         },
     };
@@ -210,7 +222,7 @@ function postAllUserData(path,data) {
 
 
 let content = null
-// this.$store.commit('templateB/fillallBusinesServises', content)
+    // this.$store.commit('templateB/fillallBusinesServises', content)
 
 
 function getBusinesTemplate(path) {
@@ -221,12 +233,12 @@ function getBusinesTemplate(path) {
     console.log('getAllBusinessDate,')
 
     return fetch(`${config.apiUrl}/${path}`, requestOptions)
-    .then(handleResponse)
-    .then(response=>{
-        console.log("ssssssssssssssssssssssssssssssss"+JSON.stringify(response))
-        return response
-    })
-    // console.log('getAllBusinessDate,')
+        .then(handleResponse)
+        .then(response => {
+            console.log("ssssssssssssssssssssssssssssssss" + JSON.stringify(response))
+            return response
+        })
+        // console.log('getAllBusinessDate,')
 
     // return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
 
@@ -240,13 +252,13 @@ async function getAllBusinessDate(path) {
     console.log('getAllBusinessDate,')
 
     return fetch(`${config.apiUrl}/${path}`, requestOptions)
-    .then(handleResponseGetData)
-    .then(response=>{
-        response = response.content
-        // console.log(JSON.stringify(response))
-        return response
-    })
-    // console.log('getAllBusinessDate,')
+        .then(handleResponseGetData)
+        .then(response => {
+            response = response.content
+                // console.log(JSON.stringify(response))
+            return response
+        })
+        // console.log('getAllBusinessDate,')
 
     // return fetch(`${config.apiUrl}/${path}`, requestOptions).then(handleResponseGetData);
 
@@ -295,26 +307,26 @@ function handleResponseGetData(response) {
             })
             //let serviceTypesListObj = [];
         data.content.forEach(item => {
-            //if (serviceTypesList.indexOf(item.serviceType.name) < 0) {
-            // var tmp = []
-            //     // serviceTypesList.forEach(el=>Object.keys(serviceTypesList))
-            // for (let i = 0; i < serviceTypesList.length - 1; i++) {
-            //     if (tmp.indexOf(serviceTypesList[i]) < 0)
-            //         tmp.push(serviceTypesList[i])
-            //         //console.log(Object.keys(serviceTypesList[i]))
-            // }
-            // console.log(tmp)
-            //console.log(Object.keys(serviceTypesList))
-            if (serviceTypesList.indexOf(item.serviceType.name) < 0) {
-                //console.log('')
-                //console.log(serviceTypesList, item.serviceType.name, serviceTypesList.indexOf(item.serviceType.name) < 0)
-                let tmpKey = {}
-                tmpKey[item.serviceType.name] = []
-                serviceTypesList.push(tmpKey)
-            }
-        })
-        // console.log(serviceTypesList2);
-        // ["run":{}, "disk", "engine", "gum", "body"]
+                //if (serviceTypesList.indexOf(item.serviceType.name) < 0) {
+                // var tmp = []
+                //     // serviceTypesList.forEach(el=>Object.keys(serviceTypesList))
+                // for (let i = 0; i < serviceTypesList.length - 1; i++) {
+                //     if (tmp.indexOf(serviceTypesList[i]) < 0)
+                //         tmp.push(serviceTypesList[i])
+                //         //console.log(Object.keys(serviceTypesList[i]))
+                // }
+                // console.log(tmp)
+                //console.log(Object.keys(serviceTypesList))
+                if (serviceTypesList.indexOf(item.serviceType.name) < 0) {
+                    //console.log('')
+                    //console.log(serviceTypesList, item.serviceType.name, serviceTypesList.indexOf(item.serviceType.name) < 0)
+                    let tmpKey = {}
+                    tmpKey[item.serviceType.name] = []
+                    serviceTypesList.push(tmpKey)
+                }
+            })
+            // console.log(serviceTypesList2);
+            // ["run":{}, "disk", "engine", "gum", "body"]
         return data;
     });
 };

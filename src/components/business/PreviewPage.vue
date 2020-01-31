@@ -3,7 +3,7 @@
         <div class="services">
             <img class="services_img1" src = "../../assets/027-checklist.png">
             <img class="services_img2" src = "../../assets/Group 133.png">
-            <h1>Попередній перегляд</h1>
+            <h1>{{ isPreview ? 'Попередній перегляд' : 'Детальна інформація'}}</h1>
             
             <div class="services-prev">
                 <div class="services-prev-img" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}">
@@ -62,7 +62,13 @@ export default {
     data() {
         return {
            dayList: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'] ,
-           types: []
+           types: [],
+        }
+    },
+    props: {
+        isPreview: {
+            type: Boolean,
+            default: true
         }
     },
     computed: {
