@@ -21,7 +21,7 @@
 
             </div>
                 <span>Выбрано: {{ selectedType }} {{selectedTypeId}}</span>
-            <form>
+            <form @submit.prevent='saveAuto'>
 
 
                 <!-- <div class="registerAuto__car">
@@ -115,7 +115,7 @@
                     </option>
                 </select>
                 <!-- <p>{{currentIndex}}</p> -->
-                <p>{{selectedModelId()||selectedModelIdVal}}</p>
+                <p>{{selectedModelIdVal||selectedModelId()}}</p>
 
 
 
@@ -124,10 +124,12 @@
 
                 <input type="text" name="individualCarNaming" id="individualCarNaming" placeholder="індивідуальна назва авто" v-model="individualCarNaming">
                 <input type="textarea" name="description" id="description" placeholder="Пару слів про авто..." v-model="description">
-                <select @click='releaseYear' type="text" name="releaseYear" id="releaseYear" placeholder="Рік випуску" v-model="year" required>
+
+
+                <select type="text" name="releaseYear" id="releaseYear" placeholder="Рік випуску" v-model="year" required>
                     <option disabled value="" >Рік випуску</option>
                     <option 
-                    v-for="y in releaseYear()"
+                    v-for="y in releaseYear"
                     :key="y.index"
 
                     >
@@ -136,24 +138,40 @@
                 </select>
                     <div class="registrStep3__Foto">
                         <p class = "registrStep3__ft">Додайте фотографії автомобілю</p>
-                        <div>
+
+
+                        <div id="photoForm" class="formPhoto">
+
+                            <PhotoFieldLoad/>
+
+                        </div>
+                        <!-- <div>
                         <label class= "registrStep3__addFile">
-                            <input type="file" accept="image/*">
+                            <input id="carphoto"
+                             @change='uploadPhoto' 
+                             type="file"
+                             accept="image/*">
                             <span>+ Фото</span>
                         </label>
-                        </div>
+                        </div> -->
                         <p class = "registrStep3__fp">* розмір файлу до 500 Кб</p>        
                     </div>
                 <p><span>*максимум п`яти фото, до 500Кб кожна </span></p>
 
-                <!-- <ul v-for="t in test"><li>{{t.name}}</li></ul> -->
-                <p>{{releaseYear()}}</p>
 
-                <div class="registerAuto__buttons">
+
+               
+                <!-- <ul v-for="t in test"><li>{{t.name}}</li></ul> -->
+                
+
+                <div class="registerAuto__buttons" ref="foo">
                     <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
-                    <input type="submit" value="Зберегти" class="registerAuto__primaryButton">    
+                    <input type="submit" value="Зберегти" class="registerAuto__primaryButton" > 
                 </div>
             </form>
+            <p>{{car}}</p>
+
+
         </div>
 
     <!-- </user-layout> -->
@@ -163,16 +181,18 @@
 
 import userdataservice from '../_store/userdataservice.module';
 import { userService } from '../_services';
+import PhotoFieldLoad from '../components/PhotoFieldLoad';
 
 
 
 export default {
     name: 'UserAutoCreatePage2',
 
-    // components: {
+    components: {
 
-    //     userService,
-    // },
+        userService,
+        PhotoFieldLoad,
+    },
     data() {
         return {
             // types:{
@@ -194,17 +214,6 @@ export default {
             return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
             },
             currentIndex:''||this.$store.state.userdataservice.currentIndex,
-            // currentIndex(){
-            //     if(this.$store.state.userdataservice.currentIndex==null){
-            //         return "";
-            //     }else{
-
-            //         return this.$store.state.userdataservice.currentIndex
-
-            //     }
-            // },
-            // // selectedModelId(){return this.$store.state.userdataservice.selectedModelId},
-            // fuelType:"",
             year:"",
             types() {return this.$store.state.userdataservice.types},
             selectedType:'',
@@ -218,9 +227,20 @@ export default {
             },
             individualCarNaming:'',
             description:'',
-            releaseYear: function(){ 
+            car: '',
+            images:[],
+
+        }
+    },
+    watch: {
+
+
+    },
+    computed: {
+
+        releaseYear: function(){ 
                 let yearArr = [];
-                let yearStart = 1900;
+                let yearStart = 1910;
                 let yearCurrent = 2020;
                 let keyCounter = 0;
                 for(let i = yearStart;i<=yearCurrent;i++){
@@ -232,19 +252,6 @@ export default {
                 }
                 return yearArr;
             },
-        }
-    },
-    watch: {
-
-
-    },
-    computed: {
-        // selectedModelId: function() {
-        //     if(this.currentIndex<=0||!this.currentIndex){
-        //         return '';
-        //     }else{
-        //     return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
-        // },
         models: function(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
         
     },
@@ -255,14 +262,7 @@ export default {
 
     },
     methods: {
-        // changeBrandFunc(e){
-        //     let b = this.brands()
-        //     let id 
-        //     b.forEach(item=>{
-        //         if(item.name==this.selectedBrand) {return this.selectedBrandId = item.id}
-        //     })
-            //this.selectedBrandId = id
-        // },
+
         back(){
             this.$emit('switchView','user-auto-create-page');
         },
@@ -292,7 +292,7 @@ export default {
 
         },
         getModel(e){
-            setTimeout(() => {
+            
             let select = document.querySelector("select#model")
             let mySetAttr = select.setAttribute
             if(!this.selectedTypeId||!this.selectedBrandId){
@@ -349,32 +349,69 @@ export default {
                     this.selectedModelIdVal = e.target.id
                     }
 
-                
-
-
-
-
-                // let currentIDField = this.selectedModelId;
-                // console.log('CURRENT '+currentIDField);
-                // let currentIDValue = this.models()[index-1].id;
-                // console.log('CURRENT CURRENT '+ currentIDField);
-
-
-                // let options = select.childNodes
-                // console.log("options JJJJJJJJJJJJJJJJJJJ"+options)
-                // console.log(e.target.id)
-                // console.log('end '+this.$store.state.userdataservice.models[0].id);
-                    //  console.log('end '+ e.target.options);
-
-                    // this.$store.dispatch('userdataservice/fieldsVal',[this.$store.state.userdataservice.models[index-1].id,'selectedModelId'])});
-
-                // select.addEventListener('click',function(){console.log("THIS SELECT")})
-            // userService.getAllUserData(`${requestString}`)
-            // .then(function(result){return result})
-            // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']))
             }
-            }, 1000);
-            clearTimeout();
+
+        },
+        uploadPhoto(e){
+            
+            console.dir(e.srcElement.files[0])
+            //let photo = e.srcElement.files[0]
+            //let photo = {};
+            //photo.img = e.srcElement.files[0];
+            //var _n = e.srcElement.value.split("\\").pop();
+            //photo.name = _n;
+            this.images[0] = e.srcElement.files[ 0 ];
+
+            //console.log("consoleLOG"+this.images[0],e.srcElement.files[0]);
+
+            console.dir(this.images[0]);
+
+        },
+        saveAuto() {
+
+            let photos = document.getElementById('photoForm');
+            console.log(photos.childNodes[0].elements);
+            
+            let auto = {
+                releaseYear: parseInt(this.year) || 1910, /* 1900 Не работает, доступные данные лучше чтоб приходили с сервера */
+                individualCarNaming: this.individualCarNaming || 'мойа ластіука', 
+                description: this.description || 'спиздив у діда',
+                // carModel:
+                // this.selectedModelIdVal||this.selectedModelId,
+                carModel:
+                {
+                    id: parseInt( this.selectedModelIdVal || this.selectedModelId() ) || 1  /* null || 0  то сервер выпадает в 500 */
+                }
+                
+            };
+
+            	for( var arr = [], i = 0; i < photos.childNodes[0].elements.length; i++ ){
+
+		        if('file' == photos.childNodes[0].elements[ i ].type && photos.childNodes[0].elements[ i ].files[ 0 ] ) {
+
+
+			    arr.push( photos.childNodes[0].elements[ i ].files[ 0 ] );
+			    console.log( )
+		        }	
+            }
+            
+            console.log( arr )
+            
+            let images = arr;
+
+            console.log(images);
+
+            
+            // let autoInfo = JSON.stringify(auto);
+            this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images })
+            
+
+
+            // console.log(auto)
+            // userService.postAllUserData(`api/user/profile/car`,auto)
+            // .then(function(result){return result})
+            // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'car']))
+            // console.log(this.$store.state.userdataservice.car)
         },
 
         clearField(dataField, stateField, index){
@@ -488,5 +525,18 @@ ul.carType>li:active{
     background-color: #FFC700;
 }
 
+	.form			{}
+	.form label,
+	.form span		{width:100px; height:100px;}
+	.form label		{display:inline-block; border:1px #777 solid; overflow:hidden; margin:4px; position:relative;}
+	.form input		{visibility:hidden;}
+	.form span		{display:table-cell; text-align:center; vertical-align:middle; font-weight:bold; font-size:50px;}
+
+	.form label		{transition:background ease-out 0.2s;}
+	.form label:hover	{background:#ffa;}
+
+	.form a			{position:absolute; display:block; top:4px; right:4px; width:16px; height:16px; background:#f00; border-radius:50%; line-height:16px; text-decoration:none; color:#fff; text-align:center;}
+
+	.form img		{max-width:96%; max-heigth:96%;}
 
 </style>

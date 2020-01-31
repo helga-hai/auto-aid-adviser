@@ -3,19 +3,21 @@
         <span class="role">
             {{info()}}
         </span>
-        <keep-alive><!-- Неактивные компоненты будут закэшированы -->
+        <!-- <keep-alive>Неактивные компоненты будут закэшированы -->
             <component :is="currentView" @switchView='switchView'></component>
-        </keep-alive>
+        <!-- </keep-alive> -->
     </business-layout>
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import BusinessLayout from "@/layouts/BusinessLayout";
 import AddObject from '../components/business/AddObject.vue';
 import RegisterObjet from '../components/business/RegisterObjet.vue';
 import Services from '../components/business/Services.vue';
 import TimeTable from '../components/business/TimeTable.vue';
-console.log(RegisterObjet)
+import PreviewPage from '../components/business/PreviewPage.vue';
+console.log(PreviewPage)
 export default {
     name:'Cabinet',
     components: {
@@ -24,6 +26,7 @@ export default {
       'register-object' :RegisterObjet,
       'services': Services,
       'time-table': TimeTable,
+      'preview-page': PreviewPage,
     },
     data(){
         return {
@@ -37,7 +40,22 @@ export default {
                 // return this.$store.state.authentication.role, this.$store.state.authentication.email;
             },
            currentView:'add-object',
+           
         }
+    },
+    watch: {
+        currentView(newVal, oldVal) {
+            this.$store.dispatch('create/GET_MY_BUSINESS_DATA')
+        }
+    },
+    computed: {
+        ...mapGetters({
+            myObjects: 'create/MY_OBJECTS',
+         }),
+    },
+    mounted(){
+        this.$store.dispatch('templateB/GET_DATALIST')
+        this.$store.dispatch('create/GET_MY_BUSINESS_DATA')
     },
     methods:{
         switchView(view) {

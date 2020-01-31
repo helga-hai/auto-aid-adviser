@@ -13,18 +13,19 @@ import Activation from '../components/Activation';
 
 import MapPage from '../views/Map';
 import AboutPage from '../views/About';
-import CreatePage from '../views/CreatePage';
-import CreatePage2 from '../views/CreatePage2';
-import CreatePage3 from '../views/CreatePage3';
-import CreatePage4 from '../views/CreatePage4';
-import CreatePage5 from '../views/CreatePage5';
+import NotFound from '../views/NotFound'
+// import CreatePage from '../views/CreatePage';
+// import CreatePage2 from '../views/CreatePage2';
+// import CreatePage3 from '../views/CreatePage3';
+// import CreatePage4 from '../views/CreatePage4';
+// import CreatePage5 from '../views/CreatePage5';
 // import AddObject from '../components/business/AddObject';
 
 
 
 
 import UserCabPage from '../views/UserCabPage';
-import BusinessCabPage from '../views/BusinessCabPage';
+// import BusinessCabPage from '../views/BusinessCabPage';
 import UserProfileReadyPage from '../views/UserProfileReadyPage';
 
 
@@ -46,15 +47,17 @@ export const router = new Router({
         { path: '/successRegister', component: SuccessRegister },
         { path: '/user/activation', component: Activation },
         { path: '/user/activation/*', redirect: '/user/activation' },
-        { path: '/create', component: CreatePage },
-        { path: '/create2', component: CreatePage2 },
-        { path: '/create3', component: CreatePage3 },
-        { path: '/create4', component: CreatePage4 },
-        { path: '/create5', component: CreatePage5 },
+        { path: '/404', component: NotFound },  
+        { path: '*', redirect: '/404' }, 
+        // { path: '/create', component: CreatePage },
+        // { path: '/create2', component: CreatePage2 },
+        // { path: '/create3', component: CreatePage3 },
+        // { path: '/create4', component: CreatePage4 },
+        // { path: '/create5', component: CreatePage5 },
 
 
         //test path
-        { path: '/business', component: BusinessCabPage },
+        // { path: '/business', component: BusinessCabPage },
         { path: '/user', component: UserCabPage },
         { path: '/userprof', component: UserProfileReadyPage },
         /////////////////////////////////////////////
@@ -62,7 +65,7 @@ export const router = new Router({
 
 
         // otherwise redirect to home
-        { path: '*', redirect: '/' }
+        // { path: '*', redirect: '/' }
     ],
     // scrollBehavior: function() {
     //     return { x: 0, y: 0 }
@@ -72,7 +75,7 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
     console.log("beforeEach:", to, from);
-    const publicPages = ['/authorization', '/cabinet', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/business', '/userprof', '/map', '/about', '/create', '/create2', '/create3', '/create4', '/create5', '/user/activation'];
+    const publicPages = ['/authorization', '/cabinet', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/userprof', '/map', '/about', '/user/activation', '/404', '*' ];
 
     const authRequired = !publicPages.includes(to.path);
 

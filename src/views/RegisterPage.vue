@@ -22,7 +22,7 @@
         <router-link to="/">Умовами використання</router-link>
       </p>
       <div>
-          <button class="form-input submit-button" :disabled="disabledCheck()" type="submit" >зареєструватися</button>
+          <button class="form-input submit-button" :disabled="disabledCheck()" type="submit" >{{!isWait?'зареєструватися':'Loading...'}}</button>
       </div>
     </form>
   </div>
@@ -52,7 +52,8 @@ export default {
       errorPassSame: {
         check: false,
         txt: 'Паролі не співпадають'
-      }
+      },
+      isWait: false
     };
   },
   methods: {
@@ -127,6 +128,7 @@ export default {
       
     },
     sendData() {
+      this.isWait==true
       this.$emit('afterPreloaderFunc')
       let data = {
         email: this.email,

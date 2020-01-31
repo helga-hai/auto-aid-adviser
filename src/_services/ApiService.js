@@ -6,7 +6,8 @@ const apiConfig = IS_DEVELOPMENT ? {
     port: 8080
 } : {
     protocol: 'https',
-    host: 'ec2-34-247-199-110.eu-west-1.compute.amazonaws.com',
+    // host: 'ec2-34-247-199-110.eu-west-1.compute.amazonaws.com',
+    host: 'ec2-34-243-67-208.eu-west-1.compute.amazonaws.com',
     port: ''
 }
 

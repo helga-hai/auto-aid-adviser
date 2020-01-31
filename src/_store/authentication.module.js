@@ -25,15 +25,23 @@ export const authentication = {
 
             userService.login(email, password)
                 .then(
-
+                    
                     user => {
+                        if(user === "Unauthorized"){
+                            console.log("AuthModule "+"Unauthorized");
+                        }
+
                         commit('loginSuccess', user);
                         commit('setVal', user); /////////////test
+                        
+
+
+                        
                         if (user.role === 'ROLE_USER') {
-                            console.log('userService.login ROLE_USER')
+                            console.log('userService.login ROLE_USER');
                             router.push('/user');
                         } else if (user.role === 'ROLE_BUSINESS') {
-                            console.log('userService.login ROLE_BUSINESS')
+                            console.log('userService.login ROLE_BUSINESS');
                             router.push('/cabinet');
                         } else {
                             console.log(user.role);

@@ -2,7 +2,11 @@
 <div>
     
     
-    <GoogleMapLoader @isDoneFuncInTravel="isDoneFuncInTravel"
+    <GoogleMapLoader 
+        @isDoneFuncInTravel="isDoneFuncInTravel"
+        @mapClickInTravel="mapClickInTravel"
+        @mapCenterChangedInTravel="mapCenterChangedInTravel"
+        @ourMapInTravel="ourMapInTravel"
         :mapConfig="mapConfig"
         apiKey="AIzaSyB_nA80Ha1asyGCQtdcgAGZNtd6Vzr8p3A"
     ><slot name="acompl"/>
@@ -16,16 +20,24 @@
                     :map="map"
                     :marker= "curMarker"
                     :clickable="true"
-                    :draggable="true"
-                   
-                />
+                    :draggable="true"                />
             </div>
+            <!-- <div v-if="enterAddress"> 
+                <GoogleMapMarker 
+                    ref="customMarker"
+                    :google="google"
+                    :map="map"
+                    :marker= "enterMarker"
+                    :clickable="true"
+                    :draggable="true"
+                />
+            </div> -->
             <!-- <GoogleMapMarker
                 :google="google"
                 :map="map"
                 :marker= "marker"
             /> -->
-            <!-- <GoogleMapMarker
+            <GoogleMapMarker
                 v-for="marker in markers"
                 :key="marker.id"
                 
@@ -36,7 +48,7 @@
                 :marker="marker"
                 :google="google"
                 :map="map"
-            /> -->
+            />
             <!-- <GoogleMapLine
                 v-for="line in lines"
                 :key="line.id"
@@ -64,67 +76,40 @@ export default {
         GoogleMapMarker,
         VueGoogleAutocomplete,
     },
-    props: ['location','address','curMarker',],
+    props: ['location','address','curMarker', 'enterAddress','enterMarker'],
     data() {
         return {
-            
-            //address: '',
-            // curMarker: {
-            //     id: "a",
-            //     position: { lat: 50.456376, lng: 30.380989 },// { lat: 3, lng: 101 }
-            //     content:'Place de la Bastille'
-            // },
             markers: [
-                {
-                    id: "a",
-                    position: { lat: 50.456376, lng: 30.380989 }// { lat: 3, lng: 101 }
+                {id: "a", position: { lat: 50.456376, lng: 30.380989 }// { lat: 3, lng: 101 } 
                 },
-                {
-                    id: "b",
-                    position: { lat: 50.455939, lng: 30.372777 }// { lat: 5, lng: 99 }
-                },
-                {
-                    id: "c",
-                    position: { lat: 50.452482, lng: 30.372232 }// { lat: 6, lng: 97 }
-                }
+                {id: "b", position: { lat: 50.455939, lng: 30.372777 } },
+                { id: "c", position: { lat: 50.452482, lng: 30.372232 } }
             ],
-            isLocationDone: this.$store.getters['selfLocation/doneLocation'].position
+            isLocationDone: this.$store.getters['selfLocation/doneLocation'].position,
+            ourMapIn: null
         };
     },
     watch:{
+        enterAddress(val){
+            console.log(this.$store.getters['create/acLatLng'])
+            // this.markers.push(this.enterMarker)
+            // console.log('enterAddress',this.enterMarker.position, this.ourMapIn)
+            this.placeMarkerAndPanTo(this.enterMarker, this.ourMapIn)
+            // this.enterMarker = this.$store.getters['create/acLatLng']
+            // {
+            //     id: "enter",
+            //     position: this.$store.getters['create/acLatLng'].position,// { lat: 3, lng: 101 }
+            //     content:'address'
+            // }
+        },
         isLocationDone() {
-            console.log('isLocationDone',isLocationDone)
+            // console.log('isLocationDone',isLocationDone)
             this.isLocationDone=true
         },
-        curMarker(newVal,oldVal){
-            //this.address=newVal
-            console.log('WATCH curMarker')
-        },
-        address(newVal,oldVal){
-            //this.address=newVal
-            console.log('WATCH address')
-        },
-        location(newVal,oldVal) {
-            console.log('WATCH location')
-        }
     },
     created() {
-        console.dir(this.$store.getters['selfLocation/doneLocation'].position);
-        // this.$store.watch(
-        //     (state)=>{
-        //         return this.$store.state.selfLocation.gettingLocation // could also put a Getter here
-        //     },
-        //     (newValue, oldValue)=>{
-        //         //something changed do something
-        //         console.log(oldValue)
-        //         console.log(newValue)
-        //         //this.getConsumption();
-        //     },
-        //     //Optional Deep if you need it
-        //         {
-        //         deep:true
-        //         }
-        // )
+        console.dir(this.$store.getters['selfLocation/doneLocation']);
+        
     },
     computed: {
         center(){ 
@@ -135,44 +120,44 @@ export default {
         },
         mapConfig () {
             return {
-                //...mapSettings, // індивідуальні налаштування для вигляду карти
-                //center: { lat: 0, lng: 0 }
                 center: this.center,
                 zoom: 15,
             }
         },
-        mapCenter() {
-           // console.log(this.markers[1].position)
-            //console.dir(this.myPosition.position)
-            //map.setCenter({lat:lat, lng:lng});
-            //return this.markers[1].position || this.myPosition.position  
+        mapCenter() { 
             return this.markers[1].position || {lat: this.marker.address.latitude, lng: this.marker.address.longitude}
         },
-        // marker () {
-        //     console.dir('this.$refs.customMarker')
-        //     console.dir(this.$refs.customMarker)
-        //     return {
-        //         id: "a",
-        //         position: { lat: this.address.latitude, lng: this.address.longitude }// { lat: address.latitude, lng: address.longitude }
-        //     }
-        // }
     },
-    // update() {
-    //     navigator.geolocate()
-    //      console.log('navigator')
-    //      console.log(navigator)
-    //      console.log(this.$refs.vAutoComplete)
-    //     // navigator.geolocate()
-    //     // this.$refs.vAutoComplete.update()
-    //     //console.log(this.$refs.vAutoComplete.geolocate())
-    // },
     methods: {
         onMarkerClick(){
-            console.log("dawdawd")
+            // console.log("dawdawd")
         },
         isDoneFuncInTravel() {
             console.log('isDoneFuncInTravel')
             this.$emit('isDoneFunc')
+        },
+        mapClickInTravel({event, m}){
+            this.$emit('mapClick', {event, m}) 
+            this.placeMarkerAndPanTo(event, m) 
+        },
+        mapCenterChangedInTravel(e){
+            this.$emit('mapCenterChanged', e)  
+        },
+        placeMarkerAndPanTo(event, map) {
+            console.log('placeMarkerAndPanTo')
+            console.log(event, map)
+            var marker = new google.maps.Marker({
+                position: event.latLng || event.position,
+                map: map,
+                icon: 'http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png'
+            });
+            console.log(event.latLng || event.position)
+            map.panTo(event.latLng || event.position);
+            this.$store.dispatch('create/GET_ENCODING', event.latLng)
+        },
+        ourMapInTravel(val){
+            this.$emit('ourMap',val)
+            this.ourMapIn = val
         },
         getAddressData: function (addressData, placeResultData, id) {
             this.address = addressData;

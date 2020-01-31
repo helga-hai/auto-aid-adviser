@@ -1,9 +1,10 @@
 <template>
-  <div>
-    <h3>ACTIVATION</h3>
+  <div class="activation">
+    <p>ACTIVATION...</p>
+    <!-- <h3>ACTIVATION</h3>
     <p>{{key()}}</p>
     <p>{{targetURL()}}{{req()}}</p>
-    <p>{{role}}</p>
+    <p>{{role}}</p> -->
   </div>
   </template>
 
@@ -77,10 +78,33 @@ methods:{
       // return role
   });
   }
-}
+  
+},
+    mounted(){
+
+      {{this.requestKey()}}
+      {{this.redirect()}}
+      
+
+    }
 }
 </script>
 
 <style>
 
+  div.activation{
+    display: block;
+    width: 100%;
+    height: 100vh;
+    background-color: #a3a3a3;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 100vh;
+  }
+  div.activation p{
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+  }
 </style>

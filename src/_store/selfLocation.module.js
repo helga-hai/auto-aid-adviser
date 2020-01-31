@@ -29,8 +29,8 @@ export const selfLocation = {
         changeLocation({ commit }, payload) {
             //do we support geolocation
 
-                commit('getAddressMarker', payload)
-            
+            commit('getAddressMarker', payload)
+
         }
     },
     mutations: {
@@ -39,15 +39,15 @@ export const selfLocation = {
             state.location.position = {};
             state.location.position.lat = placeResultData.geometry.location.lat();
             state.location.position.lng = placeResultData.geometry.location.lng()
-            console.log(state.location.position)
-            // state.acLatLng = { lat: lat, lng: lng }
-            // state.sendObject.location = { latitude: lat, longitude: lng }
-            // state.sendObject.location = {
-            //     address: placeResultData.formatted_address,
-            //     latitude: placeResultData.geometry.location.lat(),
-            //     longitude: placeResultData.geometry.location.lng()
-            // }
-            // state.address = addressData;
+            console.log(state.location)
+                // state.acLatLng = { lat: lat, lng: lng }
+                // state.sendObject.location = { latitude: lat, longitude: lng }
+                // state.sendObject.location = {
+                //     address: placeResultData.formatted_address,
+                //     latitude: placeResultData.geometry.location.lat(),
+                //     longitude: placeResultData.geometry.location.lng()
+                // }
+                // state.address = addressData;
         },
         success(state, message) {
             state.gettingLocation = true;

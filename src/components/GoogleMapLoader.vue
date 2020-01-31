@@ -33,8 +33,23 @@ export default {
     watch: {
       map(newValue,oldValue) {
         if (newValue) {
+            this.$emit('ourMapInTravel',newValue)
             console.log('GoogleMapLoader WATCH map $emit')
-          this.$emit('isDoneFuncInTravel')
+            this.$emit('isDoneFuncInTravel')
+            var th = this;
+
+            this.map.addListener('click', function(e) {  /// CLICK ///
+              var event = e;
+              var m = th.map;
+              th.$emit('mapClickInTravel', {event, m})
+              //console.log(e.latLng, this.map);//placeMarkerAndPanTo(e.latLng, map);
+            });
+
+            this.map.addListener('center_changed', function(e) { /// center_changed ///
+              var event = e;
+              var m = th.map;
+              th.$emit('mapCenterChangedInTravel', e)
+            });
         }
       },
       google(newValue,oldValue) {
