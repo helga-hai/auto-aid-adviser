@@ -20,9 +20,9 @@
                     <span class="chips-sort">Відсортовано за </span> <span>Рейтингом</span>
                 </div>
                 <!-- @click="goToDetail(cur.id)" -->
-                <div v-if="markers" >
-                    <button class="services-prev detail" v-for="cur in markerList()" :key="cur.id"  :isPreview="false">
-                        <div class="services-prev-img small" :style="{backgroundImage: 'url('+require('')+')'}">
+                <div v-if="markers">
+                    <button class="services-prev detail" v-for="cur in markers" :key="cur.id"  :isPreview="false">
+                        <div class="services-prev-img small" :style="{backgroundImage: 'url('+require('../assets/serevice.svg')+')'}"><!--:style="{backgroundImage: 'url('+require('')+')'}"-->
                         </div>
                         <div class="services-prev-info">
                             <div class='name-prev'>{{cur.name}}</div>
@@ -34,15 +34,15 @@
                                     {{d.toTime.slice(0,-3)}} <br>
                                 </span>
                             </p>
-                            <!-- <p class="phone" v-if="cur.contact.phone">{{cur.contact.phone}}</p>
-                            <p class="internet" v-if="cur.contact.url">{{cur.contact.url}}</p> -->
+                            <p class="phone" v-if="cur.contact.phone">{{cur.contact.phone}}</p>
+                            <p class="internet" v-if="cur.contact.url">{{cur.contact.url}}</p>
                         </div>
                     </button>  
                 </div> 
             </div>
             <div class="search-map"></div>
         </div>
-    </div>
+    </div> 
     <!-- <business-layout> -->
         <!-- <span class="role">
             {{info()}}
@@ -63,10 +63,17 @@ export default {
     components: {
       NavComponent, 
     },
-    // props:['markers'],
+    props:['markers'],
+    // {
+    //     markers: {
+    //         type: Object,
+    //         default: null
+    //     }
+    // },
     data() {
         return {
-            count: 23
+            count: 23,
+            markerList: null
         }
     },
     // computed: {
