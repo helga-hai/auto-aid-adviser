@@ -173,28 +173,12 @@ function getAllUserData(path) {
             return data
         });
 
-
-
-    // .then(console.log('foo baz'))
-    // .then(data=>{return data;});
 }
 
 function postAllUserData(path, data) {
 
     let token = localStorage.getItem('token');
 
-    //     var boundary = String(Math.random()).slice(2);
-    //     var boundaryMiddle = '--' + boundary + '\r\n';
-    //     var boundaryLast = '--' + boundary + '--\r\n'
-
-    //     var _body = ['\r\n'];
-    //     var _data = data;
-    //     for (var key in _data) {
-    //   // добавление поля
-    //     _body.push('Content-Disposition: form-data; name="' + key + '"\r\n\r\n' + _data[key] + '\r\n');
-    //     }
-
-    // _body = _body.join(boundaryMiddle) + boundaryLast;
     let _data = JSON.stringify(data);
 
     const requestOptions = {
