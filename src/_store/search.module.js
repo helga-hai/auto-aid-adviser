@@ -12,7 +12,11 @@ export const search = {
         serviceForBusiness: '',
         searchData: null
     },
-    getters: {},
+    getters: {
+        SEARCHDATA: state => {
+            return state.searchData; //let name = this.$store.getters.NAME
+        },
+    },
     mutations: {
         SET_POSITION: (state, { lat, lng }) => {
             state.latitude = lat;
