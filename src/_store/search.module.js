@@ -32,8 +32,9 @@ export const search = {
                 // let uri = userService.config.apiUrl + '/api/businesses/' + context.state.serviceForBusiness + '/' + context.state.longitude + '/' + context.state.latitude;
             console.log('START_SEARCH', uri);
             let options = authHeader() ? { headers: authHeader() } : {};
-            let { data } = await axios.get(uri, options); ///{serviceForBusiness}/{longtitude}/{latitude}
-            context.commit('SET_SEARCH', data);
+            let response = await axios.get(uri, options); ///{serviceForBusiness}/{longtitude}/{latitude}
+            context.commit('SET_SEARCH', response.data);
+            return response
         },
         GET_POSITION_AUTOCOMPLETE: async(context, { addressData, placeResultData, id }) => {
             let lat = addressData.latitude

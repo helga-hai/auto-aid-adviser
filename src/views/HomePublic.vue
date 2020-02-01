@@ -148,8 +148,13 @@ export default {
       this.$store.dispatch('templateB/GET_DATALIST')
     },
     methods: {
-      startSearch() {
-        this.$store.dispatch('search/START_SEARCH')
+      // startSearch() {
+      //   this.$store.dispatch('search/START_SEARCH')
+      // },
+      async startSearch() {
+        const response = await this.$store.dispatch('search/START_SEARCH')
+        console.log(response)
+        this.markets = response.data
       },
       isRoleFunc(){
         let role = localStorage.getItem('role');
