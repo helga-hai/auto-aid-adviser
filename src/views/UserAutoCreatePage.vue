@@ -41,6 +41,7 @@ export default {
         createStepOne() {
             console.log("work");
             return this.$emit('switchView','user-auto-create-page2');
+            // return this.$emit('switchView','user-auto-complite-car-cards-page')
         },
         getTypeAndBrand(){
             console.log('FOOOOOO');
@@ -52,15 +53,7 @@ export default {
             .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'brands']))
 
         },
-        // getTypes(){
-        //         console.log("Foo bar");
-        //         // let data = userService.getAllUserData('api/catalog/car/types');
-        //         // return data;
-        //         return userService.getAllUserData('api/catalog/car/types');
-        // },
-        // destroy(){
-        //     Foo();
-        // }
+
     },
 }
 </script>

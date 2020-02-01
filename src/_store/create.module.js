@@ -133,18 +133,18 @@ export const create = {
                     'Content-Type': 'application/json; charset=utf-8',
                 },
             }
+            context.state.sendObject.location.latitude = lat
+            context.state.sendObject.location.longitude = lng
             let { data } = await axios(uri, config);
-            context.commit('SET_ENCODING', data);
+            context.commit('SET_ENCODING', data, lat, lng);
         }
     },
     mutations: {
         fillBusinesTemplate(state, payload) {
-            console.log('dawdawdaw', payload)
             state.sendObject = payload;
         },
 
         fillName(state, payload) {
-            console.log('payload', payload)
             state.sendObject.name = payload
         },
         // fillLocation(state, payload){
@@ -198,10 +198,9 @@ export const create = {
             state.myObjects = payload;
         },
         SET_ENCODING: (state, payload) => {
-            console.log('SET_ENCODING')
             var longest = payload.results.reduce(function(a, b) { return a.formatted_address.length > b.formatted_address.length ? a : b; });
-            console.dir(payload.results)
             state.encoding = longest.formatted_address;
+            state.sendObject.location.address = longest.formatted_address;
             console.log(longest.formatted_address)
         },
         // getAllRequest(state) {
