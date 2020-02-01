@@ -9,7 +9,8 @@ export const search = {
     state: {
         latitude: '',
         longitude: '',
-        serviceForBusiness: ''
+        serviceForBusiness: '',
+        searchData: null
     },
     getters: {},
     mutations: {
@@ -21,7 +22,7 @@ export const search = {
             state.serviceForBusiness = payload;
         },
         SET_SEARCH: (state, payload) => {
-            console.log(payload)
+            state.searchData = payload
         },
     },
     actions: {
@@ -31,8 +32,8 @@ export const search = {
             let uri = userService.config.apiUrl + `/api/search?service=${context.state.serviceForBusiness}&latitude=${context.state.latitude}&longitude=${context.state.longitude}&radius=10.0`
                 // let uri = userService.config.apiUrl + '/api/businesses/' + context.state.serviceForBusiness + '/' + context.state.longitude + '/' + context.state.latitude;
             console.log('START_SEARCH', uri);
-            // let options = authHeader() ? { headers: authHeader() } : {};
-            let response = await axios.get(uri, options); ///{serviceForBusiness}/{longtitude}/{latitude}
+            let options = authHeader() ? { headers: authHeader() } : {};
+            let response = await axios.get(uri, options);
             context.commit('SET_SEARCH', response.data);
             return response
         },

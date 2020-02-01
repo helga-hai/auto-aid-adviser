@@ -159,7 +159,8 @@ export default {
       // },
       async startSearch() {
         const response = await this.$store.dispatch('search/START_SEARCH')
-        console.log(response)
+        console.log('startSearch',response)
+        console.dir(response)
         this.markets = response.data
       },
       isRoleFunc(){
