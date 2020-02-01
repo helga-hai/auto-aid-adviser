@@ -13,6 +13,7 @@ import Activation from '../components/Activation';
 
 import MapPage from '../views/Map';
 import AboutPage from '../views/About';
+// import SearchPublic from '../views/SearchPublic';
 // import CreatePage from '../views/CreatePage';
 // import CreatePage2 from '../views/CreatePage2';
 // import CreatePage3 from '../views/CreatePage3';

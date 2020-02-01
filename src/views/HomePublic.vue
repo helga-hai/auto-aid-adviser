@@ -127,7 +127,8 @@ export default {
         curLoc: false,
         ac: false,
         preloader: false,
-        afterPreloader: false
+        afterPreloader: false,
+        markets: null
       }
     },
     watch: {
@@ -135,6 +136,10 @@ export default {
         if(newVal) {
           this.$store.dispatch('search/GET_POSITION_SELFLOCATION', newVal)
         }
+      },
+      markets(){
+        // this.$router.push()
+        // this.$router.push({ name: 'user', params: { userId: '123' } })
       }
     },
     computed: {
