@@ -35,13 +35,14 @@
                 <p>Особистий кабінет</p>
                 <ul>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-create-page1')" :class="{'active': currentView == 'user-create-page1' || currentView == 'user-profile-ready-page'}">Особисті данні</a></li>
-                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-auto-create-page')" :class="{'active': currentView == 'user-auto-create-page' || currentView == 'user-auto-create-page2' }">Мої автомобілі</a></li>
+                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView(getCurrentView( 'cars' , [ 'user-auto-create-page' , 'user-auto-complite-car-cards-page' ]))" :class="{'active': currentView == 'user-auto-create-page' || currentView == 'user-auto-create-page2' || currentView == 'user-auto-complite-car-cards-page' }">Мої автомобілі</a></li>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-station-recording')" :class="{'active': currentView == 'user-station-recording' }">Записи до станції</a></li>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-settings')" :class="{'active': currentView == 'user-settings' }">Налаштування</a></li>
                     <!-- <li>text: {{mIt}}</li> -->
                 </ul>
             </section>
             <section class="objectsWrapp">
+                <!-- {{cars()}} -->
                 <!-- <slot></slot> -->
                 <keep-alive><!-- Неактивные компоненты будут закэшированы -->
                     <component :is="currentView" @switchView='switchView'></component>
@@ -82,6 +83,10 @@ import UserSettings from '../views/UserSettings';
 import UserStationRecording from '../views/UserStationRecording'
 import UserProfileReadyPage from '../views/UserProfileReadyPage';
 import NavComponent from '../components/NavComponent';
+import UserAutoCompliteCarCardsPage from '../views/UserAutoCompliteCarCardsPage';
+
+import  userdataservice  from '../_store/userdataservice.module';
+import { userService } from '../_services';
 
 export default {
     // props:['email'],
@@ -94,12 +99,14 @@ export default {
         UserStationRecording,
         UserProfileReadyPage,
         NavComponent,
+        UserAutoCompliteCarCardsPage,
     },
     data(){
         return{
             currentView:"user-create-page1",
             // mIt:"Особисті данні",
             email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
+            cars: [1,2,3],
 
         }
     },
@@ -116,7 +123,54 @@ export default {
             this.currentView = view;
         },
 
+        getCars(){
+            console.log('GET_CARS')
+
+            userService.getAllUserData( 'api/user/profile/cars' )
+
+                .then(function(result){
+
+                    console.log("CARS "+result);
+
+                    // this.cars = result
+
+                    return result })
+
+                .then( result => {
+                
+                this.$store.dispatch( 'userdataservice/fieldsVal', [ result, 'cars' ]) });
+
+        },
+
+        getCurrentView( param , viewArr){
+
+            this[ param ] = this.$store.state.userdataservice[param]
+
+            console.log("getCurrentView "+this.$store.state.userdataservice.cars );
+
+            console.log("getCurrentView "+this[ param ] );
+
+            console.log("getCurrentView "+this.currentView );
+
+            if( this[ param ] == null || this[ param ] == undefined || this[ param ].length == 0){
+
+                return viewArr[ 0 ];
+            }else{
+
+                return viewArr[ 1 ];
+            }
+
+        },
+
     },
+
+    beforeMount(){
+
+        {{this.getCars()}}
+
+    },
+
+
 
 }
 
