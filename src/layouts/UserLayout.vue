@@ -42,6 +42,7 @@
                 </ul>
             </section>
             <section class="objectsWrapp">
+                <!-- {{cars()}} -->
                 <!-- <slot></slot> -->
                 <keep-alive><!-- Неактивные компоненты будут закэшированы -->
                     <component :is="currentView" @switchView='switchView'></component>
@@ -84,7 +85,7 @@ import UserProfileReadyPage from '../views/UserProfileReadyPage';
 import NavComponent from '../components/NavComponent';
 import UserAutoCompliteCarCardsPage from '../views/UserAutoCompliteCarCardsPage';
 
-import userdataservice from '../_store/userdataservice.module';
+import  userdataservice  from '../_store/userdataservice.module';
 import { userService } from '../_services';
 
 export default {
@@ -105,7 +106,7 @@ export default {
             currentView:"user-create-page1",
             // mIt:"Особисті данні",
             email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
-            cars: this.$store.state.userdataservice.cars,
+            cars: [1,2,3],
 
         }
     },
@@ -131,24 +132,27 @@ export default {
 
                     console.log("CARS "+result);
 
+                    // this.cars = result
+
                     return result })
 
-                .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[ 'cars' , result ]))
+                .then( result => {
+                
+                this.$store.dispatch( 'userdataservice/fieldsVal', [ result, 'cars' ]) });
 
-                // .then( ()=>{
-                //     let _cars = this.$store.state.userdataservice.cars;
-
-                //     console.log("CARS _CARS!!!!!!!!!!!!!!!!! from UserLayout"+_cars );
-
-                //     this.cars = _cars;
-                //     })
         },
 
         getCurrentView( param , viewArr){
 
-            console.log("getCurrentView "+param);
+            this[ param ] = this.$store.state.userdataservice[param]
 
-            if( param == null || param == undefined || param.length == 0){
+            console.log("getCurrentView "+this.$store.state.userdataservice.cars );
+
+            console.log("getCurrentView "+this[ param ] );
+
+            console.log("getCurrentView "+this.currentView );
+
+            if( this[ param ] == null || this[ param ] == undefined || this[ param ].length == 0){
 
                 return viewArr[ 0 ];
             }else{
@@ -160,20 +164,9 @@ export default {
 
     },
 
-    created(){
+    beforeMount(){
 
-        // {{this.getCars()}}
-        console.log('GET_CARS from USER_LAYOUT')
-
-        userService.getAllUserData( 'api/user/profile/cars' )
-
-            .then(function(result){
-
-                console.log("CARS "+result);
-
-                return result })
-
-            .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[ 'cars' , result ]))
+        {{this.getCars()}}
 
     },
 

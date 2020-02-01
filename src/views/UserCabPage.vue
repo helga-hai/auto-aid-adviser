@@ -78,40 +78,9 @@ export default {
             // this.step1 = false;
             // this.step2 = true;
         },
-        // menuToggler(){
-        //     switch(this.$store.state.userdataservice.menuItem){
-        //         case "Особисті данні":
-        //             console.log("foo");
-        //             p1=true;
-        //             break;
-        //         case "Мої автомобілі":
-        //             console.log("bar");
-        //             p1=false;
-        //             p2=true;
-        //             break;
-        //         default:
-        //             p1=true;
-        //             break;
-        //     }
-
-        // }
 
     },
 
-/////////////////////////////////////////////
-    // computed:{
-    //     menuPos() {
-    //         return UserLayout.data().mIt
-    //     },
-    // },
-    // watch:{
-    //     menuPos() {
-    //         return UserLayout.data().mIt
-    //     },
-    // }
-
-
-    ////////////////////////////////////////
 }
 </script>
 

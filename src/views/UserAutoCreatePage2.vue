@@ -20,7 +20,7 @@
 
 
             </div>
-                <span>Выбрано: {{ selectedType }} {{selectedTypeId}}</span>
+                <span>Выбрано: {{ selectedType }} {{ selectedTypeId }}</span>
             <form @submit.prevent='saveAuto'>
 
 
@@ -210,7 +210,7 @@ export default {
             }else{
             return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
             },
-            currentIndex:''||this.$store.state.userdataservice.currentIndex,
+            currentIndex: '' || this.$store.state.userdataservice.currentIndex,
             year:"",
             types() {return this.$store.state.userdataservice.types},
             selectedType:'',
@@ -410,11 +410,14 @@ export default {
 
             console.log(images);
 
-            
-            // let autoInfo = JSON.stringify(auto);
-            this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images })
+            this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images });
 
+            this.clearField('modelType', 'models','currentIndex');
+            
             this.$emit('switchView','user-auto-complite-car-cards-page');
+
+            
+
             
 
 
