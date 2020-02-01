@@ -138,8 +138,9 @@ export default {
         }
       },
       markets(){
-        // this.$router.push()
-        // this.$router.push({ name: 'user', params: { userId: '123' } })
+        console.log('router PUSH Search')
+        var th = this
+        this.$router.push({ name:'Search', params: { markets: th.markets } })
       }
     },
     computed: {
@@ -470,28 +471,6 @@ cursor: pointer;
   .btn{
     margin-top: 30.6px;
   }
-  .btn__button {
-    display:block;
-    width: 146px;
-    height: 56px;
-    padding: 19px 0px;
-    font-size: 16px;
-    line-height: 18px;
-    text-transform: uppercase;
-    color: #0E1E2E;
-    text-align: center;
-    border-radius: 4px;
-  }
-  .btn__button.orange {
-    background-color: #FFC700;
-    &[disabled] {
-      cursor: default;
-      background-color: rgb(141, 141, 140);
-    }
-    &:active {
-      background-color: rgba(247, 181, 0, 0.932);
-    }
-  }
   /*body{
     width: 800px;
     border: 1px solid;
@@ -644,4 +623,29 @@ svg#svg-filter {
       }
     }
 }
+  .btn__button {
+    display:block;
+    width: 146px;
+    height: 56px;
+    padding: 19px 0px;
+    font-size: 16px;
+    line-height: 18px;
+    text-transform: uppercase;
+    color: #0E1E2E;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .btn__button.orange {
+    background-color: #FFC700;
+    &[disabled] {
+      cursor: default;
+      background-color: rgb(141, 141, 140);
+    }
+    &:hover {
+      background-color: rgba(241, 177, 1, 0.932);
+    }
+    &:active {
+      background-color: rgba(247, 181, 0, 0.932);
+    }
+  }
 </style>
