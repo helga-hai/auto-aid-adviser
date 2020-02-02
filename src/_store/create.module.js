@@ -26,7 +26,7 @@ export const create = {
         myObjects: null,
         encoding: null,
         markersEntities: {
-            'marker-23': marker
+            // 'marker-23': marker
         }
     },
     getters: {
