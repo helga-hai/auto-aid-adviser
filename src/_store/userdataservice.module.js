@@ -18,6 +18,9 @@ export const userdataservice = {
         selectedModelId: null,
         currentIndex: null,
         cars: null,
+        currentCar: null,
+
+
         images: null,
 
 

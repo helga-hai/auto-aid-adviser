@@ -84,6 +84,7 @@ import UserStationRecording from '../views/UserStationRecording'
 import UserProfileReadyPage from '../views/UserProfileReadyPage';
 import NavComponent from '../components/NavComponent';
 import UserAutoCompliteCarCardsPage from '../views/UserAutoCompliteCarCardsPage';
+import UserAutoComplite from '../views/UserAutoComplite'
 
 import  userdataservice  from '../_store/userdataservice.module';
 import { userService } from '../_services';
@@ -100,6 +101,7 @@ export default {
         UserProfileReadyPage,
         NavComponent,
         UserAutoCompliteCarCardsPage,
+        UserAutoComplite,
     },
     data(){
         return{

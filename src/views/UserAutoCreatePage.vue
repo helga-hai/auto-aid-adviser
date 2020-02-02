@@ -99,8 +99,7 @@ export default {
 }
 .Image__labe {
     width: 360px;
-    height: 377px;
-  
+    height: 377px; 
 }
 div.banner{
     border: 2px solid #FFC700;

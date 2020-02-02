@@ -1,26 +1,26 @@
 <template>
   <div >
 
-        <div class = "CarCardsContent">
-            <div class = "CarCardWrapper">
-                <div class = "CarCards"
-                @click='lookAuto'
-                v-for="c of cars"
+
+            <!-- <div class = "CarWrapper">
+                <div class = "Car"
+
+                v-for="c of currentCar"
                 :key="c.id"
                 :id="c.id"
                 >
                     <img alt='' :src = "c.images[0].urlImage"/>
                     <div class = "info">
-                        <h5>{{c.carModel.carBrand.name}}</h5>
-                        <p>{{c.carModel.name}}/{{c.releaseYear}}</p>
+                        <h5>vnvhn{{currentCar.carModel.carBrand.name}}</h5>
+                        <p>fdngdgnh{{currentCar.carModel.name}}/{{c.releaseYear}}</p>
                         <p>{{c.individualCarNaming}}</p>
                     </div>              
                 </div>
-            </div>
-            <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/illustration_Car.svg')+')'}"></div>
-      </div>
+            </div> -->
+            {{currentCar}}
+            {{}}
     
-      <span><a href="#" class="objects__button" @click="createStepOne">Додати автомобіль</a></span>
+
   </div>
 </template>
 
@@ -31,12 +31,12 @@ import { userService } from '../_services';
 
 export default {
 
-    name: 'UserAutoCompliteCarCardsPage',
+    name: 'UserAutoComplite',
 
     data(){
 
         return {
-            cars: this.$store.state.userdataservice.cars,
+            currentCar: this.$store.state.userdataservice.currentCar,
 
         }
 
@@ -64,19 +64,18 @@ export default {
                     this.cars = _cars;})
 
         },
-        lookAuto(e){
+        // lookAuto(e){
 
-            var
-            currentCarID = e.target.id;
-            console.log(currentCarID);
+        //     var
+        //     currentCarID = e.target.id;
+        //     console.log(currentCarID);
 
-            userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
-            .then(function(result){return result})
-            .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]))
-            // .(this.$emit('switchView','user-auto-complite'));
+        //     userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
+        //     .then(function(result){return result})
+        //     .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'currentCar']))
 
 
-        },
+        // },
 
         createStepOne() {
             console.log("work");
@@ -85,11 +84,11 @@ export default {
         },
     },
 
-    mounted(){
+    // mounted(){
 
-        {{this.getCars()}}
+    //     {{this.getCars()}}
 
-    }
+    // }
 
 
 }
