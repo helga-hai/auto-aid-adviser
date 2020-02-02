@@ -82,7 +82,6 @@ export default {
             enableGeolocation: true,
             ele: this.$store.state.create.sendObject,
             location: this.$store.state.selfLocation.location,
-            groups: ['СТО','Шиномонтаж','Мойка'],
             curMarker: {
                 id: "a",
                 position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }
@@ -178,9 +177,7 @@ export default {
             this.$store.commit('create/fillSite', e.target.value)
         },
         isDoneFunc(e){
-            console.log('isDoneFunc') // google map is load 
-            this.isDone=true; // - start autocomplete
-            //this.$refs.vAutoComplete.geolocate(); // - start autocomplete geolocale -not workinfg here
+            this.isDone=true; 
         },
         getAddressData(addressData, placeResultData, id){
             this.$store.commit('create/getAddressData', {addressData, placeResultData, id})

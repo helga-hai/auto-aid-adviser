@@ -98,6 +98,7 @@ import Authorization from '../views/AuthorizationPage';
 import LoginPage from '@/views/LoginPage.vue';
 import RegisterPage from '@/views/RegisterPage.vue';
 import VueGoogleAutocomplete from 'vue-google-autocomplete';
+import {mapGetters} from 'vuex';
 
 export default {
     name: 'HomePublic',
@@ -138,12 +139,23 @@ export default {
         }
       },
       markets(){
-        console.log('router PUSH Search')
-        var th = this
-        this.$router.push({ name:'Search', params: { markets: th.markets } })
-      }
+        console.log('router PUSH to /search?...')
+        const newQuery = {}
+        newQuery.service = this.SERVICEFORBUSINESS
+        newQuery.latitude = this.LATITUDE
+        newQuery.longitude = this.LONGITUDE
+        newQuery.radius = '10.0'
+        this.$router.push({ name:'Search', query: newQuery})
+      }//?service=Замена%20воздушного%20фильтра&latitude=50.4535353&longitude=30.365232199999998&radius=10.0#
     },
     computed: {
+        ...mapGetters({
+            markers: 'search/SEARCHDATA',
+            gettingLocation: 'selfLocation/gettingLocation',
+            SERVICEFORBUSINESS: 'search/SERVICEFORBUSINESS',
+            LATITUDE: 'search/LATITUDE',
+            LONGITUDE: 'search/LONGITUDE'
+         }),
         gettingLocation() {
           console.dir('this.$route')
           console.dir(this.$route)

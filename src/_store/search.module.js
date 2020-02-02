@@ -16,6 +16,15 @@ export const search = {
         SEARCHDATA: state => {
             return state.searchData; //let name = this.$store.getters.NAME
         },
+        SERVICEFORBUSINESS: state => {
+            return state.serviceForBusiness;
+        },
+        LATITUDE: state => {
+            return state.latitude;
+        },
+        LONGITUDE: state => {
+            return state.longitude;
+        },
     },
     mutations: {
         SET_POSITION: (state, { lat, lng }) => {
