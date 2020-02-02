@@ -152,12 +152,12 @@ export default {
             }
         },
         count() {
-            return this.markers.length  
+            return this.markers ? this.markers.length : ''  
         },
         queryLocation(){
             let tmp = {}
-            tmp.lat = this.$route.query.latitude;
-            tmp.lng = this.$route.query.lngitude;
+            // tmp.lat = this.$router.query.latitude;
+            // tmp.lng = this.$router.query.lngitude;
             return tmp
         },
         // mapConfig () {
@@ -222,7 +222,7 @@ export default {
         }
     },
     mounted(){
-            console.log('mounted')
+        console.log('mounted')
         this.fetchData()
         // var th = this
         // this.$router.push({ name:'Search', params: { markets: th.markets } })
