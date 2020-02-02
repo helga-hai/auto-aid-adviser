@@ -11,7 +11,7 @@
                 >
                     <img alt='' :src = "c.images[0].urlImage"/>
                     <div class = "info">
-                        <h5>{{c.carModel.carBrand.name}}</h5>
+                        <!-- <h5>{{c.carModel.carBrand.name}}</h5> -->
                         <p>{{c.carModel.name}}/{{c.releaseYear}}</p>
                         <p>{{c.individualCarNaming}}</p>
                     </div>              
