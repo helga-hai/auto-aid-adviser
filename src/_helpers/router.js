@@ -47,7 +47,7 @@ export const router = new Router({
         { path: '/successRegister', component: SuccessRegister },
         { path: '/user/activation', component: Activation },
         { path: '/user/activation/*', redirect: '/user/activation' },
-        { path: '/search', component: SearchPublic, name: "Search",  },
+        { path: '/search', component: SearchPublic, name: "Search", },
 
 
         //test path
