@@ -36,7 +36,7 @@ export const templateB = {
         GET_CATTEGORY_LIST: async(context, payload) => {
             const config = {
                 method: 'get',
-                url: userService.config.apiUrl + '/api/catalog/business/type/17/service/types',
+                url: userService.config.apiUrl + '/api/catalog/business/type/1/service/types',
                 headers: authHeader()
             }
             let { data } = await axios(config);
