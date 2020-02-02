@@ -24,7 +24,10 @@ export const create = {
         },
         businessPrepend: null,
         myObjects: null,
-        encoding: null
+        encoding: null,
+        markersEntities: {
+            'marker-23': marker
+        }
     },
     getters: {
         SendObject: state => {
