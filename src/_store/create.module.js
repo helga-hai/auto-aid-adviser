@@ -42,6 +42,9 @@ export const create = {
         encoding: state => {
             return state.encoding; //let name = this.$store.getters.NAME
         },
+        ADDRESS: state => {
+            return state.address; //let name = this.$store.getters.ADDRESS
+        },
     },
     actions: {
         // getAll({ commit }) {
@@ -122,9 +125,10 @@ export const create = {
             // context.commit('', data);
         },
         GET_ENCODING: async(context, payload) => {
-            const lat = payload.lat();
-            const lng = payload.lng();
-            console.log('payload.lng ', typeof payload.lng())
+            console.log('payload type', typeof payload)
+            console.log('payload ', payload)
+            const lat = payload.lat;
+            const lng = payload.lng;
             let uri = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=' + 'AIzaSyBasISENNNlp6Immcd1Rr5pGhkQ5Um1ZVA'
             var config = {
                 method: "GET",
@@ -202,6 +206,7 @@ export const create = {
             state.encoding = longest.formatted_address;
             state.sendObject.location.address = longest.formatted_address;
             console.log(longest.formatted_address)
+            state.address = longest.formatted_address;
         },
         // getAllRequest(state) {
         //     state.all = { loading: true };

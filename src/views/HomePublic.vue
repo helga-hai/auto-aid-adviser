@@ -26,7 +26,7 @@
             <div class="two">
               <label for="">Де шукати</label>
               <button type="button" name="button" @click="submenuShow = !submenuShow" v-if="!ac">
-                <div class="selected-option">{{curLoc ? curLoc : plase}}</div>
+                <div class="selected-option">{{this.ADDRESS ? this.ADDRESS : plase}}</div>
                 <img :src="require('../assets/ico-dropdown.png')" class="registrStep2__icon" :class="{'transform': submenuShow}">
               </button>
               <div class="ac-input" slot="acompl" v-if="isDone && ac" >
@@ -129,23 +129,24 @@ export default {
         ac: false,
         preloader: false,
         afterPreloader: false,
-        markets: null
+        goSearchPage: false
       }
     },
     watch: {
       curLoc(newVal,oldVal) {
         if(newVal) {
           this.$store.dispatch('search/GET_POSITION_SELFLOCATION', newVal)
+          this.$store.dispatch('create/GET_ENCODING', newVal)
         }
       },
-      markets(){
+      goSearchPage(){
         console.log('router PUSH to /search?...')
         const newQuery = {}
         newQuery.service = this.SERVICEFORBUSINESS
         newQuery.latitude = this.LATITUDE
         newQuery.longitude = this.LONGITUDE
         newQuery.radius = '10.0'
-        this.$router.push({ name:'Search', query: newQuery})
+        this.$router.push({ path: '/search', name:'Search', query: newQuery})
       }//?service=Замена%20воздушного%20фильтра&latitude=50.4535353&longitude=30.365232199999998&radius=10.0#
     },
     computed: {
@@ -154,7 +155,8 @@ export default {
             gettingLocation: 'selfLocation/gettingLocation',
             SERVICEFORBUSINESS: 'search/SERVICEFORBUSINESS',
             LATITUDE: 'search/LATITUDE',
-            LONGITUDE: 'search/LONGITUDE'
+            LONGITUDE: 'search/LONGITUDE',
+            ADDRESS: 'create/ADDRESS'
          }),
         gettingLocation() {
           console.dir('this.$route')
@@ -169,11 +171,11 @@ export default {
       // startSearch() {
       //   this.$store.dispatch('search/START_SEARCH')
       // },
-      async startSearch() {
-        const response = await this.$store.dispatch('search/START_SEARCH')
-        console.log('startSearch',response)
-        console.dir(response)
-        this.markets = response.data
+      startSearch() {
+        // const response = await this.$store.dispatch('search/START_SEARCH')
+        // console.log('startSearch',response)
+        // console.dir(response)
+        this.goSearchPage = true
       },
       isRoleFunc(){
         let role = localStorage.getItem('role');

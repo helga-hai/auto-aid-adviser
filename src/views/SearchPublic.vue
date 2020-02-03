@@ -4,8 +4,8 @@
         <div class="search-wrap">
             <div class="search-dashboard">
                 <div class="top-line">
+                    <div class="controls-error" v-if="error.q_service.status">{{error.q_service.value}}</div>
                     <div class="controls">
-                        <!-- <input type='text' placeholder="Оберіть послугу"> -->
                         <websocket />
                         <div class="btn">
                             <a href="#" class="btn__button orange "  @click="startRoute" >застосувати</a>
@@ -48,49 +48,14 @@
             <div class="search-map">
                 <div class="Step1Image__labe" >
                     <div v-if="gettingLocation">loading...</div>
-                    <div v-else>
-                        <!-- <travel-map class="guide"
-                        :mapCenter="queryLocation" 
-                        :mapConfig="mapConfig"
-                        :curMarker="markers.position"
-                        @mapClick="mapClick"
-                        @mapCenterChanged="mapCenterChanged"
-                        @ourMap="ourMap"
-                        :ac_center="ac_center"
-                            /> -->
-                        <!-- :enterMarker="enterMarker"
-                         @mapClick="mapClick"
-                         @mapCenterChanged="mapCenterChanged"
-                         @ourMap="ourMap"
-                         :enterAddress="enterAddress"
-                         :toggleAddres="toggleAddres"
-                         :ac_center="ac_center" -->
-                            <!-- @isDoneFuncInTravel="isDoneFuncInTravel"
-                            @mapClickInTravel="mapClickInTravel"
-                            @mapCenterChangedInTravel="mapCenterChangedInTravel"
-                            @ourMapInTravel="ourMapInTravel" 
-                            :center="inner_ac_center"-->
-                         <GoogleMapLoader 
-                            
+                    <div v-else-if="queryLocation">
+                        <GoogleMapLoader
                             @isDoneFuncInTravel="isDoneFunc"
                             :mapConfig="mapConfig"
                             :center="queryLocation"
                             apiKey="AIzaSyB_nA80Ha1asyGCQtdcgAGZNtd6Vzr8p3A"
                         >
                             <template v-slot:default="{ google, map }" @isDoneFuncInTravel="isDoneFunc"> 
-                                <!-- <GoogleMapMarker
-                                /> -->
-                                    <!-- v-for="marker in newMarkers"
-                                    :key="marker.id"
-                                    
-                                    :enableGeolocation="true"
-                                    @focus="onFocus()"
-                                    @blur="onBlur()"
-                                    
-                                    :marker="marker"
-                                    :google="google"
-                                    :map="map"
-                                    @setmap="setmapInTraver" -->
                             </template>
                          </GoogleMapLoader>
                     </div>
@@ -135,6 +100,22 @@ export default {
             //     position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }
             //     content:'You are here'
             // },
+            q_service: null,
+            error: {
+                q_service: {
+                    value: 'Оберіть сервіс',
+                    status: false
+                },
+                q_service: {
+                    value: 'Оберіть сервіс',
+                    status: false
+                },
+                q_service: {
+                    value: 'Оберіть сервіс',
+                    status: false
+                },
+
+            }
         }
     },
     computed: {
@@ -143,7 +124,7 @@ export default {
             gettingLocation: 'selfLocation/gettingLocation',
             SERVICEFORBUSINESS: 'search/SERVICEFORBUSINESS',
             LATITUDE: 'search/LATITUDE',
-            LONGITUDE: 'search/LONGITUDE'
+            LONGITUDE: 'search/LONGITUDE',
          }),
         mapConfig () {
             return {
@@ -223,6 +204,21 @@ export default {
     },
     mounted(){
         console.log('mounted')
+        console.log(this.$route)
+        if(!this.$route.query.service) { 
+             if(!this.SERVICEFORBUSINESS){
+                this.error.q_service.status = true 
+             }
+            this.q_service = this.SERVICEFORBUSINESS || ''; 
+        }
+        if(!this.$route.query.latitude) { 
+            if(!this.LATITUDE) {
+                this.$store.dispatch('selfLocation/getLocation');
+            }
+        }
+        // this.q_latitude = this.LATITUDE
+        // this.q_longitude = this.LONGITUDE
+        // this.q_radius = '10.0'
         this.fetchData()
         // var th = this
         // this.$router.push({ name:'Search', params: { markets: th.markets } })
@@ -248,6 +244,7 @@ export default {
     }
     .top-line {
         padding: 40px 50px 0px;
+        position: relative;
     }
     .content-line {
         background: #FFFFFF;
@@ -299,6 +296,13 @@ export default {
         button {
             text-align:left;
         }
+    }
+    .controls-error {
+        position: absolute;
+        top: 14px;
+        color: red;
+        z-index: 2;
+        font-size: 13px;
     }
 }
 .search-map {
