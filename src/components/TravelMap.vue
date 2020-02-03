@@ -165,7 +165,7 @@ export default {
         placeMarkerAndPanTo(event, map) {
             console.log('placeMarkerAndPanTo')
             console.log(event, map)
-            var marker = new google.maps.Marker({
+            new google.maps.Marker({
                 position: event.latLng || event.position,
                 map: map,
                 icon: 'http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png'
