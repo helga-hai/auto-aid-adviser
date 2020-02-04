@@ -24,7 +24,10 @@ export const create = {
         },
         businessPrepend: null,
         myObjects: null,
-        encoding: null
+        encoding: null,
+        markersEntities: {
+            // 'marker-23': marker
+        }
     },
     getters: {
         SendObject: state => {
@@ -41,6 +44,9 @@ export const create = {
         },
         encoding: state => {
             return state.encoding; //let name = this.$store.getters.NAME
+        },
+        ADDRESS: state => {
+            return state.address; //let name = this.$store.getters.ADDRESS
         },
     },
     actions: {
@@ -122,9 +128,10 @@ export const create = {
             // context.commit('', data);
         },
         GET_ENCODING: async(context, payload) => {
-            const lat = payload.lat();
-            const lng = payload.lng();
-            console.log('payload.lng ', typeof payload.lng())
+            console.log('payload type', typeof payload)
+            console.log('payload ', payload)
+            const lat = payload.lat;
+            const lng = payload.lng;
             let uri = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=' + 'AIzaSyBasISENNNlp6Immcd1Rr5pGhkQ5Um1ZVA'
             var config = {
                 method: "GET",
@@ -133,18 +140,18 @@ export const create = {
                     'Content-Type': 'application/json; charset=utf-8',
                 },
             }
+            context.state.sendObject.location.latitude = lat
+            context.state.sendObject.location.longitude = lng
             let { data } = await axios(uri, config);
-            context.commit('SET_ENCODING', data);
+            context.commit('SET_ENCODING', data, lat, lng);
         }
     },
     mutations: {
         fillBusinesTemplate(state, payload) {
-            console.log('dawdawdaw', payload)
             state.sendObject = payload;
         },
 
         fillName(state, payload) {
-            console.log('payload', payload)
             state.sendObject.name = payload
         },
         // fillLocation(state, payload){
@@ -198,11 +205,11 @@ export const create = {
             state.myObjects = payload;
         },
         SET_ENCODING: (state, payload) => {
-            console.log('SET_ENCODING')
             var longest = payload.results.reduce(function(a, b) { return a.formatted_address.length > b.formatted_address.length ? a : b; });
-            console.dir(payload.results)
             state.encoding = longest.formatted_address;
+            state.sendObject.location.address = longest.formatted_address;
             console.log(longest.formatted_address)
+            state.address = longest.formatted_address;
         },
         // getAllRequest(state) {
         //     state.all = { loading: true };

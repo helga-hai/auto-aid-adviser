@@ -1,26 +1,40 @@
 <template>
 <div>
     
-    
     <GoogleMapLoader 
         @isDoneFuncInTravel="isDoneFuncInTravel"
         @mapClickInTravel="mapClickInTravel"
         @mapCenterChangedInTravel="mapCenterChangedInTravel"
         @ourMapInTravel="ourMapInTravel"
         :mapConfig="mapConfig"
+        :center="inner_ac_center"
         apiKey="AIzaSyB_nA80Ha1asyGCQtdcgAGZNtd6Vzr8p3A"
     ><slot name="acompl"/>
 
         <template v-slot:default="{ google, map }" @isDoneFuncInTravel="isDoneFuncInTravel"> 
  
             <div v-if="isLocationDone">
-                <GoogleMapMarker
+                <!-- <GoogleMapMarker
                     ref="customMarker"
                     :google="google"
                     :map="map"
                     :marker= "curMarker"
                     :clickable="true"
-                    :draggable="true"                />
+                    :draggable="true"
+                    /> -->
+                    <GoogleMapMarker
+                        v-for="marker in newMarkers"
+                        :key="marker.id"
+                        
+                        :enableGeolocation="true"
+                        @focus="onFocus()"
+                        @blur="onBlur()"
+                        
+                        :marker="marker"
+                        :google="google"
+                        :map="map"
+                        @setmap="setmapInTraver"
+                    />
             </div>
             <!-- <div v-if="enterAddress"> 
                 <GoogleMapMarker 
@@ -37,18 +51,6 @@
                 :map="map"
                 :marker= "marker"
             /> -->
-            <GoogleMapMarker
-                v-for="marker in markers"
-                :key="marker.id"
-                
-                :enableGeolocation="true"
-                @focus="onFocus()"
-                @blur="onBlur()"
-                
-                :marker="marker"
-                :google="google"
-                :map="map"
-            />
             <!-- <GoogleMapLine
                 v-for="line in lines"
                 :key="line.id"
@@ -76,40 +78,42 @@ export default {
         GoogleMapMarker,
         VueGoogleAutocomplete,
     },
-    props: ['location','address','curMarker', 'enterAddress','enterMarker'],
+    props: ['location','curMarker', 'enterAddress','enterMarker','toggleAddres','ac_center'],
     data() {
         return {
             markers: [
-                {id: "a", position: { lat: 50.456376, lng: 30.380989 }// { lat: 3, lng: 101 } 
+                {id: "a", position: this.$store.getters['selfLocation/doneLocation'].position// { lat: 3, lng: 101 } 
                 },
-                {id: "b", position: { lat: 50.455939, lng: 30.372777 } },
-                { id: "c", position: { lat: 50.452482, lng: 30.372232 } }
             ],
+            newMarkers: null,
             isLocationDone: this.$store.getters['selfLocation/doneLocation'].position,
-            ourMapIn: null
+            ourMapIn: null,
+            inner_ac_center: null
         };
     },
     watch:{
         enterAddress(val){
-            console.log(this.$store.getters['create/acLatLng'])
-            // this.markers.push(this.enterMarker)
-            // console.log('enterAddress',this.enterMarker.position, this.ourMapIn)
-            this.placeMarkerAndPanTo(this.enterMarker, this.ourMapIn)
-            // this.enterMarker = this.$store.getters['create/acLatLng']
-            // {
-            //     id: "enter",
-            //     position: this.$store.getters['create/acLatLng'].position,// { lat: 3, lng: 101 }
-            //     content:'address'
-            // }
+            console.log('enterAddress')
+            ///////////////////////////// this.placeMarkerAndPanTo(this.enterMarker, this.ourMapIn)
+        },
+        toggleAddres(){
+            const last = this.enterMarker[this.enterMarker.length-1]
+            this.markers.push(last)
+            // this.newMarkers = last
+            // this.markers[0].delete =true
+            // this.markers.shift()
+        },
+        ac_center(newCenter){
+            console.log('QWEQWEQWEQWEQ this.mapConfig.center=',this.mapConfig.center)
+            console.log('QWEQWEQWEQWEQ this.enterMarker[this.enterMarker.length-1]=',this.enterMarker[this.enterMarker.length-1])
+            this.inner_ac_center = newCenter
         },
         isLocationDone() {
-            // console.log('isLocationDone',isLocationDone)
             this.isLocationDone=true
         },
     },
     created() {
         console.dir(this.$store.getters['selfLocation/doneLocation']);
-        
     },
     computed: {
         center(){ 
@@ -128,9 +132,19 @@ export default {
             return this.markers[1].position || {lat: this.marker.address.latitude, lng: this.marker.address.longitude}
         },
     },
+    mounted(){
+        this.newMarkers=this.markers
+    },
     methods: {
+        onFocus(){
+            console.log('FOCUS')
+        },
+        deleteMarkers() {
+            // clearMarkers();
+            this.curMarker = [];
+        },
         onMarkerClick(){
-            // console.log("dawdawd")
+            // 
         },
         isDoneFuncInTravel() {
             console.log('isDoneFuncInTravel')
@@ -142,25 +156,30 @@ export default {
         },
         mapCenterChangedInTravel(e){
             this.$emit('mapCenterChanged', e)  
+            console.log("this.markers[0]",this.markers[0])
+            // this.markers[0].setMap(null)
+        },
+        setmapInTraver(){
+            console.log('SET')
         },
         placeMarkerAndPanTo(event, map) {
             console.log('placeMarkerAndPanTo')
             console.log(event, map)
-            var marker = new google.maps.Marker({
+            new google.maps.Marker({
                 position: event.latLng || event.position,
                 map: map,
                 icon: 'http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png'
             });
             console.log(event.latLng || event.position)
             map.panTo(event.latLng || event.position);
-            this.$store.dispatch('create/GET_ENCODING', event.latLng)
+            let ll = {}
+            ll.lat = event.latLng.lat();
+            ll.lng = event.latLng.lng();
+            this.$store.dispatch('create/GET_ENCODING', ll)
         },
         ourMapInTravel(val){
             this.$emit('ourMap',val)
             this.ourMapIn = val
-        },
-        getAddressData: function (addressData, placeResultData, id) {
-            this.address = addressData;
         },
         // geolocate() {
         //     console.log('geolocate')

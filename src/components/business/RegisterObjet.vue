@@ -6,7 +6,7 @@
                 <div class="registrStep1__address">
                     <label for="name">Вкажіть місцезнаходження об’єкту на карті або введіть адресу</label>
                         <div class="auto-complete-input" slot="acompl" v-if="isDone">
-                            <vue-google-autocomplete v-if="!encoding"
+                            <vue-google-autocomplete v-if="!encoding || isEncoding"
                                 ref="vAutoComplete"
                                 :country="['ua']"
                                 id="autocompletePannel"
@@ -18,8 +18,8 @@
                             ></vue-google-autocomplete>
                         </div>
                     <div class="auto-complete-input-wrap">
-                        <button v-if="encoding">+</button>
-                        <input v-if="encoding" type="text" :value="encoding" @click="deleteEncoding" ref="inputEncoding" class="input-encoding">
+                        <button v-if="encoding && !isEncoding" @click="changeInput">+</button>
+                        <input v-if="encoding && !isEncoding" type="text" :value="encoding" ref="inputEncoding" class="input-encoding">
                     </div>
                 </div>
                 <label>Дані об’єкта</label>
@@ -41,32 +41,17 @@
                         ref="mapr" 
                         :mapCenter="location.position" 
                         @isDoneFunc="isDoneFunc" 
-                        :address="address" 
-                        :curMarker="location"
+                        
+                        :curMarker="markers.position"
                         :enterMarker="enterMarker"
                          @mapClick="mapClick"
                          @mapCenterChanged="mapCenterChanged"
                          @ourMap="ourMap"
                          :enterAddress="enterAddress"
+                         :toggleAddres="toggleAddres"
+                         :ac_center="ac_center"
                         />
                 </div>
-                <!-- <GoogleMapLoader:location="location" 
-                    :mapConfig="mapConfig" //v-if="location.position"
-                    apiKey="AIzaSyB_nA80Ha1asyGCQtdcgAGZNtd6Vzr8p3A"
-                >
-
-                    <template v-slot:default="{ google, map }"> 
-                        <h3 class="title is-4" >
-                            <button @click="$refs.vAutoComplete.geolocate()">force current location</button>
-                        </h3>
-
-                        <GoogleMapMarker v-if="address"
-                            :google="google"
-                            :map="map"
-                            :marker= "marker"
-                        />
-                    </template>
-                </GoogleMapLoader> -->
             </div>
         </div>    
     </div>
@@ -97,59 +82,50 @@ export default {
             enableGeolocation: true,
             ele: this.$store.state.create.sendObject,
             location: this.$store.state.selfLocation.location,
-            groups: ['СТО','Шиномонтаж','Мойка'],
             curMarker: {
                 id: "a",
                 position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }
                 content:'You are here'
             },
-            enterMarker: {
-                position: this.$store.getters['create/acLatLng'].position,// { lat: 3, lng: 101 }
-                content:'address',
-                id:"enterw"
-            },
-            address: '',//store
-            markers: [
-                {
-                    id: "a",
-                    position: { lat: 50.456376, lng: 30.380989 }// { lat: 3, lng: 101 }
-                },
-                {
-                    id: "b",
-                    position: { lat: 50.455939, lng: 30.372777 }// { lat: 5, lng: 99 }
-                },
-                {
-                    id: "c",
-                    position: { lat: 50.452482, lng: 30.372232 }// { lat: 6, lng: 97 }
-                }
-            ],
+            enterMarker: [],
+            position: this.$store.getters['create/acLatLng'].position,// { lat: 3, lng: 101 }
+            ac_position: null,
+            ac_center: null,
+            
+            markers: [],
             sendObject: {
             },
-            ourM:null,
-            // encoding: this.$store.getters['create/encoding']
+            ourM: null,
+            count: 0,
+            isEncoding: false
         }
     },
     watch: {
-        // encoding (newVal, oldVal) {
-        //     console.log(`We have ${newVal} fruits now, yaay!`)
-        // },
-        location(newVal, oldVal) {
-            console.log('location',newVal, oldVal)
-            //this.locationDone = true
-        },
         mapCenter(newVal, oldVal){
             console.log(newVal, oldVal)
         },
-        coords(newVal, oldVal) {
-            console.log('coords',newVal, oldVal)
+        toggleAddres(newVal, oldVal) {
+            this.ac_position = this.$store.getters['selfLocation/ac_location']
+            this.ac_center = this.ac_position
         },
+        ac_position(val) {
+           var object = {}
+           object.position=val
+           object.id='t'+this.count
+           object.content='here'
+           this.enterMarker.push(object)
+           this.count++
+        },
+        encoding(){
+            this.isEncoding=false
+        }
     },
     computed: {
         encoding () {
             return this.$store.getters['create/encoding']
         },
-        coords() {
-            return this.$store.getters['selfLocation/doneLocation']
+        toggleAddres() {
+            return this.$store.getters['selfLocation/toggleAddres']
         },
         // mapCenter(){
         //     return this.curMarker.position
@@ -160,34 +136,6 @@ export default {
         gettingLocation() {
             return this.$store.state.selfLocation.gettingLocation;
         },
-        // location() {
-        //     //console.log(this.$store.state.selfLocation.location)
-        //     this.locationPos = this.$store.state.selfLocation.location;
-        // },///////
-        // mapConfig () {
-        //     return {
-        //         //...mapSettings, // індивідуальні налаштування для вигляду карти
-        //         //center: { lat: 0, lng: 0 }
-        //         center: this.mapCenter,
-        //         zoom: 15,
-        //     }
-        // },
-        // mapCenter() {
-        //     //console.log(this.markers[1].position)
-        //     //console.dir(this.myPosition.position)
-        //     //map.setCenter({lat:lat, lng:lng});
-        //     //return this.markers[1].position || this.myPosition.position  
-        //     console.log('mapCenter')
-        //     console.log(this.markers[1].position || {lat: this.marker.address.latitude, lng: this.marker.address.longitude})
-        //     //return this.markers[1].position || {lat: this.marker.address.latitude, lng: this.marker.address.longitude}
-        //     return this.markers[1].position || {lat: this.marker.address.latitude, lng: this.marker.address.longitude}
-        // },
-        // marker () {
-        //     return {
-        //         id: "a",
-        //         position: { lat: this.address.latitude, lng: this.address.longitude }// { lat: address.latitude, lng: address.longitude }
-        //     }
-        // },
     },
     update() {
         navigator.geolocate()
@@ -200,9 +148,10 @@ export default {
         // this.$store.dispatch('selfLocation/changeLocation');
     },
     methods: {
-        deleteEncoding(e){
-            console.log("deleteEncoding",e)
-            this.encoding=false
+        changeInput(){
+            console.log('sJHKDSKJFDKJ',this.isEncoding)
+            console.log(!this.encoding, this.isEncoding)
+            this.isEncoding = !this.isEncoding
         },
         ourMap(val){
             this.ourM = val
@@ -228,15 +177,13 @@ export default {
             this.$store.commit('create/fillSite', e.target.value)
         },
         isDoneFunc(e){
-            console.log('isDoneFunc') // google map is load 
-            this.isDone=true; // - start autocomplete
-            //this.$refs.vAutoComplete.geolocate(); // - start autocomplete geolocale -not workinfg here
+            this.isDone=true; 
         },
         getAddressData(addressData, placeResultData, id){
             this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
             this.$store.dispatch('selfLocation/changeLocation', {addressData, placeResultData, id});
-            console.log(addressData, placeResultData, id)
-            console.log(addressData.latitude)
+            // console.log(addressData, placeResultData, id)
+            // console.log(addressData.latitude)
             this.enterPosition( placeResultData )
         },
         enterPosition( placeResultData ){
@@ -245,13 +192,7 @@ export default {
             let lng = placeResultData.geometry.location.lng()
             console.log(lat, lng)
             this.enterMarker.position = { lat: lat, lng: lng }
-            // state.sendObject.location = { latitude: lat, longitude: lng }
-            // state.sendObject.location = {
-            //     address: placeResultData.formatted_address,
-            //     latitude: placeResultData.geometry.location.lat(),
-            //     longitude: placeResultData.geometry.location.lng()
-            // }
-            // state.address = addressData;
+            // this.curMarker.posi
         },
         geolocate() {
         },
@@ -259,9 +200,6 @@ export default {
             this.$emit('switchView', val);
         },
         beforeUpdate() {
-            // this.curMarker.position = this.$store.getters['selfLocation/doneLocation'].position
-        //     console.dir(this.curMarker)
-        // console.dir(this.location) 
         },
     }
 }

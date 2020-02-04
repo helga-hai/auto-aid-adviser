@@ -18,8 +18,7 @@ export default {
     props: {
         mapConfig: Object,
         apiKey: String,
-        //paramOrigin: new google.maps.LatLng(50.450100,30.523399),
-        //paramDest: new google.maps.LatLng(50.450100,30.523399),
+        center: Object
     },
     data() {
         return {
@@ -27,10 +26,19 @@ export default {
             map: null,
             directionsDisplay: null,
             directionsService: null,
-            //navigator_location: null
+            config: null
         }
     },
+    computed:{
+      toggleAddres() {
+          return this.$store.getters['selfLocation/toggleAddres']
+      },
+    },
     watch: {
+      toggleAddres(newVal, oldVal) {
+          this.config.center = this.$store.getters['selfLocation/ac_location']
+          this.map.setCenter(this.config.center)
+      },
       map(newValue,oldValue) {
         if (newValue) {
             this.$emit('ourMapInTravel',newValue)
@@ -42,7 +50,6 @@ export default {
               var event = e;
               var m = th.map;
               th.$emit('mapClickInTravel', {event, m})
-              //console.log(e.latLng, this.map);//placeMarkerAndPanTo(e.latLng, map);
             });
 
             this.map.addListener('center_changed', function(e) { /// center_changed ///
@@ -58,28 +65,13 @@ export default {
       }
     },
     async mounted() {
-        //console.log('navigator')
-        //console.log(this.$store.state.selfLocation.gettingLocation)
+        this.config = this.mapConfig
         const googleMapApi = await GoogleMapsApiLoader({
             apiKey: this.apiKey,
             libraries: ['places, directions, drawing'],
         })
         this.google = googleMapApi
         this.initializeMap()
-        //this.getDirection()
-        // .then(function(googleApi) {
-        //     var autocomplete = new googleApi.maps.places.AutocompleteService();
-        // }, function(err) {
-        //     console.error(err);
-        // });
-        // // GoogleMapsApiLoader().then(function(googleApi) {
-        // //     var autocomplete = new googleApi.maps.places.AutocompleteService();
-        // //     console.log('autocomplete',autocomplete)
-        // // }, function(err) {
-        // //     console.error(err);
-        // // });
-
-        //this.calcRoute()
     },
     methods: {
         initializeMap() {
@@ -87,7 +79,7 @@ export default {
             const mapContainer = this.$refs.googleMap;
             this.directionsService = new google.maps.DirectionsService();
             //var directionsRenderer = new google.maps.DirectionsRenderer();
-            this.map = new this.google.maps.Map(mapContainer, this.mapConfig);
+            this.map = new this.google.maps.Map(mapContainer, this.config);
             this.directionsDisplay = new google.maps.DirectionsRenderer({
               map: this.map,
               draggable: true

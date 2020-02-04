@@ -13,6 +13,7 @@ import Activation from '../components/Activation';
 
 import MapPage from '../views/Map';
 import AboutPage from '../views/About';
+import SearchPublic from '../views/SearchPublic';
 // import CreatePage from '../views/CreatePage';
 // import CreatePage2 from '../views/CreatePage2';
 // import CreatePage3 from '../views/CreatePage3';
@@ -46,11 +47,7 @@ export const router = new Router({
         { path: '/successRegister', component: SuccessRegister },
         { path: '/user/activation', component: Activation },
         { path: '/user/activation/*', redirect: '/user/activation' },
-        // { path: '/create', component: CreatePage },
-        // { path: '/create2', component: CreatePage2 },
-        // { path: '/create3', component: CreatePage3 },
-        // { path: '/create4', component: CreatePage4 },
-        // { path: '/create5', component: CreatePage5 },
+        { path: '/search', component: SearchPublic, name: "Search", },
 
 
         //test path
@@ -72,7 +69,7 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
     console.log("beforeEach:", to, from);
-    const publicPages = ['/authorization', '/cabinet', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/userprof', '/map', '/about', '/user/activation'];
+    const publicPages = ['/authorization', '/search', '/cabinet', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/userprof', '/map', '/about', '/user/activation'];
 
     const authRequired = !publicPages.includes(to.path);
 

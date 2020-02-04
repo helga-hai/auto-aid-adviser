@@ -6,13 +6,24 @@ export const selfLocation = {
             position: null,
             content: ''
         },
+        ac_location: null,
         gettingLocation: false,
-        errorStr: null
+        errorStr: null,
+        toggleAddres: false
     },
     getters: {
         doneLocation: state => {
             return state.location
-        }
+        },
+        gettingLocation: state => {
+            return state.gettingLocation
+        },
+        toggleAddres: state => {
+            return state.toggleAddres
+        },
+        ac_location: state => {
+            return state.ac_location
+        },
     },
     actions: {
         getLocation({ commit }, payload) {
@@ -35,10 +46,11 @@ export const selfLocation = {
     mutations: {
         getAddressMarker(state, { addressData, placeResultData, id }) {
             console.log('STORE getAddressMarker', { addressData, placeResultData, id })
-            state.location.position = {};
-            state.location.position.lat = placeResultData.geometry.location.lat();
-            state.location.position.lng = placeResultData.geometry.location.lng()
+            state.ac_location = {};
+            state.ac_location.lat = placeResultData.geometry.location.lat();
+            state.ac_location.lng = placeResultData.geometry.location.lng()
             console.log(state.location)
+            state.toggleAddres = !state.toggleAddres
                 // state.acLatLng = { lat: lat, lng: lng }
                 // state.sendObject.location = { latitude: lat, longitude: lng }
                 // state.sendObject.location = {
