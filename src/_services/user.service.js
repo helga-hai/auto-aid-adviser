@@ -106,11 +106,11 @@ function login(email, password) {
             console.log(JSON.stringify(response));
             return handleResponse;})
         .then(user => {
-            // .then(token => {
-            console.log('requestOptions')
+
+            console.log('requestOptions');
             console.log('requestOptions ' + requestOptions); //email password
             // login successful if there's a jwt token in the response
-            // if (user.token)
+
             if (user) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
 
@@ -118,21 +118,23 @@ function login(email, password) {
                 console.log("USER_SERVICE " + JSON.stringify(user));
 
                 if (JSON.stringify(user.status) == 401) {
-                    console.log("NO_USER");
-                    console.log(JSON.stringify(user.error)); //:"Unauthorized"
-                    console.log(JSON.stringify(user.message));
+                    console.log( "NO_USER" );
+                    console.log( JSON.stringify(user.error) ); //:"Unauthorized"
+                    console.log( JSON.stringify(user.message) );
                     return user.error;
                     //"message":"Authorization failed"
                     // return router.push('/');
                 } else {
 
-                    localStorage.setItem('token', JSON.stringify(user.token));
-                    localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
-                    localStorage.setItem('role', JSON.stringify(user.role)); ////role///////////////////////////
-                    console.log(JSON.stringify(user.role));
-                    console.log("router.push user" + user.role);
-                    //console.log(router.push);
+                    localStorage.setItem( 'token', JSON.stringify(user.token) );
+                    localStorage.setItem( 'email', JSON.stringify(user.email) ); ////email///////////////////////////
+                    localStorage.setItem( 'role', JSON.stringify(user.role) ); ////role///////////////////////////
+
+                    console.log( JSON.stringify(user.role) );
+                    console.log( "router.push user" + user.role );
+
                     //router.push('user');//not working
+                    
                     return user;
                 }
             }
@@ -145,9 +147,12 @@ function logout() {
 
     // localStorage.removeItem('user');
     localStorage.removeItem('token');
+
     localStorage.removeItem('email');
+
     localStorage.removeItem('role');
-    console.log('localStor: ' + localStorage);
+
+    console.log( 'localStor: ' + localStorage );
 
 }
 
@@ -161,6 +166,7 @@ function getAll() {
 }
 
 function getAllUserData(path) {
+
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
@@ -169,7 +175,9 @@ function getAllUserData(path) {
     return fetch(`${config.apiUrl}/${path}`, requestOptions)
         .then(handleResponse)
         .then(data => {
-            console.log('getAllUserData ' + JSON.stringify(data));
+
+            console.log( 'getAllUserData ' + JSON.stringify(data) );
+
             return data
         });
 
@@ -179,18 +187,6 @@ function postAllUserData(path, data) {
 
     let token = localStorage.getItem('token');
 
-    //     var boundary = String(Math.random()).slice(2);
-    //     var boundaryMiddle = '--' + boundary + '\r\n';
-    //     var boundaryLast = '--' + boundary + '--\r\n'
-
-    //     var _body = ['\r\n'];
-    //     var _data = data;
-    //     for (var key in _data) {
-    //   // добавление поля
-    //     _body.push('Content-Disposition: form-data; name="' + key + '"\r\n\r\n' + _data[key] + '\r\n');
-    //     }
-
-    // _body = _body.join(boundaryMiddle) + boundaryLast;
     let _data = JSON.stringify(data);
 
     const requestOptions = {

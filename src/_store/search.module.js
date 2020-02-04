@@ -27,7 +27,8 @@ export const search = {
     actions: {
         START_SEARCH: async(context, payload) => {
             console.dir(authHeader())
-            let uri = userService.config.apiUrl + '/api/businesses/' + context.state.serviceForBusiness + '/' + context.state.longitude + '/' + context.state.latitude;
+            let uri = userService.config.apiUrl + `/api/businesses/search?service=${context.state.serviceForBusiness}&latitude=${context.state.latitude}&longitude=${context.state.longitude}&radius=50.0`
+                // let uri = userService.config.apiUrl + '/api/businesses/' + context.state.serviceForBusiness + '/' + context.state.longitude + '/' + context.state.latitude;
             console.log('START_SEARCH', uri);
             let options = authHeader() ? { headers: authHeader() } : {};
             let { data } = await axios.get(uri, options); ///{serviceForBusiness}/{longtitude}/{latitude}

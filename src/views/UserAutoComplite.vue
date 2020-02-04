@@ -1,27 +1,26 @@
 <template>
   <div >
 
-        <div class = "CarCardsContent">
 
-            <div class = "CarCardWrapper">
-                <div class = "CarCards"
-                @click='lookAuto'
-                v-for="c of currentCars"
+            <!-- <div class = "CarWrapper">
+                <div class = "Car"
+
+                v-for="c of currentCar"
                 :key="c.id"
                 :id="c.id"
                 >
                     <img alt='' :src = "c.images[0].urlImage"/>
                     <div class = "info">
-                        <h5>{{(c.carModel.carBrand.name != null) ? (c.carModel.carBrand.name) : ("BRAND")}}</h5>
-                        <p>{{(c.carModel.name != null) ? (c.carModel.name) : ("MODEL")}}/{{c.releaseYear}}</p>
+                        <h5>vnvhn{{currentCar.carModel.carBrand.name}}</h5>
+                        <p>fdngdgnh{{currentCar.carModel.name}}/{{c.releaseYear}}</p>
                         <p>{{c.individualCarNaming}}</p>
-                    </div>
+                    </div>              
                 </div>
-            </div>
-            <div class="Image__labe" :style="{backgroundImage: 'url('+require('../assets/illustration_Car.svg')+')'}"></div>
-      </div>
+            </div> -->
+            {{currentCar}}
+            {{}}
     
-      <span><a href="#" class="objects__button" @click="createStepOne">Додати автомобіль</a></span>
+
   </div>
 </template>
 
@@ -32,24 +31,21 @@ import { userService } from '../_services';
 
 export default {
 
-    name: 'UserAutoCompliteCarCardsPage',
+    name: 'UserAutoComplite',
 
     data(){
 
         return {
-
+            
 
         }
 
     },
-
     computed:{
-        currentCars: function(){
-            this.getCars();
-            let cars = this.$store.state.userdataservice.cars;
-            return cars},
+        currentCar: function(){
+            var car = this.$store.state.userdataservice.currentCar
+            return car},
     },
-
     methods:{
 
         getCars(){
@@ -57,13 +53,13 @@ export default {
 
             userService.getAllUserData( 'api/user/profile/cars' )
 
-                .then( function(result){
+                .then(function(result){
 
                     console.log("CARS "+result);
 
-                    return result } )
+                    return result })
 
-                .then( result=>this.$store.dispatch('userdataservice/fieldsVal',[ result ,'cars' ]) )
+                .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[ result ,'cars' ]))
 
                 .then( ()=>{
                     let _cars = this.$store.state.userdataservice.cars;
@@ -73,19 +69,18 @@ export default {
                     this.cars = _cars;})
 
         },
-        lookAuto(e){
+        // lookAuto(e){
 
-            var
-            currentCarID = e.target.id;
-            console.log(currentCarID);
+        //     var
+        //     currentCarID = e.target.id;
+        //     console.log(currentCarID);
 
-            userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
-            .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]));
-            this.$emit('switchView','user-auto-complite');
-            
+        //     userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
+        //     .then(function(result){return result})
+        //     .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'currentCar']))
 
 
-        },
+        // },
 
         createStepOne() {
             console.log("work");
@@ -93,6 +88,13 @@ export default {
             // return this.$emit('switchView','user-auto-complite-car-cards-page')
         },
     },
+
+    // mounted(){
+
+    //     {{this.getCars()}}
+
+    // }
+
 
 }
 </script>

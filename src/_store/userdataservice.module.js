@@ -17,7 +17,10 @@ export const userdataservice = {
         models: null,
         selectedModelId: null,
         currentIndex: null,
-        cars: [],
+        cars: null,
+        currentCar: null,
+
+
         images: null,
 
 
@@ -220,7 +223,7 @@ if ( photo.files[ 0 ] ) {
 
             console.log( "RESP " + resp );
 
-            context.commit( 'SET_MULTIPART' , JSON.parse(this.responseText) );
+            // context.commit( 'SET_MULTIPART' , JSON.parse(this.responseText) );
 
                 }
             };
