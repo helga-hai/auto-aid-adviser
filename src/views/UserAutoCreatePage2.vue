@@ -192,24 +192,14 @@ export default {
     },
     data() {
         return {
-            // types:{
-            //     type1: 'Мотоцикл',
-            //     type2: 'Легкове',
-            //     type3: 'Вантажівка',
-            //     type4: 'Автобус',
-            // },
-            
-            // models(selectedTypeId,selectedBrandId) {return this.$store.state.userdataservice.models},
-            // models: models(),
             modelType:'',
-            // selectedModelId:'',
             selectedModelIdVal:'',
             selectedModelId: function() {
-            if(this.currentIndex<0||!this.currentIndex){
-                return '';
-            }else{
-            return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
-            },
+                if(this.currentIndex<0||!this.currentIndex){
+                    return '';
+                }else{
+                return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
+                },
             currentIndex: '' || this.$store.state.userdataservice.currentIndex,
             year:"",
             types() {return this.$store.state.userdataservice.types},
@@ -413,7 +403,11 @@ export default {
             this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images });
 
             this.clearField('modelType', 'models','currentIndex');
-            
+
+            this.year = '';
+
+            // this.releaseYear();
+           
             this.$emit('switchView','user-auto-complite-car-cards-page');
 
             

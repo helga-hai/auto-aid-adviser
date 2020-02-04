@@ -2,17 +2,18 @@
   <div >
 
         <div class = "CarCardsContent">
+
             <div class = "CarCardWrapper">
                 <div class = "CarCards"
                 @click='lookAuto'
-                v-for="c of cars"
+                v-for="c of currentCars"
                 :key="c.id"
                 :id="c.id"
                 >
                     <img alt='' :src = "c.images[0].urlImage"/>
                     <div class = "info">
-                        <!-- <h5>{{c.carModel.carBrand.name}}</h5> -->
-                        <p>{{c.carModel.name}}/{{c.releaseYear}}</p>
+                        <h5>{{(c.carModel.carBrand.name != null) ? (c.carModel.carBrand.name) : ("BRAND")}}</h5>
+                        <p>{{(c.carModel.name != null) ? (c.carModel.name) : ("MODEL")}}/{{c.releaseYear}}</p>
                         <p>{{c.individualCarNaming}}</p>
                     </div>              
                 </div>
@@ -36,11 +37,19 @@ export default {
     data(){
 
         return {
-            cars: this.$store.state.userdataservice.cars,
+
 
         }
 
     },
+
+    computed:{
+        currentCars: function(){
+            this.getCars();
+            let cars = this.$store.state.userdataservice.cars;
+            return cars},
+    },
+
     methods:{
 
         getCars(){
@@ -71,7 +80,8 @@ export default {
             console.log(currentCarID);
 
             userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
-            .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]))
+            .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]));
+            this.$emit('switchView','user-auto-complite');
             
 
 
@@ -83,13 +93,6 @@ export default {
             // return this.$emit('switchView','user-auto-complite-car-cards-page')
         },
     },
-
-    mounted(){
-
-        {{this.getCars()}}
-
-    }
-
 
 }
 </script>

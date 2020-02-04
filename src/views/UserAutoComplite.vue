@@ -36,10 +36,15 @@ export default {
     data(){
 
         return {
-            currentCar: this.$store.state.userdataservice.currentCar,
+            
 
         }
 
+    },
+    computed:{
+        currentCar: function(){
+            var car = this.$store.state.userdataservice.currentCar
+            return car},
     },
     methods:{
 

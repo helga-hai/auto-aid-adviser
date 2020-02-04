@@ -223,7 +223,7 @@ if ( photo.files[ 0 ] ) {
 
             console.log( "RESP " + resp );
 
-            context.commit( 'SET_MULTIPART' , JSON.parse(this.responseText) );
+            // context.commit( 'SET_MULTIPART' , JSON.parse(this.responseText) );
 
                 }
             };
