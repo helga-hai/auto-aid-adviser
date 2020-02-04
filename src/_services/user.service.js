@@ -97,14 +97,14 @@ function login(email, password) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
     };
-
+    console.log(requestOptions);
     return fetch(`${config.apiUrl}/api/user/login`, requestOptions)
 
 
     .then(handleResponse)
-        // .then(handleResponse => {
-        //     console.log(JSON.stringify(response));
-        //     return handleResponse;})
+        .then(handleResponse => {
+            console.log(JSON.stringify(response));
+            return handleResponse;})
         .then(user => {
             // .then(token => {
             console.log('requestOptions')
@@ -332,7 +332,7 @@ function handleResponseGetData(response) {
 };
 
 function handleResponse(response) {
-    //console.dir(JSON.parse(response))
+    console.log(response)
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         console.log(data);

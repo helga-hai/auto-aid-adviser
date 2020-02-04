@@ -12,7 +12,7 @@ export const authentication = {
     state: {
         initialState,
 
-        // password: null,
+        password: null,
         email: null, // test
         role: null, // test
 
@@ -27,10 +27,11 @@ export const authentication = {
                 .then(
                     
                     user => {
+                        console.log(user)
                         if(user === "Unauthorized"){
                             console.log("AuthModule "+"Unauthorized");
                         }
-
+                        console.log(user);
                         commit('loginSuccess', user);
                         commit('setVal', user); /////////////test
                         
@@ -74,6 +75,7 @@ export const authentication = {
 
         ///test
         setVal(state, obj) {
+            console.log('setVal work')
             return state.email = obj.email, state.role = obj.role;
             // state.role = obj.role;
         },

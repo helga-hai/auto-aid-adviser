@@ -146,9 +146,11 @@ export default {
 
         getCurrentView( param , viewArr){
 
-            console.log("getCurrentView "+param);
+            console.log('THIS_THIS_THIS_THIS_THIS_'+this);
 
-            if( param == null || param == undefined || param.length == 0){
+            console.log("getCurrentView " + this.cars.length );
+
+            if( this.cars == null || this.cars == undefined || this.cars.length == 0){
 
                 return viewArr[ 0 ];
             }else{
@@ -174,6 +176,9 @@ export default {
                 return result })
 
             .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[ 'cars' , result ]))
+            .then(()=>{console.log('ggggggggggggggggggggggggggggggg '+this.$store.state.userdataservice.cars);
+            this.cars = this.$store.state.userdataservice.cars
+            console.log('ggggggggggggggggggggggggggggggg '+this.$store.state.userdataservice.cars)})
 
     },
 
