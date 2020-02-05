@@ -9,9 +9,23 @@ export const search = {
     state: {
         latitude: '',
         longitude: '',
-        serviceForBusiness: ''
+        serviceForBusiness: '',
+        searchData: null
     },
-    getters: {},
+    getters: {
+        SEARCHDATA: state => {
+            return state.searchData; //let name = this.$store.getters.NAME
+        },
+        SERVICEFORBUSINESS: state => {
+            return state.serviceForBusiness;
+        },
+        LATITUDE: state => {
+            return state.latitude;
+        },
+        LONGITUDE: state => {
+            return state.longitude;
+        },
+    },
     mutations: {
         SET_POSITION: (state, { lat, lng }) => {
             state.latitude = lat;
@@ -21,7 +35,7 @@ export const search = {
             state.serviceForBusiness = payload;
         },
         SET_SEARCH: (state, payload) => {
-            console.log(payload)
+            state.searchData = payload
         },
     },
     actions: {
@@ -30,11 +44,12 @@ export const search = {
 
             let uri = userService.config.apiUrl + `/api/search?service=${context.state.serviceForBusiness}&latitude=${context.state.latitude}&longitude=${context.state.longitude}&radius=10.0`
                 // let uri = userService.config.apiUrl + '/api/businesses/' + context.state.serviceForBusiness + '/' + context.state.longitude + '/' + context.state.latitude;
-            console.log('START_SEARCH', uri);
+            console.log('START_SEARCH1', uri);
             let options = authHeader() ? { headers: authHeader() } : {};
-            let response = await axios.get(uri, options); ///{serviceForBusiness}/{longtitude}/{latitude}
+            let response = await axios.get(uri, options);
             context.commit('SET_SEARCH', response.data);
-            return response
+            console.log('START_SEARCH response', response)
+                // return response
         },
         GET_POSITION_AUTOCOMPLETE: async(context, { addressData, placeResultData, id }) => {
             let lat = addressData.latitude

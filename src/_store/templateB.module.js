@@ -6,16 +6,8 @@ import axios from 'axios';
 export const templateB = {
     namespaced: true,
     state: {
-        // allBusinesServises: [],
-        // serviceTypesList: [],
-        // serviceTypesObj: [],
-        // st: [],
-        // service: {
-        //     run: [],
-        //     bite: [],
-        //     scream: []
-        // },
         dataList: [],
+        typeList: [], // 'СТО'
         categoryList: [],
     },
     getters: {
@@ -33,15 +25,31 @@ export const templateB = {
         fillallBusinesServises(state, payload) {
             state.commit('fillallBusinesServises', payload);
         },
-        GET_CATTEGORY_LIST: async(context, payload) => {
+        GET_TYPE_LIST: async(context, payload) => {
             const config = {
                 method: 'get',
-                url: userService.config.apiUrl + '/api/catalog/business/type/1/service/types',
+                url: userService.config.apiUrl + '/api/catalog/business/types',
                 headers: authHeader()
             }
             let { data } = await axios(config);
+            // context.dispatch('GET_CATTEGORY_LIST_NEXT', data);
+            context.commit('SET_TYPE_LIST', data);
+        },
+        GET_CATTEGORY_LIST: async(context, payload) => {
+            console.dir('GET_CATTEGORY_LIST')
+            console.dir(context.state.typeList)
+            let activeType = context.state.typeList.filter(type => type.name == "СТО")
+            console.dir(activeType)
+            const config = {
+                method: 'get',
+                url: userService.config.apiUrl + '/api/catalog/business/type/' + activeType[0].id + '/service/types',
+                headers: authHeader()
+            }
+            console.dir(config)
+            let { data } = await axios(config);
             context.commit('SET_CATTEGORY_LIST', data);
         },
+
         GET_SERVICE_LIST: async(context, ID) => {
             console.log('GET_SERVICE_LIST', ID)
 
@@ -97,6 +105,11 @@ export const templateB = {
         // },
     },
     mutations: {
+        SET_TYPE_LIST: (state, payload) => {
+            console.log('SET_TYPE_LIST')
+            state.typeList = payload;
+            console.dir(state.typeList)
+        },
         SET_CATTEGORY_LIST: (state, payload) => {
             console.log('SET_CATTEGORY_LIST')
             state.categoryList = payload;

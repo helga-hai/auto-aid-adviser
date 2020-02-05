@@ -165,14 +165,17 @@ export default {
         placeMarkerAndPanTo(event, map) {
             console.log('placeMarkerAndPanTo')
             console.log(event, map)
-            var marker = new google.maps.Marker({
+            new google.maps.Marker({
                 position: event.latLng || event.position,
                 map: map,
                 icon: 'http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png'
             });
             console.log(event.latLng || event.position)
             map.panTo(event.latLng || event.position);
-            this.$store.dispatch('create/GET_ENCODING', event.latLng)
+            let ll = {}
+            ll.lat = event.latLng.lat();
+            ll.lng = event.latLng.lng();
+            this.$store.dispatch('create/GET_ENCODING', ll)
         },
         ourMapInTravel(val){
             this.$emit('ourMap',val)

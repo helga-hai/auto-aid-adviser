@@ -23,9 +23,9 @@
                     </div>
                 </div>
                 <label>Дані об’єкта</label>
-                <input type="text" name="title" id="title" placeholder="Назва" @change="setName">
-                <input type="text" name="phone" id="phone" placeholder="Телефон" @change="setPhone">
-                <input type="text" name="site" id="site" placeholder="Сайт (опционально)" @change="setSite">
+                <input type="text" name="title" id="title" placeholder="Назва" @change="setName" ref="nameInput">
+                <input type="text" name="phone" id="phone" placeholder="Телефон" @change="setPhone" ref="phoneInput">
+                <input type="text" name="site" id="site" placeholder="Сайт (опционально)" @change="setSite" ref="urlInput">
                 <div class="registrStep1__buttons">
                     <input type="reset" value="Відмінити" @click="switchView('add-object')" class="registrStep1__secondaryButton">
                     <input  value="Продовжити 1/3" class="registrStep1__primaryButton" @click="switchView('services')">    
@@ -63,6 +63,7 @@ import GoogleMapLoader from "../../components/GoogleMapLoader";
 import GoogleMapMarker from "../../components/GoogleMapMarker";
 import { mapSettings } from "@/constants/mapSettings";
 import VueGoogleAutocomplete from 'vue-google-autocomplete';
+import {mapGetters} from 'vuex';
 
 export default {
     name: 'RegisterObjet',
@@ -73,6 +74,13 @@ export default {
         // GoogleMapLine,
         VueGoogleAutocomplete,
     },
+    activated(){
+        // if(!this.ADDRESS) { this.$refs.addressInputvalue='' }
+        if(!this.URL && this.next) { this.$refs.urlInput.value='' }
+        if(!this.NAME && this.next) { this.$refs.nameInput.value='' }
+        if(!this.PHONE && this.next) { this.$refs.phoneInput.value='' }
+    },
+    props:['next'],
     data() {
         var th = this
         return {
@@ -82,7 +90,6 @@ export default {
             enableGeolocation: true,
             ele: this.$store.state.create.sendObject,
             location: this.$store.state.selfLocation.location,
-            groups: ['СТО','Шиномонтаж','Мойка'],
             curMarker: {
                 id: "a",
                 position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }{ lat: 50.510854099999996, lng: 30.491225300000004 }
@@ -122,6 +129,17 @@ export default {
         }
     },
     computed: {
+        ...mapGetters({
+            markers: 'search/SEARCHDATA',
+            gettingLocation: 'selfLocation/gettingLocation',
+            SERVICEFORBUSINESS: 'search/SERVICEFORBUSINESS',
+            LATITUDE: 'search/LATITUDE',
+            LONGITUDE: 'search/LONGITUDE',
+            ADDRESS: 'search/ADDRESS',
+            PHONE: 'search/PHONE',
+            NAME: 'search/NAME',
+            URL: 'search/URL',
+         }),
         encoding () {
             return this.$store.getters['create/encoding']
         },
@@ -187,9 +205,7 @@ export default {
             this.$store.commit('create/fillSite', e.target.value)
         },
         isDoneFunc(e){
-            console.log('isDoneFunc') // google map is load 
-            this.isDone=true; // - start autocomplete
-            //this.$refs.vAutoComplete.geolocate(); // - start autocomplete geolocale -not workinfg here
+            this.isDone=true; 
         },
         getAddressData(addressData, placeResultData, id){
             this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
@@ -210,6 +226,7 @@ export default {
         },
         switchView(val){
             this.$emit('switchView', val);
+            val=='add-object'? this.$emit('nextChange',false) : this.$emit('nextChange',true)
         },
         beforeUpdate() {
         },

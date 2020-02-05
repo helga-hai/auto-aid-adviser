@@ -15,6 +15,9 @@ export const selfLocation = {
         doneLocation: state => {
             return state.location
         },
+        gettingLocation: state => {
+            return state.gettingLocation
+        },
         toggleAddres: state => {
             return state.toggleAddres
         },

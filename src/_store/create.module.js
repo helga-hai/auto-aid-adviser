@@ -24,7 +24,10 @@ export const create = {
         },
         businessPrepend: null,
         myObjects: null,
-        encoding: null
+        encoding: null,
+        markersEntities: {
+            // 'marker-23': marker
+        }
     },
     getters: {
         SendObject: state => {
@@ -41,6 +44,18 @@ export const create = {
         },
         encoding: state => {
             return state.encoding; //let name = this.$store.getters.NAME
+        },
+        ADDRESS: state => {
+            return state.address; //let name = this.$store.getters.ADDRESS
+        },
+        NAME: state => {
+            return state.name; //let name = this.$store.getters.ADDRESS
+        },
+        PHONE: state => {
+            return state.contact ? state.contact.phone : ''; //let name = this.$store.getters.ADDRESS
+        },
+        URL: state => {
+            return state.contact ? state.contact.url : ''; //let name = this.$store.getters.ADDRESS
         },
     },
     actions: {
@@ -79,18 +94,13 @@ export const create = {
             console.log('SEND_MULTIPART_BUSINESS', payload[0])
             var str = JSON.stringify(context.state.sendObject)
             var formData = new FormData();
-            formData.append("files", payload);
+            formData.append("files", payload[0]);
             formData.append('json', new Blob([str], {
                 type: "application/json"
             }));
-            // var businessHeader = authHeader()
-            // businessHeader['Content-Type'] = undefined; //'multipart/form-data';
-            // businessHeader['Authorization'] = `Bearer ${localStorage.getItem('token').split('"').join('')}`;
-
             var config = {
                 method: "POST",
                 url: userService.config.apiUrl + '/api/businesses',
-                // headers: businessHeader,
                 headers: {
                     'Accept': 'application/json, */*',
                     'Content-Type': 'multipart/form-data',
@@ -115,16 +125,17 @@ export const create = {
             let { data } = await axios.get(uri, options);
             context.commit('SET_MY_BUSINESS_DATA', data);
         },
-        DELETE_BUSINESS: async(context, payload) => { // попередній перегляд щойно створеного обєкту
+        DELETE_BUSINESS: async(context, payload) => {
             const options = authHeader() ? { headers: authHeader() } : {};
             const uri = userService.config.apiUrl + '/api/businesses/' + payload
             let { data } = await axios.delete(uri, options);
             // context.commit('', data);
         },
         GET_ENCODING: async(context, payload) => {
-            const lat = payload.lat();
-            const lng = payload.lng();
-            console.log('payload.lng ', typeof payload.lng())
+            console.log('payload type', typeof payload)
+            console.log('payload ', payload)
+            const lat = payload.lat;
+            const lng = payload.lng;
             let uri = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=' + 'AIzaSyBasISENNNlp6Immcd1Rr5pGhkQ5Um1ZVA'
             var config = {
                 method: "GET",
@@ -140,6 +151,19 @@ export const create = {
         }
     },
     mutations: {
+        CLEAR_CASH(state, payload) {
+            state.sendObject.contact.phone = '';
+            state.sendObject.contact.url = '';
+            state.sendObject.id = null;
+            // state.sendObject.location.address = '';
+            // state.sendObject.location.latitude = null;
+            // state.sendObject.location.longitude = null;
+            state.sendObject.name = '';
+            state.sendObject.serviceForBusinesses = [];
+            state.sendObject.workTimes = [];
+            state.businessPrepend = null
+        },
+
         fillBusinesTemplate(state, payload) {
             state.sendObject = payload;
         },
@@ -202,6 +226,7 @@ export const create = {
             state.encoding = longest.formatted_address;
             state.sendObject.location.address = longest.formatted_address;
             console.log(longest.formatted_address)
+            state.address = longest.formatted_address;
         },
         // getAllRequest(state) {
         //     state.all = { loading: true };
