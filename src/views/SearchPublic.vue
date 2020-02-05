@@ -178,11 +178,11 @@ export default {
         // ourMap(val){
         //     this.ourM = val
         // },
-        async fetchData(){
+        fetchData(){
             console.log('fetchData')
             //  /search?service=balancing&latitude=50.0&longitude=50.0&radius=10.0
             this.loading = true;
-            const response = await this.$store.dispatch('search/START_SEARCH')
+           this.$store.dispatch('search/START_SEARCH')
         },
         // fetch(){
         //     const options = {}

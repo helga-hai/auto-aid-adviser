@@ -53,10 +53,16 @@ export default {
     },
     data() {
         return {
-           dayList: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'] ,
+           dayList: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'] 
         } 
     },
+    activated: function () {
+        console.log("ACTIVETED")// Clear Cash in inner components (keep-alive)
+        this.$store.commit('create/CLEAR_CASH')
+
+    },
     async created () {
+        await this.$store.dispatch('templateB/GET_TYPE_LIST')
         await this.$store.dispatch('templateB/GET_CATTEGORY_LIST')
         await this.$store.dispatch('templateB/GET_SERVICE_LIST',this.category.map(item=>item.id))
     },
