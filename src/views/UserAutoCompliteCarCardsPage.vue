@@ -38,6 +38,7 @@ export default {
 
         return {
 
+            counter: 0,
 
         }
 
@@ -45,9 +46,21 @@ export default {
 
     computed:{
         currentCars: function(){
-            this.getCars();
+
+            
+
             let cars = this.$store.state.userdataservice.cars;
-            return cars},
+
+
+
+            this.getCars();
+
+
+
+            console.log( 'computed ' + cars );
+
+            return cars
+            },
     },
 
     methods:{
@@ -68,9 +81,11 @@ export default {
                 .then( ()=>{
                     let _cars = this.$store.state.userdataservice.cars;
 
-                    console.log("CARS _CARS!!!!!!!!!!!!!!!!! "+_cars );
+                    this.counter++;
 
-                    this.cars = _cars;})
+                    console.log( "CARS _CARS!!!!!!!!!!!!!!!!! " + this.counter );
+
+                    } )
 
         },
         lookAuto(e){
@@ -93,6 +108,10 @@ export default {
             // return this.$emit('switchView','user-auto-complite-car-cards-page')
         },
     },
+
+    mounted(){
+        this.getCars();
+    }
 
 }
 </script>

@@ -112,6 +112,10 @@ export default {
 
         }
     },
+    computed:{
+
+
+    },
     methods:{
         // menuItem(){
         //     console.log(document.activeElement.innerText)
@@ -140,7 +144,7 @@ export default {
 
                 .then( result => {
                 
-                this.$store.dispatch( 'userdataservice/fieldsVal', [ result, 'cars' ]) });
+                return this.$store.dispatch( 'userdataservice/fieldsVal', [ result, 'cars' ]) });
 
         },
 

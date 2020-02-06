@@ -371,7 +371,7 @@ export default {
         saveAuto() {
 
             let photos = document.getElementById('photoForm');
-            console.log(photos.childNodes[0].elements);
+            console.log(photos.childNodes[ 0 ].elements);
             
             let auto = {
                 releaseYear: parseInt(this.year) || 1910, /* 1900 Не работает, доступные данные лучше чтоб приходили с сервера */
@@ -406,7 +406,20 @@ export default {
 
             this.year = '';
 
-            // this.releaseYear();
+            this.selectedType = '';
+
+            this.selectedTypeId = '';
+
+            this.selectedBrand = '';
+
+            this.selectedBrandId = '';
+
+            this.selectedModelIdVal = '';
+
+            this.individualCarNaming = '';
+            this.description = '';
+
+            
            
             this.$emit('switchView','user-auto-complite-car-cards-page');
 

@@ -48,27 +48,27 @@ export default {
     },
     methods:{
 
-        getCars(){
-            console.log('GET_CARS')
+        // getCars(){
+        //     console.log('GET_CARS')
 
-            userService.getAllUserData( 'api/user/profile/cars' )
+        //     userService.getAllUserData( 'api/user/profile/cars' )
 
-                .then(function(result){
+        //         .then( function(result){
 
-                    console.log("CARS "+result);
+        //             console.log("CARS "+result);
 
-                    return result })
+        //             return result })
 
-                .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[ result ,'cars' ]))
+        //         .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[ result , 'currentCar' ]) )
 
-                .then( ()=>{
-                    let _cars = this.$store.state.userdataservice.cars;
+        //         .then( ()=>{
+        //             let _cars = this.$store.state.userdataservice.currentCar;
 
-                    console.log("CARS _CARS!!!!!!!!!!!!!!!!! "+_cars );
+        //             console.log("CARS _CARS!!!!!!!!!!!!!!!!! "+_cars );
 
-                    this.cars = _cars;})
+        //             this.cars = _cars;})
 
-        },
+        // },
         // lookAuto(e){
 
         //     var

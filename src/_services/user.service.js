@@ -97,49 +97,47 @@ function login(email, password) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
     };
-    console.log(requestOptions);
+    console.log("login "+requestOptions);
     return fetch(`${config.apiUrl}/api/user/login`, requestOptions)
 
 
     .then(handleResponse)
-        .then(handleResponse => {
-            console.log(JSON.stringify(response));
-            return handleResponse;})
-        .then(user => {
 
-            console.log('requestOptions');
-            console.log('requestOptions ' + requestOptions); //email password
-            // login successful if there's a jwt token in the response
+    .then(user => {
 
-            if (user) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
+        console.log('requestOptions');
+        console.log('requestOptions ' + requestOptions); //email password
+        // login successful if there's a jwt token in the response
+
+        if (user) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
 
 
-                console.log("USER_SERVICE " + JSON.stringify(user));
+            console.log("USER_SERVICE " + JSON.stringify(user));
 
-                if (JSON.stringify(user.status) == 401) {
-                    console.log( "NO_USER" );
-                    console.log( JSON.stringify(user.error) ); //:"Unauthorized"
-                    console.log( JSON.stringify(user.message) );
-                    return user.error;
-                    //"message":"Authorization failed"
-                    // return router.push('/');
-                } else {
+            if (JSON.stringify(user.status) == 401) {
+                console.log( "NO_USER" );
+                console.log( JSON.stringify(user.error) ); //:"Unauthorized"
+                console.log( JSON.stringify(user.message) );
+                return user.error;
+                //"message":"Authorization failed"
+                // return router.push('/');
+            } else {
 
-                    localStorage.setItem( 'token', JSON.stringify(user.token) );
-                    localStorage.setItem( 'email', JSON.stringify(user.email) ); ////email///////////////////////////
-                    localStorage.setItem( 'role', JSON.stringify(user.role) ); ////role///////////////////////////
+                localStorage.setItem( 'token', JSON.stringify(user.token) );
+                localStorage.setItem( 'email', JSON.stringify(user.email) ); ////email///////////////////////////
+                localStorage.setItem( 'role', JSON.stringify(user.role) ); ////role///////////////////////////
 
-                    console.log( JSON.stringify(user.role) );
-                    console.log( "router.push user" + user.role );
+                console.log( JSON.stringify(user.role) );
+                console.log( "router.push user" + user.role );
 
-                    //router.push('user');//not working
-                    
-                    return user;
-                }
+                //router.push('user');//not working
+                
+                return user;
             }
-            return user;
-        });
+        }
+        return user;
+    });
 }
 
 function logout() {
