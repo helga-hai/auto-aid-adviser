@@ -13,8 +13,11 @@
                 </div>
             </div>
             <!-- {{currentCar}} -->
+            <h5>{{currentCar.carModel.carBrand.name}}</h5>
             <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
             <p>{{currentCar.individualCarNaming}}</p>
+            <p>{{currentCar.description}}</p>
+            <p>{{currentCarIMG}}</p>
 
             <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
     
@@ -40,10 +43,16 @@ export default {
 
     },
     computed:{
+
         currentCar: function(){
             var car = this.$store.state.userdataservice.currentCar;
             return car},
+
+        currentCarIMG: function(){
+            var carIMG = this.$store.state.userdataservice.currentCar.images;
+            return carIMG},
     },
+
     methods:{
 
         back(){

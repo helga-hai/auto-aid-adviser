@@ -46,57 +46,13 @@ export default {
 
     computed:{
         currentCars: function(){
-<<<<<<< HEAD
-
-            
-
-            let cars = this.$store.state.userdataservice.cars;
-
-
-
-            this.getCars();
-
-
-
-            console.log( 'computed ' + cars );
-
-            return cars
-            },
-=======
             let cars = this.$store.state.userdataservice.cars;
             console.log( cars );
             return cars},
->>>>>>> fe88d9e380a7b6815c97169a237573ef2d999e7b
     },
 
     methods:{
 
-<<<<<<< HEAD
-        getCars(){
-            console.log('GET_CARS')
-
-            userService.getAllUserData( 'api/user/profile/cars' )
-
-                .then( function(result){
-
-                    console.log("CARS "+result);
-
-                    return result } )
-
-                .then( result=>this.$store.dispatch('userdataservice/fieldsVal',[ result ,'cars' ]) )
-
-                .then( ()=>{
-                    let _cars = this.$store.state.userdataservice.cars;
-
-                    this.counter++;
-
-                    console.log( "CARS _CARS!!!!!!!!!!!!!!!!! " + this.counter );
-
-                    } )
-
-        },
-=======
->>>>>>> fe88d9e380a7b6815c97169a237573ef2d999e7b
         lookAuto(e){
 
             var
@@ -115,10 +71,6 @@ export default {
             // return this.$emit('switchView','user-auto-complite-car-cards-page')
         },
     },
-
-    mounted(){
-        this.getCars();
-    }
 
 }
 </script>

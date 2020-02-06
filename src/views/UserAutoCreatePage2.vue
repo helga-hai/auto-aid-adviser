@@ -145,6 +145,7 @@
                             <PhotoFieldLoad/>
 
                         </div>
+
                         <!-- <div>
                         <label class= "registrStep3__addFile">
                             <input id="carphoto"
@@ -267,7 +268,17 @@ export default {
         },
 
         back(){
-            this.$emit('switchView','user-auto-create-page');
+            if(this.$store.state.userdataservice.cars.length > 0){
+
+                console.log('BACK-BLOCK');
+
+                this.$emit('switchView','user-auto-complite-car-cards-page');
+
+            }else{
+
+                this.$emit('switchView','user-auto-create-page');
+
+            }
         },
         selectType(e){
             console.log(e.target.id);
@@ -406,7 +417,7 @@ export default {
 
             this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images })
 
-
+            let photosLength = photos.childNodes[0].getElementsByTagName('a').length;
       
             this.clearField('modelType', 'models','currentIndex');
 
@@ -426,13 +437,16 @@ export default {
             
             this.description = '';
 
-            
-            photos.childNodes[0].getElementsByTagName('a')[0].onclick();
-            photos.childNodes[0].getElementsByTagName('a')[0].onclick();
-            photos.childNodes[0].getElementsByTagName('a')[0].onclick();
+            if(photosLength>0){
 
-            // this.releaseYear();
-           
+                for( let i = photosLength; i>0 ; i-- ){
+
+                    photos.childNodes[0].getElementsByTagName('a')[0].onclick();
+
+                }
+            };
+            
+
             this.$emit('switchView','user-auto-complite-car-cards-page');
 
         },

@@ -256,9 +256,6 @@ if ( photo.files[ 0 ] ) {
         //     .then(userService.handleResponse);
 
         // },
-        getData(val) {
-            return val;
-        },
         // getAll({ commit }) {
         //     commit('getAllRequest');
 
@@ -268,18 +265,15 @@ if ( photo.files[ 0 ] ) {
         //             error => commit('getAllFailure', error)
         //         );
         // }
+
+        
         fieldsVal({ commit }, val) {
-            // console.log(data);
+
             commit('setData', val);
         }
     },
 
-
-    
-
     mutations: {
-
-
 
         SET_TYPES: (state, payload) => {
 
@@ -290,37 +284,24 @@ if ( photo.files[ 0 ] ) {
         SET_MULTIPART: (state, payload)=>{
 
             state.cars.push(payload);
+
             console.log(payload);
 
         },
 
         setData( state, data ) {
+
             console.log( "DATA " + data[1] );
             console.log( data );
-            let toState = data[1];
-            state[toState] = data[0];
-            console.log(state[toState]);
-        },
 
-        // setData(state, resp){
-        //     return state.user_data.role.resp.role = resp.role;
-        // {
-        //     id: resp.id,
-        //     role: resp.role,
-        //     email: resp.email,
-        // }
+            let toState = data[1];
+
+            state[toState] = data[0];
+
+            console.log(state[toState]);
+
+        },
 
     },
 
-
-    // getAllRequest(state) {
-    //     state.all = { loading: true };
-    // },
-    // getAllSuccess(state, users) {
-    //     state.all = { items: users };
-    // },
-    // getAllFailure(state, error) {
-    //     state.all = { error };
-    // }
-    // }
 };

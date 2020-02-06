@@ -47,17 +47,14 @@ export const router = new Router({
         { path: '/successRegister', component: SuccessRegister },
         { path: '/user/activation', component: Activation },
         { path: '/user/activation/*', redirect: '/user/activation' },
-<<<<<<< HEAD
-        { path: '/404', component: NotFound },  
+        // { path: '/404', component: NotFound },  
         { path: '*', redirect: '/404' }, 
         // { path: '/create', component: CreatePage },
         // { path: '/create2', component: CreatePage2 },
         // { path: '/create3', component: CreatePage3 },
         // { path: '/create4', component: CreatePage4 },
         // { path: '/create5', component: CreatePage5 },
-=======
         { path: '/search', component: SearchPublic, name: "Search", },
->>>>>>> fe88d9e380a7b6815c97169a237573ef2d999e7b
 
 
         //test path
@@ -79,11 +76,10 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
     console.log("beforeEach:", to, from);
-<<<<<<< HEAD
     const publicPages = ['/authorization', '/cabinet', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/userprof', '/map', '/about', '/user/activation', '/404', '*' ];
-=======
-    const publicPages = ['/authorization', '/search', '/cabinet', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/userprof', '/map', '/about', '/user/activation'];
->>>>>>> fe88d9e380a7b6815c97169a237573ef2d999e7b
+
+
+    // const publicPages = ['/authorization', '/search', '/cabinet', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/userprof', '/map', '/about', '/user/activation'];
 
     const authRequired = !publicPages.includes(to.path);
 
