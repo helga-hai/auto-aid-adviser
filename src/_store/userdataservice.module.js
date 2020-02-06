@@ -223,6 +223,16 @@ if ( photo.files[ 0 ] ) {
 
             console.log( "RESP " + resp );
 
+            userService.getAllUserData( 'api/user/profile/cars' )
+
+            .then(function(result){
+
+                    console.log("CARS "+result);
+
+                    return result })
+
+                .then(result=>context.commit('setData',[ result ,'cars' ]));
+
             // context.commit( 'SET_MULTIPART' , JSON.parse(this.responseText) );
 
                 }
@@ -231,6 +241,7 @@ if ( photo.files[ 0 ] ) {
             return false;
 
         },
+
         // getData(path) {
 
 

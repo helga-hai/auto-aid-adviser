@@ -45,34 +45,13 @@ export default {
 
     computed:{
         currentCars: function(){
-            this.getCars();
             let cars = this.$store.state.userdataservice.cars;
+            console.log( cars );
             return cars},
     },
 
     methods:{
 
-        getCars(){
-            console.log('GET_CARS')
-
-            userService.getAllUserData( 'api/user/profile/cars' )
-
-                .then(function(result){
-
-                    console.log("CARS "+result);
-
-                    return result })
-
-                .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[ result ,'cars' ]))
-
-                .then( ()=>{
-                    let _cars = this.$store.state.userdataservice.cars;
-
-                    console.log("CARS _CARS!!!!!!!!!!!!!!!!! "+_cars );
-
-                    this.cars = _cars;})
-
-        },
         lookAuto(e){
 
             var
@@ -80,10 +59,8 @@ export default {
             console.log(currentCarID);
 
             userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
-            .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]));
-            this.$emit('switchView','user-auto-complite');
-            
-
+            .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]))
+            this.$emit('switchView','user-auto-complite');         
 
         },
 

@@ -35,7 +35,7 @@
                 <p>Особистий кабінет</p>
                 <ul>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-create-page1')" :class="{'active': currentView == 'user-create-page1' || currentView == 'user-profile-ready-page'}">Особисті данні</a></li>
-                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView(getCurrentView( 'cars' , [ 'user-auto-create-page' , 'user-auto-complite-car-cards-page' ]))" :class="{'active': currentView == 'user-auto-create-page' || currentView == 'user-auto-create-page2' || currentView == 'user-auto-complite-car-cards-page' }">Мої автомобілі</a></li>
+                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView(getCurrentView( 'cars' , [ 'user-auto-create-page' , 'user-auto-complite-car-cards-page' ]))" :class="{'active': currentView == 'user-auto-create-page' || currentView == 'user-auto-create-page2' || currentView == 'user-auto-complite-car-cards-page' || currentView == 'user-auto-complite'}">Мої автомобілі</a></li>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-station-recording')" :class="{'active': currentView == 'user-station-recording' }">Записи до станції</a></li>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-settings')" :class="{'active': currentView == 'user-settings' }">Налаштування</a></li>
                     <!-- <li>text: {{mIt}}</li> -->

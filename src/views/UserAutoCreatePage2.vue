@@ -371,7 +371,10 @@ export default {
         saveAuto() {
 
             let photos = document.getElementById('photoForm');
-            console.log(photos.childNodes[0].elements);
+            console.dir('from user create page '+photos.childNodes[0].elements[0]);
+            console.dir('from user create page '+photos.innerHTML);
+            console.dir('from user create page '+photos.childNodes[0].getElementsByTagName('a')[0].innerText);
+            console.log(photos.childNodes[0].getElementsByTagName('a').length);
             
             let auto = {
                 releaseYear: parseInt(this.year) || 1910, /* 1900 Не работает, доступные данные лучше чтоб приходили с сервера */
@@ -400,33 +403,31 @@ export default {
 
             console.log(images);
 
-            this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images });
+            this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images })
 
+
+      
             this.clearField('modelType', 'models','currentIndex');
 
             this.year = '';
+
+            photos.childNodes[0].getElementsByTagName('a')[0].onclick();
+            photos.childNodes[0].getElementsByTagName('a')[0].onclick();
+            photos.childNodes[0].getElementsByTagName('a')[0].onclick();
 
             // this.releaseYear();
            
             this.$emit('switchView','user-auto-complite-car-cards-page');
 
-            
-
-            
-
-
-            // console.log(auto)
-            // userService.postAllUserData(`api/user/profile/car`,auto)
-            // .then(function(result){return result})
-            // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'car']))
-            // console.log(this.$store.state.userdataservice.car)
         },
+
 
         clearField(dataField, stateField, index){
             this[dataField] = '';
             this.$store.dispatch('userdataservice/fieldsVal',[null, stateField]);
             this[index] = '';
         },
+
     },
 
 }
