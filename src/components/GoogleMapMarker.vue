@@ -17,7 +17,9 @@ export default {
         marker: {
             type: Object,
             required: true
-        }
+        },
+    },
+    watch:{
     },
     mounted() {
         // new this.google.maps.Marker({
@@ -41,6 +43,7 @@ export default {
             map: this.map,
             icon: iconBase,
             draggable:true,
+            animation: google.maps.Animation.DROP
             // icon: POINT_MARKER_ICON_CONFIG
         });
     },

@@ -46,6 +46,7 @@ export default {
 
     computed:{
         currentCars: function(){
+<<<<<<< HEAD
 
             
 
@@ -61,10 +62,16 @@ export default {
 
             return cars
             },
+=======
+            let cars = this.$store.state.userdataservice.cars;
+            console.log( cars );
+            return cars},
+>>>>>>> fe88d9e380a7b6815c97169a237573ef2d999e7b
     },
 
     methods:{
 
+<<<<<<< HEAD
         getCars(){
             console.log('GET_CARS')
 
@@ -88,6 +95,8 @@ export default {
                     } )
 
         },
+=======
+>>>>>>> fe88d9e380a7b6815c97169a237573ef2d999e7b
         lookAuto(e){
 
             var
@@ -95,10 +104,8 @@ export default {
             console.log(currentCarID);
 
             userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
-            .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]));
-            this.$emit('switchView','user-auto-complite');
-            
-
+            .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]))
+            this.$emit('switchView','user-auto-complite');         
 
         },
 

@@ -15,6 +15,7 @@ export function authHeader() {
     if (token) {
         // console.log('Authorization: Bearer user.token', token);
         return {
+            //'Set-Cookie': 'HttpOnly;Secure;SameSite=Strict',
             'Content-Type': 'application/json; charset=utf-8',
             // 'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token

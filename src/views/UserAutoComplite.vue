@@ -2,23 +2,21 @@
   <div >
 
 
-            <!-- <div class = "CarWrapper">
-                <div class = "Car"
-
-                v-for="c of currentCar"
-                :key="c.id"
-                :id="c.id"
-                >
-                    <img alt='' :src = "c.images[0].urlImage"/>
+            <div class = "CarWrapper">
+                <div class = "Car">
+                    <img alt='' :src = "currentCar.images[0].urlImage"/>
                     <div class = "info">
-                        <h5>vnvhn{{currentCar.carModel.carBrand.name}}</h5>
-                        <p>fdngdgnh{{currentCar.carModel.name}}/{{c.releaseYear}}</p>
-                        <p>{{c.individualCarNaming}}</p>
-                    </div>              
+                        <h5>{{currentCar.carModel.carBrand.name}}</h5>
+                        <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</p>
+                        <p>{{currentCar.individualCarNaming}}</p>
+                    </div>               
                 </div>
-            </div> -->
-            {{currentCar}}
-            {{}}
+            </div>
+            <!-- {{currentCar}} -->
+            <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
+            <p>{{currentCar.individualCarNaming}}</p>
+
+            <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
     
 
   </div>
@@ -43,58 +41,15 @@ export default {
     },
     computed:{
         currentCar: function(){
-            var car = this.$store.state.userdataservice.currentCar
+            var car = this.$store.state.userdataservice.currentCar;
             return car},
     },
     methods:{
 
-        // getCars(){
-        //     console.log('GET_CARS')
-
-        //     userService.getAllUserData( 'api/user/profile/cars' )
-
-        //         .then( function(result){
-
-        //             console.log("CARS "+result);
-
-        //             return result })
-
-        //         .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[ result , 'currentCar' ]) )
-
-        //         .then( ()=>{
-        //             let _cars = this.$store.state.userdataservice.currentCar;
-
-        //             console.log("CARS _CARS!!!!!!!!!!!!!!!!! "+_cars );
-
-        //             this.cars = _cars;})
-
-        // },
-        // lookAuto(e){
-
-        //     var
-        //     currentCarID = e.target.id;
-        //     console.log(currentCarID);
-
-        //     userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
-        //     .then(function(result){return result})
-        //     .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'currentCar']))
-
-
-        // },
-
-        createStepOne() {
-            console.log("work");
-            return this.$emit('switchView','user-auto-create-page2');
-            // return this.$emit('switchView','user-auto-complite-car-cards-page')
+        back(){
+            this.$emit( 'switchView','user-auto-complite-car-cards-page' );
         },
     },
-
-    // mounted(){
-
-    //     {{this.getCars()}}
-
-    // }
-
 
 }
 </script>

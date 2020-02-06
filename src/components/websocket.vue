@@ -149,7 +149,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .servise {
   &__input {
     border: 1px solid #000;
