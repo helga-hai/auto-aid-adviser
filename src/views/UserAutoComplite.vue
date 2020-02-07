@@ -1,25 +1,24 @@
 <template>
   <div >
-
-
-            <div class = "CarWrapper">
+            <div class = "CurrentCarWrapper">
                 <div class = "Car">
                     <img alt='' :src = "currentCar.images[0].urlImage"/>
                     <div class = "info">
                         <h5>{{currentCar.carModel.carBrand.name}}</h5>
-                        <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</p>
+                        <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
                         <p>{{currentCar.individualCarNaming}}</p>
-                    </div>               
+                        <p>{{currentCar.description}}</p>
+                        <!-- <p>{{currentCarIMG}}</p> -->
+                    </div>
                 </div>
+            <div class="currentCar__buttons">
+                <input type="submit" value="Назад" class="backButton" @click="back">
+            </div>
+            
             </div>
             <!-- {{currentCar}} -->
-            <h5>{{currentCar.carModel.carBrand.name}}</h5>
-            <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
-            <p>{{currentCar.individualCarNaming}}</p>
-            <p>{{currentCar.description}}</p>
-            <p>{{currentCarIMG}}</p>
 
-            <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
+
     
 
   </div>
@@ -46,11 +45,13 @@ export default {
 
         currentCar: function(){
             var car = this.$store.state.userdataservice.currentCar;
-            return car},
+            return car
+        },
 
         currentCarIMG: function(){
             var carIMG = this.$store.state.userdataservice.currentCar.images;
-            return carIMG},
+            return carIMG
+        },
     },
 
     methods:{
@@ -65,14 +66,13 @@ export default {
 
 <style scoped>
 
-    .CarCardWrapper{
-        display: inline-block;
-        width:595px;
+    .CurrentCarWrapper{
+        display: block;
+        margin: 0 auto;
     }
-    .CarCards{
+
+    .Car{
         display: inline-block;
-        width: 590px;
-        height: 160px;
         background: #FFFFFF;
         border: 1px solid #C9CFD7;
         box-sizing: border-box;
@@ -82,32 +82,62 @@ export default {
         position: relative;
 
     }
-    .CarCards img{
-        display: inline-block;
-        width:200px;
-        height: 158px;
+    .Car img{
+        display: block;
+        width:640px;
+        height: 480px;
+        margin: 0 auto;
     }
-    .CarCards .info{
+    .Car .info{
         display: inline-block;
-        height: 158px;
+
         padding: 10px;
-        position: relative;
+
         box-sizing: border-box;
         bottom:40px;
 
     }
-    .CarCards .info p{
+
+    .Car .info p{
         padding: 20px 0px 20px 0px;
     }
+
     span .objects__button{
         margin-bottom: 20px;
     }
-
-    .Image__labe {
-    width: 360px;
-    height: 377px; 
+    .currentCar__buttons input {
+        display: inline-block;
+        text-align: center;
+        padding: 19px 0 19px 0;
+        font-size: 16px;
+        line-height: 18px;
+        text-transform: uppercase;
     }
 
+    .currentCar__buttons {
+        margin: 20px 0 20px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        margin-top: 32px;
+    }
+
+    .currentCar__buttons .backButton {
+        width: 125px;
+        background-color: white;
+        color: #6F7E95;
+        border: 1px solid #6F7E95;
+        border-radius: 4px;
+    }
+    .currentCar__buttons .backButton {
+        width: 238px;
+        background-color: #FFC700;
+        color: #000000;
+        border: none;
+        border-radius: 4px;
+    }
 
 
 </style>
