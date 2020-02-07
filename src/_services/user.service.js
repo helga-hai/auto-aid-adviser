@@ -97,47 +97,47 @@ function login(email, password) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
     };
-
+    console.log("login "+requestOptions);
     return fetch(`${config.apiUrl}/api/user/login`, requestOptions)
 
 
     .then(handleResponse)
-        // .then(handleResponse => {
-        //     console.log(JSON.stringify(response));
-        //     return handleResponse;})
-        .then(user => {
-            // .then(token => {
-            console.log('requestOptions')
-            console.log('requestOptions ' + requestOptions); //email password
-            // login successful if there's a jwt token in the response
-            // if (user.token)
-            if (user) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
+
+    .then(user => {
+
+        console.log('requestOptions');
+        console.log('requestOptions ' + requestOptions); //email password
+        // login successful if there's a jwt token in the response
+
+        if (user) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
 
 
-                console.log("USER_SERVICE " + JSON.stringify(user));
+            console.log("USER_SERVICE " + JSON.stringify(user));
 
-                if (JSON.stringify(user.status) == 401) {
-                    console.log("NO_USER");
-                    console.log(JSON.stringify(user.error)); //:"Unauthorized"
-                    console.log(JSON.stringify(user.message));
-                    return user.error;
-                    //"message":"Authorization failed"
-                    // return router.push('/');
-                } else {
+            if (JSON.stringify(user.status) == 401) {
+                console.log( "NO_USER" );
+                console.log( JSON.stringify(user.error) ); //:"Unauthorized"
+                console.log( JSON.stringify(user.message) );
+                return user.error;
+                //"message":"Authorization failed"
+                // return router.push('/');
+            } else {
 
-                    localStorage.setItem('token', JSON.stringify(user.token));
-                    localStorage.setItem('email', JSON.stringify(user.email)); ////email///////////////////////////
-                    localStorage.setItem('role', JSON.stringify(user.role)); ////role///////////////////////////
-                    console.log(JSON.stringify(user.role));
-                    console.log("router.push user" + user.role);
-                    //console.log(router.push);
-                    //router.push('user');//not working
-                    return user;
-                }
+                localStorage.setItem( 'token', JSON.stringify(user.token) );
+                localStorage.setItem( 'email', JSON.stringify(user.email) ); ////email///////////////////////////
+                localStorage.setItem( 'role', JSON.stringify(user.role) ); ////role///////////////////////////
+
+                console.log( JSON.stringify(user.role) );
+                console.log( "router.push user" + user.role );
+
+                //router.push('user');//not working
+                
+                return user;
             }
-            return user;
-        });
+        }
+        return user;
+    });
 }
 
 function logout() {
@@ -145,9 +145,12 @@ function logout() {
 
     // localStorage.removeItem('user');
     localStorage.removeItem('token');
+
     localStorage.removeItem('email');
+
     localStorage.removeItem('role');
-    console.log('localStor: ' + localStorage);
+
+    console.log( 'localStor: ' + localStorage );
 
 }
 
@@ -161,6 +164,7 @@ function getAll() {
 }
 
 function getAllUserData(path) {
+
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
@@ -169,7 +173,9 @@ function getAllUserData(path) {
     return fetch(`${config.apiUrl}/${path}`, requestOptions)
         .then(handleResponse)
         .then(data => {
-            console.log('getAllUserData ' + JSON.stringify(data));
+
+            console.log( 'getAllUserData ' + JSON.stringify(data) );
+
             return data
         });
 
@@ -320,7 +326,7 @@ function handleResponseGetData(response) {
 };
 
 function handleResponse(response) {
-    //console.dir(JSON.parse(response))
+    console.log(response)
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         console.log(data);

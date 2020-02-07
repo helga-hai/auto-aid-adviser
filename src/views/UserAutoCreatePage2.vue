@@ -145,6 +145,7 @@
                             <PhotoFieldLoad/>
 
                         </div>
+
                         <!-- <div>
                         <label class= "registrStep3__addFile">
                             <input id="carphoto"
@@ -192,24 +193,14 @@ export default {
     },
     data() {
         return {
-            // types:{
-            //     type1: 'Мотоцикл',
-            //     type2: 'Легкове',
-            //     type3: 'Вантажівка',
-            //     type4: 'Автобус',
-            // },
-            
-            // models(selectedTypeId,selectedBrandId) {return this.$store.state.userdataservice.models},
-            // models: models(),
             modelType:'',
-            // selectedModelId:'',
             selectedModelIdVal:'',
             selectedModelId: function() {
-            if(this.currentIndex<0||!this.currentIndex){
-                return '';
-            }else{
-            return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
-            },
+                if(this.currentIndex<0||!this.currentIndex){
+                    return '';
+                }else{
+                return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
+                },
             currentIndex: '' || this.$store.state.userdataservice.currentIndex,
             year:"",
             types() {return this.$store.state.userdataservice.types},
@@ -277,7 +268,17 @@ export default {
         },
 
         back(){
-            this.$emit('switchView','user-auto-create-page');
+            if(this.$store.state.userdataservice.cars.length > 0){
+
+                console.log('BACK-BLOCK');
+
+                this.$emit('switchView','user-auto-complite-car-cards-page');
+
+            }else{
+
+                this.$emit('switchView','user-auto-create-page');
+
+            }
         },
         selectType(e){
             console.log(e.target.id);
@@ -381,7 +382,11 @@ export default {
         saveAuto() {
 
             let photos = document.getElementById('photoForm');
-            console.log(photos.childNodes[0].elements);
+            console.log(photos.childNodes[ 0 ].elements);
+            console.dir('from user create page '+photos.childNodes[0].elements[0]);
+            console.dir('from user create page '+photos.innerHTML);
+            console.dir('from user create page '+photos.childNodes[0].getElementsByTagName('a')[0].innerText);
+            console.log(photos.childNodes[0].getElementsByTagName('a').length);
             
             let auto = {
                 releaseYear: parseInt(this.year) || 1910, /* 1900 Не работает, доступные данные лучше чтоб приходили с сервера */
@@ -410,29 +415,49 @@ export default {
 
             console.log(images);
 
-            this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images });
+            this.$store.dispatch('userdataservice/GET_MULTIPART', { auto, images })
 
+            let photosLength = photos.childNodes[0].getElementsByTagName('a').length;
+      
             this.clearField('modelType', 'models','currentIndex');
+
+            this.year = '';
+
+            this.selectedType = '';
+
+            this.selectedTypeId = '';
+
+            this.selectedBrand = '';
+
+            this.selectedBrandId = '';
+
+            this.selectedModelIdVal = '';
+
+            this.individualCarNaming = '';
             
+            this.description = '';
+
+            if(photosLength>0){
+
+                for( let i = photosLength; i>0 ; i-- ){
+
+                    photos.childNodes[0].getElementsByTagName('a')[0].onclick();
+
+                }
+            };
+            
+
             this.$emit('switchView','user-auto-complite-car-cards-page');
 
-            
-
-            
-
-
-            // console.log(auto)
-            // userService.postAllUserData(`api/user/profile/car`,auto)
-            // .then(function(result){return result})
-            // .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'car']))
-            // console.log(this.$store.state.userdataservice.car)
         },
+
 
         clearField(dataField, stateField, index){
             this[dataField] = '';
             this.$store.dispatch('userdataservice/fieldsVal',[null, stateField]);
             this[index] = '';
         },
+
     },
 
 }

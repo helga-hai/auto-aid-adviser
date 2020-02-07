@@ -14,6 +14,8 @@ export const selfLocation = {
     getters: {
         doneLocation: state => {
             return state.location
+
+        
         },
         gettingLocation: state => {
             return state.gettingLocation
