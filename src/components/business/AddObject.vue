@@ -9,7 +9,7 @@
                 <!-- <card-min/> -->
             </div>
             <button v-else class="services-prev detail" v-for="cur in myObjects" :key="cur.id" @click="goToDetail(cur.id)" :isPreview="false">
-                <div class="services-prev-img small" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}">
+                <div class="services-prev-img small" :style="{backgroundImage: 'url('+cur.images[0].urlImage+')'||'url('+require('../../assets/serevice.svg')+')'}">
                 </div>
                 <div class="services-prev-info">
                     <div class='name-prev'>{{cur.name}}</div>
@@ -136,8 +136,9 @@ export default {
 }
 .services-prev-img.small {
     width:200px;
-    background-size: cover;
     height: 155px;
+    background-size: cover;
+    background-position: center;
 }
 .services-prev.detail {
     border: 2px solid #E5E5E5;

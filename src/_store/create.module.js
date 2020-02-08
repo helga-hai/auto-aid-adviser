@@ -214,7 +214,7 @@ export const create = {
         SET_BUSINESS_DATA_PRPEND: (state, payload) => {
             console.log('SET_BUSINESS_DATA_PRPEND')
             state.businessPrepend = payload;
-            console.dir(state.business)
+            console.dir(state.businessPrepend)
         },
         SET_MY_BUSINESS_DATA: (state, payload) => {
             console.log('SET_MY_BUSINESS_DATA')

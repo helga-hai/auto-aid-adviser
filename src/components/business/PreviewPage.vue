@@ -6,10 +6,10 @@
             <h1>{{ isPreview ? 'Попередній перегляд' : 'Детальна інформація'}}</h1>
             
             <div class="services-prev">
-                <div class="services-prev-img" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}">
+                <div class="services-prev-img" :style="{backgroundImage: cur && cur.images.length ? 'url('+cur.images[0].urlImage+')' : 'url('+require('../../assets/serevice.svg')+')'}">
                 </div>
                 <div class="services-prev-info">
-                    <div class='name-prev'>{{cur.name}}</div>
+                    <div class='name-prev' v-show="cur">{{cur.name}}</div>
                     <p class="loc" v-if="cur.location.address">{{cur.location.address}}</p>
                     <p class="time" v-if="cur.workTimes.length">
                         <span v-for="d in cur.workTimes" :key="d.id">
@@ -30,7 +30,23 @@
                     <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
                     </svg>
                 </div> -->
-                <details v-for="(item, i) in types" :key="i" class="services__services opened" >
+                <!-- <details v-for="(item, i) in service" :key="i" class="services__services opened" >
+                    <summary class="services__servicename">
+                        <span>{{item}}</span>
+                    </summary> 
+                    <div class="services__checkwrapp">
+                        <div class="services__autocontent" >
+                            <div></div>
+                            <label v-for="elem in dealList" :key="elem.id" >
+                                {{item}}
+                                <div v-if="elem.serviceType.name==item">
+                                    <p>{{elem.name}}</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div> 
+                </details>-->
+                <details v-for="(item, i) in service" :key="i" class="services__services opened" >
                     <summary class="services__servicename">
                         <span>{{item}}</span>
                     </summary> 
@@ -62,7 +78,7 @@ export default {
     data() {
         return {
            dayList: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'] ,
-           types: [],
+           service: [],
         }
     },
     props: {
@@ -74,7 +90,8 @@ export default {
     computed: {
         ...mapGetters({
             cur: 'create/businessPrepend',
-            dealList: 'templateB/DATALIST'
+            dealList: 'templateB/DATALIST',
+            category: 'templateB/CATEGORYLIST',
          }),
     },
     mounted(){
@@ -84,12 +101,15 @@ export default {
             this.$store.dispatch('templateB/GET_DATALIST')
             // this.cur.serviceForBusinesses
         }
-        // this.$store.dispatch('templateB/GET_SERVICES_BY_ID',this.types)
+        // this.$store.dispatch('templateB/GET_SERVICES_BY_ID',this.service)
         if(this.cur) {
+            console.log('this.cur.serviceForBusinesses',this.cur.serviceForBusinesses)
             this.cur.serviceForBusinesses.forEach(item=>{
                 let tmp = this.dealList.find(deal=>deal.id === item.id) 
-                if(this.types.indexOf(tmp.name)<0){
-                    this.types.push(tmp.name)
+                if(tmp) {
+                    if(this.service.indexOf(tmp.name)<0){
+                        this.service.push(tmp.name)
+                    }
                 }
             })
             // this.type.map(item=>{
@@ -98,26 +118,26 @@ export default {
             //     })
             //     inner.id = tmp.serviceType.id
             //     inner.name = tmp.serviceType.name
-            //     this.types.push(inner)
+            //     this.service.push(inner)
             // })
         }
         // let serv;
-        // this.types.forEach( type => {
+        // this.service.forEach( type => {
         //     this.cur.serviceForBusinesses
         // })
     },
     methods: {
         getCategory(item){
             let val =  this.dealList.find(deal=>deal.id === item.id) 
-            return val.serviceType.name
+            return val.serviceType ? val.serviceType.name : ''
         },
         findServ(type){
-            this.cur.serviceForBusinesses.forEach(item=>{
-                let tmp = this.dealList.find(deal=>deal.id === item.id) 
-                if(this.types.indexOf(tmp.serviceType.name)<0){
-                    this.types.push(tmp.serviceType.name)
-                }
-            })
+            // this.cur.serviceForBusinesses.forEach(item=>{
+            //     let tmp = this.dealList.find(deal=>deal.id === item.id) 
+            //     if(this.service.indexOf(tmp.serviceType.name)<0){
+            //         this.service.push(tmp.serviceType.name)
+            //     }
+            // })
 
         },
         switchView(val){
@@ -144,9 +164,14 @@ export default {
     // border: 2px solid #E5E5E5;
     // border-radius: 5px;
 }
+.services .services-prev:hover {
+    box-shadow:none
+}
 .services-prev-img {
     width:413px;
     height:260px;
+    background-size: cover;
+    background-position: center;
 }
 .services-prev-info {
     p {
