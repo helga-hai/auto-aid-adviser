@@ -132,12 +132,12 @@ export default {
             return val.serviceType ? val.serviceType.name : ''
         },
         findServ(type){
-            // this.cur.serviceForBusinesses.forEach(item=>{
-            //     let tmp = this.dealList.find(deal=>deal.id === item.id) 
-            //     if(this.service.indexOf(tmp.serviceType.name)<0){
-            //         this.service.push(tmp.serviceType.name)
-            //     }
-            // })
+            this.cur.serviceForBusinesses.forEach(item=>{
+                let tmp = this.dealList.find(deal=>deal.id === item.id) 
+                if(this.service.indexOf(tmp.serviceType.name)<0){
+                    this.service.push(tmp.serviceType.name)
+                }
+            })
 
         },
         switchView(val){

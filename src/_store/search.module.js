@@ -10,11 +10,14 @@ export const search = {
         latitude: '',
         longitude: '',
         serviceForBusiness: '',
-        searchData: null
+        searchData: null,
+        markersEntities: {
+            // 'marker-23': marker
+        }
     },
     getters: {
         SEARCHDATA: state => {
-            return state.searchData; //let name = this.$store.getters.NAME
+            return state.searchData;
         },
         SERVICEFORBUSINESS: state => {
             return state.serviceForBusiness;
@@ -24,6 +27,9 @@ export const search = {
         },
         LONGITUDE: state => {
             return state.longitude;
+        },
+        MARKER_ENTITIES: state => {
+            return state.markersEntities;
         },
     },
     mutations: {
@@ -36,6 +42,10 @@ export const search = {
         },
         SET_SEARCH: (state, payload) => {
             state.searchData = payload
+        },
+        GET_MARKER_ENTITIES(state, [id, bodyMarker]) {
+            console.log(id, bodyMarker)
+            state.markersEntities[id] = bodyMarker
         },
     },
     actions: {

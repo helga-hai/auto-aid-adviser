@@ -130,7 +130,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            markers: 'search/SEARCHDATA',
+            // markets: 'search/SEARCHDATA',
             gettingLocation: 'selfLocation/gettingLocation',
             SERVICEFORBUSINESS: 'search/SERVICEFORBUSINESS',
             LATITUDE: 'search/LATITUDE',
@@ -208,6 +208,8 @@ export default {
             this.isDone=true; 
         },
         getAddressData(addressData, placeResultData, id){
+            // this.ourM.removeMarker('self-location');
+            // document.getElementById('self-location').setMap(null)
             this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
             this.$store.dispatch('selfLocation/changeLocation', {addressData, placeResultData, id});
             // console.log(addressData, placeResultData, id)
