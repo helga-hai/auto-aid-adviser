@@ -26,7 +26,7 @@
                     
                     <div v-if="marketsSearch">
                         <button class="services-prev detail" v-for="cur in marketsSearch" :key="cur.id"  :isPreview="false">
-                            <div class="services-prev-img small" :style="{backgroundImage: cur.images && cur.images.length ? 'url('+cur.images[0].urlImage+')' : 'url('+require('../assets/serevice.svg')+')'}">
+                            <div class="services-prev-img small"  v-if="cur.images" :style="{backgroundImage: cur.images.length ? 'url('+cur.images[0].urlImage+')' : 'url('+require('../assets/serevice.svg')+')'}">
                             </div>
                             <div class="services-prev-info">
                                 <div class='name-prev'>{{cur.name}}</div>
