@@ -9,7 +9,8 @@
                 <!-- <card-min/> -->
             </div>
             <button v-else class="services-prev detail" v-for="cur in myObjects" :key="cur.id" @click="goToDetail(cur.id)" :isPreview="false">
-                <div class="services-prev-img small" :style="{backgroundImage: 'url('+cur.images[0].urlImage+')'||'url('+require('../../assets/serevice.svg')+')'}">
+                <div class="services-prev-img small" v-if="cur.images" :style="{backgroundImage: 'url('+cur.images[0].urlImage+')'||'url('+require('../../assets/serevice.svg')+')'}">
+                <div class="services-prev-img small" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}">
                 </div>
                 <div class="services-prev-info">
                     <div class='name-prev'>{{cur.name}}</div>
@@ -57,9 +58,7 @@ export default {
         } 
     },
     activated: function () {
-        console.log("ACTIVETED")// Clear Cash in inner components (keep-alive)
         this.$store.commit('create/CLEAR_CASH')
-
     },
     async created () {
         await this.$store.dispatch('templateB/GET_TYPE_LIST')
