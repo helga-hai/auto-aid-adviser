@@ -19,7 +19,15 @@
                     <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
                     <p>{{currentCar.individualCarNaming}}</p>
                     <p>{{currentCar.description}}</p>
-                    <!-- <p>{{currentCarIMG}}</p> -->
+                    <p>{{currentCarIMG[ 0 ].urlImage}}</p>
+                    <!-- <v-carousel>
+                        <v-carousel-item
+                         v-for="car  in currentCarIMG" 
+                         :key="car.id"
+                         :src="currentCarIMG[ 0 ].urlImage"
+                         ></v-carousel-item>
+                    </v-carousel> -->
+                    <img :src="currentCarIMG[ 0 ].urlImage">
                 </div>
             </div>
             <div class="currentCar__buttons">
@@ -229,6 +237,10 @@ export default {
     },
 
     methods:{
+
+        getPath(file){
+            return '/images/' + file
+        },
 
         back(){
             this.$emit( 'switchView','user-auto-complite-car-cards-page' );
