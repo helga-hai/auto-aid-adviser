@@ -12,7 +12,7 @@ export const authentication = {
     state: {
         initialState,
 
-        // password: null,
+        password: null,
         email: null, // test
         role: null, // test
 
@@ -24,13 +24,12 @@ export const authentication = {
             commit('loginRequest', { email, password });
 
             userService.login(email, password)
-                .then(
-                    
-                    user => {
+                .then(user => {
+                        console.log(user)
                         if(user === "Unauthorized"){
                             console.log("AuthModule "+"Unauthorized");
                         }
-
+                        console.log(user);
                         commit('loginSuccess', user);
                         commit('setVal', user); /////////////test
                         
@@ -64,7 +63,12 @@ export const authentication = {
         loginRequest(state, user) {
             console.log('store mutations loginRequest: state, user', state, user);
             state.status = { loggingIn: true };
-            state.user = user;
+            // state.user = user;
+            state.email = user.email;
+            state.password = user.password;
+            console.log('store mutations loginRequest: state, user', state.email);
+            console.log('store mutations loginRequest: state, user', state.password);
+            console.log('---------------------hhhhhhhhhhh--------------');
         },
         loginSuccess(state, user) {
             state.status = { loggedIn: true };
@@ -74,6 +78,7 @@ export const authentication = {
 
         ///test
         setVal(state, obj) {
+            console.log('setVal work')
             return state.email = obj.email, state.role = obj.role;
             // state.role = obj.role;
         },

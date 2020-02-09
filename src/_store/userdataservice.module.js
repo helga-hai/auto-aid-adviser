@@ -16,8 +16,11 @@ export const userdataservice = {
         brands: null,
         models: null,
         selectedModelId: null,
-        currentIndex: null,
+        currentIndex: - 1,
         cars: null,
+        currentCar: null,
+
+
         images: null,
 
 
@@ -53,6 +56,26 @@ export const userdataservice = {
             }
             let { data } = await axios(config);
             context.commit('SET_TYPES', data);
+        },
+
+        DELETE_USER_CAR: async(context, payload) => { // попередній перегляд щойно створеного обєкту
+
+            const options = authHeader() ? { headers: authHeader() } : {};
+
+            const urlWithCarID = userService.config.apiUrl + '/api/user/profile/car/' + payload
+            
+            let { data } = await axios.delete(urlWithCarID, options);
+            // context.commit('', data);
+            userService.getAllUserData( 'api/user/profile/cars' )
+            
+
+            .then(function(result){
+
+                    console.log("CARS "+result);
+
+                    return result })
+
+                .then(result=>context.commit('setData',[ result ,'cars' ]));
         },
 
 
@@ -220,7 +243,17 @@ if ( photo.files[ 0 ] ) {
 
             console.log( "RESP " + resp );
 
-            context.commit( 'SET_MULTIPART' , JSON.parse(this.responseText) );
+            userService.getAllUserData( 'api/user/profile/cars' )
+
+            .then(function(result){
+
+                    console.log("CARS "+result);
+
+                    return result })
+
+                .then(result=>context.commit('setData',[ result ,'cars' ]));
+
+            // context.commit( 'SET_MULTIPART' , JSON.parse(this.responseText) );
 
                 }
             };
@@ -228,6 +261,7 @@ if ( photo.files[ 0 ] ) {
             return false;
 
         },
+
         // getData(path) {
 
 
@@ -242,9 +276,6 @@ if ( photo.files[ 0 ] ) {
         //     .then(userService.handleResponse);
 
         // },
-        getData(val) {
-            return val;
-        },
         // getAll({ commit }) {
         //     commit('getAllRequest');
 
@@ -254,18 +285,15 @@ if ( photo.files[ 0 ] ) {
         //             error => commit('getAllFailure', error)
         //         );
         // }
+
+        
         fieldsVal({ commit }, val) {
-            // console.log(data);
+
             commit('setData', val);
         }
     },
 
-
-    
-
     mutations: {
-
-
 
         SET_TYPES: (state, payload) => {
 
@@ -276,37 +304,24 @@ if ( photo.files[ 0 ] ) {
         SET_MULTIPART: (state, payload)=>{
 
             state.cars.push(payload);
+
             console.log(payload);
 
         },
 
         setData( state, data ) {
+
             console.log( "DATA " + data[1] );
             console.log( data );
-            let toState = data[1];
-            state[toState] = data[0];
-            console.log(state[toState]);
-        },
 
-        // setData(state, resp){
-        //     return state.user_data.role.resp.role = resp.role;
-        // {
-        //     id: resp.id,
-        //     role: resp.role,
-        //     email: resp.email,
-        // }
+            let toState = data[1];
+
+            state[toState] = data[0];
+
+            console.log(state[toState]);
+
+        },
 
     },
 
-
-    // getAllRequest(state) {
-    //     state.all = { loading: true };
-    // },
-    // getAllSuccess(state, users) {
-    //     state.all = { items: users };
-    // },
-    // getAllFailure(state, error) {
-    //     state.all = { error };
-    // }
-    // }
 };

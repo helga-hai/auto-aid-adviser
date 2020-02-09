@@ -34,22 +34,24 @@ export default {
         return{
 
             visible: false,
+
         }
     },
 
     methods: {
         createStepOne() {
             console.log("work");
+            
             return this.$emit('switchView','user-auto-create-page2');
             // return this.$emit('switchView','user-auto-complite-car-cards-page')
         },
         getTypeAndBrand(){
             console.log('FOOOOOO');
             userService.getAllUserData('api/catalog/car/types')
-            .then(function(result){return result})
+            // .then(function(result){ console.log( result ); return result} )
             .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'types']))
             userService.getAllUserData('api/catalog/car/brands')
-            .then(function(result){return result})
+            // .then(function(result){ console.log( result ); return result} )
             .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'brands']))
 
         },
@@ -99,8 +101,7 @@ export default {
 }
 .Image__labe {
     width: 360px;
-    height: 377px;
-  
+    height: 377px; 
 }
 div.banner{
     border: 2px solid #FFC700;
