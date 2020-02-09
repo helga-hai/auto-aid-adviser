@@ -13,13 +13,16 @@
 
         <div class = "CurrentCarWrapper">
             <div class = "Car">
+                <div v-for="car in filterCarsImages()" :key="car.id">
+                    <img alt='' :src="car">
+                </div>
                 <img alt='' :src = "currentCar.images[0].urlImage"/>
                 <div class = "info">
                     <h5>{{currentCar.carModel.carBrand.name}}</h5>
                     <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
                     <p>{{currentCar.individualCarNaming}}</p>
                     <p>{{currentCar.description}}</p>
-                    <p>{{currentCarIMG[ 0 ].urlImage}}</p>
+
                     <!-- <v-carousel>
                         <v-carousel-item
                          v-for="car  in currentCarIMG" 
@@ -27,7 +30,7 @@
                          :src="currentCarIMG[ 0 ].urlImage"
                          ></v-carousel-item>
                     </v-carousel> -->
-                    <img :src="currentCarIMG[ 0 ].urlImage">
+                    <img :src="currentCarIMG[ 1 ].urlImage">
                 </div>
             </div>
             <div class="currentCar__buttons">
@@ -97,7 +100,7 @@
                                         </option>
                                     </select>
 
-                                    <p>{{selectedModelIdVal||selectedModelId()}}</p>
+                                    <!-- <p>{{selectedModelIdVal||selectedModelId()}}</p> -->
 
                                     <input type="text" name="individualCarNaming" id="individualCarNaming" placeholder="індивідуальна назва авто" v-model="individualCarNaming">
                                     <input type="textarea" name="description" id="description" placeholder="Пару слів про авто..." v-model="description">
@@ -138,6 +141,7 @@
 
 import userdataservice from '../_store/userdataservice.module';
 import { userService } from '../_services';
+import { data } from '../_store/data.module';
 
 export default {
 
@@ -148,21 +152,37 @@ export default {
         return {
             togglerData: false,
 
+            
 
+            filterCarsImages(){
+                let CarsImages = []
+                this.currentCarIMG.forEach(item => {
+                    if (CarsImages.indexOf(item.urlImage) < 0) {
+                        CarsImages.push(item.urlImage)
+                    }
+                })
+                return CarsImages
 
+            },
 
             modelType:'',
 
             selectedModelIdVal:'',
 
             selectedModelId: function() {
+
                 if(this.currentIndex<0||!this.currentIndex){
-                    return '';
-                }else{
-                return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
+                    return ' ';
+                }else if(this.$store.state.userdataservice.models[this.currentIndex-1].id == null){
+
+                return ' ';}
+
+                else{
+                    return this.$store.state.userdataservice.models[this.currentIndex-1].id;
+                }
                 },
 
-            currentIndex: '' || this.$store.state.userdataservice.currentIndex,
+            currentIndex: this.$store.state.userdataservice.currentIndex || -1 ,
 
             year:"",
 
@@ -225,9 +245,9 @@ export default {
                 year.year = i;
                 yearArr.push(year);
                 console.log(year)
-        }
+            }
         return yearArr;
-            },
+        },
 
         models: function(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
 
