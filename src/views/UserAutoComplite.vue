@@ -13,24 +13,16 @@
 
         <div class = "CurrentCarWrapper">
             <div class = "Car">
-                <div v-for="car in filterCarsImages()" :key="car.id">
-                    <img alt='' :src="car">
-                </div>
-                <img alt='' :src = "currentCar.images[0].urlImage"/>
+
+                <!-- <img alt='' :src = "currentCar.images[0].urlImage"/> -->
                 <div class = "info">
                     <h5>{{currentCar.carModel.carBrand.name}}</h5>
                     <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
                     <p>{{currentCar.individualCarNaming}}</p>
                     <p>{{currentCar.description}}</p>
-
-                    <!-- <v-carousel>
-                        <v-carousel-item
-                         v-for="car  in currentCarIMG" 
-                         :key="car.id"
-                         :src="currentCarIMG[ 0 ].urlImage"
-                         ></v-carousel-item>
-                    </v-carousel> -->
-                    <img :src="currentCarIMG[ 1 ].urlImage">
+                    <div v-for="car in filterCarsImages()" :key="car.id">
+                        <img alt='' :src="car">
+                    </div>
                 </div>
             </div>
             <div class="currentCar__buttons">
@@ -152,18 +144,6 @@ export default {
         return {
             togglerData: false,
 
-            
-
-            filterCarsImages(){
-                let CarsImages = []
-                this.currentCarIMG.forEach(item => {
-                    if (CarsImages.indexOf(item.urlImage) < 0) {
-                        CarsImages.push(item.urlImage)
-                    }
-                })
-                return CarsImages
-
-            },
 
             modelType:'',
 
@@ -257,6 +237,17 @@ export default {
     },
 
     methods:{
+
+            filterCarsImages(){
+                let CarsImages = []
+                this.currentCarIMG.forEach(item => {
+                    if (CarsImages.indexOf(item.urlImage) < 0) {
+                        CarsImages.push(item.urlImage)
+                    }
+                })
+                return CarsImages
+
+            },
 
         getPath(file){
             return '/images/' + file
