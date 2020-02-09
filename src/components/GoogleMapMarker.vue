@@ -48,9 +48,14 @@ export default {
             description: null
             // icon: POINT_MARKER_ICON_CONFIG
         });
+        console.log('QQQQQ',this.$store.state.search.markersEntities)
+        var markerEntities = this.$store.state.search.markersEntities
+        console.log('QQQQQ m',m)
+        console.log('QQQQQ m.title',m.marker.title)
+        
         var th = this
         m['infowindow'] = new google.maps.InfoWindow({
-            // content: html
+            content: m.marker.description,
             maxWidth: 300,
             infoBoxClearance: new google.maps.Size(1, 1),
             disableAutoPan: false

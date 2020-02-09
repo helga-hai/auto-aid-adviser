@@ -64,9 +64,9 @@ export const search = {
                 // });
                 // this.$store.commit('search/GET_MARKER_ENTITIES',[`marker-${item.id}`, markerBody])
                 // state.markersEntities[`marker-${item.id}`] = markerBody
-                markerBody.description = `<p>Baur-Sames-Bogart Hall</p>`;
-                markerBody.title = `<p>${item.name}</p>`;
-
+                markerBody.description = `<div class="content"><h3>${item.name}</h3><hr class="grey" />${item.contact.phone}</div>`;
+                // item.contact.phone `<h3>${item.name}</h3>`;item.images[0]?item.images[0].urlImage:''
+                // `<div class="content" id="content-${item.id}" style="max-height:300px; font-size:12px;"><h3>${item.title}</h3><hr class="grey" />${item.images[0]?item.images[0].urlImage:'' + item.description}</div>`
                 // markerBody['infowindow'] = new google.maps.InfoWindow({ // replace to GoogleMaparker.vue
                 //     // content: html
                 //     maxWidth: 300,
