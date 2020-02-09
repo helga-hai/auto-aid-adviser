@@ -89,7 +89,7 @@
                                         </option>
                                     </select>
 
-                                    <p>{{selectedModelIdVal||selectedModelId()}}</p>
+                                    <!-- <p>{{selectedModelIdVal||selectedModelId()}}</p> -->
 
                                     <input type="text" name="individualCarNaming" id="individualCarNaming" placeholder="індивідуальна назва авто" v-model="individualCarNaming">
                                     <input type="textarea" name="description" id="description" placeholder="Пару слів про авто..." v-model="description">
@@ -148,13 +148,19 @@ export default {
             selectedModelIdVal:'',
 
             selectedModelId: function() {
+
                 if(this.currentIndex<0||!this.currentIndex){
-                    return '';
-                }else{
-                return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
+                    return ' ';
+                }else if(this.$store.state.userdataservice.models[this.currentIndex-1].id == null){
+
+                return ' ';}
+
+                else{
+                    return this.$store.state.userdataservice.models[this.currentIndex-1].id;
+                }
                 },
 
-            currentIndex: '' || this.$store.state.userdataservice.currentIndex,
+            currentIndex: this.$store.state.userdataservice.currentIndex || -1 ,
 
             year:"",
 
@@ -217,9 +223,9 @@ export default {
                 year.year = i;
                 yearArr.push(year);
                 console.log(year)
-        }
+            }
         return yearArr;
-            },
+        },
 
         models: function(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
 
