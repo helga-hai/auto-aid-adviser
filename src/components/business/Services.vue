@@ -7,11 +7,13 @@
 
                 <h4>Выберите из списка типы обслуживаемых автомобилей</h4>
                 
-                <ul class="carType">
+                <ul class="carType1">
                  <li
                     v-for="t in types"
                     :key="t.id"
                     :id="t.id"
+                    tabindex = 1    
+                    v-on:click="changeActive"
                     >{{t.name}}</li>
                  </ul>
 
@@ -68,15 +70,47 @@ export default {
     },
     data() {
         return {
+            isActive : false,
             checkedServicesID: [],
+            selectedTypeId: [],
         }
     },
     methods: {
+        changeActive(e){
+            let idCar = document.getElementById(e.target.id);
+            if("active" == idCar.className){
+                    
+                    idCar.className = "";
+                    console.log(idCar.className)
+                }else{
+                    idCar.className = "active";
+                }
+                
+            console.log(idCar)
+            console.log(e.target.id)
+        },
+        // selectType(e){
+        //     console.log(e.target.id);
+        //     console.log(e.target);
+        //     this.selectedType = e.target.textContent;
+        //     this.selectedTypeId.set(e.target.id);
+        //     function select(value){
+        //                     console.log(value);
+        //         for(let i =0; i < selectedTypeId.length-1; i++){
+        //             if(selectedTypeId[i] == value){
+                        
+        //             } else console.log(this.selectedTypeId)
+        //         }
+
+        //     }
+        //     select(e.target.id);
+
+        //    },
         // createStepThree() {
         //     this.$emit('stepThreeFunction');        
         // },
         serviceShow(e){
-            console.dir(e.target)
+            console.dir(e.class)
 
         },
         switchView(val){
@@ -89,6 +123,34 @@ export default {
 
 <style lang="scss">
 /* step02.css */
+ul.carType1{
+    margin: 20px 0 20px 0;
+    display: inline-block;
+
+}
+ul.carType1>li{
+    background-color: #6F7E95;
+    border-radius: 15px 15px;
+    padding: 5px 10px 5px 10px;
+    color: #000000;
+    margin-left: 5px;
+    display: inline;
+}
+ul.carType1>li:hover{
+    cursor: pointer;
+}
+// ul.carType1>li:focus,
+// ul.carType1>li:active{
+//     background-color: #FFC700;
+// }
+ul.carType1>li.active {
+    background-color: #FFC700;
+}
+// ul.carType1>li:active{
+//     cursor: pointer;
+//     background-color: #FFC700;
+// }
+
 .services {
     width: 100%;
     padding: 64px 48px 64px 48px;
@@ -357,15 +419,8 @@ hr { border: 0;
 .services ul.carType>li:hover{
     cursor: pointer;
 }
-.services ul.carType>li:focus,
-.services ul.carType>li:active{
-    background-color: #FFC700;
-}
-.services ul.carType>li.active {
-    background-color: #FFC700;
-}
-.services ul.carType>li:active{
-    cursor: pointer;
-    background-color: #FFC700;
+
+.red {
+    color: red
 }
 </style>

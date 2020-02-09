@@ -23,9 +23,9 @@
                     </div>
                 </div>
                 <label>Дані об’єкта</label>
-                <input type="text" name="title" id="title" placeholder="Назва" @change="setName">
-                <input type="text" name="phone" id="phone" placeholder="Телефон" @change="setPhone">
-                <input type="text" name="site" id="site" placeholder="Сайт (опционально)" @change="setSite">
+                <input type="text" name="title" id="title" placeholder="Назва" @change="setName" ref="nameInput">
+                <input type="text" name="phone" id="phone" placeholder="Телефон" @change="setPhone" ref="phoneInput">
+                <input type="text" name="site" id="site" placeholder="Сайт (опционально)" @change="setSite" ref="urlInput">
                 <div class="registrStep1__buttons">
                     <input type="reset" value="Відмінити" @click="switchView('add-object')" class="registrStep1__secondaryButton">
                     <input  value="Продовжити 1/3" class="registrStep1__primaryButton" @click="switchView('services')">    
@@ -63,6 +63,7 @@ import GoogleMapLoader from "../../components/GoogleMapLoader";
 import GoogleMapMarker from "../../components/GoogleMapMarker";
 import { mapSettings } from "@/constants/mapSettings";
 import VueGoogleAutocomplete from 'vue-google-autocomplete';
+import {mapGetters} from 'vuex';
 
 export default {
     name: 'RegisterObjet',
@@ -73,6 +74,13 @@ export default {
         // GoogleMapLine,
         VueGoogleAutocomplete,
     },
+    activated(){
+        // if(!this.ADDRESS) { this.$refs.addressInputvalue='' }
+        if(!this.URL && this.next) { this.$refs.urlInput.value='' }
+        if(!this.NAME && this.next) { this.$refs.nameInput.value='' }
+        if(!this.PHONE && this.next) { this.$refs.phoneInput.value='' }
+    },
+    props:['next'],
     data() {
         var th = this
         return {
@@ -121,6 +129,17 @@ export default {
         }
     },
     computed: {
+        ...mapGetters({
+            // markets: 'search/SEARCHDATA',
+            gettingLocation: 'selfLocation/gettingLocation',
+            SERVICEFORBUSINESS: 'search/SERVICEFORBUSINESS',
+            LATITUDE: 'search/LATITUDE',
+            LONGITUDE: 'search/LONGITUDE',
+            ADDRESS: 'search/ADDRESS',
+            PHONE: 'search/PHONE',
+            NAME: 'search/NAME',
+            URL: 'search/URL',
+         }),
         encoding () {
             return this.$store.getters['create/encoding']
         },
@@ -189,6 +208,8 @@ export default {
             this.isDone=true; 
         },
         getAddressData(addressData, placeResultData, id){
+            // this.ourM.removeMarker('self-location');
+            // document.getElementById('self-location').setMap(null)
             this.$store.commit('create/getAddressData', {addressData, placeResultData, id})
             this.$store.dispatch('selfLocation/changeLocation', {addressData, placeResultData, id});
             // console.log(addressData, placeResultData, id)
@@ -207,6 +228,7 @@ export default {
         },
         switchView(val){
             this.$emit('switchView', val);
+            val=='add-object'? this.$emit('nextChange',false) : this.$emit('nextChange',true)
         },
         beforeUpdate() {
         },

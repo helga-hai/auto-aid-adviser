@@ -48,6 +48,18 @@ export const create = {
         ADDRESS: state => {
             return state.address; //let name = this.$store.getters.ADDRESS
         },
+        NAME: state => {
+            return state.name; //let name = this.$store.getters.ADDRESS
+        },
+        PHONE: state => {
+            return state.contact ? state.contact.phone : ''; //let name = this.$store.getters.ADDRESS
+        },
+        URL: state => {
+            return state.contact ? state.contact.url : ''; //let name = this.$store.getters.ADDRESS
+        },
+        MARKER_ENTITIES: state => {
+            return state.markersEntities; //let name = this.$store.getters.NAME
+        },
     },
     actions: {
         // getAll({ commit }) {
@@ -59,7 +71,6 @@ export const create = {
         //             error => commit('getAllFailure', error)
         //         );
         // }
-
         GET_TIME: (context, payload) => {
             console.log('GET_TIME', payload)
 
@@ -85,18 +96,13 @@ export const create = {
             console.log('SEND_MULTIPART_BUSINESS', payload[0])
             var str = JSON.stringify(context.state.sendObject)
             var formData = new FormData();
-            formData.append("files", payload);
+            formData.append("files", payload[0]);
             formData.append('json', new Blob([str], {
                 type: "application/json"
             }));
-            // var businessHeader = authHeader()
-            // businessHeader['Content-Type'] = undefined; //'multipart/form-data';
-            // businessHeader['Authorization'] = `Bearer ${localStorage.getItem('token').split('"').join('')}`;
-
             var config = {
                 method: "POST",
                 url: userService.config.apiUrl + '/api/businesses',
-                // headers: businessHeader,
                 headers: {
                     'Accept': 'application/json, */*',
                     'Content-Type': 'multipart/form-data',
@@ -121,7 +127,7 @@ export const create = {
             let { data } = await axios.get(uri, options);
             context.commit('SET_MY_BUSINESS_DATA', data);
         },
-        DELETE_BUSINESS: async(context, payload) => { // попередній перегляд щойно створеного обєкту
+        DELETE_BUSINESS: async(context, payload) => {
             const options = authHeader() ? { headers: authHeader() } : {};
             const uri = userService.config.apiUrl + '/api/businesses/' + payload
             let { data } = await axios.delete(uri, options);
@@ -147,6 +153,23 @@ export const create = {
         }
     },
     mutations: {
+        GET_MARKER_ENTITIES(state, [id, bodyMarker]) {
+            console.log(id, bodyMarker)
+            state.markersEntities[id] = bodyMarker
+        },
+        CLEAR_CASH(state, payload) {
+            state.sendObject.contact.phone = '';
+            state.sendObject.contact.url = '';
+            state.sendObject.id = null;
+            // state.sendObject.location.address = '';
+            // state.sendObject.location.latitude = null;
+            // state.sendObject.location.longitude = null;
+            state.sendObject.name = '';
+            state.sendObject.serviceForBusinesses = [];
+            state.sendObject.workTimes = [];
+            state.businessPrepend = null
+        },
+
         fillBusinesTemplate(state, payload) {
             state.sendObject = payload;
         },
@@ -197,7 +220,7 @@ export const create = {
         SET_BUSINESS_DATA_PRPEND: (state, payload) => {
             console.log('SET_BUSINESS_DATA_PRPEND')
             state.businessPrepend = payload;
-            console.dir(state.business)
+            console.dir(state.businessPrepend)
         },
         SET_MY_BUSINESS_DATA: (state, payload) => {
             console.log('SET_MY_BUSINESS_DATA')

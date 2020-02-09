@@ -4,7 +4,7 @@
             {{info()}}
         </span>
         <keep-alive><!--Неактивные компоненты будут закэшированы-->
-            <component :is="currentView" @switchView='switchView'></component>
+            <component :is="currentView" @switchView='switchView' @nextChange="nextChange"></component>
         </keep-alive>
     </business-layout>
 </template>
@@ -40,6 +40,7 @@ export default {
                 // return this.$store.state.authentication.role, this.$store.state.authentication.email;
             },
            currentView:'add-object',
+           next: false
            
         }
     },
@@ -61,6 +62,9 @@ export default {
         switchView(view) {
           this.currentView = view;
         },
+        nextChange(val){ // next or prev button was clicked
+            this.next = val
+        }
     },
 }
 </script>

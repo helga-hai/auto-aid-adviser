@@ -14,8 +14,11 @@ export const selfLocation = {
     getters: {
         doneLocation: state => {
             return state.location
+<<<<<<< HEAD
 
         
+=======
+>>>>>>> 1698edb600bb5203b508bac30babb3761436857c
         },
         gettingLocation: state => {
             return state.gettingLocation

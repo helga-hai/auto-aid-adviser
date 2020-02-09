@@ -71,6 +71,7 @@ import GoogleMapLoader from "./GoogleMapLoader";
 import GoogleMapMarker from "./GoogleMapMarker";
 import { mapSettings } from "@/constants/mapSettings";
 import VueGoogleAutocomplete from 'vue-google-autocomplete';
+import {mapGetters} from 'vuex';
 //console.log(VueGoogleAutocomplete)
 export default {
     components: {
@@ -82,13 +83,14 @@ export default {
     data() {
         return {
             markers: [
-                {id: "a", position: this.$store.getters['selfLocation/doneLocation'].position// { lat: 3, lng: 101 } 
+                {id: "self-location", position: this.$store.getters['selfLocation/doneLocation'].position// { lat: 3, lng: 101 } 
                 },
             ],
             newMarkers: null,
             isLocationDone: this.$store.getters['selfLocation/doneLocation'].position,
             ourMapIn: null,
-            inner_ac_center: null
+            inner_ac_center: null,
+            counter: 0
         };
     },
     watch:{
@@ -115,7 +117,11 @@ export default {
     created() {
         console.dir(this.$store.getters['selfLocation/doneLocation']);
     },
+    
     computed: {
+        ...mapGetters({
+            MARKER_ENTITIES:'create/MARKER_ENTITIES',
+        }),
         center(){ 
             if(this.$store.state.selfLocation.location.position){
                 return this.$store.state.selfLocation.location.position
@@ -156,7 +162,7 @@ export default {
         },
         mapCenterChangedInTravel(e){
             this.$emit('mapCenterChanged', e)  
-            console.log("this.markers[0]",this.markers[0])
+            // console.log("this.markers[0]",this.markers[0])
             // this.markers[0].setMap(null)
         },
         setmapInTraver(){
@@ -165,17 +171,22 @@ export default {
         placeMarkerAndPanTo(event, map) {
             console.log('placeMarkerAndPanTo')
             console.log(event, map)
-            new google.maps.Marker({
+            let markerBody = new google.maps.Marker({
                 position: event.latLng || event.position,
                 map: map,
-                icon: 'http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png'
+                icon: 'http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png',
+                id: `marker-${this.counter}`
             });
+            console.log(this.MARKER_ENTITIES['marker-0'])
+            if(this.counter>0){ this.MARKER_ENTITIES[`marker-${this.counter - 1}`].setMap(null) }
+            this.$store.commit('create/GET_MARKER_ENTITIES',[`marker-${this.counter}`, markerBody])
             console.log(event.latLng || event.position)
             map.panTo(event.latLng || event.position);
             let ll = {}
             ll.lat = event.latLng.lat();
             ll.lng = event.latLng.lng();
             this.$store.dispatch('create/GET_ENCODING', ll)
+            this. counter++
         },
         ourMapInTravel(val){
             this.$emit('ourMap',val)

@@ -24,9 +24,9 @@
                         <span class="chips-sort">Відсортовано за </span> <span>Рейтингом</span>
                     </div>
                     
-                    <div v-if="markers">
-                        <button class="services-prev detail" v-for="cur in markers" :key="cur.id"  :isPreview="false">
-                            <div class="services-prev-img small" :style="{backgroundImage: 'url('+require('../assets/serevice.svg')+')'}"><!--:style="{backgroundImage: 'url('+require('')+')'}"-->
+                    <div v-if="marketsSearch">
+                        <button class="services-prev detail" v-for="cur in marketsSearch" :key="cur.id"  :isPreview="false">
+                            <div class="services-prev-img small"  v-if="cur.images" :style="{backgroundImage: cur.images.length ? 'url('+cur.images[0].urlImage+')' : 'url('+require('../assets/serevice.svg')+')'}">
                             </div>
                             <div class="services-prev-info">
                                 <div class='name-prev'>{{cur.name}}</div>
@@ -48,16 +48,24 @@
             <div class="search-map">
                 <div class="Step1Image__labe" >
                     <div v-if="gettingLocation">loading...</div>
-                    <div v-else-if="queryLocation">
-                        <GoogleMapLoader
-                            @isDoneFuncInTravel="isDoneFunc"
-                            :mapConfig="mapConfig"
-                            :center="queryLocation"
-                            apiKey="AIzaSyB_nA80Ha1asyGCQtdcgAGZNtd6Vzr8p3A"
-                        >
-                            <template v-slot:default="{ google, map }" @isDoneFuncInTravel="isDoneFunc"> 
-                            </template>
-                         </GoogleMapLoader>
+                    <div v-else>
+                        
+                        <search-map class="travel-map"/>
+                        <!-- <travel-map class="guide"-if="queryLocation"
+                            ref="mapr" 
+                            :mapCenter="location.position" 
+                            @isDoneFunc="isDoneFunc" 
+                            
+                            @mapClick="mapClick"
+                            @mapCenterChanged="mapCenterChanged"
+                            @ourMap="ourMap" -->
+                            <!-- /> -->
+                            <!-- :curMarker="markers.position"
+                            :enterMarker="enterMarker"
+                            :enterAddress="enterAddress"
+                            :toggleAddres="toggleAddres"
+                            :ac_center="ac_center" -->
+
                     </div>
                 </div> 
             </div>
@@ -66,12 +74,10 @@
 </template>
 
 <script>
-import TravelMap from '@/components/TravelMap.vue';
+// import TravelMap from '@/components/TravelMap.vue';
+import SearchMap from '@/components/SearchMap.vue';
 // import VueGoogleAutocomplete from 'vue-google-autocomplete';
 import websocket from '@/components/websocket';
-
-import GoogleMapLoader from "@/components/GoogleMapLoader";
-import GoogleMapMarker from "@/components/GoogleMapMarker";
 import { mapSettings } from "@/constants/mapSettings";
 
 import NavComponent from '@/components/NavComponent';
@@ -80,27 +86,19 @@ export default {
     name:'Search',
     components: {
         NavComponent, 
-        TravelMap,
+        SearchMap,
         websocket,
-        GoogleMapLoader,
-        GoogleMapMarker,
     },
     data() {
         return {
+            location: this.$store.state.selfLocation.location,
             loading: false,
-            //markers: [],
-            // enterMarker: [],
-            // position: this.$store.getters['create/acLatLng'].position,// { lat: 3, lng: 101 }
-            // ac_position: null,
-            // ac_center: null,
+            markers: [],
             isDone: false,
-            // location: this.$store.state.selfLocation.location,
-            // curMarker: {
-            //     id: "a",
-            //     position: this.$store.getters['selfLocation/doneLocation'].position,// { lat: 3, lng: 101 }
-            //     content:'You are here'
-            // },
             q_service: null,
+            q_lat: null,
+            q_lng: null,
+            curLoc: null,
             error: {
                 q_service: {
                     value: 'Оберіть сервіс',
@@ -120,20 +118,15 @@ export default {
     },
     computed: {
         ...mapGetters({
-            markers: 'search/SEARCHDATA',
+            marketsSearch: 'search/SEARCHDATA',
             gettingLocation: 'selfLocation/gettingLocation',
             SERVICEFORBUSINESS: 'search/SERVICEFORBUSINESS',
             LATITUDE: 'search/LATITUDE',
             LONGITUDE: 'search/LONGITUDE',
          }),
-        mapConfig () {
-            return {
-                ...mapSettings,
-                center: { lat: 0, lng: 0 }
-            }
-        },
+         
         count() {
-            return this.markers ? this.markers.length : ''  
+            return this.marketsSearch ? this.marketsSearch.length : ''  
         },
         queryLocation(){
             let tmp = {}
@@ -149,8 +142,24 @@ export default {
         // },
     },
     watch: {
+        // success(pos) {
+        //     var crd = pos.coords;
+        //     this.curLoc = {
+        //         lat: pos.coords.latitude,
+        //         lng: pos.coords.longitude
+        //     }
+        // },
+        // error(err) {
+        //     console.warn(`ERROR(${err.code}): ${err.message}`);
+        // },
+        // chooseMyLocation(){
+        //     const position = navigator.geolocation.getCurrentPosition(this.success, this.error);
+        //     this.submenuShow = !this.submenuShow;
+        // },
         $route(newVal,oldVal) {
             console.log('$route', newVal, oldVal)
+            this.q_service = newVal.query.service
+            // const position = navigator.geolocation.getCurrentPosition(this.success, this.error);
             this.fetchData()
         }
         // toggleAddres(newVal, oldVal) {
@@ -167,22 +176,23 @@ export default {
         // },
     },
     methods: {
+        ourMap(val){
+            this.ourM = val
+        },
         isDoneFunc() {
             // console.log('isDoneFuncInTravel')
             // this.$emit('isDoneFunc')
             this.isDone=true; 
         },
-        // isDoneFunc(e){
-        //     this.isDone=true; 
-        // },
-        // ourMap(val){
-        //     this.ourM = val
-        // },
-        async fetchData(){
+        fetchData(){
             console.log('fetchData')
             //  /search?service=balancing&latitude=50.0&longitude=50.0&radius=10.0
             this.loading = true;
-            const response = await this.$store.dispatch('search/START_SEARCH')
+            const options ={}
+            options.service = this.q_service
+            options.latitude = this.q_lat || this.location.position.lat
+            options.longitude = this.q_lng || this.location.position.lng
+            this.$store.dispatch('search/START_SEARCH', options)
         },
         // fetch(){
         //     const options = {}
@@ -195,25 +205,45 @@ export default {
         async startRoute(){
             console.log('startRoute')
             const newQuery = {}
-            newQuery.service = this.SERVICEFORBUSINESS
+            newQuery.service = this.SERVICEFORBUSINESS 
             newQuery.latitude = this.LATITUDE
-            newQuery.longitude = this.LONGITUDE
+            newQuery.longitude = this.LONGITUDE 
             newQuery.radius = '10.0'
             await this.$router.push( { query: newQuery }).catch(err => {console.log(err)})
-        }
+        },
+        mapClick({event, m}){
+            console.log("mapClick")
+            console.log({event, m})
+        },
+        mapCenterChanged(val){
+            console.log("mapCenterChanged")
+            console.log(val)
+        },
     },
     mounted(){
-        console.log('mounted')
+        console.log('mounted',this.location)
         console.log(this.$route)
+        this.$store.dispatch('selfLocation/getLocation')
+        const params = this.$route.query
+        this.q_service = params.service
+        this.q_lat = params.latitude || this.location.position.lat
+        this.q_lng = params.longitude || this.location.position.lng
+        console.log(this.q_lat==="")
+        if(this.q_lat==="") {console.log('Q_LAT');this.q_lat= this.location.position.lat}
+        if(this.q_lng==="") {this.q_lng= this.location.position.lng}
+        
         if(!this.$route.query.service) { 
+             console.log('!this.$route.query.service')
              if(!this.SERVICEFORBUSINESS){
+                console.log('!this.SERVICEFORBUSINESS')
                 this.error.q_service.status = true 
              }
             this.q_service = this.SERVICEFORBUSINESS || ''; 
         }
         if(!this.$route.query.latitude) { 
             if(!this.LATITUDE) {
-                this.$store.dispatch('selfLocation/getLocation');
+                console.log('!this.LATITUDE')
+                // this.$store.dispatch('selfLocation/getLocation');
             }
         }
         // this.q_latitude = this.LATITUDE
