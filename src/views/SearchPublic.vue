@@ -96,6 +96,9 @@ export default {
             markers: [],
             isDone: false,
             q_service: null,
+            q_lat: null,
+            q_lng: null,
+            curLoc: null,
             error: {
                 q_service: {
                     value: 'Оберіть сервіс',
@@ -139,8 +142,24 @@ export default {
         // },
     },
     watch: {
+        // success(pos) {
+        //     var crd = pos.coords;
+        //     this.curLoc = {
+        //         lat: pos.coords.latitude,
+        //         lng: pos.coords.longitude
+        //     }
+        // },
+        // error(err) {
+        //     console.warn(`ERROR(${err.code}): ${err.message}`);
+        // },
+        // chooseMyLocation(){
+        //     const position = navigator.geolocation.getCurrentPosition(this.success, this.error);
+        //     this.submenuShow = !this.submenuShow;
+        // },
         $route(newVal,oldVal) {
             console.log('$route', newVal, oldVal)
+            this.q_service = newVal.query.service
+            // const position = navigator.geolocation.getCurrentPosition(this.success, this.error);
             this.fetchData()
         }
         // toggleAddres(newVal, oldVal) {
@@ -169,7 +188,11 @@ export default {
             console.log('fetchData')
             //  /search?service=balancing&latitude=50.0&longitude=50.0&radius=10.0
             this.loading = true;
-           this.$store.dispatch('search/START_SEARCH')
+            const options ={}
+            options.service = this.q_service
+            options.latitude = this.q_lat || this.location.position.lat
+            options.longitude = this.q_lng || this.location.position.lng
+            this.$store.dispatch('search/START_SEARCH', options)
         },
         // fetch(){
         //     const options = {}
@@ -182,9 +205,9 @@ export default {
         async startRoute(){
             console.log('startRoute')
             const newQuery = {}
-            newQuery.service = this.SERVICEFORBUSINESS
+            newQuery.service = this.SERVICEFORBUSINESS 
             newQuery.latitude = this.LATITUDE
-            newQuery.longitude = this.LONGITUDE
+            newQuery.longitude = this.LONGITUDE 
             newQuery.radius = '10.0'
             await this.$router.push( { query: newQuery }).catch(err => {console.log(err)})
         },
@@ -198,17 +221,29 @@ export default {
         },
     },
     mounted(){
-        console.log('mounted')
+        console.log('mounted',this.location)
         console.log(this.$route)
+        this.$store.dispatch('selfLocation/getLocation')
+        const params = this.$route.query
+        this.q_service = params.service
+        this.q_lat = params.latitude || this.location.position.lat
+        this.q_lng = params.longitude || this.location.position.lng
+        console.log(this.q_lat==="")
+        if(this.q_lat==="") {console.log('Q_LAT');this.q_lat= this.location.position.lat}
+        if(this.q_lng==="") {this.q_lng= this.location.position.lng}
+        
         if(!this.$route.query.service) { 
+             console.log('!this.$route.query.service')
              if(!this.SERVICEFORBUSINESS){
+                console.log('!this.SERVICEFORBUSINESS')
                 this.error.q_service.status = true 
              }
             this.q_service = this.SERVICEFORBUSINESS || ''; 
         }
         if(!this.$route.query.latitude) { 
             if(!this.LATITUDE) {
-                this.$store.dispatch('selfLocation/getLocation');
+                console.log('!this.LATITUDE')
+                // this.$store.dispatch('selfLocation/getLocation');
             }
         }
         // this.q_latitude = this.LATITUDE

@@ -11,11 +11,19 @@ export const search = {
         longitude: '',
         serviceForBusiness: '',
         searchData: null,
-        markersEntities: {
-            // 'marker-23': marker
-        }
+        markersEntities: [],
+        // 'marker-23': marker
+        // },
+        isMap: false,
+        mapObj: null
     },
     getters: {
+        ISMAP: state => {
+            return state.isMap
+        },
+        MAPOBJ: state => {
+            return state.mapObj
+        },
         SEARCHDATA: state => {
             return state.searchData;
         },
@@ -42,19 +50,36 @@ export const search = {
         },
         SET_SEARCH: (state, payload) => {
             state.searchData = payload
+                // var th = this
+            payload.forEach(item => {
+                let markerBody = {}
+                markerBody.position = { lat: item.location.latitude, lng: item.location.longitude },
+                    // map: state.mapObj,
+                    markerBody.icon = 'http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png',
+                    markerBody.id = `marker-${item.id}`
+                    // });
+                    // this.$store.commit('search/GET_MARKER_ENTITIES',[`marker-${item.id}`, markerBody])
+                    // state.markersEntities[`marker-${item.id}`] = markerBody
+                state.markersEntities.push(markerBody)
+            })
         },
         GET_MARKER_ENTITIES(state, [id, bodyMarker]) {
             console.log(id, bodyMarker)
             state.markersEntities[id] = bodyMarker
         },
+        IS_MAP(state, payload) {
+            state.isMap = true
+            state.mapObj = payload
+        },
     },
     actions: {
         START_SEARCH: async(context, payload) => {
-            console.dir(authHeader())
 
-            let uri = userService.config.apiUrl + `/api/search?service=${context.state.serviceForBusiness}&latitude=${context.state.latitude}&longitude=${context.state.longitude}&radius=10.0`
+            let uri = payload ?
+                userService.config.apiUrl + `/api/search?service=${payload.service}&latitude=${payload.latitude}&longitude=${payload.longitude}&radius=10.0` :
+                userService.config.apiUrl + `/api/search?service=${context.state.serviceForBusiness}&latitude=${context.state.latitude}&longitude=${context.state.longitude}&radius=10.0`
                 // let uri = userService.config.apiUrl + '/api/businesses/' + context.state.serviceForBusiness + '/' + context.state.longitude + '/' + context.state.latitude;
-            console.log('START_SEARCH1', uri);
+            console.log('START_SEARCH2', uri);
             let options = authHeader() ? { headers: authHeader() } : {};
             let response = await axios.get(uri, options);
             context.commit('SET_SEARCH', response.data);

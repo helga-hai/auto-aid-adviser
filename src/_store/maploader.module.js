@@ -1,21 +1,12 @@
 export const maploader = {
     namespaced: true,
     state: {
-        isMap: false,
-        mapObj: null
-            // options: {
-            //     libraries: [], //'places'
-            //     apiKey: '' // optional
-            // }
+        // options: {
+        //     libraries: [], //'places'
+        //     apiKey: '' // optional
+        // }
     },
-    getters: {
-        ISMAP: state => {
-            return state.isMap
-        },
-        MAPOBJ: state => {
-            return state.mapObj
-        },
-    },
+    getters: {},
     actions: {
         // setConnect() {
         //     var GoogleMapsApiLoader = require('google-maps-api-loader');
@@ -31,11 +22,5 @@ export const maploader = {
         //         });
         // }
     },
-    mutations: {
-        IS_MAP(state, payload) {
-            console.log(payload)
-            state.isMap = true
-            state.mapObj = payload
-        },
-    }
+    mutations: {}
 }

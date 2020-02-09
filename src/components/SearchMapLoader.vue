@@ -49,7 +49,7 @@ export default {
         if (newValue) {
             // this.$emit('ourMapInTravel',newValue)
             console.log('GoogleMapLoader WATCH map $emit',newValue)
-            this.$store.commit('maploader/IS_MAP',newValue)
+            this.$store.commit('search/IS_MAP',newValue)
             // this.$emit('isDoneFuncInTravel')
         }
       },
