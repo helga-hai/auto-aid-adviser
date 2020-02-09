@@ -13,10 +13,7 @@ import Activation from '../components/Activation';
 
 import MapPage from '../views/Map';
 import AboutPage from '../views/About';
-<<<<<<< HEAD
-=======
 import NotFound from '../views/NotFound'
->>>>>>> 1698edb600bb5203b508bac30babb3761436857c
 import SearchPublic from '../views/SearchPublic';
 // import CreatePage from '../views/CreatePage';
 // import CreatePage2 from '../views/CreatePage2';
