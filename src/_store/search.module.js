@@ -15,7 +15,8 @@ export const search = {
         // 'marker-23': marker
         // },
         isMap: false,
-        mapObj: null
+        mapObj: null,
+        google: null
     },
     getters: {
         ISMAP: state => {
@@ -39,6 +40,9 @@ export const search = {
         MARKER_ENTITIES: state => {
             return state.markersEntities;
         },
+        GOOGLE: state => {
+            return state.google;
+        },
     },
     mutations: {
         SET_POSITION: (state, { lat, lng }) => {
@@ -53,13 +57,26 @@ export const search = {
                 // var th = this
             payload.forEach(item => {
                 let markerBody = {}
-                markerBody.position = { lat: item.location.latitude, lng: item.location.longitude },
-                    // map: state.mapObj,
-                    markerBody.icon = 'http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png',
-                    markerBody.id = `marker-${item.id}`
-                    // });
-                    // this.$store.commit('search/GET_MARKER_ENTITIES',[`marker-${item.id}`, markerBody])
-                    // state.markersEntities[`marker-${item.id}`] = markerBody
+                markerBody.position = { lat: item.location.latitude, lng: item.location.longitude };
+                // map: state.mapObj,
+                markerBody.icon = 'http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png';
+                markerBody.id = `marker-${item.id}`;
+                // });
+                // this.$store.commit('search/GET_MARKER_ENTITIES',[`marker-${item.id}`, markerBody])
+                // state.markersEntities[`marker-${item.id}`] = markerBody
+                markerBody.description = `<p>Baur-Sames-Bogart Hall</p>`;
+                markerBody.title = `<p>${item.name}</p>`;
+
+                // markerBody['infowindow'] = new google.maps.InfoWindow({ // replace to GoogleMaparker.vue
+                //     // content: html
+                //     maxWidth: 300,
+                //     infoBoxClearance: new google.maps.Size(1, 1),
+                //     disableAutoPan: false
+                // });
+                // google.maps.event.addListener(newmarker, 'mouseover', function() {
+                //     this['infowindow'].open(map, this);
+                // });
+
                 state.markersEntities.push(markerBody)
             })
         },
@@ -70,6 +87,9 @@ export const search = {
         IS_MAP(state, payload) {
             state.isMap = true
             state.mapObj = payload
+        },
+        SET_GOOGLE(state, payload) {
+            state.google = payload
         },
     },
     actions: {

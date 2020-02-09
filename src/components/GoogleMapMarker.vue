@@ -37,14 +37,27 @@ export default {
         // });
         const { Marker } = this.google.maps;
         console.log('marker ')
-        new Marker({
+        var m = new Marker({
             position: this.marker.position,
             marker: this.marker,
             map: this.map,
             icon: iconBase,
             draggable:true,
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
+            title: null,
+            description: null
             // icon: POINT_MARKER_ICON_CONFIG
+        });
+        var th = this
+        m['infowindow'] = new google.maps.InfoWindow({
+            // content: html
+            maxWidth: 300,
+            infoBoxClearance: new google.maps.Size(1, 1),
+            disableAutoPan: false
+        });
+
+        google.maps.event.addListener(m, 'mouseover', function() {
+            this['infowindow'].open(th.map, this);
         });
     },
 }

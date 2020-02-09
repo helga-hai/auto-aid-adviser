@@ -26,7 +26,7 @@
                     
                     <div v-if="marketsSearch">
                         <button class="services-prev detail" v-for="cur in marketsSearch" :key="cur.id"  :isPreview="false">
-                            <div class="services-prev-img small"  v-if="cur.images" :style="{backgroundImage: cur.images.length ? 'url('+cur.images[0].urlImage+')' : 'url('+require('../assets/serevice.svg')+')'}">
+                            <div class="services-prev-img small"  v-if="cur.images && cur.images.length" :style="{backgroundImage: cur.images.length ? 'url('+cur.images[0].urlImage+')' : 'url('+require('../assets/serevice.svg')+')'}">
                             </div>
                             <div class="services-prev-info">
                                 <div class='name-prev'>{{cur.name}}</div>
@@ -74,9 +74,7 @@
 </template>
 
 <script>
-// import TravelMap from '@/components/TravelMap.vue';
 import SearchMap from '@/components/SearchMap.vue';
-// import VueGoogleAutocomplete from 'vue-google-autocomplete';
 import websocket from '@/components/websocket';
 import { mapSettings } from "@/constants/mapSettings";
 
@@ -91,7 +89,7 @@ export default {
     },
     data() {
         return {
-            location: this.$store.state.selfLocation.location,
+            dayList: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'] ,
             loading: false,
             markers: [],
             isDone: false,
@@ -124,7 +122,7 @@ export default {
             LATITUDE: 'search/LATITUDE',
             LONGITUDE: 'search/LONGITUDE',
          }),
-         
+        location() { return this.$store.state.selfLocation.location },
         count() {
             return this.marketsSearch ? this.marketsSearch.length : ''  
         },

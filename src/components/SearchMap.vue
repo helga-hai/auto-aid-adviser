@@ -51,6 +51,7 @@ export default {
             ISMAP: 'search/ISMAP',
             MAPOBJ: 'search/MAPOBJ',
             points: 'search/MARKER_ENTITIES',
+            GOOGLE: 'search/GOOGLE',
         }),
         mapCenter (){
             return this.points[1].position
