@@ -5,7 +5,7 @@
                 <img :src="require('../assets/icoDelete.png')"> 
                 Видалити
             </button>
-            <button  class = "redactWrapp__edit" @click="togglerData=!togglerData">
+            <button  class = "redactWrapp__edit" @click="showEditCar">
                 <img :src="require('../assets/icoEdit.png')"> 
                 Редагувати
             </button>
@@ -34,7 +34,7 @@
 
 
 
-                <form @submit.prevent='saveUserData'>
+                <form @submit.prevent='saveEditCar'>
                         <label class = "long">Змінити дані</label>
                             <div class = "filds">
 
@@ -179,7 +179,9 @@ export default {
 
         {{this.getTypeAndBrand()}}
 
+
     },
+
     computed:{
 
         currentCar: function(){
@@ -223,7 +225,37 @@ export default {
 
     methods:{
 
+        showEditCar(){
+
+            this.togglerData = !this.togglerData;
+
+            let cCar = this.$store.state.userdataservice.currentCar;
+
+            console.log('mounted cCar 11111111111111!!!!!!!!' + this.$store.state.userdataservice.currentCar);
+
+            this.selectedTypeId = cCar.carModel.typeCar.id;
+
+            this.selectedBrand = cCar.carModel.carBrand.name;
+
+            this.selectedBrandId = cCar.carModel.carBrand.id;
+
+            this.__getModels();
+
+            this.selectedModelIdVal = cCar.carModel.id;
+
+            this.modelType = cCar.carModel.name;
+
+            this.individualCarNaming = cCar.individualCarNaming;
+
+            this.description = cCar.description;
+
+            this.year = cCar.releaseYear;
+
+
+        },
+
         back(){
+
             this.$emit( 'switchView','user-auto-complite-car-cards-page' );
         },
 
@@ -377,7 +409,27 @@ export default {
 
         },
 
-        editCar(){
+        saveEditCar(){
+
+            var
+            currentCarID = this.currentCar.id;
+
+            this.currentCar.releaseYear = parseInt(this.year);
+
+            this.currentCar.individualCarNaming = this.individualCarNaming || ' ';
+
+            this.currentCar.description = this.description || ' ';
+
+            this.currentCar.carModel.id = parseInt( this.selectedModelIdVal )
+
+            console.log(this.currentCar);
+
+            let editCar = this.currentCar;
+            
+            this.$store.dispatch( 'userdataservice/EDIT_USER_CAR', editCar );
+
+            userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
+                .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]));
 
         },
 

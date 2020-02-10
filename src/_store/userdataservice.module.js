@@ -62,14 +62,12 @@ export const userdataservice = {
 
             const options = authHeader() ? { headers: authHeader() } : {};
 
-            const urlWithCarID = userService.config.apiUrl + '/api/user/profile/car/' + payload
+            const urlWithCarID = userService.config.apiUrl + '/api/user/profile/car/' + payload;
             
-            let { data } = await axios.delete(urlWithCarID, options);
+            let { data } = await axios.delete( urlWithCarID, options );
             // context.commit('', data);
-            userService.getAllUserData( 'api/user/profile/cars' )
-            
-
-            .then(function(result){
+            userService.getAllUserData( 'api/user/profile/cars' )        
+                .then(function(result){
 
                     console.log("CARS "+result);
 
@@ -78,6 +76,46 @@ export const userdataservice = {
                 .then(result=>context.commit('setData',[ result ,'cars' ]));
         },
 
+        EDIT_USER_CAR: async(context, payload) => {
+
+            var
+            currentCarID = payload.id;
+
+            const urlEditCar = userService.config.apiUrl + '/api/user/profile/car';
+            
+            var
+            myAuth = (function() {
+
+                var
+                t = localStorage.getItem('token');
+
+                return ( t ) ? ('Bearer ' + t.split('"').join(' ') ) : '';
+            })();       
+
+            const options =  {
+                method: 'put',
+                headers: {'Authorization': myAuth},
+                url: urlEditCar,
+                data: payload
+            }
+            
+            
+            let { data } = await axios(options);
+
+            context.commit('setData', [ data ,'currentCar' ]);
+            
+            userService.getAllUserData( 'api/user/profile/cars' )
+                .then(function(result){
+
+                    console.log("CARS "+result);
+
+                    return result })
+
+                .then(result => context.commit('setData',[ result ,'cars' ]));
+
+            userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
+                .then(result => context.commit('setData',[ result ,'currentCar' ]));
+        },
 
 
         GET_MULTIPART: async(context, carInfo ) => {
