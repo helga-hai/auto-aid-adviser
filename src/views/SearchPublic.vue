@@ -39,7 +39,7 @@
                                     </span>
                                 </p>
                                 <p class="phone" v-if="cur.contact.phone">{{cur.contact.phone}}</p>
-                                <p class="internet" v-if="cur.contact.url">{{cur.contact.url}}</p>
+                                <!-- <p class="internet" v-if="cur.contact.url">{{cur.contact.url}}</p> -->
                             </div>
                         </button>  
                     </div> 
@@ -257,15 +257,21 @@ export default {
 <style lang="scss">
 .search-wrap{
     display: flex;
-    height:100vh;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+    .Step1Image__labe {
+        width: 100%;
+        height: 100%;
+    }
 }
 .search-dashboard {
     width: 50vw;
     // min-height: calc(100vh - 80px);
     background: #F6F7F8;
+    
     div:first-child {
         flex-grow: 2;
-        margin-right: 20px;
+        margin-right: 0px;
     }
     input {
         padding: 12px 16px 12px
@@ -277,6 +283,9 @@ export default {
     .content-line {
         background: #FFFFFF;
         padding: 0px 50px 20px;
+        height: calc(100vh - 162px - 80px);
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
     .controls {
         display: flex;
@@ -312,10 +321,12 @@ export default {
         }
     }
     .name-prev {
-        font-size: 24px;
+        font-size: 22px;
+        padding: 6px 6px 6px 0;
     }
     button {
         border:none;
+        width: 100%;
     }
     .servise__autocomplete {
         max-height: 37vh;
@@ -331,6 +342,20 @@ export default {
         color: red;
         z-index: 2;
         font-size: 13px;
+    }
+    .services-prev {
+        align-items: top;
+    }
+    .services-prev-info p {
+        font-size: 15px!important;
+        line-height: 21px!important;
+        color: #6f7e95!important;
+        text-align: left;
+        padding: 0 0 3px 30px;
+        font-weight: 400;
+        span {
+            font-size: 14px;
+        }
     }
 }
 .search-map {
