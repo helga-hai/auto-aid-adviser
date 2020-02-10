@@ -241,8 +241,8 @@ export default {
     display: flex;
 }
 .Step1Image {
-    height: 100%;
-    min-height: 720px;
+    // height: 100%;
+    // min-height: 720px;
 }
 .Step1Image__labe {
     width: 673px;
@@ -333,5 +333,20 @@ export default {
 }
 .input-encoding {
     padding-right:40px !important;
+}
+.register-wrap {
+    width: 100%;
+    .registrStep1 {
+        width: 45%;
+        height: calc(100vh - 80px - 79.6px);
+    }
+    .Step1Image {
+        height: 100vh;
+        width: 55%;
+        height: calc(100vh - 80px - 79.6px);
+        .map-loader .google-map {
+            height: calc(100vh - 80px - 79.6px);
+        }
+    }
 }
 </style>

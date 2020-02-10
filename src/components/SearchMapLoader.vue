@@ -40,7 +40,7 @@ export default {
 
   methods: {
     initializeMap() {
-        const mapContainer = this.$refs.googleMap;
+      const mapContainer = this.$refs.googleMap;
       this.map = new this.google.maps.Map(mapContainer, this.mapConfig);
     }
   },
@@ -53,6 +53,9 @@ export default {
             // this.$emit('isDoneFuncInTravel')
         }
       },
+      google(){
+        this.$store.commit('search/SET_GOOGLE',this.google)
+      }
   }
 };
 </script>
@@ -60,6 +63,6 @@ export default {
 <style scoped>
 .google-map {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
 }
 </style>

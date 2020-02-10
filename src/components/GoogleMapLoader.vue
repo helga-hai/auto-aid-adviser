@@ -217,7 +217,7 @@ export default {
 .map-loader {
   .google-map {
     width: 100%;
-    min-height: calc(100vh - 86px);
+    height: calc(100vh - 86px);
     position:relative
   }
 

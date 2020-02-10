@@ -7,7 +7,7 @@
             
             <div class="services-prev">
                 <div class="services-prev-img"  v-if="cur.images"  :style="{backgroundImage: cur.images.length ? 'url('+cur.images[0].urlImage+')' : 'url('+require('../../assets/serevice.svg')+')'}"></div>
-                <div class="services-prev-img" v-if="!cur.images || !cur.images.length" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}">
+                <div class="services-prev-img" v-if="!cur.images && !cur.images.length" :style="{backgroundImage: 'url('+require('../../assets/serevice.svg')+')'}">
                 </div>
                 <div class="services-prev-info">
                     <div class='name-prev' v-show="cur">{{cur.name}}</div>
