@@ -221,9 +221,9 @@ export default {
         {{this.getTypeAndBrand()}}
         // {{var slideIndex = 1;
         // console.log(this.showSlides)}}
-        {{
-            console.log("wwerr")
-            this.showSlides(this.slideIndex)}}
+        // {{
+        //     console.log("wwerr")
+        //     this.showSlides(this.slideIndex)}}
 
 
     },
@@ -267,7 +267,7 @@ export default {
     mounted() {
         // {{this.caruselLogic()}}
         //         {{var slideIndex = 1;}}
-        // {{this.showSlides(this.slideIndex);}}
+        {{this.showSlides(this.slideIndex);}}
     },
 
     methods:{
@@ -304,6 +304,7 @@ export default {
             for (i = 0; i < dots.length; i++) {
                 dots[i].className = dots[i].className.replace(" active", "");
             }
+            if(n = 1){console.log("awwd"+slides[0]);}
             slides[this.slideIndex-1].style.display = "block";  
             dots[this.slideIndex-1].className += " active";
             },
