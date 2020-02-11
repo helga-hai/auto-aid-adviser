@@ -441,6 +441,26 @@ export default {
 
         deleteCar(){
 
+            console.log(this.$store.state.userdataservice.currentCar.id);
+
+            let deleteCarID = this.$store.state.userdataservice.currentCar.id;
+
+            this.$store.dispatch( 'userdataservice/DELETE_USER_CAR', deleteCarID );
+
+            if( (this.$store.state.userdataservice.cars.length - 1 > 0 ) ){
+
+                console.log( this.$store.state.userdataservice.cars.length);
+
+                this.back();
+
+            }else{
+
+                this.$emit( 'switchView' , 'user-auto-create-page' )
+
+            }
+
+            
+
         },
     },
 

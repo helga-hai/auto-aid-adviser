@@ -41,6 +41,7 @@ export default {
     methods: {
         createStepOne() {
             console.log("work");
+            
             return this.$emit('switchView','user-auto-create-page2');
             // return this.$emit('switchView','user-auto-complite-car-cards-page')
         },

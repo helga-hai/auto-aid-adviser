@@ -58,6 +58,26 @@ export const userdataservice = {
             context.commit('SET_TYPES', data);
         },
 
+        DELETE_USER_CAR: async(context, payload) => { // попередній перегляд щойно створеного обєкту
+
+            const options = authHeader() ? { headers: authHeader() } : {};
+
+            const urlWithCarID = userService.config.apiUrl + '/api/user/profile/car/' + payload
+            
+            let { data } = await axios.delete(urlWithCarID, options);
+            // context.commit('', data);
+            userService.getAllUserData( 'api/user/profile/cars' )
+            
+
+            .then(function(result){
+
+                    console.log("CARS "+result);
+
+                    return result })
+
+                .then(result=>context.commit('setData',[ result ,'cars' ]));
+        },
+
 
 
         GET_MULTIPART: async(context, carInfo ) => {
