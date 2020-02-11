@@ -20,9 +20,27 @@
                     <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
                     <p>{{currentCar.individualCarNaming}}</p>
                     <p>{{currentCar.description}}</p>
-                    <div v-for="car in filterCarsImages()" :key="car.id">
-                        <img alt='' :src="car">
+                    <div class="slideshow-container">
+                        <div 
+                            v-for="car in filterCarsImages()" 
+                            :key="car.id" 
+                            class="mySlides fade"
+                            >
+                                <img alt='' :src="car" >
+                        </div>
+                        <a class="prev" @click="plusSlides(-1)">&#10094;</a>
+                        <a class="next" @click="plusSlides(1)">&#10095;</a>
                     </div>
+                    <div  style="text-align:center">
+                        <span 
+                            v-for="n in filterCarsImages().length" 
+                            :key="n.id" 
+                            class="dot" 
+                            @click="currentSlide(n)"
+                        >
+                        </span>
+                    </div>
+
                 </div>
             </div>
             <div class="currentCar__buttons">
@@ -144,6 +162,7 @@ export default {
         return {
             togglerData: false,
 
+            // slideIndex : 1,
 
             modelType:'',
 
@@ -196,6 +215,9 @@ export default {
     created() {
 
         {{this.getTypeAndBrand()}}
+        {{var slideIndex = 1;
+        showSlides(slideIndex);}}
+        {{this.showSlides(this.slideIndex)}}
 
     },
     computed:{
@@ -235,19 +257,77 @@ export default {
 
 
     },
+    mounted() {
+        // {{this.caruselLogic()}}
+        // {{this.showSlides(this.slideIndex)}}
+    },
 
     methods:{
 
-            filterCarsImages(){
-                let CarsImages = []
-                this.currentCarIMG.forEach(item => {
-                    if (CarsImages.indexOf(item.urlImage) < 0) {
-                        CarsImages.push(item.urlImage)
-                    }
-                })
-                return CarsImages
+        filterCarsImages(){
+            let сarsImages = []
+            this.currentCarIMG.forEach(item => {
+                if (сarsImages.indexOf(item.urlImage) < 0) {
+                    сarsImages.push(item.urlImage)
+                }
+            })
+            return сarsImages
 
+        },
+
+        plusSlides(n) {
+            console.log(n)
+        this.showSlides(this.slideIndex += n);
+        },
+
+        currentSlide(n) {
+        this.showSlides(this.slideIndex = n);
+        },
+
+        showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {this.slideIndex = 1}    
+            if (n < 1) {this.slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[this.slideIndex-1].style.display = "block";  
+            dots[this.slideIndex-1].className += " active";
             },
+        // caruselLogic(){
+        //     var slideIndex = 1;
+        //     showSlides(slideIndex);
+
+            // function plusSlides(n) {
+            // showSlides(slideIndex += n);
+            // }
+
+            // function currentSlide(n) {
+            // showSlides(slideIndex = n);
+            // }
+
+            // function showSlides(n) {
+            // var i;
+            // var slides = document.getElementsByClassName("mySlides");
+            // var dots = document.getElementsByClassName("dot");
+            // if (n > slides.length) {slideIndex = 1}    
+            // if (n < 1) {slideIndex = slides.length}
+            // for (i = 0; i < slides.length; i++) {
+            //     slides[i].style.display = "none";  
+            // }
+            // for (i = 0; i < dots.length; i++) {
+            //     dots[i].className = dots[i].className.replace(" active", "");
+            // }
+            // slides[slideIndex-1].style.display = "block";  
+            // dots[slideIndex-1].className += " active";
+            // }
+
+        // },
 
         getPath(file){
             return '/images/' + file
@@ -703,5 +783,82 @@ export default {
  .done  .changeWrapp__done {
    display: flex;
  }
+
+
+/* carusel */
+
+.mySlides {display: none}
+
+img {vertical-align: middle;}
+
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
 
 </style>
