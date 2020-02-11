@@ -13,13 +13,6 @@
 
         <div class = "CurrentCarWrapper">
             <div class = "Car">
-
-                <!-- <img alt='' :src = "currentCar.images[0].urlImage"/> -->
-                <div class = "info">
-                    <h5>{{currentCar.carModel.carBrand.name}}</h5>
-                    <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
-                    <p>{{currentCar.individualCarNaming}}</p>
-                    <p>{{currentCar.description}}</p>
                     <div class="slideshow-container">
                         <div 
                             v-for="car in filterCarsImages()" 
@@ -28,18 +21,28 @@
                             >
                                 <img alt='' :src="car" >
                         </div>
-                        <a class="prev" @click="plusSlides(-1)">&#10094;</a>
-                        <a class="next" @click="plusSlides(1)">&#10095;</a>
+                        <div v-if="filterCarsImages().length >1">
+                            <a class="prev" @click="plusSlides(-1)">&#10094;</a>
+                            <a class="next" @click="plusSlides(1)">&#10095;</a>
+                        </div>
                     </div>
-                    <div  style="text-align:center">
+                    <div  style="text-align:center" v-if="filterCarsImages().length >1 ">
                         <span 
                             v-for="n in filterCarsImages().length" 
                             :key="n.id" 
                             class="dot" 
-                            @click="currentSlide(n)"
+                            @click="currentSlide(n)"                            
                         >
                         </span>
                     </div>
+                <!-- <img alt='' :src = "currentCar.images[0].urlImage"/> -->
+                <div class = "info">
+                    
+                    <h5>{{currentCar.carModel.carBrand.name}}</h5>
+                    <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
+                    <p>{{currentCar.individualCarNaming}}</p>
+                    <p>{{currentCar.description}}</p>
+
 
                 </div>
             </div>
@@ -162,7 +165,8 @@ export default {
         return {
             togglerData: false,
 
-            // slideIndex : 1,
+            slideIndex : 1,
+            
 
             modelType:'',
 
@@ -215,9 +219,12 @@ export default {
     created() {
 
         {{this.getTypeAndBrand()}}
-        {{var slideIndex = 1;
-        showSlides(slideIndex);}}
-        {{this.showSlides(this.slideIndex)}}
+        // {{var slideIndex = 1;
+        // console.log(this.showSlides)}}
+        {{
+            console.log("wwerr")
+            this.showSlides(this.slideIndex)}}
+
 
     },
     computed:{
@@ -259,14 +266,16 @@ export default {
     },
     mounted() {
         // {{this.caruselLogic()}}
-        // {{this.showSlides(this.slideIndex)}}
+        //         {{var slideIndex = 1;}}
+        // {{this.showSlides(this.slideIndex);}}
     },
 
     methods:{
 
         filterCarsImages(){
             let сarsImages = []
-            this.currentCarIMG.forEach(item => {
+            let CarIMG = this.$store.state.userdataservice.currentCar.images;
+            CarIMG.forEach(item => {
                 if (сarsImages.indexOf(item.urlImage) < 0) {
                     сarsImages.push(item.urlImage)
                 }
@@ -276,7 +285,6 @@ export default {
         },
 
         plusSlides(n) {
-            console.log(n)
         this.showSlides(this.slideIndex += n);
         },
 
@@ -299,35 +307,6 @@ export default {
             slides[this.slideIndex-1].style.display = "block";  
             dots[this.slideIndex-1].className += " active";
             },
-        // caruselLogic(){
-        //     var slideIndex = 1;
-        //     showSlides(slideIndex);
-
-            // function plusSlides(n) {
-            // showSlides(slideIndex += n);
-            // }
-
-            // function currentSlide(n) {
-            // showSlides(slideIndex = n);
-            // }
-
-            // function showSlides(n) {
-            // var i;
-            // var slides = document.getElementsByClassName("mySlides");
-            // var dots = document.getElementsByClassName("dot");
-            // if (n > slides.length) {slideIndex = 1}    
-            // if (n < 1) {slideIndex = slides.length}
-            // for (i = 0; i < slides.length; i++) {
-            //     slides[i].style.display = "none";  
-            // }
-            // for (i = 0; i < dots.length; i++) {
-            //     dots[i].className = dots[i].className.replace(" active", "");
-            // }
-            // slides[slideIndex-1].style.display = "block";  
-            // dots[slideIndex-1].className += " active";
-            // }
-
-        // },
 
         getPath(file){
             return '/images/' + file
@@ -828,7 +807,7 @@ img {vertical-align: middle;}
   cursor: pointer;
   height: 15px;
   width: 15px;
-  margin: 0 2px;
+  margin: 10px 2px;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
