@@ -48,11 +48,7 @@ export const router = new Router({
         { path: '/successRegister', component: SuccessRegister },
         { path: '/user/activation', component: Activation },
         { path: '/user/activation/*', redirect: '/user/activation' },
-<<<<<<< HEAD
-        // { path: '/404', component: NotFound },  
-=======
         { path: '/404', component: NotFound },  
->>>>>>> 38861f9de1c57259c90eab88d1a1a73ed2396ca1
         { path: '*', redirect: '/404' }, 
         // { path: '/create', component: CreatePage },
         // { path: '/create2', component: CreatePage2 },
