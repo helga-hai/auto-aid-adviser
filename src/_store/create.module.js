@@ -57,6 +57,9 @@ export const create = {
         URL: state => {
             return state.contact ? state.contact.url : ''; //let name = this.$store.getters.ADDRESS
         },
+        MARKER_ENTITIES: state => {
+            return state.markersEntities; //let name = this.$store.getters.NAME
+        },
     },
     actions: {
         // getAll({ commit }) {
@@ -68,7 +71,6 @@ export const create = {
         //             error => commit('getAllFailure', error)
         //         );
         // }
-
         GET_TIME: (context, payload) => {
             console.log('GET_TIME', payload)
 
@@ -151,6 +153,10 @@ export const create = {
         }
     },
     mutations: {
+        GET_MARKER_ENTITIES(state, [id, bodyMarker]) {
+            console.log(id, bodyMarker)
+            state.markersEntities[id] = bodyMarker
+        },
         CLEAR_CASH(state, payload) {
             state.sendObject.contact.phone = '';
             state.sendObject.contact.url = '';
@@ -214,7 +220,7 @@ export const create = {
         SET_BUSINESS_DATA_PRPEND: (state, payload) => {
             console.log('SET_BUSINESS_DATA_PRPEND')
             state.businessPrepend = payload;
-            console.dir(state.business)
+            console.dir(state.businessPrepend)
         },
         SET_MY_BUSINESS_DATA: (state, payload) => {
             console.log('SET_MY_BUSINESS_DATA')

@@ -56,7 +56,7 @@
         </div>
       </div>
       <hr>
-      <div class="registrStep3__services" :class="{'opened': komfort}" >
+      <!-- <div class="registrStep3__services" :class="{'opened': komfort}" >
         <div  class="registrStep3__servicename" @click="komfort=!komfort">
             <span>Комфорт</span>
             <img :src="require('../../assets/arrow drop down.png')" class="registrStep3__icon" :class="{'transform': komfort}">
@@ -69,7 +69,7 @@
             <img :src="require('../../assets/arrow drop down.png')" class="registrStep3__icon" :class="{'transform': more}">
         </div>
       </div>
-      <hr>
+      <hr> -->
       <!-- <form  method="post" enctype="multipart/form-data" @submit.prevent="send"> -->
         <div class="registrStep3__Foto">
           <p class="registrStep3__ft" >Фото об’єкта</p>
@@ -151,26 +151,25 @@ export default {
           }
       },
       images(newVal, oldVal){
-        console.log(newVal, oldVal)
+        // console.log(newVal, oldVal)
         var reader  = new FileReader();
-        reader.onloadend = () => {
-          console.log(reader.result)
-          this.$refs.previewImg.style.backgroundImage = reader.result;
-        }
+        // reader.onloadend = () => {
+          // console.log(reader.result)
+          // this.$refs.previewImg.style.backgroundImage = reader.result;
+        // }
 
         if (this.images[0]) {
-          reader.readAsDataURL(this.images[0]);
-          console.log(reader.result)
-          this.bg=reader.readAsDataURL(this.images[0]);
+          // reader.readAsDataURL(this.images[0]);
+          // console.log(reader.result)
+          // this.bg=reader.readAsDataURL(this.images[0]);
         } else {
-          this.$refs.previewImg.style.backgroundImage = "";
-          console.log(this.$refs.previewImg)
+          // this.$refs.previewImg.style.backgroundImage = "";
+          // console.log(this.$refs.previewImg)
         }
       }
     },
     methods: {
       async send(e) {
-        console.dir(e)
         let arr = this.week;
         let sheduleWeek = []; 
         for(let i=0; i<arr.length; i++) {
@@ -180,16 +179,12 @@ export default {
           if(arr[i].to) { shaduleDay.toTime = arr[i].to }
           if(arr[i].selected) { sheduleWeek.push(shaduleDay) }
         }
-        console.log(sheduleWeek);
         await this.$store.dispatch('create/GET_TIME', sheduleWeek)
         await this.$store.dispatch('create/SEND_MULTIPART_BUSINESS', this.images)
         
       },
       uploadPhoto(e) {
         this.images.push(e.target.files[0])
-        console.log(e.target.files)
-        console.log(this.images)
-        console.dir(this.images)
       },
       waitFunc() {
         this.waitResponse = true

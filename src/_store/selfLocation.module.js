@@ -2,7 +2,7 @@ export const selfLocation = {
     namespaced: true,
     state: {
         location: {
-            id: '0',
+            id: 'marker-self',
             position: null,
             content: ''
         },
@@ -14,8 +14,6 @@ export const selfLocation = {
     getters: {
         doneLocation: state => {
             return state.location
-
-        
         },
         gettingLocation: state => {
             return state.gettingLocation

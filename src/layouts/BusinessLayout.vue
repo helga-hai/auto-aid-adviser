@@ -222,6 +222,7 @@ input {
         width: calc(100% - 216px);
         min-height: calc(100vh - 80px - 79.6px);
         text-align: left;
+        height:fit-content;
     }
     /*  footer  */
     footer {

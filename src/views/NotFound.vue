@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <div class='home wrap' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/background_image.png') + ')'}">
+        <div class='home wrap not-found' :class="{'res__login': loginShow}" :style="{'background-image': 'url(' + require('../assets/background_image.png') + ')'}">
             <div :class="{'blur-content': loginShow}">
                 <nav-component :loginShow="loginShow" @loginShowFunc="loginShowFunc" :isRole="isRoleFunc()"/>
                 <div class="settingsWrapper center">
@@ -66,5 +66,9 @@ export default {
     h3+div {
         margin-top: 20px;
         font-size: 140px;
+    }
+    .home.wrap.not-found {
+        background-size: cover;
+        height: 100vh;
     }
 </style>
