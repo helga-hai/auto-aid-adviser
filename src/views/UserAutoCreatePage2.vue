@@ -115,7 +115,7 @@
                     </option>
                 </select>
                 <!-- <p>{{currentIndex}}</p> -->
-                <p>{{selectedModelIdVal||selectedModelId()}}</p>
+                <p>{{selectedModelIdVal}}</p>
 
 
 
@@ -194,28 +194,36 @@ export default {
     data() {
         return {
             modelType:'',
+
             selectedModelIdVal:'',
-            selectedModelId: function() {
-                if(this.currentIndex<0||!this.currentIndex){
-                    return '';
-                }else{
-                return this.$store.state.userdataservice.models[this.currentIndex-1].id;}
-                },
+
             currentIndex: '' || this.$store.state.userdataservice.currentIndex,
+
             year:"",
+            
             types() {return this.$store.state.userdataservice.types},
+
             selectedType:'',
+            
             selectedTypeId:'',
+
             brands() {return this.$store.state.userdataservice.brands},
+
             selectedBrand:'',
+            
             selectedBrandId:'',
+
             formCheck:{
                 check: false,
                 msg:'Спочатку оберить тип та марку авто!!!',
             },
+
             individualCarNaming:'',
+
             description:'',
+
             car: '',
+
             images:[],
 
         }
@@ -240,7 +248,11 @@ export default {
                 }
                 return yearArr;
             },
-        models: function(selectedTypeId ,selectedBrandId) {return this.$store.state.userdataservice.models},
+        models: function() {
+
+            return ( this.selectedTypeId&&this.selectedBrandId  ? this.$store.state.userdataservice.models : null );
+
+            },
         
     },
 
@@ -281,30 +293,77 @@ export default {
             }
         },
         selectType(e){
+
             console.log(e.target.id);
             console.log(e.target);
+
             this.selectedType = e.target.textContent;
+
             this.selectedTypeId = e.target.id;
-            this.clearField('modelType', 'models','currentIndex');
+
+            this.clearField('modelType', 'models','currentIndex','selectedModelIdVal');
+
+            if(this.selectedBrandId){
+
+                console.log( '__selectedBrandId '+this.selectedBrandId + '__selectedTypeId '+this.selectedTypeId );
+
+                this.__getModels();
+
+                console.log(this.models)
+            }
+
             return e.target.textContent;
         },
+
         select(currentFieldWithID,$event){
+
             console.log('work');
-            // console.log($event.target.selectedIndex);
-            let index = $event.target.selectedIndex;
-            let currentIDField = currentFieldWithID[1];
-            let currentIDValue = currentFieldWithID[0][index-1].id;
-            this.clearField('modelType', 'models','currentIndex');
-            // currentIDField=currentIDValue;
+
+            let
+            index = $event.target.selectedIndex,
+            currentIDField = currentFieldWithID[1],
+            currentIDValue = currentFieldWithID[0][index-1].id;
+
+            this.clearField('modelType', 'models','currentIndex','selectedModelIdVal');
+
             console.log(currentIDField);
+
             switch(currentIDField){
                 case "selectedBrandId":
+
                     console.log('switch ' +currentIDValue);
                     this.selectedBrandId=currentIDValue;
+
+                    if(this.selectedTypeId){
+
+                        console.log( '__selectedTypeId '+this.selectedTypeId + '__selectedBrandId '+this.selectedBrandId );
+
+                        this.__getModels();
+
+                        console.log(this.models)
+            }
+
                 break;
             }
 
         },
+
+        __getModels(){
+
+            let
+            typeID = this.selectedTypeId,
+            brandID = this.selectedBrandId;
+
+            this.formCheck.check=false;
+
+            let requestString = `api/catalog/car/model/type/${typeID}/brand/${brandID}`;
+
+            userService.getAllUserData(requestString)
+                .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']));
+
+
+        },
+
         getModel(e){
             
             let select = document.querySelector("select#model")
@@ -325,42 +384,34 @@ export default {
                 return;
             }else{
                 
-                    console.log('Search results .....');
+                let index = e.target.selectedIndex;
 
-                    let
-                    typeID = this.selectedTypeId,
-                    brandID = this.selectedBrandId;
+                console.log('Search results .....');             
+                console.log('1 ID '+e.target.id);
+                console.log('2 ID '+e.target.options);
+                console.log('3 '+index + '????????????????????????????????????');
 
-                    this.formCheck.check=false;
+                if(e.target.id!='model'){
 
-                    console.log(typeID,brandID);
+                    return this.selectedModelIdVal = e.target.id;
 
-                    let requestString = `api/catalog/car/model/type/${typeID}/brand/${brandID}`;
+                }else if(index==0){
 
-                    console.log(requestString);
-                    
-                    userService.getAllUserData(requestString)
-                    .then(function(result){
-                        console.log("resulTTTTT "+result);
-                        return result})
-                    .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'models']));
-                    
-                    console.log('ID '+e.target.id);
-                    console.log('ID '+e.target.options);
-                    let index = e.target.selectedIndex;
-                    console.log(index + '????????????????????????????????????');
-
-                    if(index==0){
+                    console.log('if index = 0');
                     this.currentIndex = '';
-                    }else{
-                        this.$store.dispatch('userdataservice/fieldsVal',[index,'currentIndex']);
-                        this.currentIndex = index;
-                    ;}
 
-                    if(e.target.id!='model'){
-                    this.selectedModelIdVal = e.target.id
-                    }
+                }else{
 
+                    console.log('if index not 0')
+                    this.$store.dispatch('userdataservice/fieldsVal',[index,'currentIndex']);
+                    this.currentIndex = index;
+
+                    console.log('if index not 0 '+index);
+                    console.log( this.$store.state.userdataservice.models[index-1].id );
+
+                    this.selectedModelIdVal = this.$store.state.userdataservice.models[index-1].id;
+                    
+                ;}
             }
 
         },
@@ -394,7 +445,7 @@ export default {
                 description: this.description || 'спиздив у діда',
                 carModel:
                 {
-                    id: parseInt( this.selectedModelIdVal || this.selectedModelId() ) || 1  /* null || 0  то сервер выпадает в 500 */
+                    id: parseInt( this.selectedModelIdVal ) || 1  /* null || 0  то сервер выпадает в 500 */
                 }
                 
             };
