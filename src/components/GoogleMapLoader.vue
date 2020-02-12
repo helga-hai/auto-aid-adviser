@@ -8,13 +8,15 @@
         :map="map"
       />
     </template>
-    <button id="dir" @click="calculateAndDisplayRoute( {from:paramOrigin,to:paramDest} )">get directions</button>
+    <button id="dir" @click="calculateAndDisplayRoute( {from:paramOrigin,to:paramDest} )">get directions2</button>
   </div>
 </template>
 
 <script>
 import GoogleMapsApiLoader from 'google-maps-api-loader';
+import MyMixin from '../mixins/mymixin';
 export default {
+    mixins: [MyMixin],
     props: {
         mapConfig: Object,
         apiKey: String,
@@ -26,15 +28,50 @@ export default {
             map: null,
             directionsDisplay: null,
             directionsService: null,
-            config: null
+            config: null,
         }
     },
     computed:{
       toggleAddres() {
           return this.$store.getters['selfLocation/toggleAddres']
       },
+      location() { return this.$store.state.search.location },
+      // location_address() {}
+      selected() { return this.$store.getters['search/SELECTED'] },
+      from() { return this.$store.getters['search/FROM'] },
+      to() { return this.$store.getters['create/TO'] },
+      isLocation()  { return this.$store.getters['search/ISLOCATION'] },
     },
     watch: {
+      // location: {
+      //   position(val){
+      //     console.log('locationlocationlocationlocation')
+      //   },
+      //   deep: true
+      // },
+      // location(newVal){
+      //   console.log('0000')
+      //   if(newVal){
+      //     console.log('LOC',newVal)
+      //     const tmp = newVal.position;
+      //     const isSelfLoc = true
+      //     // this.$store.dispatch('create/GET_ENCODING_FOR_SEARCH', {tmp,isSelfLoc})
+      //     this.$store.dispatch('search/GET_ENCODING_MY_LOCATION', tmp)
+      //   }
+      // },
+      isLocation(){
+        console.log('13164242',this.location.position)
+        this.$store.dispatch('search/GET_ENCODING_MY_LOCATION', this.location.position)
+      },
+      selected(newVal){
+        console.log('123dfsdfsdd,',newVal)
+        const tmp = newVal[0].position
+        console.log('123dfsdfsdd,',tmp)
+        if(tmp) {
+        console.log('123dfsdfsdd,',tmp)
+          this.$store.dispatch('create/GET_ENCODING_FOR_SEARCH', tmp)
+        }
+      },
       toggleAddres(newVal, oldVal) {
           this.config.center = this.$store.getters['selfLocation/ac_location']
           this.map.setCenter(this.config.center)
@@ -72,6 +109,7 @@ export default {
         })
         this.google = googleMapApi
         this.initializeMap()
+        this.$store.dispatch('search/getLocation')
     },
     methods: {
         initializeMap() {
@@ -93,40 +131,15 @@ export default {
               control.style.display = 'block';
               map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
             }
-
-            
-            // // var buttonD = document.getElementById('dir');
-            // // buttonD.style.display = 'block';
-            // // map.controls[google.maps.ControlPosition.TOP_LEFT].push(buttonD);
-            //map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(button);
-            //var onChangeHandler = function() {
-            //  this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
-              
-            //};
-            //document.getElementById('start').addEventListener('change', onChangeHandler);
-            //document.getElementById('end').addEventListener('change', onChangeHandler);
         },
         calcRoute() {
-          // const directionsService = new google.maps.DirectionsService;
-          // var start = {lat:50.450100,lng:30.523399};//"cambridge, ma";
-          // var end = {lat:50.254280,lng:28.659010};//"boston, ma";
-          // var request = {
-          //   origin: start,
-          //   destination: end,
-          //   travelMode: google.maps.TravelMode.DRIVING
-          // };
-          // directionsService.route(request, function(result, status) {
-          //   if (status == google.maps.DirectionsStatus.OK) {
-          //     directionsDisplay.setDirections(result);
-          //   }
-          // });
         },
         
         calculateAndDisplayRoute({
           directionsService, 
           directionsDisplay,
-          from='chicago, il', 
-          to='oklahoma city, ok'
+          from=this.from, 
+          to=this.to
           }) {
             console.log('directionsService',directionsService)
             console.log('directionsRenderer',directionsDisplay)
@@ -146,68 +159,7 @@ export default {
                 }
               });
           },
-        // onChangeHandler() {
-        //   this.calculateAndDisplayRoute(directionsService, directionsRenderer);
-        // },
-        // calculateAndDisplayRoute(directionsService, directionsDisplay) {
-        // this.directionsService.route(
-        //     {
-        //       origin: {query: 'Gagarina Street'},
-        //       destination: {query: 'Derybasivska Street'},
-        //       travelMode: 'DRIVING'
-        //     },
-        //     function(response, status) {
-        //       if (status === 'OK') {
-        //         this.directionsDisplay.setDirections(response);
-        //       } else {
-        //         window.alert('Directions request failed due to ' + status);
-        //       }
-        //     });
-        // },
-        // calculateAndDisplayRoute(directionsService, directionsDisplay, start={ lat: 50.455939, lng: 30.372777 }, destination={ lat: 50.452482, lng: 30.372232 }) {
-        //   directionsService = this.directionsService;
-        //   directionsDisplay = this.directionsDisplay;
-        //   console.dir(directionsDisplay)
-        //   directionsService.route({
-        //       origin: start,
-        //       destination: destination,
-        //       travelMode: 'DRIVING'
-        //   }, function(response, status) {
-        //       if (status === 'OK') {
-        //       directionsDisplay.setDirections(response);
-        //       } else {
-        //       window.alert('Directions request failed due to ' + status);
-        //       }
-        //   });
-        // },
         getDirection() {
-              // var directionsService = this.google.maps.DirectionsService;
-              // var directionsDisplay = this.google.maps.DirectionsRenderer({draggable:true});
-              // // console.log( 'directionsDisplay')
-              // // console.log( directionsDisplay)
-              // this.google.maps.DirectionsDisplay.setMap(this.$refs.googleMap.$mapObject);
-              // // console.log('directionsService',directionsService)
-              // // console.log('directionsDisplay',directionsDisplay)
-              // // console.log('this.$refs.mapRef.$mapObject',this.$refs.mapRef.$mapObject)
-              // //google maps API's direction service
-              // function calculateAndDisplayRoute(directionsService, directionsDisplay, start={ lat: 50.455939, lng: 30.372777 }, destination={ lat: 50.452482, lng: 30.372232 }) {
-              //   directionsService.route({
-              //       origin: start,
-              //       destination: destination,
-              //       travelMode: 'DRIVING'
-              //   }, function(response, status) {
-              //       if (status === 'OK') {
-              //       directionsDisplay.setDirections(response);
-              //       } else {
-              //       window.alert('Directions request failed due to ' + status);
-              //       }
-              //   });
-              // }
-
-              // console.log(directionsService);
-              // console.log(this.destination);
-              // console.log('hmmm yha');
-              // calculateAndDisplayRoute(directionsService, directionsDisplay);
           }
         }
 }
