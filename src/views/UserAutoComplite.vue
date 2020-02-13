@@ -13,13 +13,37 @@
 
         <div class = "CurrentCarWrapper">
             <div class = "Car">
-                <img alt='' :src = "currentCar.images[0].urlImage"/>
+                    <div class="slideshow-container">
+                        <div 
+                            v-for="car in filterCarsImages()" 
+                            :key="car.id" 
+                            class="mySlides fade"
+                            >
+                                <img alt='' :src="car" >
+                        </div>
+                        <div v-if="filterCarsImages().length >1">
+                            <a class="prev" @click="plusSlides(-1)">&#10094;</a>
+                            <a class="next" @click="plusSlides(1)">&#10095;</a>
+                        </div>
+                    </div>
+                    <div  style="text-align:center" v-if="filterCarsImages().length >1 ">
+                        <span 
+                            v-for="n in filterCarsImages().length" 
+                            :key="n.id" 
+                            class="dot" 
+                            @click="currentSlide(n)"                            
+                        >
+                        </span>
+                    </div>
+                <!-- <img alt='' :src = "currentCar.images[0].urlImage"/> -->
                 <div class = "info">
+                    
                     <h5>{{currentCar.carModel.carBrand.name}}</h5>
                     <p>{{currentCar.carModel.name}}/{{currentCar.releaseYear}}</P>
                     <p>{{currentCar.individualCarNaming}}</p>
                     <p>{{currentCar.description}}</p>
-                    <!-- <p>{{currentCarIMG}}</p> -->
+
+
                 </div>
             </div>
             <div class="currentCar__buttons">
@@ -130,6 +154,7 @@
 
 import userdataservice from '../_store/userdataservice.module';
 import { userService } from '../_services';
+import { data } from '../_store/data.module';
 
 export default {
 
@@ -140,7 +165,10 @@ export default {
         return {
             togglerData: false,
 
-            modelType: '',
+            slideIndex : 1,
+            
+
+            modelType:'',
 
             selectedModelIdVal:'',
 
@@ -178,6 +206,12 @@ export default {
     created() {
 
         {{this.getTypeAndBrand()}}
+        // {{var slideIndex = 1;
+        // console.log(this.showSlides)}}
+        // {{
+        //     console.log("wwerr")
+        //     this.showSlides(this.slideIndex)}}
+
 
 
     },
@@ -222,6 +256,11 @@ export default {
         currentBrand(){return this.$store.state.userdataservice.currentCar.carModel.carBrand},
 
     },
+    mounted() {
+        // {{this.caruselLogic()}}
+        //         {{var slideIndex = 1;}}
+        {{this.showSlides(this.slideIndex);}}
+    },
 
     methods:{
 
@@ -251,7 +290,48 @@ export default {
 
             this.year = cCar.releaseYear;
 
+        },
 
+
+        filterCarsImages(){
+            let сarsImages = []
+            let CarIMG = this.$store.state.userdataservice.currentCar.images;
+            CarIMG.forEach(item => {
+                if (сarsImages.indexOf(item.urlImage) < 0) {
+                    сarsImages.push(item.urlImage)
+                }
+            })
+            return сarsImages
+
+        },
+
+        plusSlides(n) {
+        this.showSlides(this.slideIndex += n);
+        },
+
+        currentSlide(n) {
+        this.showSlides(this.slideIndex = n);
+        },
+
+        showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {this.slideIndex = 1}    
+            if (n < 1) {this.slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            if(n = 1){console.log("awwd"+slides[0]);}
+            slides[this.slideIndex-1].style.display = "block";  
+            dots[this.slideIndex-1].className += " active";
+            },
+
+        getPath(file){
+            return '/images/' + file
         },
 
         back(){
@@ -778,5 +858,82 @@ export default {
  .done  .changeWrapp__done {
    display: flex;
  }
+
+
+/* carusel */
+
+.mySlides {display: none}
+
+img {vertical-align: middle;}
+
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 10px 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
 
 </style>
