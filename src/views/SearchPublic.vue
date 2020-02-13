@@ -25,7 +25,8 @@
                     </div>
                     
                     <div v-if="marketsSearch">
-                        <button class="services-prev detail" v-for="cur in marketsSearch" :key="cur.id"  :isPreview="false">
+                        <button class="services-prev detail" v-for="cur in marketsSearch" :key="cur.id"  :isPreview="false" @click="onClick(cur.id)" @mouseover="onHover(cur.id)" @mouseleave="onLeave(cur.id)">
+                            <button class="direct" @click="sendCommand=true">GET DIRECTION</button>
                             <div class="services-prev-img small"  v-if="cur.images && cur.images.length" :style="{backgroundImage: cur.images.length ? 'url('+cur.images[0].urlImage+')' : 'url('+require('../assets/serevice.svg')+')'}">
                             </div>
                             <div class="services-prev-info">
@@ -50,7 +51,7 @@
                     <div v-if="gettingLocation">loading...</div>
                     <div v-else>
                         
-                        <search-map class="travel-map"/>
+                        <search-map class="travel-map" :startDirection="sendCommand"/>
                         <!-- <travel-map class="guide"-if="queryLocation"
                             ref="mapr" 
                             :mapCenter="location.position" 
@@ -110,8 +111,8 @@ export default {
                     value: 'Оберіть сервіс',
                     status: false
                 },
-
-            }
+            },
+            sendCommand: false
         }
     },
     computed: {
@@ -132,50 +133,28 @@ export default {
             // tmp.lng = this.$router.query.lngitude;
             return tmp
         },
-        // mapConfig () {
-        //     return {
-        //         center: { lat: this.LATITUDE, lng: this.LONGITUDE },
-        //         zoom: 15,
-        //     }
-        // },
     },
     watch: {
-        // success(pos) {
-        //     var crd = pos.coords;
-        //     this.curLoc = {
-        //         lat: pos.coords.latitude,
-        //         lng: pos.coords.longitude
-        //     }
-        // },
-        // error(err) {
-        //     console.warn(`ERROR(${err.code}): ${err.message}`);
-        // },
-        // chooseMyLocation(){
-        //     const position = navigator.geolocation.getCurrentPosition(this.success, this.error);
-        //     this.submenuShow = !this.submenuShow;
-        // },
         $route(newVal,oldVal) {
             console.log('$route', newVal, oldVal)
             this.q_service = newVal.query.service
             // const position = navigator.geolocation.getCurrentPosition(this.success, this.error);
             this.fetchData()
         }
-        // toggleAddres(newVal, oldVal) {
-        //     this.ac_position = this.$store.getters['selfLocation/ac_location']
-        //     this.ac_center = this.ac_position
-        // },
-        // ac_position(val) {
-        //    var object = {}
-        //    object.position=val
-        //    object.id='t'+this.count
-        //    object.content='here'
-        //    this.enterMarker.push(object)
-        //    this.count++
-        // },
     },
     methods: {
-        ourMap(val){
-            this.ourM = val
+        onClick(id){
+            this.$store.commit('search/SELECT_MARKER',id)
+        },
+        onHover(id){
+            if(document.querySelector(`.marker-${id}`)) {
+                document.querySelector(`.marker-${id}`).style="background-color:#ffc700;padding: 15px 22px;"
+            }
+        },
+        onLeave(id){
+            if(document.querySelector(`.marker-${id}`)) {
+                document.querySelector(`.marker-${id}`).style="background-color:#FFF;padding: 0px 0px;"
+            }
         },
         isDoneFunc() {
             // console.log('isDoneFuncInTravel')
@@ -286,6 +265,21 @@ export default {
         height: calc(100vh - 162px - 80px);
         overflow-y: scroll;
         overflow-x: hidden;
+        .detail {
+            position:relative;
+        }
+        .direct {
+            display:none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: max-content;
+            padding: 7px;
+            color: darkgoldenrod;
+        }
+        .detail:hover .direct {
+            display:block;
+        }
     }
     .controls {
         display: flex;
@@ -361,5 +355,8 @@ export default {
 .search-map {
     width: 50vw;
     // min-height: calc(100vh - 80px)
+}
+.content {
+    transition: all .3s ease;
 }
 </style>

@@ -4,7 +4,9 @@ export const selfLocation = {
         location: {
             id: 'marker-self',
             position: null,
-            content: ''
+            icon: 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellowA.png',
+            // content: '',
+            description: `<div class="content"><h3>Ваше місцезнаходження</h3></div>`
         },
         ac_location: null,
         gettingLocation: false,
@@ -14,6 +16,8 @@ export const selfLocation = {
     getters: {
         doneLocation: state => {
             return state.location
+
+        
         },
         gettingLocation: state => {
             return state.gettingLocation

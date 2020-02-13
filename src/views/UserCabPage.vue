@@ -27,10 +27,6 @@
 
 import Activation from '../components/Activation';
 
-
-// import UserCreatePage1 from '../views/UserCreatePage1';
-// import UserAutoCreatePage from '../views/UserAutoCreatePage';
-// import UserAutoCreatePage2 from '../views/UserAutoCreatePage2';
 import UserLayout from '../layouts/UserLayout'
 import userdataservice from '../_store/userdataservice.module'
 
@@ -54,29 +50,12 @@ export default {
                 let role = this.$store.state.authentication.role||localStorage.getItem('role');
                 let email = this.$store.state.authentication.email||localStorage.getItem('email');
                 return {role, email};
-
-                // return this.$store.state.authentication.role, this.$store.state.authentication.email;
             },
-            // mePos() { console.log(this.$store.state.userdataservice.menuItem)
-            // return this.$store.state.userdataservice.menuItem},     ///////////////////////////
-
-
-            // step1: true,
-            // step2: false,
-
-
-            // p1: false,
-            // p2: true,
-            // p3: false,
-            // p4: false,
-
         }
     },
     methods: {
         stepOneFunction() {
             console.log('foo UserCab');
-            // this.step1 = false;
-            // this.step2 = true;
         },
 
     },

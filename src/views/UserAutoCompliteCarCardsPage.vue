@@ -60,7 +60,7 @@ export default {
             console.log(currentCarID);
 
             userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
-            .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]))
+                .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]));
             this.$emit('switchView','user-auto-complite');         
 
         },

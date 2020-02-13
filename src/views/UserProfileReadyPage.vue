@@ -3,15 +3,16 @@
     <div class="profileReady">
       <h1>Особисті данні</h1>
       <div class="info">  
-        <div class="info__img" :style="{backgroundImage: 'url('+require('../assets/Rectangle142.svg')+')'}"></div>
+        <!-- <div class="info__img" :style="{backgroundImage: 'url('+require('../assets/Rectangle142.svg')+')'}"></div> -->
         <div class="info__text" > 
-          <h2>Уик{{surname}} Джoн{{name}}</h2>
-          <p class = "info__phone">093 7859898{{phone}}</p>
-          <p class = "info__email">jwick@gmail.com{{email}}</p>
+          <h2>{{surname}} {{name}}</h2>
+          <p class = "info__phone">{{phone}}</p>
+          <p class = "info__email">{{email}}</p>
           <button class = "info__logoChange"  @click="toggler=!toggler">Змінити пароль</button>
         </div>
       </div>
     </div>
+
     <div class="redactWrapp">
       <button class = "redactWrapp__del">
         <img :src="require('../assets/icoDelete.png')"> 
@@ -22,6 +23,7 @@
         Редагувати
       </button>
     </div>
+
     <div class = "change" :class="{'on': toggler, 'done': toggler2}">
       <div class = "changeWrapp">
         <button class="close-x" @click="toggler=!toggler, toggler2=false"></button>
@@ -42,6 +44,7 @@
         </div>
       </div>
     </div>
+
     <div class = "changeData" :class="{'onData': togglerData}">
       <div class = "changeDataWrapp">
         <button class="close-x" @click="togglerData=!togglerData"></button>
@@ -52,7 +55,7 @@
                   <input type="text" name="name" id="name" placeholder="Ім'я" v-model="name" required>
                   <input type="text" name="phone" id="phone" placeholder="Телефон" v-model="phone">
                 </div>
-                <div class="changeDataWrapp__img" :style="{backgroundImage: 'url('+require('../assets/Rectangle142.svg')+')'}"></div>
+                <!-- <div class="changeDataWrapp__img" :style="{backgroundImage: 'url('+require('../assets/Rectangle142.svg')+')'}"></div> -->
                 <div class="changeDataWrapp__buttons">
 
                     <input type="submit" value="Зберегти" class="changeDataWrapp__primaryButton">    
@@ -82,14 +85,29 @@
           oldPassword:"",
           newPassword:"",
           confirmPassword:"",
-          surname:this.$store.state.userdataservice.personalPageData.surname,
-          name:this.$store.state.userdataservice.personalPageData.name,
+          surname:this.$store.state.userdataservice.personalPageData.lastName,
+          name:this.$store.state.userdataservice.personalPageData.firstName,
           phone:this.$store.state.userdataservice.personalPageData.phone,
-          email:this.$store.state.userdataservice.personalPageData.email,
+
 
           }
       
       },
+      computed: {
+
+        email(){ return this.$store.state.authentication.email||localStorage.getItem( 'email' ) },
+
+        USER(){
+
+        }
+
+      },
+
+      methods:{
+
+
+
+      }
 
   }
 </script>
@@ -142,7 +160,7 @@
     width: 100%;
   }
   .changeDataWrapp .filds {
-    width:50%
+    width:100%
   }
   .changeDataWrapp__img {
     width:180px;

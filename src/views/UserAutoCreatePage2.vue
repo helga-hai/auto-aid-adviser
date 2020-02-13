@@ -158,13 +158,7 @@
                         <p class = "registrStep3__fp">* розмір файлу до 500 Кб</p>        
                     </div>
                 <p><span>*максимум п`яти фото, до 500Кб кожна </span></p>
-
-
-
-               
-                <!-- <ul v-for="t in test"><li>{{t.name}}</li></ul> -->
                 
-
                 <div class="registerAuto__buttons" ref="foo">
                     <input type="submit" value="Назад" class="registerAuto__secondaryButton" @click="back">
                     <input type="submit" value="Зберегти" class="registerAuto__primaryButton" > 

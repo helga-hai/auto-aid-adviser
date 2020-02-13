@@ -27,7 +27,9 @@ export const create = {
         encoding: null,
         markersEntities: {
             // 'marker-23': marker
-        }
+        },
+        to: null,
+        // from: null
     },
     getters: {
         SendObject: state => {
@@ -60,17 +62,14 @@ export const create = {
         MARKER_ENTITIES: state => {
             return state.markersEntities; //let name = this.$store.getters.NAME
         },
+        TO: state => {
+            return state.to; //let name = this.$store.getters.NAME
+        },
+        // FROM: state => {
+        //     return state.from; //let name = this.$store.getters.NAME
+        // },
     },
     actions: {
-        // getAll({ commit }) {
-        //     commit('getAllRequest');
-
-        //     userService.getAll()
-        //         .then(
-        //             users => commit('getAllSuccess', users),
-        //             error => commit('getAllFailure', error)
-        //         );
-        // }
         GET_TIME: (context, payload) => {
             console.log('GET_TIME', payload)
 
@@ -79,15 +78,6 @@ export const create = {
                 single.day = item.day;
                 single.fromTime = item.fromTime;
                 single.toTime = item.toTime;
-                // if (item.fromTime) {
-                //     single.fromTime = {};
-                //     single.fromTime.hour = parseInt(item.fromTime[0])
-                //     single.fromTime.minute = parseInt(item.fromTime[1])
-
-                //     single.toTime = {};
-                //     single.toTime.hour = parseInt(item.toTime[0])
-                //     single.toTime.minute = parseInt(item.toTime[1])
-                // }
                 context.commit('SET_TIME', single);
 
             })
@@ -134,8 +124,6 @@ export const create = {
             // context.commit('', data);
         },
         GET_ENCODING: async(context, payload) => {
-            console.log('payload type', typeof payload)
-            console.log('payload ', payload)
             const lat = payload.lat;
             const lng = payload.lng;
             let uri = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=' + 'AIzaSyBasISENNNlp6Immcd1Rr5pGhkQ5Um1ZVA'
@@ -150,7 +138,24 @@ export const create = {
             context.state.sendObject.location.longitude = lng
             let { data } = await axios(uri, config);
             context.commit('SET_ENCODING', data, lat, lng);
-        }
+        },
+        GET_ENCODING_FOR_SEARCH: async(context, payload) => {
+            console.log('payload ', payload)
+            const lat = payload.lat;
+            const lng = payload.lng;
+            console.log('payload ', lat)
+            let uri = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=' + 'AIzaSyBasISENNNlp6Immcd1Rr5pGhkQ5Um1ZVA'
+            var config = {
+                method: "GET",
+                url: uri,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            }
+            let { data } = await axios(uri, config);
+            console.log(data)
+            context.commit('SET_ENCODING_FOR_SEARCH', data);
+        },
     },
     mutations: {
         GET_MARKER_ENTITIES(state, [id, bodyMarker]) {
@@ -233,6 +238,14 @@ export const create = {
             state.sendObject.location.address = longest.formatted_address;
             console.log(longest.formatted_address)
             state.address = longest.formatted_address;
+        },
+        SET_ENCODING_FOR_SEARCH: (state, payload) => {
+            var longest = payload.results.reduce(function(a, b) { return a.formatted_address.length > b.formatted_address.length ? a : b; });
+            // if (isSelfLoc) {
+            //     state.from = longest.formatted_address
+            // } else {
+            state.to = longest.formatted_address
+                // }
         },
         // getAllRequest(state) {
         //     state.all = { loading: true };

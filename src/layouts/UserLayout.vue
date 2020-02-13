@@ -148,6 +148,16 @@ export default {
 
         },
 
+        getUser(){
+            userService.getAllUserData( 'api/user/profile' )
+                .then(function(result){
+
+                    console.log("USER "+result);
+
+                    return result })
+                .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'personalPageData' ]));
+        },
+
         getCurrentView( param , viewArr){
 
             this[ param ] = this.$store.state.userdataservice[param]
@@ -173,6 +183,7 @@ export default {
     beforeMount(){
 
         {{this.getCars()}}
+        {{this.getUser()}}
 
     },
 
