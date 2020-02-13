@@ -152,38 +152,6 @@ export const userdataservice = {
         },
 
         GET_MULTIPART: async(context, carInfo ) => {
-            // let customHeader = authHeader();
-            // console.log(customHeader);
-            // //customHeader['Content-Type'] = undefined;
-            // console.log("THIS " + customHeader['Content-Type']);
-            // console.log("THIS " + customHeader['Authorization']);
-            // console.log(customHeader);
-            // let formData = new FormData();
-            // formData.append("test", '1');
-
-            // formData.append("file", carPhoto);
-            // formData.append("json", JSON.stringify(carInfo));
-            // formData.append('properties', new Blob(JSON.stringify({
-            //     "name": "root",
-            //     "password": "root"                    
-            // }), {
-            //     type: "application/json"
-            // }));
-
-/*
-            const config = {
-                method: 'POST',
-                url: userService.config.apiUrl + '/api/user/profile/car',
-                headers: customHeader,
-                data: 'a'//formData,
-            };
-
-
-            let { data } = await axios(config);
-            context.commit('SET_MULTIPART', data);
-
-*/
-
 
 /* NEVER DO LIKE THIS
 window.myfunction = function() {
