@@ -431,6 +431,8 @@ export default {
             userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
                 .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]));
 
+            this.togglerData = !this.togglerData;
+
         },
 
         deleteCar(){

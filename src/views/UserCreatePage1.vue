@@ -9,10 +9,12 @@
                 <input type="text" name="surname" id="surname" placeholder="Прізвище" v-model="surname" required>
                 <input type="text" name="name" id="name" placeholder="Ім'я" v-model="name" required>
                 <input type="text" name="phone" id="phone" placeholder="Телефон" v-model="phone">
-                <input type="e-mail" name="e-mail" id="e-mail" placeholder="e-mail" :value='email()'>
+                <input type="e-mail" name="e-mail" id="e-mail" placeholder="e-mail" :value='email' disabled="disabled">
                 <div class="avatar">
+
+                    {{user}}
                     <div>{{data()}}</div>
-                    <div class="registrStep3__Foto">
+                    <!-- <div class="registrStep3__Foto">
                         <p class = "registrStep3__ft">Додати аватар</p>
                         <div>
                         <label class= "registrStep3__addFile">
@@ -21,7 +23,7 @@
                         </label>
                         </div>
                         <p class = "registrStep3__fp">* розмір файлу до 500 Кб</p>        
-                    </div>
+                    </div> -->
                 </div>
                 <!-- <label>Змінити пароль</label>
                 <input type="password" name="oldPassword" id="oldPassword" placeholder="Існуючий пароль" v-model="oldPassword">
@@ -42,6 +44,8 @@
 
 // import UserLayout from "@/layouts/UserLayout";
 
+import { userService } from '../_services';
+
 export default {
     name: 'UserCreatePage1',
 
@@ -56,7 +60,7 @@ export default {
             oldPassword:"",
             newPassword:"",
             confirmPassword:"",
-            email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
+
             data: function(){return this.$store.state.userdataservice.personalPageData}
         }
     },
@@ -65,6 +69,12 @@ export default {
 
     },
     computed: {
+
+
+
+        email: function(){ return this.$store.state.authentication.email||localStorage.getItem('email') },
+
+        user: function(){ return this.$store.state.userdataservice.personalPageData; },
    
     },
     update() {
@@ -72,16 +82,24 @@ export default {
     },
     created() {
 
+
+
     },
     methods: {
+
         saveUserData: function(){
+
             console.log("click work");
-            let data = {
-                surname: this.surname,
-                name: this.name,
-                phone: this.phone,
-            };
-            this.$store.dispatch("userdataservice/fieldsVal", [data, 'personalPageData']); 
+            console.log(this.user);
+
+            this.user.lastName = this.surname;
+            this.user.firstName = this.name;
+            this.user.phone = this.phone;
+
+            let editUser = this.user;
+
+
+            this.$store.dispatch( "userdataservice/EDIT_USER", editUser ); 
             this.$emit('switchView','user-profile-ready-page');  
         },
         createStepOne() {

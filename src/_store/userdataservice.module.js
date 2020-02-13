@@ -7,11 +7,7 @@ import axios from 'axios';
 export const userdataservice = {
     namespaced: true,
     state: {
-        personalPageData: {
-            surname: null,
-            name: null,
-            phone: null,
-        },
+        personalPageData: null,
         types: null,
         brands: null,
         models: null,
@@ -19,6 +15,8 @@ export const userdataservice = {
         currentIndex: null,
         cars: null,
         currentCar: null,
+
+
 
 
         images: null,
@@ -117,6 +115,41 @@ export const userdataservice = {
                 .then(result => context.commit('setData',[ result ,'currentCar' ]));
         },
 
+        EDIT_USER: async(context, payload) => {
+
+            const urlEditUser = userService.config.apiUrl + '/api/user/profile';
+            
+            var
+            myAuth = (function() {
+
+                var
+                t = localStorage.getItem('token');
+
+                return ( t ) ? ('Bearer ' + t.split('"').join(' ') ) : '';
+            })();       
+
+            const options =  {
+                method: 'put',
+                headers: {'Authorization': myAuth},
+                url: urlEditUser,
+                data: payload
+            }
+            
+            
+            let { data } = await axios(options);
+
+            context.commit('setData', [ data ,'personalPageData' ]);
+            
+            userService.getAllUserData( 'api/user/profile' )
+                .then(function(result){
+
+                    console.log("USER "+result);
+
+                    return result })
+
+                .then(result => context.commit('setData',[ result ,'personalPageData' ]));
+
+        },
 
         GET_MULTIPART: async(context, carInfo ) => {
             // let customHeader = authHeader();
