@@ -58,7 +58,7 @@
               }" 
             :opacity=".6"></ground-overlay> -->
       </GmapMap >
-      <button @click="getDirection">get direction</button>
+      <button @click="getDirection">get direction1</button>
     </div>
 </template>
 
