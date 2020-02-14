@@ -216,7 +216,7 @@ export default {
                 imgObjArr.forEach(item => {
                     imgUrlArr.push(item.urlImage);
                 });
-
+            
             return imgUrlArr;
             },
 
@@ -227,13 +227,13 @@ export default {
     created() {
 
         {{this.getTypeAndBrand()}}
-
+        
 
         // {{var slideIndex = 1;
         // console.log(this.showSlides)}}
 
             // console.log("wwerr")
-        {{this.showSlides(this.slideIndex)}}
+        // {{this.showSlides(this.slideIndex)}}
     },
 
     computed:{
@@ -287,10 +287,10 @@ export default {
 
     },
 
-    mounted() {
+    updated() {
         // {{this.caruselLogic()}}
         //         {{var slideIndex = 1;}}
-        // {{this.showSlides(this.slideIndex);}}
+        {{this.showSlides(this.slideIndex);}}
 
     },
 
