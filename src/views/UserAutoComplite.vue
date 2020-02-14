@@ -243,20 +243,6 @@ export default {
             return car
         },
 
-        // currentCarIMG: function(){
-
-        //     console.log('current car img ' +this.$store.state.userdataservice.currentCar)
-        //     var carIMG = null;
-        //     return () => {do{
-            
-        //         carIMG = this.$store.state.userdataservice.currentCar.images;
-        //     }while(carIMG == null);
-
-        //     console.log('current car img ' +carIMG);
-
-        //     return carIMG;}
-        // },
-
         releaseYear: function(){
 
             let yearArr = [];
@@ -288,8 +274,7 @@ export default {
     },
 
     updated() {
-        // {{this.caruselLogic()}}
-        //         {{var slideIndex = 1;}}
+
         {{this.showSlides(this.slideIndex);}}
 
     },
@@ -321,52 +306,6 @@ export default {
             this.description = cCar.description;
 
             this.year = cCar.releaseYear;
-
-        },
-
-
-        // filterCarsImages(){
-        //             let indexCarID = function(){return this.$store.state.userdataservice.indexCarID};
-        // userService.getAllUserData(`api/user/profile/car/${indexCarID}`)
-        //         .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]))
-
-        //         .then(()=>{let сarsImages = [], CarIMG = this.$store.state.userdataservice.currentCar.images;
-
-        //             CarIMG.forEach(item => {
-        //                 if (сarsImages.indexOf(item.urlImage) < 0) {
-        //                     сarsImages.push(item.urlImage)
-        //                 }
-        //     });
-
-        //     return сarsImages;})
-
-        // },
-        
-        filterCarsImages(){
-
-
-            let
-            сarsImages = [],
-            self = this;
-            let indexCarID =  this.$store.state.userdataservice.indexCarID;
-
-
-            // userService.getAllUserData(`api/user/profile/car/${indexCarID}`)
-            //     .then(result=> {console.log('filterCarsImages '+result); return result})
-            //     .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]))
-            //     .then( => CarIMG = function(){return self.$store.state.userdataservice.currentCar.images};)
-
-
-
-            // CarIMG = function(){return self.$store.state.userdataservice.currentCar.images};
-
-            //         CarIMG.forEach(item => {
-            //             if (сarsImages.indexOf(urlImage) < 0) {
-            //                 сarsImages.push(item.urlImage)
-            //             }
-            // });
-
-            return сarsImages;
 
         },
 

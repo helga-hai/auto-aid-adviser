@@ -437,8 +437,8 @@ export default {
             
             let auto = {
                 releaseYear: parseInt(this.year) || 1910, /* 1900 Не работает, доступные данные лучше чтоб приходили с сервера */
-                individualCarNaming: this.individualCarNaming || 'мойа ластіука', 
-                description: this.description || 'спиздив у діда',
+                individualCarNaming: this.individualCarNaming || '... ',//'мойа ластіука', 
+                description: this.description || '... ',//'спиздив у діда',
                 carModel:
                 {
                     id: parseInt( this.selectedModelIdVal ) || 1  /* null || 0  то сервер выпадает в 500 */
