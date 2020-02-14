@@ -58,17 +58,23 @@ export default {
             var
             currentCarID = e.target.id;
             console.log(currentCarID);
+            
+            // this.$store.dispatch('userdataservice/fieldsVal',[ null ,'indexCarID' ]);
+
+            this.$store.dispatch('userdataservice/fieldsVal',[ currentCarID ,'indexCarID' ]);
 
             userService.getAllUserData(`api/user/profile/car/${currentCarID}`)
                 .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]));
-            this.$emit('switchView','user-auto-complite');         
+
+            this.$emit('switchView','user-auto-complite');
 
         },
 
         createStepOne() {
+
             console.log("work");
             return this.$emit('switchView','user-auto-create-page2');
-            // return this.$emit('switchView','user-auto-complite-car-cards-page')
+
         },
     },
 

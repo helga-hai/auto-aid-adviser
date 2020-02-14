@@ -32,7 +32,7 @@
 
                 <div class="registrStep1__buttons">
 
-                    <input type="submit" value="Зберегти" class="registrStep1__primaryButton" @click="saveUserData">    
+                    <input type="submit" value="Зберегти" class="registrStep1__primaryButton">    
                 </div>
             </form>
         </div>
@@ -99,9 +99,11 @@ export default {
             let editUser = this.user;
 
 
-            this.$store.dispatch( "userdataservice/EDIT_USER", editUser ); 
+            this.$store.dispatch( "userdataservice/EDIT_USER", editUser );
+
             this.$emit('switchView','user-profile-ready-page');  
         },
+
         createStepOne() {
             console.log("work");
             return this.$emit('switchView','user-profile-ready-page');

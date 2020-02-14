@@ -34,7 +34,8 @@
             <section class="sideBar">
                 <p>Особистий кабінет</p>
                 <ul>
-                    <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-create-page1')" :class="{'active': currentView == 'user-create-page1' || currentView == 'user-profile-ready-page'}">Особисті данні</a></li>
+                    <!-- <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-create-page1')" :class="{'active': currentView == 'user-create-page1' || currentView == 'user-profile-ready-page'}">Особисті данні</a></li> -->
+                                        <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView(getUserView( 'firstName' , [ 'user-create-page1', 'user-profile-ready-page' ]))" :class="{'active': currentView == 'user-create-page1' || currentView == 'user-profile-ready-page'}">Особисті данні</a></li>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView(getCurrentView( 'cars' , [ 'user-auto-create-page' , 'user-auto-complite-car-cards-page' ]))" :class="{'active': currentView == 'user-auto-create-page' || currentView == 'user-auto-create-page2' || currentView == 'user-auto-complite-car-cards-page' || currentView == 'user-auto-complite'}">Мої автомобілі</a></li>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-station-recording')" :class="{'active': currentView == 'user-station-recording' }">Записи до станції</a></li>
                     <li class="sideBar__list "><a href="#" class="sideBar__button" @click="switchView('user-settings')" :class="{'active': currentView == 'user-settings' }">Налаштування</a></li>
@@ -105,8 +106,8 @@ export default {
     },
     data(){
         return{
-            currentView:"user-create-page1",
-            // mIt:"Особисті данні",
+            // currentView:"user-create-page1",
+            currentView:"",
             email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
             cars: [1,2,3],
 
@@ -149,13 +150,15 @@ export default {
         },
 
         getUser(){
+
             userService.getAllUserData( 'api/user/profile' )
                 .then(function(result){
 
                     console.log("USER "+result);
 
                     return result })
-                .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'personalPageData' ]));
+                .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'personalPageData' ]))
+                .then(()=>this.__userView( 'firstName' , [ 'user-create-page1', 'user-profile-ready-page' ]))
         },
 
         getCurrentView( param , viewArr){
@@ -178,14 +181,50 @@ export default {
 
         },
 
+        __userView( param,viewArr ){
+
+            let userProp = this.$store.state.userdataservice.personalPageData[param];
+
+            if( userProp == null || userProp == undefined || userProp.length == 0){
+
+                this.currentView = viewArr[ 0 ];
+            }else{
+
+                this.currentView = viewArr[ 1 ];
+            }
+        },
+
+        getUserView( param , viewArr){
+
+            let userProp = this.$store.state.userdataservice.personalPageData[param]
+
+            console.log("getUserView____getUserView "+userProp );
+
+            if( userProp == null || userProp == undefined || userProp.length == 0){
+
+                return viewArr[ 0 ];
+            }else{
+
+                return viewArr[ 1 ];
+            }
+        },
+
+    },
+
+    created(){
+
+        this.$store.dispatch('userdataservice/fieldsVal',[ null ,'personalPageData' ]);
+
     },
 
     beforeMount(){
 
-        {{this.getCars()}}
         {{this.getUser()}}
 
+        {{this.getCars()}}
+        
     },
+
 
 
 

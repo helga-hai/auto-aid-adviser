@@ -16,6 +16,8 @@ export const userdataservice = {
         cars: null,
         currentCar: null,
 
+        indexCarID: null,
+
 
 
 
@@ -63,7 +65,7 @@ export const userdataservice = {
             const urlWithCarID = userService.config.apiUrl + '/api/user/profile/car/' + payload;
             
             let { data } = await axios.delete( urlWithCarID, options );
-            // context.commit('', data);
+
             userService.getAllUserData( 'api/user/profile/cars' )        
                 .then(function(result){
 
@@ -138,16 +140,9 @@ export const userdataservice = {
             
             let { data } = await axios(options);
 
-            context.commit('setData', [ data ,'personalPageData' ]);
-            
-            userService.getAllUserData( 'api/user/profile' )
-                .then(function(result){
+            console.log(data);
 
-                    console.log("USER "+result);
-
-                    return result })
-
-                .then(result => context.commit('setData',[ result ,'personalPageData' ]));
+            context.commit('setData', [ data , 'personalPageData' ]);
 
         },
 

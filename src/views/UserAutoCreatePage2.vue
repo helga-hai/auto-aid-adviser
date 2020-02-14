@@ -242,6 +242,7 @@ export default {
                 }
                 return yearArr;
             },
+
         models: function() {
 
             return ( this.selectedTypeId&&this.selectedBrandId  ? this.$store.state.userdataservice.models : null );
@@ -424,6 +425,7 @@ export default {
         //     console.dir(this.images[0]);
 
         // },
+        
         saveAuto() {
 
             let photos = document.getElementById('photoForm');
@@ -497,10 +499,15 @@ export default {
         },
 
 
-        clearField(dataField, stateField, index){
+        clearField(dataField, stateField, index, ID){
+
             this[dataField] = '';
+
             this.$store.dispatch('userdataservice/fieldsVal',[null, stateField]);
+
             this[index] = '';
+
+            this[ID] = '';
         },
 
     },

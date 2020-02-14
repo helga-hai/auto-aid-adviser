@@ -2,6 +2,7 @@
 import { authHeader, router } from '../_helpers';
 
 
+
 // const config = {
 //     apiUrl: 'http://localhost:8080'
 // };
@@ -144,11 +145,14 @@ function logout() {
     // remove user from local storage to log user out
 
     // localStorage.removeItem('user');
+
     localStorage.removeItem('token');
 
     localStorage.removeItem('email');
 
     localStorage.removeItem('role');
+
+
 
     console.log( 'localStor: ' + localStorage );
 

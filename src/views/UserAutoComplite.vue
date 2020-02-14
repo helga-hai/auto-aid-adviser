@@ -1,5 +1,6 @@
 <template>
   <div >
+      
         <div class="redactWrapp">
             <button class = "redactWrapp__del" @click="deleteCar">
                 <img :src="require('../assets/icoDelete.png')"> 
@@ -14,21 +15,27 @@
         <div class = "CurrentCarWrapper">
             <div class = "Car">
                     <div class="slideshow-container">
+                        <!-- {{currentCarIMG()}} -->
+                        <!-- {{indexCarID()}}
+                        {{imgs()}} -->
+                        <!-- {{this.showSlides(this.slideIndex)}} -->
+                        <!-- {{currentCar['images']}} -->
                         <div 
-                            v-for="car in filterCarsImages()" 
-                            :key="car.id" 
+                            v-for="car in imgs()" 
+                            :key="car" 
                             class="mySlides fade"
                             >
                                 <img alt='' :src="car" >
+
                         </div>
-                        <div v-if="filterCarsImages().length >1">
+                        <div v-if="imgs().length >1">
                             <a class="prev" @click="plusSlides(-1)">&#10094;</a>
                             <a class="next" @click="plusSlides(1)">&#10095;</a>
                         </div>
                     </div>
-                    <div  style="text-align:center" v-if="filterCarsImages().length >1 ">
+                    <div  style="text-align:center" v-if="imgs().length >1 ">
                         <span 
-                            v-for="n in filterCarsImages().length" 
+                            v-for="n in imgs().length" 
                             :key="n.id" 
                             class="dot" 
                             @click="currentSlide(n)"                            
@@ -199,6 +206,20 @@ export default {
 
             car: '',
 
+            indexCarID(){return this.$store.state.userdataservice.indexCarID},
+
+            imgs(){
+                let
+                imgObjArr = this.$store.state.userdataservice.currentCar.images,
+                imgUrlArr = [];
+
+                imgObjArr.forEach(item => {
+                    imgUrlArr.push(item.urlImage);
+                });
+
+            return imgUrlArr;
+            },
+
         }
 
     },
@@ -206,14 +227,13 @@ export default {
     created() {
 
         {{this.getTypeAndBrand()}}
+
+
         // {{var slideIndex = 1;
         // console.log(this.showSlides)}}
-        // {{
-        //     console.log("wwerr")
-        //     this.showSlides(this.slideIndex)}}
 
-
-
+            // console.log("wwerr")
+        {{this.showSlides(this.slideIndex)}}
     },
 
     computed:{
@@ -223,10 +243,20 @@ export default {
             return car
         },
 
-        currentCarIMG: function(){
-            var carIMG = this.$store.state.userdataservice.currentCar.images;
-            return carIMG;
-        },
+        // currentCarIMG: function(){
+
+        //     console.log('current car img ' +this.$store.state.userdataservice.currentCar)
+        //     var carIMG = null;
+        //     return () => {do{
+            
+        //         carIMG = this.$store.state.userdataservice.currentCar.images;
+        //     }while(carIMG == null);
+
+        //     console.log('current car img ' +carIMG);
+
+        //     return carIMG;}
+        // },
+
         releaseYear: function(){
 
             let yearArr = [];
@@ -256,10 +286,12 @@ export default {
         currentBrand(){return this.$store.state.userdataservice.currentCar.carModel.carBrand},
 
     },
+
     mounted() {
         // {{this.caruselLogic()}}
         //         {{var slideIndex = 1;}}
-        {{this.showSlides(this.slideIndex);}}
+        // {{this.showSlides(this.slideIndex);}}
+
     },
 
     methods:{
@@ -293,15 +325,48 @@ export default {
         },
 
 
+        // filterCarsImages(){
+        //             let indexCarID = function(){return this.$store.state.userdataservice.indexCarID};
+        // userService.getAllUserData(`api/user/profile/car/${indexCarID}`)
+        //         .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]))
+
+        //         .then(()=>{let сarsImages = [], CarIMG = this.$store.state.userdataservice.currentCar.images;
+
+        //             CarIMG.forEach(item => {
+        //                 if (сarsImages.indexOf(item.urlImage) < 0) {
+        //                     сarsImages.push(item.urlImage)
+        //                 }
+        //     });
+
+        //     return сarsImages;})
+
+        // },
+        
         filterCarsImages(){
-            let сarsImages = []
-            let CarIMG = this.$store.state.userdataservice.currentCar.images;
-            CarIMG.forEach(item => {
-                if (сarsImages.indexOf(item.urlImage) < 0) {
-                    сarsImages.push(item.urlImage)
-                }
-            })
-            return сarsImages
+
+
+            let
+            сarsImages = [],
+            self = this;
+            let indexCarID =  this.$store.state.userdataservice.indexCarID;
+
+
+            // userService.getAllUserData(`api/user/profile/car/${indexCarID}`)
+            //     .then(result=> {console.log('filterCarsImages '+result); return result})
+            //     .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'currentCar' ]))
+            //     .then( => CarIMG = function(){return self.$store.state.userdataservice.currentCar.images};)
+
+
+
+            // CarIMG = function(){return self.$store.state.userdataservice.currentCar.images};
+
+            //         CarIMG.forEach(item => {
+            //             if (сarsImages.indexOf(urlImage) < 0) {
+            //                 сarsImages.push(item.urlImage)
+            //             }
+            // });
+
+            return сarsImages;
 
         },
 
@@ -316,6 +381,7 @@ export default {
         showSlides(n) {
             var i;
             var slides = document.getElementsByClassName("mySlides");
+
             var dots = document.getElementsByClassName("dot");
             if (n > slides.length) {this.slideIndex = 1}    
             if (n < 1) {this.slideIndex = slides.length}
@@ -341,8 +407,6 @@ export default {
 
         getTypeAndBrand(){
 
-            console.log('FOOOOOO');
-
             userService.getAllUserData('api/catalog/car/types')
             .then(function(result){return result})
             .then(result=>this.$store.dispatch('userdataservice/fieldsVal',[result,'types']))
@@ -355,9 +419,6 @@ export default {
 
         selectType(e){
 
-            console.log(e.target.id);
-            console.log(e.target);
-
             this.selectedType = e.target.textContent;
 
             this.selectedTypeId = e.target.id;
@@ -366,19 +427,14 @@ export default {
 
             if(this.selectedBrandId){
 
-                console.log( '__selectedBrandId '+this.selectedBrandId + '__selectedTypeId '+this.selectedTypeId );
-
                 this.__getModels();
 
-                console.log(this.models)
             }
 
             return e.target.textContent;
         },
 
         select(currentFieldWithID,$event){
-
-            console.log('work');
 
             let
             index = $event.target.selectedIndex,
@@ -387,21 +443,15 @@ export default {
 
             this.clearField('modelType', 'models','currentIndex','selectedModelIdVal');
 
-            console.log(currentIDField);
-
             switch(currentIDField){
                 case "selectedBrandId":
 
-                    console.log('switch ' +currentIDValue);
                     this.selectedBrandId=currentIDValue;
 
                     if(this.selectedTypeId){
 
-                        console.log( '__selectedTypeId '+this.selectedTypeId + '__selectedBrandId '+this.selectedBrandId );
-
                         this.__getModels();
 
-                        console.log(this.models)
             }
 
                 break;
@@ -410,6 +460,7 @@ export default {
         },
 
         __getModels(){
+
             let
             typeID = this.selectedTypeId,
             brandID = this.selectedBrandId;
@@ -426,14 +477,20 @@ export default {
 
        getModel(e){
             
-            let select = document.querySelector("select#model")
-            let mySetAttr = select.setAttribute
+            let select = document.querySelector("select#model");
+
+            let mySetAttr = select.setAttribute;
+
             if(!this.selectedTypeId||!this.selectedBrandId){
+
                 this.formCheck.check = true;
+
                 this.models = null;
+
                 let checkMsg = document.querySelector("div.modelShowMsg");
-                console.dir(checkMsg);
+
                 checkMsg.style.color='red'
+
                 let self = this
                 
                 select.onblur = function(){
@@ -442,7 +499,6 @@ export default {
                     self.formCheck.check=false;
                     
                     this.modelType="";
-
                     console.log("blur "+self.formCheck.check);
                     };
                 return;
@@ -450,28 +506,19 @@ export default {
                 
                 let index = e.target.selectedIndex;
 
-                console.log('Search results .....');             
-                console.log('1 ID '+e.target.id);
-                console.log('2 ID '+e.target.options);
-                console.log('3 '+index + '????????????????????????????????????');
-
                 if(e.target.id!='model'){
 
                     return this.selectedModelIdVal = e.target.id;
 
                 }else if(index==0){
 
-                    console.log('if index = 0');
                     this.currentIndex = '';
 
                 }else{
 
-                    console.log('if index not 0')
                     this.$store.dispatch('userdataservice/fieldsVal',[index,'currentIndex']);
-                    this.currentIndex = index;
 
-                    console.log('if index not 0 '+index);
-                    console.log( this.$store.state.userdataservice.models[index-1].id );
+                    this.currentIndex = index;
 
                     this.selectedModelIdVal = this.$store.state.userdataservice.models[index-1].id;
                     
@@ -483,8 +530,11 @@ export default {
         clearField(dataField, stateField, index, ID){
 
             this[dataField] = '';
+
             this.$store.dispatch('userdataservice/fieldsVal',[ null, stateField ]);
+
             this[index] = '';
+
             this[ID] = '';
 
         },

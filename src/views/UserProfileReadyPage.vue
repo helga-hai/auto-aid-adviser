@@ -18,7 +18,7 @@
         <img :src="require('../assets/icoDelete.png')"> 
         Видалити
       </button>
-      <button  class = "redactWrapp__edit" @click="togglerData=!togglerData">
+      <button  class = "redactWrapp__edit" @click="showCurrentUserData">
         <img :src="require('../assets/icoEdit.png')"> 
         Редагувати
       </button>
@@ -26,7 +26,9 @@
 
     <div class = "change" :class="{'on': toggler, 'done': toggler2}">
       <div class = "changeWrapp">
+
         <button class="close-x" @click="toggler=!toggler, toggler2=false"></button>
+
         <form>
           <label>Змінити пароль</label>
           <input type="password" name="oldPassword" id="oldPassword" placeholder="Існуючий пароль" v-model="oldPassword">
@@ -47,7 +49,9 @@
 
     <div class = "changeData" :class="{'onData': togglerData}">
       <div class = "changeDataWrapp">
+
         <button class="close-x" @click="togglerData=!togglerData"></button>
+
          <form @submit.prevent='saveUserData'>
                 <label class = "long">Змінити дані</label>
                 <div class = "filds">
@@ -55,7 +59,7 @@
                   <input type="text" name="name" id="name" placeholder="Ім'я" v-model="name" required>
                   <input type="text" name="phone" id="phone" placeholder="Телефон" v-model="phone">
                 </div>
-                <!-- <div class="changeDataWrapp__img" :style="{backgroundImage: 'url('+require('../assets/Rectangle142.svg')+')'}"></div> -->
+                  <!-- <div class="changeDataWrapp__img" :style="{backgroundImage: 'url('+require('../assets/Rectangle142.svg')+')'}"></div> -->
                 <div class="changeDataWrapp__buttons">
 
                     <input type="submit" value="Зберегти" class="changeDataWrapp__primaryButton">    
@@ -69,6 +73,8 @@
 <script>
 
   import passChange from '../components/passChange';
+
+  import { userService } from '../_services';
 
   export default {
 
@@ -85,27 +91,62 @@
           oldPassword:"",
           newPassword:"",
           confirmPassword:"",
-          surname:this.$store.state.userdataservice.personalPageData.lastName,
-          name:this.$store.state.userdataservice.personalPageData.firstName,
-          phone:this.$store.state.userdataservice.personalPageData.phone,
+          surname: this.$store.state.userdataservice.personalPageData.lastName,
+          name: this.$store.state.userdataservice.personalPageData.firstName,
+          phone: this.$store.state.userdataservice.personalPageData.phone,
 
 
           }
       
       },
+
+      created(){
+
+        {{this.getUserData()}}
+      },
       computed: {
 
         email(){ return this.$store.state.authentication.email||localStorage.getItem( 'email' ) },
-
-        USER(){
-
-        }
 
       },
 
       methods:{
 
+        getUserData(){
 
+          userService.getAllUserData( 'api/user/profile' )
+            .then(function(result){
+
+                console.log("USER "+result);
+
+                return result })
+
+            .then(result=> this.$store.dispatch('userdataservice/fieldsVal',[ result ,'personalPageData' ]))
+        },
+
+        showCurrentUserData(){
+
+          this.togglerData = !this.togglerData;
+
+
+        },
+
+        saveUserData(){
+
+          let editUser;
+
+          this.$store.state.userdataservice.personalPageData.lastName = this.surname;
+
+          this.$store.state.userdataservice.personalPageData.firstName = this.name;
+
+          this.$store.state.userdataservice.personalPageData.phone = this.phone;
+
+          editUser = this.$store.state.userdataservice.personalPageData;
+
+          this.$store.dispatch( "userdataservice/EDIT_USER", editUser );
+
+          this.togglerData = !this.togglerData;
+        },
 
       }
 
