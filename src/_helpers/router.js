@@ -49,7 +49,7 @@ export const router = new Router({
         { path: '/user/activation', component: Activation },
         { path: '/user/activation/*', redirect: '/user/activation' },
         // { path: '/404', component: NotFound },  
-        { path: '*', redirect: '/404' }, 
+        { path: '*', redirect: '/404' },
         // { path: '/create', component: CreatePage },
         // { path: '/create2', component: CreatePage2 },
         // { path: '/create3', component: CreatePage3 },
@@ -77,7 +77,7 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
     console.log("beforeEach:", to, from);
-    const publicPages = ['/authorization', '/cabinet', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/userprof', '/map', '/about', '/user/activation', '/404', '*' ];
+    const publicPages = ['/authorization', '/cabinet', '/search', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/userprof', '/map', '/about', '/user/activation', '/404', '*'];
 
 
     // const publicPages = ['/authorization', '/search', '/cabinet', '/register', '/', '/user', '/user/activation/*', '/user/activation/', '/userprof', '/map', '/about', '/user/activation'];

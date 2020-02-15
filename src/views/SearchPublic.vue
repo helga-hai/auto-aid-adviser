@@ -46,7 +46,7 @@
                     </div> 
                 </div>
             </div>
-            <div class="search-map">
+            <div class="search-map "  v-if="location.position && location.position.lat">
                 <div class="Step1Image__labe" >
                     <div v-if="gettingLocation">loading...</div>
                     <div v-else>
