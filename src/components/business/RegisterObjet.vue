@@ -240,6 +240,12 @@ export default {
 .register-wrap {
     display: flex;
 }
+
+.register-wrap .registrStep1 {
+    width: 45%;
+    height: calc(100vh - 80px - 79.6px);
+    overflow-y: scroll;
+}
 .Step1Image {
     // height: 100%;
     // min-height: 720px;

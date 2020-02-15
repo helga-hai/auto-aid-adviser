@@ -80,7 +80,6 @@
 
   name:"UserProfileReadyPage",
   components: {
-
       passChange,
   },
   data(){
@@ -94,20 +93,14 @@
           surname: this.$store.state.userdataservice.personalPageData.lastName,
           name: this.$store.state.userdataservice.personalPageData.firstName,
           phone: this.$store.state.userdataservice.personalPageData.phone,
-
-
           }
       
       },
-
       created(){
-
         {{this.getUserData()}}
       },
       computed: {
-
         email(){ return this.$store.state.authentication.email||localStorage.getItem( 'email' ) },
-
       },
 
       methods:{
@@ -220,6 +213,7 @@
     margin-bottom: 16px;
     border: 1px solid #6F7E95;
     border-radius: 4px;
+    padding-left:10px;
 }
 .changeDataWrapp__buttons {
     display: flex;
@@ -318,6 +312,7 @@
     margin-bottom: 16px;
     border: 1px solid #6F7E95;
     border-radius: 4px;
+        padding-left: 10px;
 }
 .changeWrapp__buttons {
     display: flex;

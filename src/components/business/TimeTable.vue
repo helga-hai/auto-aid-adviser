@@ -74,7 +74,11 @@
         <div class="registrStep3__Foto">
           <p class="registrStep3__ft" >Фото об’єкта</p>
           <div>
-            <label class= "registrStep3__addFile" for="file" ref="previewImg" :style="{ backgroundImage: 'url(' + bg || '' + ')' }">
+            <label v-for="item in photo" class="registrStep3__addFile" for="file" :style="{ backgroundImage: 'url(' + item || '' + ')' }">
+              <input  type="file" id="file" accept="image/*" @change="uploadPhoto">
+              <!-- <span>+ Фото</span> -->
+            </label>
+            <label :class="`registrStep3__addFile photo-${counter}`" for="file" ref="previewImg" :style="{ backgroundImage: 'url(' + bg || '' + ')' }">
               <input  type="file" id="file" accept="image/*" @change="uploadPhoto">
               <span>+ Фото</span>
             </label>
@@ -119,7 +123,9 @@ export default {
             ],
             images:[],
             waitResponse: false,
-            bg:null
+            bg:null,
+            counter:1,
+            photo:[]
         }
     },
     computed: {
@@ -185,6 +191,7 @@ export default {
       },
       uploadPhoto(e) {
         this.images.push(e.target.files[0])
+        this.previewFile(e)
       },
       waitFunc() {
         this.waitResponse = true
@@ -196,20 +203,9 @@ export default {
       switchView(val){
           this.$emit('switchView', val);
       },
-      previewFile() {
-        // var preview = document.querySelector('img');
-        // var file    = document.querySelector('input[type=file]').files[0];
-        var reader  = new FileReader();
-
-        reader.onloadend = function () {
-          preview.src = reader.result;
-        }
-
-        if (this.images[0]) {
-          reader.readAsDataURL(this.images[0]);
-        } else {
-          preview.src = "";
-        }
+      previewFile(event) {
+        console.log('PREW,',event)
+        this.photo.push( URL.createObjectURL(event.target.files[0]) )
       }
     },
     mounted(){
@@ -498,6 +494,8 @@ input[type="checkbox"]:checked ~ p:after{
   margin-right: 20px;
   border: 1px dashed #6F7E95;
   border-radius: 4px;
+  background-size:cover;
+  margin-right: 20px;
 }
 .registrStep3__fp {
   font-size: 16px;

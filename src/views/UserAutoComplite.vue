@@ -83,7 +83,7 @@
                                         >{{t.name}}</li>
                                     </ul>
                                 </div>
-                                <span>Выбрано: {{ selectedType }} {{ selectedTypeId }}</span>
+                                <span class="label-txt">Выбрано: {{ selectedType }} {{ selectedTypeId }}</span>
 
 
 
@@ -99,7 +99,7 @@
                                         {{b.name}}
                                         </option>
                                     </select>
-                                    <span>Выбрано: 
+                                    <span  class="label-txt">Выбрано: 
                                         {{ selectedBrand }} 
                                         {{selectedBrandId}}
                                     </span>
@@ -532,7 +532,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
     .CurrentCarWrapper{
         display: block;
@@ -924,5 +924,8 @@ img {vertical-align: middle;}
 @media only screen and (max-width: 300px) {
   .prev, .next,.text {font-size: 11px}
 }
-
+.registerAuto span.label-txt {
+        margin-bottom:10px;
+        display:inline-block
+    }
 </style>

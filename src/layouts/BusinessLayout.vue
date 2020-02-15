@@ -1,32 +1,5 @@
 <template>
     <div class="bus">
-        <!-- <header>
-            <router-link to="/" class ="logo">
-                <img :src="require('../assets/aaa_logo.svg')">
-            </router-link>
-            <nav>
-                <ul class="topMenu">
-                    <li><router-link to="/"><img src="../assets/ico-search.png"/></router-link></li>
-                    <li><router-link to="/about">Про нас</router-link></li>
-                    <li class="topMenu__language">
-                        <div class="topMenu__selected">
-                            <span class="topMenu__langLabel selLabel">Укр</span>
-                            <img :src="require('../assets/arrow drop down.png')" class="topMenu__icon">
-                        </div>
-                        <div class="topMenu__langSwitch">
-                            <a>
-                                <span class="topMenu__langLabel">Укр</span>
-                            </a>
-                            <a>
-                                <span class="topMenu__langLabel">Рус</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li> {{email()}} </li>
-                    <li><router-link to="/">Вхід</router-link></li>
-                </ul>
-            </nav>
-        </header> -->
         <nav-component class="dark" :isRole="'business'"/>
         <main>
             <section class="sideBar">
@@ -247,5 +220,25 @@ input {
         line-height: 12px;
         color: #FFFFFF;
     }
+}/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(228, 228, 228); 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(221, 221, 221); 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(212, 212, 212); 
 }
 </style>

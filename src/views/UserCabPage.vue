@@ -1,25 +1,13 @@
 <template>
   <div>
-
-      <!-- <h1>
-          e-mail:{{email()}}
-      </h1> -->
-      <!-- <user-create-page1 v-if="p1" @menuToggler="menuToggler"/>
-      <user-auto-create-page />
-      <user-auto-create-page2 /> -->
-      <span class="role">
+      <!-- <span class="role">
           {{role}}
           {{info()}}
           e-mail: {{email()}}
-      </span>
+      </span> -->
 
       <user-layout/>
-      <!-- <user-create-page1  @menuToggler="menuToggler"/>
-      <user-auto-create-page  @menuToggler="menuToggler"/>
-      <user-auto-create-page2  @menuToggler="menuToggler"/>  -->
 
-        <!-- <user-create-page2 v-if="step1" @stepOneFunction="stepOneFunction"/>
-      <user-create-page1 v-if="step2"/> -->
   </div>
 </template>
 

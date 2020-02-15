@@ -23,30 +23,8 @@
                     <p class="internet" v-if="cur.contact.url">{{cur.contact.url}}</p>
                 </div>
             </div>
-            <div v-if="dealList">
-            <!-- <div class="title-prev">Основні послуги</div> -->
-            <!-- <div :class="{'spinner-wrap':waitData}"> -->
-                <!-- <div v-if="waitData" >
-                    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-                    <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-                    </svg>
-                </div> -->
-                <!-- <details v-for="(item, i) in service" :key="i" class="services__services opened" >
-                    <summary class="services__servicename">
-                        <span>{{item}}</span>
-                    </summary> 
-                    <div class="services__checkwrapp">
-                        <div class="services__autocontent" >
-                            <div></div>
-                            <label v-for="elem in dealList" :key="elem.id" >
-                                {{item}}
-                                <div v-if="elem.serviceType.name==item">
-                                    <p>{{elem.name}}</p>
-                                </div>
-                            </label>
-                        </div>
-                    </div> 
-                </details>-->
+            <div>
+
                 <details v-for="(item, i) in service" :key="i" class="services__services opened" >
                     <summary class="services__servicename">
                         <span>{{item}}</span>

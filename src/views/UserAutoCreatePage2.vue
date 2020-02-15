@@ -20,7 +20,7 @@
 
 
             </div>
-                <span>Выбрано: {{ selectedType }} {{ selectedTypeId }}</span>
+                <span class="label-txt">Выбрано: {{ selectedType }} {{ selectedTypeId }}</span>
             <form @submit.prevent='saveAuto'>
 
 
@@ -75,7 +75,7 @@
                     {{b.name}}
                     </option>
                 </select>
-                <span>Выбрано: 
+                <span class="label-txt">Выбрано: 
                     {{ selectedBrand }} 
                     {{selectedBrandId}}
                 </span>
@@ -550,6 +550,7 @@ export default {
     margin-bottom: 16px;
     border: 1px solid #6F7E95;
     border-radius: 4px;
+    padding-left: 10px;
 }
 
 .registerAuto__buttons {
@@ -631,4 +632,8 @@ ul.carType>li:active{
 
 	.form img		{max-width:96%; max-heigth:96%;}
 
+.registerAuto span.label-txt {
+        margin-bottom:10px;
+        display:inline-block
+    }
 </style>

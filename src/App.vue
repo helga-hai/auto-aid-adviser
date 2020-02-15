@@ -78,6 +78,7 @@ input {
 	outline: none;
 	border-radius: 0;
 	box-shadow: none;
+  padding-left:10px;
 	//-webkit-appearance: none;
 }
 

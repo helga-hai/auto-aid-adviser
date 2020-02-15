@@ -9,18 +9,11 @@
             <router-link to="/cabinet">business</router-link>
             <router-link to="/user">user</router-link>
             <span class="header__lang">Укр </span> 
-            <!-- <router-link to="/authorization" @click="loginShowFunc">Вхід / Реєстрація</router-link> -->
+
             <span v-if="ifToken()===true && isLog" class="enterRegExit"> <a @click="logout"  id='logout'>Вихід</a></span>
             <span v-if="ifToken()===true && isLog" class="enterRegExit"> <a @click="perconalCab" id='personalCab'>Особистий кабінет</a></span>
             <span v-if="ifToken()===false&&!isLog" class="enterRegExit"> <a @click="loginShowFunc" href="#">Вхід</a></span>
-            
-                
-            
-            <!-- <router-link v-if="isRole" :to="(isRole=='user') ? '/user' : (isRole=='business') ? '/business' : ''">Особистий кабінет</router-link> -->
 
-            <!--<router-link to="/create">Особистий кабінет</router-link> -->
-            <!-- <a href="#" @click="loginShowFunc">Вхід / Реєстрація</a>
-            <router-link to="/create">Особистий кабінет</router-link> -->
         </div>
     </div>
 </template>

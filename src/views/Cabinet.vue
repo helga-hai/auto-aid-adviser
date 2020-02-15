@@ -1,8 +1,8 @@
 <template>
     <business-layout>
-        <span class="role">
+        <!-- <span class="role">
             {{info()}}
-        </span>
+        </span> -->
         <keep-alive><!--Неактивные компоненты будут закэшированы-->
             <component :is="currentView" @switchView='switchView' @nextChange="nextChange"></component>
         </keep-alive>
@@ -17,7 +17,7 @@ import RegisterObjet from '../components/business/RegisterObjet.vue';
 import Services from '../components/business/Services.vue';
 import TimeTable from '../components/business/TimeTable.vue';
 import PreviewPage from '../components/business/PreviewPage.vue';
-console.log(PreviewPage)
+
 export default {
     name:'Cabinet',
     components: {
@@ -33,11 +33,11 @@ export default {
             role: this.$store.state.authentication.role,
             email: function(){return this.$store.state.authentication.email||localStorage.getItem('email')},
             info: function(){
-                // let role = this.$store.state.authentication.role;
+
                 let role = localStorage.getItem('role');
                 let email = this.$store.state.authentication.email||localStorage.getItem('email');
                 return {role, email};
-                // return this.$store.state.authentication.role, this.$store.state.authentication.email;
+
             },
            currentView:'add-object',
            next: false
