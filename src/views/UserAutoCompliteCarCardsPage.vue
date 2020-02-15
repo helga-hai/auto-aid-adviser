@@ -10,7 +10,7 @@
                 :key="c.id"
                 :id="c.id"
                 >
-                    <img alt='' :src = "c.images[0].urlImage" :id="c.id" @click='lookAuto'/>
+                    <img alt='' :src = "((c.images.length>0) ? c.images[0].urlImage : '#')" :id="c.id" @click='lookAuto'/>
                     <div class = "info">
                         <h5>{{(c.carModel.carBrand.name != null) ? (c.carModel.carBrand.name) : ("BRAND")}}</h5>
                         <p>{{(c.carModel.name != null) ? (c.carModel.name) : ("MODEL")}}/{{c.releaseYear}}</p>
