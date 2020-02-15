@@ -429,11 +429,11 @@ export default {
         saveAuto() {
 
             let photos = document.getElementById('photoForm');
-            console.log(photos.childNodes[ 0 ].elements);
-            console.dir('from user create page '+photos.childNodes[0].elements[0]);
-            console.dir('from user create page '+photos.innerHTML);
-            console.dir('from user create page '+photos.childNodes[0].getElementsByTagName('a')[0].innerText);
-            console.log(photos.childNodes[0].getElementsByTagName('a').length);
+            // console.log(photos.childNodes[ 0 ].elements);
+            // console.dir('from user create page '+photos.childNodes[0].elements[0]);
+            // console.dir('from user create page '+photos.innerHTML);
+            // console.dir('from user create page '+photos.childNodes[0].getElementsByTagName('a')[0].innerText);
+            // console.log(photos.childNodes[0].getElementsByTagName('a').length);
             
             let auto = {
                 releaseYear: parseInt(this.year) || 1910, /* 1900 Не работает, доступные данные лучше чтоб приходили с сервера */
