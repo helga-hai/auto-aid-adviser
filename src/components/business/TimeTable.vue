@@ -477,6 +477,9 @@ input[type="checkbox"]:checked ~ p:after{
   justify-content: flex-start;
   align-items: flex-start;
   margin: 64px 0px;
+  .registrStep3__addFile {
+    margin-right: 17px;
+  }
 }
 .registrStep3__ft, .registrStep3__Info p {
   font-weight: 500;
