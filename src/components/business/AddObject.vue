@@ -144,7 +144,11 @@ export default {
     border-radius: 5px;
         height: 160px;
     .name-prev {
-        padding-left:0px
+        padding-left:0px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+        max-height: 40px;
     }
     .services-prev-info {
         padding-left:20px;
