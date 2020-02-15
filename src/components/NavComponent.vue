@@ -6,8 +6,8 @@
         <div class="header__nav">
             <router-link to="/" exact><img src="../assets/ico-search.png"/></router-link>
             <router-link to="/about">Про нас</router-link>
-            <router-link to="/cabinet">business</router-link>
-            <router-link to="/user">user</router-link>
+            <!-- <router-link to="/cabinet">business</router-link>
+            <router-link to="/user">user</router-link> -->
             <span class="header__lang">Укр </span> 
 
             <span v-if="ifToken()===true && isLog" class="enterRegExit"> <a @click="logout"  id='logout'>Вихід</a></span>
