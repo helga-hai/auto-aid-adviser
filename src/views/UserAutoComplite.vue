@@ -213,11 +213,17 @@ export default {
                 imgObjArr = this.$store.state.userdataservice.currentCar.images,
                 imgUrlArr = [];
 
+                 if(imgObjArr.length>0){
+
                 imgObjArr.forEach(item => {
                     imgUrlArr.push(item.urlImage);
                 });
             
-            return imgUrlArr;
+                    return imgUrlArr;
+                 }else{
+                     
+                     return '#';
+                 }
             },
 
         }
