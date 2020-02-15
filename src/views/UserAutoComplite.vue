@@ -83,7 +83,7 @@
                                         >{{t.name}}</li>
                                     </ul>
                                 </div>
-                                <span class="label-txt">Выбрано: {{ selectedType }} {{ selectedTypeId }}</span>
+                                <!-- <span class="label-txt">Выбрано: {{ selectedType }} {{ selectedTypeId }}</span> -->
 
 
 
@@ -99,10 +99,10 @@
                                         {{b.name}}
                                         </option>
                                     </select>
-                                    <span  class="label-txt">Выбрано: 
+                                    <!-- <span  class="label-txt">Выбрано: 
                                         {{ selectedBrand }} 
                                         {{selectedBrandId}}
-                                    </span>
+                                    </span> -->
 
 
 
@@ -119,8 +119,7 @@
                                         {{m.name}}
                                         </option>
                                     </select>
-
-                                    <p>{{selectedModelIdVal}}</p>
+<!-- <p>{{selectedModelIdVal}}</p> -->
 
                                     <input type="text" name="individualCarNaming" id="individualCarNaming" placeholder="індивідуальна назва авто" v-model="individualCarNaming">
                                     <input type="textarea" name="description" id="description" placeholder="Пару слів про авто..." v-model="description">

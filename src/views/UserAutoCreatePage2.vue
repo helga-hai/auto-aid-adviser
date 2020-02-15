@@ -20,7 +20,7 @@
 
 
             </div>
-                <span class="label-txt">Выбрано: {{ selectedType }} {{ selectedTypeId }}</span>
+                <!-- <span class="label-txt">Выбрано: {{ selectedType }} {{ selectedTypeId }}</span> -->
             <form @submit.prevent='saveAuto'>
 
 
@@ -75,10 +75,10 @@
                     {{b.name}}
                     </option>
                 </select>
-                <span class="label-txt">Выбрано: 
+                <!-- <span class="label-txt">Выбрано: 
                     {{ selectedBrand }} 
                     {{selectedBrandId}}
-                </span>
+                </span> -->
 
 
                 <!-- 
@@ -115,7 +115,7 @@
                     </option>
                 </select>
                 <!-- <p>{{currentIndex}}</p> -->
-                <p>{{selectedModelIdVal}}</p>
+                <!-- <p>{{selectedModelIdVal}}</p> -->
 
 
 

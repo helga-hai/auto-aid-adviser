@@ -12,8 +12,8 @@
                 <input type="e-mail" name="e-mail" id="e-mail" placeholder="e-mail" :value='email' disabled="disabled">
                 <div class="avatar">
 
-                    {{user}}
-                    <div>{{data()}}</div>
+                    <!-- {{user}}
+                    <div>{{data()}}</div> -->
                     <!-- <div class="registrStep3__Foto">
                         <p class = "registrStep3__ft">Додати аватар</p>
                         <div>
