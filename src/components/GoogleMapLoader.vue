@@ -8,7 +8,7 @@
         :map="map"
       />
     </template>
-    <button id="dir" @click="calculateAndDisplayRoute( {from:paramOrigin,to:paramDest} )">get directions2</button>
+    <button id="dir" @click="calculateAndDisplayRoute( {from:paramOrigin,to:paramDest} )">Побудувати маршрут</button>
   </div>
 </template>
 
@@ -80,6 +80,7 @@ export default {
         if (newValue) {
             this.$emit('ourMapInTravel',newValue)
             console.log('GoogleMapLoader WATCH map $emit')
+            this.$store.commit('search/IS_MAP',newValue)
             this.$emit('isDoneFuncInTravel')
             var th = this;
 
@@ -210,9 +211,12 @@ export default {
   }
   #dir {
     position: absolute;
-    bottom:0;
+    bottom: 0;
     text-transform: uppercase;
-    background: yellow;
+    background: white;
+    padding: 9px 17px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
   }
 }
 </style>

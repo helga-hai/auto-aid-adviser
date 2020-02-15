@@ -26,7 +26,7 @@
                     
                     <div v-if="marketsSearch">
                         <button class="services-prev detail" v-for="cur in marketsSearch" :key="cur.id"  :isPreview="false" @click="onClick(cur.id)" @mouseover="onHover(cur.id)" @mouseleave="onLeave(cur.id)">
-                            <button class="direct" @click="sendCommand=true">GET DIRECTION</button>
+                            <button class="direct" @click="sendCommand=true"></button>
                             <div class="services-prev-img small"  v-if="cur.images && cur.images.length" :style="{backgroundImage: cur.images.length ? 'url('+cur.images[0].urlImage+')' : 'url('+require('../assets/serevice.svg')+')'}">
                             </div>
                             <div class="services-prev-info">
@@ -46,7 +46,7 @@
                     </div> 
                 </div>
             </div>
-            <div class="search-map "  v-if="location.position && location.position.lat">
+            <div class="search-map " >
                 <div class="Step1Image__labe" >
                     <div v-if="gettingLocation">loading...</div>
                     <div v-else>
@@ -122,6 +122,8 @@ export default {
             SERVICEFORBUSINESS: 'search/SERVICEFORBUSINESS',
             LATITUDE: 'search/LATITUDE',
             LONGITUDE: 'search/LONGITUDE',
+            MARKER_ENTITIES: 'search/MARKER_ENTITIES',
+            MAPOBJ: 'search/MAPOBJ',
          }),
         location() { return this.$store.state.selfLocation.location },
         count() {
@@ -147,7 +149,16 @@ export default {
             this.$store.commit('search/SELECT_MARKER',id)
         },
         onHover(id){
+            // console.log(this.MARKER_ENTITIES.find(i=>i.id==`marker-${id}`))
+            // var m = this.MARKER_ENTITIES.find(i=>i.id==`marker-${id}`)
+            // console.log(this.MAPOBJ)
+            // m.map=this.MAPOBJ
+            // m['infowindow'].close()
+            // google.maps.event.trigger(`marker-${id}`, 'mouseover');
+            // m['infowindow'].open(this.MAPOBJ, m)
+            this.$store.commit('search/ON_HOVER',id)
             if(document.querySelector(`.marker-${id}`)) {
+                // ['infowindow'].open(th.map, this);
                 document.querySelector(`.marker-${id}`).style="background-color:#ffc700;padding: 15px 22px;"
             }
         },
